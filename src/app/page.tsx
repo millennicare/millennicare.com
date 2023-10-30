@@ -23,7 +23,7 @@ export default function Page() {
     return (
       <div key={href}>
         <Link href={href}>
-          <Button variant="link" size="lg">
+          <Button variant="link" size="lg" className="text-lg">
             {title}
           </Button>
         </Link>
@@ -56,8 +56,8 @@ export default function Page() {
         <div className="flex ">
           {navItems}
 
-          <Button variant="secondary" size="lg" className="text-white">
-            Login
+          <Button variant="secondary" size="lg" className="text-lg text-white">
+            <Link href="login">Login</Link>
           </Button>
         </div>
       </div>
