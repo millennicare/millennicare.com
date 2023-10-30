@@ -9,9 +9,10 @@ generator client {
 }
 
 model User {
-    id             Int         @id @default(autoincrement())
-    createdAt      DateTime    @default(now())
-    updatedAt      DateTime    @updatedAt
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
     type           UserType
     firstName      String
     middle         String?
@@ -28,21 +29,21 @@ model User {
 }
 
 model Location {
-    id        Int      @id @default(autoincrement())
+    id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     placeId   String
     longitude Float
     latitude  Float
     address   String
-    userId    Int      @unique
+    userId    String   @unique
     user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Careseeker {
     createdAt    DateTime                @default(now())
     updatedAt    DateTime                @updatedAt
-    userId       Int                     @id
+    userId       String                  @id
     appointments Appointment[]
     User         User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
     children     Child[]
@@ -53,13 +54,13 @@ model Careseeker {
 }
 
 model Child {
-    id        Int      @id @default(autoincrement())
+    id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     age                 Int
     specialInstructions String?
-    careseekerId        Int
+    careseekerId        String
     name                String
     careseeker          Careseeker @relation(fields: [careseekerId], references: [userId], onDelete: Cascade)
 
@@ -69,7 +70,7 @@ model Child {
 model Caregiver {
     createdAt                DateTime                @default(now())
     updatedAt                DateTime                @updatedAt
-    userId                   Int                     @id
+    userId                   String                  @id
     backgroundCheckCompleted Boolean                 @default(false)
     appointments             Appointment[]
     User                     User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -83,10 +84,10 @@ model Caregiver {
 model Review {
     createdAt    DateTime   @default(now())
     updatedAt    DateTime   @updatedAt
-    id           Int        @id @default(autoincrement())
+    id           String     @id @default(cuid())
     score        Int
-    caregiverId  Int
-    careseekerId Int
+    caregiverId  String
+    careseekerId String
     Caregiver    Caregiver  @relation(fields: [caregiverId], references: [userId])
     Careseeker   Careseeker @relation(fields: [careseekerId], references: [userId])
 
@@ -95,8 +96,8 @@ model Review {
 }
 
 model FavoritesOnCaregivers {
-    careseekerId Int
-    caregiverId  Int
+    careseekerId String
+    caregiverId  String
     createdAt    DateTime   @default(now())
     updatedAt    DateTime   @updatedAt
     Caregiver    Caregiver  @relation(fields: [caregiverId], references: [userId])
@@ -108,14 +109,14 @@ model FavoritesOnCaregivers {
 }
 
 model Appointment {
-    id           Int               @id @default(autoincrement())
+    id           String            @id @default(cuid())
     createdAt    DateTime          @default(now())
     updatedAt    DateTime          @updatedAt
     startTime    DateTime
     endTime      DateTime
-    careseekerId Int
-    caregiverId  Int
-    serviceId    Int
+    careseekerId String
+    caregiverId  String
+    serviceId    String
     status       AppointmentStatus @default(pending)
     Caregiver    Caregiver         @relation(fields: [caregiverId], references: [userId])
     Careseeker   Careseeker        @relation(fields: [careseekerId], references: [userId])
@@ -127,7 +128,7 @@ model Appointment {
 }
 
 model Contact {
-    id          Int      @id @default(autoincrement())
+    id          String   @id @default(cuid())
     email       String
     firstName   String
     lastName    String
@@ -138,7 +139,7 @@ model Contact {
 }
 
 model Waitlist {
-    id        Int      @id @default(autoincrement())
+    id        String   @id @default(cuid())
     email     String   @unique
     contacted Boolean? @default(false)
     createdAt DateTime @default(now())
@@ -146,13 +147,13 @@ model Waitlist {
 }
 
 model Service {
-    id           Int             @id @default(autoincrement())
+    id           String          @id @default(cuid())
     createdAt    DateTime        @default(now())
     updatedAt    DateTime        @updatedAt
     title        String
     description  String
     price        Decimal
-    caregiverId  Int
+    caregiverId  String
     category     ServiceCategory
     duration     Int
     appointments Appointment[]
@@ -162,7 +163,7 @@ model Service {
 }
 
 model ForgotPasswordToken {
-    id         Int    @id @default(autoincrement())
+    id         String @id @default(cuid())
     userId     Int
     expiresInt BigInt
     token      String
