@@ -1,5 +1,6 @@
 import "~/styles/globals.css";
 
+import { Analytics } from "@vercel/analytics/react";
 import { headers } from "next/headers";
 
 import { TRPCReactProvider } from "~/trpc/react";
@@ -20,7 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${montserrat.variable} ${quicksand.variable}`}>
       <body>
-        <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+        <TRPCReactProvider headers={headers()}>
+          {children}
+          <Analytics />
+        </TRPCReactProvider>
       </body>
     </html>
   );
