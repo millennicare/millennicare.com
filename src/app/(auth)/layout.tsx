@@ -16,6 +16,8 @@ export default function Layout({ children }: LayoutProps) {
                 className="h-24 w-auto"
                 src="/millennicare_logo.png"
                 alt="Workflow"
+                height={300}
+                width={300}
               />
             </Link>
           </div>
