@@ -85,7 +85,7 @@ model Review {
     createdAt    DateTime   @default(now())
     updatedAt    DateTime   @updatedAt
     id           String     @id @default(cuid())
-    score        Int
+    rating       Int
     caregiverId  String
     careseekerId String
     Caregiver    Caregiver  @relation(fields: [caregiverId], references: [userId])
