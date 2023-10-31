@@ -35,7 +35,7 @@ export default function Page() {
     <div className="flex flex-col">
       <div
         id="navbar"
-        className="bg-palecream flex w-full items-center justify-between px-4 py-6"
+        className="flex w-full items-center justify-between bg-palecream px-4 py-6"
       >
         <Image
           src="/millennicare_logo.png"
@@ -43,6 +43,7 @@ export default function Page() {
           width={50}
           alt="Millennicare Logo"
           className="block md:hidden"
+          priority={true}
         />
 
         <Image
@@ -64,7 +65,7 @@ export default function Page() {
 
       <div
         id="hero"
-        className="bg-cream flex h-[80vh] w-full flex-col items-center justify-center md:flex-row md:space-x-48"
+        className="flex h-[80vh] w-full flex-col items-center justify-center bg-cream md:flex-row md:space-x-48"
       >
         <div className="flex flex-col">
           <div className="w-full space-y-3 self-center px-5 md:max-w-lg">
@@ -74,7 +75,7 @@ export default function Page() {
             <h2 className="pb-2 font-mono text-2xl text-secondary md:text-3xl">
               COMING SOON
             </h2>
-            <h3 className="text-communityteal pb-2 text-lg md:text-2xl">
+            <h3 className="pb-2 text-lg text-communityteal md:text-2xl">
               Low-monthly fee to access quality and affordable childcare
               services.
             </h3>
@@ -96,7 +97,7 @@ export default function Page() {
 
       <div
         id="about"
-        className="bg-cream flex flex-col-reverse items-center justify-center px-20 pt-10 md:flex-row  md:space-x-48 md:pb-5 lg:pb-0"
+        className="flex flex-col-reverse items-center justify-center bg-cream px-20 pt-10 md:flex-row  md:space-x-48 md:pb-5 lg:pb-0"
       >
         <Image
           className="max-h-2xl h-auto min-w-[20rem] max-w-xs self-center px-5 pt-3"
