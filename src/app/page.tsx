@@ -58,7 +58,7 @@ export default function Page() {
           {navItems}
 
           <Button variant="secondary" size="lg" className="text-lg text-white">
-            <Link href="login">Login</Link>
+            <Link href="/auth/login">Login</Link>
           </Button>
         </div>
       </div>
