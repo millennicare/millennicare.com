@@ -6,7 +6,6 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import { db } from "~/server/db";
-import { z } from "zod";
 import { verify } from "argon2";
 
 /**
@@ -36,6 +35,7 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(db),
   pages: {
     signIn: "/login",
     newUser: "/register",
