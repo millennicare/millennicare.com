@@ -54,7 +54,7 @@ export default function Page() {
           alt="Millennicare Logo"
         />
 
-        <div className="flex ">
+        <div className="flex">
           {navItems}
 
           <Button variant="secondary" size="lg" className="text-lg text-white">
