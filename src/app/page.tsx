@@ -56,7 +56,6 @@ export default function Page() {
 
         <div className="flex">
           {navItems}
-
           <Button variant="secondary" size="lg" className="text-lg text-white">
             <Link href="/auth/login">Login</Link>
           </Button>

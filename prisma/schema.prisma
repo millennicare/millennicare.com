@@ -60,11 +60,10 @@ model User {
 
     type           UserType
     firstName      String
-    middleName     String?
     lastName       String
     password       String
     birthdate      DateTime
-    profilePicture String
+    profilePicture String?
     phoneNumber    String
     biography      String?
     caregiver      Caregiver?
@@ -102,11 +101,10 @@ model Child {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    age                 Int
-    specialInstructions String?
-    careseekerId        String
-    name                String
-    careseeker          Careseeker @relation(fields: [careseekerId], references: [userId], onDelete: Cascade)
+    age          Int
+    careseekerId String
+    name         String
+    careseeker   Careseeker @relation(fields: [careseekerId], references: [userId], onDelete: Cascade)
 
     @@index([careseekerId])
 }
