@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-import { api } from "~/trpc/react";
+// import { api } from "~/trpc/react";
 import {
   PersonalInfoForm,
   WhoNeedsCareForm,
@@ -60,7 +60,7 @@ export default function Page() {
     children: [],
   });
 
-  const mutation = api.user.register.useMutation();
+  // const mutation = api.user.register.useMutation();
 
   // file upload to s3 isnt working
   // prisma errors when trying to upload
@@ -121,7 +121,7 @@ export default function Page() {
 
   function handleNext() {
     if (step === 2) {
-      submit();
+      void submit();
       return;
     }
     setStep((prev) => prev + 1);
