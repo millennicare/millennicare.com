@@ -2,14 +2,15 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { TRPCClientError } from "@trpc/client";
 
-// import { api } from "~/trpc/react";
+import { api } from "~/trpc/react";
 import {
   PersonalInfoForm,
   WhoNeedsCareForm,
   AdditionalInfoForm,
 } from "./forms";
-import { uploadImage } from "~/app/_actions";
+import { useToast } from "~/components/ui/use-toast";
 
 export type IChild = {
   name: string;
@@ -27,7 +28,7 @@ export type IUser = {
   children: IChild[];
   // third step
   birthdate: Date;
-  profilePicture?: File;
+  profilePicture?: string;
   biography?: string;
   type: "careseeker";
 };
@@ -60,22 +61,30 @@ export default function Page() {
     children: [],
   });
 
-  // const mutation = api.user.register.useMutation();
+  const { toast } = useToast();
+  const mutation = api.user.register.useMutation();
 
-  // file upload to s3 isnt working
-  // prisma errors when trying to upload
   async function submit() {
-    let presignedUrl: string | undefined = undefined;
-    if (formValues.profilePicture) {
-      const formData = new FormData();
-      formData.append("file", formValues.profilePicture);
-      presignedUrl = await uploadImage(formData);
+    try {
+      const response = await mutation.mutateAsync(formValues);
+      toast({ title: response.message });
 
-      console.log(presignedUrl);
+      //@TODO: redirect to /auth/verify-email
+    } catch (error) {
+      if (error instanceof TRPCClientError) {
+        toast({
+          title: "Uh-oh",
+          description: error.message,
+          variant: "destructive",
+        });
+        return;
+      }
+      toast({
+        title: "Uh-oh",
+        description: "Something went wrong, please try again later.",
+        variant: "destructive",
+      });
     }
-    const data = { ...formValues, profilePicture: presignedUrl };
-    //const response = await mutation.mutateAsync(data);
-    console.log(data);
   }
 
   function displayStep(step: number) {

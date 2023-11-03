@@ -34,14 +34,18 @@ export default function WhoNeedsCareForm({
 }: FormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    // checks to see if 'children' field are already in and sets the default values
     defaultValues: {
       ...formValues,
-      children: [
-        {
-          name: "",
-          age: 0,
-        },
-      ],
+      children:
+        formValues.children.length !== 0
+          ? formValues.children
+          : [
+              {
+                name: "",
+                age: 1,
+              },
+            ],
     },
     mode: "onSubmit",
   });
@@ -56,72 +60,70 @@ export default function WhoNeedsCareForm({
   }
 
   return (
-    <>
-      <Form {...form}>
-        <form className="space-y-4" onSubmit={form.handleSubmit(handleSave)}>
-          <ul>
-            {fields.map((item, index) => (
-              <li key={item.id} className="flex items-center space-x-2">
-                <FormField
-                  control={form.control}
-                  name={`children.${index}.name`}
-                  render={({ field }) => (
-                    <FormItem className="w-1/2">
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Name" type="text" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+    <Form {...form}>
+      <form className="space-y-4" onSubmit={form.handleSubmit(handleSave)}>
+        <ul>
+          {fields.map((item, index) => (
+            <li key={item.id} className="flex items-center space-x-2">
+              <FormField
+                control={form.control}
+                name={`children.${index}.name`}
+                render={({ field }) => (
+                  <FormItem className="w-1/2">
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Name" type="text" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                <FormField
-                  control={form.control}
-                  name={`children.${index}.age`}
-                  render={({ field }) => (
-                    <FormItem className="w-1/4">
-                      <FormLabel>Age</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Age" type="number" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  variant="destructive"
-                  type="button"
-                  onClick={() => remove(index)}
-                  className="self-end"
-                >
-                  Delete
-                </Button>
-              </li>
-            ))}
-          </ul>
-          <div>
-            <Button
-              variant="link"
-              onClick={() => append({ name: "", age: 0 })}
-              className="p-0"
-            >
-              Add child
-            </Button>
-          </div>
-          <div className="flex justify-end space-x-4">
-            <Button
-              variant="outline"
-              onClick={handleBack}
-              disabled={step === 0}
-              className="disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
-            >
-              Back
-            </Button>
-            <Button type="submit">Next</Button>
-          </div>
-        </form>
-      </Form>
-    </>
+              <FormField
+                control={form.control}
+                name={`children.${index}.age`}
+                render={({ field }) => (
+                  <FormItem className="w-1/4">
+                    <FormLabel>Age</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Age" type="number" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                variant="destructive"
+                type="button"
+                onClick={() => remove(index)}
+                className="self-end"
+              >
+                Delete
+              </Button>
+            </li>
+          ))}
+        </ul>
+        <div>
+          <Button
+            variant="link"
+            onClick={() => append({ name: "", age: 0 })}
+            className="p-0"
+          >
+            Add child
+          </Button>
+        </div>
+        <div className="flex justify-end space-x-4">
+          <Button
+            variant="outline"
+            onClick={handleBack}
+            disabled={step === 0}
+            className="disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
+          >
+            Back
+          </Button>
+          <Button type="submit">Next</Button>
+        </div>
+      </form>
+    </Form>
   );
 }

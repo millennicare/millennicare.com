@@ -71,7 +71,6 @@ export const authOptions: NextAuthOptions = {
         if (!user) {
           throw new Error("Incorrect email or password, please try again.");
         }
-
         const passwordsMatch = await verify(
           user.password,
           credentials.password,

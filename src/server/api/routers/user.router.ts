@@ -1,5 +1,6 @@
 import * as z from "zod";
 import validator from "validator";
+import * as argon from "argon2";
 
 import { publicProcedure, createTRPCRouter } from "../trpc";
 import { TRPCError } from "@trpc/server";
@@ -35,17 +36,19 @@ export const userRouter = createTRPCRouter({
       if (existingUser) {
         throw new TRPCError({
           code: "CONFLICT",
-          message: "A user already exists with this email address",
+          message: "A user already exists with this email address.",
         });
       }
 
-      const careseeker = await ctx.db.user.create({
+      const hashed = await argon.hash(input.password);
+
+      await ctx.db.user.create({
         data: {
           firstName: input.firstName,
           lastName: input.lastName,
           profilePicture: input.profilePicture,
           email: input.email,
-          password: input.password,
+          password: hashed,
           birthdate: input.birthdate,
           phoneNumber: input.phoneNumber,
           type: input.type,
@@ -65,7 +68,10 @@ export const userRouter = createTRPCRouter({
           },
         },
       });
-      return careseeker;
+      return {
+        status: 201,
+        message: "Sign up successful!",
+      };
     }),
   // send email
 });
