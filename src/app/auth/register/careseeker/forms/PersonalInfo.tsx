@@ -29,7 +29,6 @@ const formSchema = z.object({
   phoneNumber: z.string().refine(validator.isMobilePhone),
 });
 
-// @TODO: check if email is valid when user clicks next
 export default function PersonalInfoForm({
   formValues,
   setFormValues,

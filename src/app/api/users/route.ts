@@ -4,8 +4,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
+  const email = req.nextUrl.searchParams.get("email");
   try {
-    const email = req.nextUrl.searchParams.get("email");
     const existingUser = await prisma.user.findFirst({
       where: {
         email: email,
