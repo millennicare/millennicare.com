@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { useToast } from "~/components/ui/use-toast";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -36,15 +37,40 @@ export default function PersonalInfoForm({
   handleNext,
   step,
 }: FormProps) {
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: formValues,
     mode: "onSubmit",
   });
 
-  function handleSave(values: z.infer<typeof formSchema>) {
-    setFormValues((prev) => ({ ...prev, ...values }));
-    handleNext();
+  async function handleSave(values: z.infer<typeof formSchema>) {
+    // check if email is already in use
+    const response = await fetch(`/api/users?email=${values.email}`, {
+      method: "GET",
+    });
+
+    if (response?.ok) {
+      setFormValues((prev) => ({ ...prev, ...values }));
+      handleNext();
+    }
+
+    const { error } = (await response.json()) as { error: string };
+    console.log(error);
+    if (response?.status === 401) {
+      toast({
+        title: "Something went wrong.",
+        description: error,
+        variant: "destructive",
+      });
+    }
+    if (response?.status === 500) {
+      toast({
+        title: "Something went wrong.",
+        description: error,
+        variant: "destructive",
+      });
+    }
   }
 
   return (

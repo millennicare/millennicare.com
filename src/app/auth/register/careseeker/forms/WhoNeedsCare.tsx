@@ -19,7 +19,9 @@ import { Input } from "~/components/ui/input";
 const formSchema = z.object({
   children: z.array(
     z.object({
-      name: z.string().min(1),
+      name: z
+        .string({ required_error: "Name required" })
+        .min(1, "Name required"),
       age: z.coerce.number().int().gte(0).lte(18),
     }),
   ),
@@ -64,7 +66,7 @@ export default function WhoNeedsCareForm({
       <form className="space-y-4" onSubmit={form.handleSubmit(handleSave)}>
         <ul>
           {fields.map((item, index) => (
-            <li key={item.id} className="flex items-center space-x-2">
+            <li key={item.id} className={`flex space-x-2 bg-red-200`}>
               <FormField
                 control={form.control}
                 name={`children.${index}.name`}
@@ -96,7 +98,6 @@ export default function WhoNeedsCareForm({
                 variant="destructive"
                 type="button"
                 onClick={() => remove(index)}
-                className="self-end"
               >
                 Delete
               </Button>
@@ -104,11 +105,7 @@ export default function WhoNeedsCareForm({
           ))}
         </ul>
         <div>
-          <Button
-            variant="link"
-            onClick={() => append({ name: "", age: 0 })}
-            className="p-0"
-          >
+          <Button variant="ghost" onClick={() => append({ name: "", age: 0 })}>
             Add child
           </Button>
         </div>

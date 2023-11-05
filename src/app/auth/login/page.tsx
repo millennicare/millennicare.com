@@ -70,7 +70,7 @@ export default function Page() {
 
   return (
     <div className="flex min-h-screen flex-col justify-center bg-palecream py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="space-y-4 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
           <Link className="flex items-center text-white" href="/">
             <Image
@@ -83,10 +83,10 @@ export default function Page() {
             />
           </Link>
         </div>
-        <h2 className="mt-3 text-center text-3xl">Welcome Back</h2>
+        <h2 className="text-center text-3xl">Welcome Back</h2>
       </div>
-      <div className="my-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white px-2 py-4 shadow sm:rounded-lg sm:px-10">
+      <div className="mt-4 px-4 sm:mx-auto sm:w-full sm:max-w-md md:p-0">
+        <div className="rounded-lg bg-white px-2 py-4 shadow sm:px-10">
           <div className="flex flex-col">
             <Form {...form}>
               <form

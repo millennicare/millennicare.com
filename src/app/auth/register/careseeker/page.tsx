@@ -137,9 +137,9 @@ export default function Page() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col justify-center bg-palecream py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen flex-col items-center justify-center space-y-4 bg-palecream py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex flex-col items-center justify-center space-y-2">
+        <div className="flex flex-col items-center justify-center space-y-4">
           <Image
             src="/millennicare_logo.png"
             alt="Workflow"
@@ -147,14 +147,13 @@ export default function Page() {
             width={85}
             priority={true}
           />
-          <h2 className="font-mono text-xl">{titles[step]}</h2>
+          <h2 className="text-xl">{titles[step]}</h2>
         </div>
         {/* @TODO: Stepper */}
       </div>
-      <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white px-2 py-4 shadow sm:rounded-lg sm:px-10">
-          {displayStep(step)}
-        </div>
+
+      <div className="w-2/5 rounded-lg bg-white px-4 py-3 shadow">
+        {displayStep(step)}
       </div>
     </div>
   );
