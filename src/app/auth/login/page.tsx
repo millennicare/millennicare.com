@@ -52,6 +52,7 @@ export default function Page() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const res = await signIn("credentials", { ...values, redirect: false });
+    console.log(res);
     if (res?.ok) {
       showToast("Success!", "Going to dashboard", "default");
       void router.push("/dashboard");
@@ -138,7 +139,7 @@ export default function Page() {
 
             <div className="mb-2 mt-4 flex items-center justify-between">
               <Button variant="link" className="p-0">
-                <Link href="/forgot-password">
+                <Link href="/auth/forgot-password">
                   <p className="text-center text-sm">Forgot password?</p>
                 </Link>
               </Button>
