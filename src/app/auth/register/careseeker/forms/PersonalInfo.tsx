@@ -55,7 +55,6 @@ export default function PersonalInfoForm({
     }
 
     const { error } = (await response.json()) as { error: string };
-    console.log(error);
     if (response?.status === 401) {
       toast({
         title: "Something went wrong.",

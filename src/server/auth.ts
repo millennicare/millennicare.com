@@ -5,8 +5,10 @@ import {
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth";
-import { db } from "~/server/db";
+import { encode, decode } from "next-auth/jwt";
 import { verify } from "argon2";
+
+import { db } from "~/server/db";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -36,9 +38,27 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
+  session: {
+    strategy: "jwt",
+  },
+  jwt: { encode, decode },
   pages: {
-    signIn: "/login",
-    newUser: "/register",
+    signIn: "/auth/login",
+  },
+  callbacks: {
+    session: ({ session, token }) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: token.sub,
+      },
+    }),
+    jwt: ({ user, token }) => {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
   },
   providers: [
     CredentialsProvider({
@@ -59,7 +79,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials) {
-          throw new Error();
+          throw new Error("Please enter an email and password");
         }
 
         const user = await db.user.findUnique({
@@ -80,7 +100,11 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Incorrect email or password, please try again.");
         }
 
-        return { id: user.id };
+        return {
+          id: user.id,
+          email: user.email,
+          name: `${user.firstName} ${user.lastName}`,
+        };
       },
     }),
   ],
