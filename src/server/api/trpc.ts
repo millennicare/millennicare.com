@@ -13,6 +13,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "~/server/db";
+import { getServerAuthSession } from "../auth";
 
 /**
  * 1. CONTEXT
@@ -102,9 +103,9 @@ export const createTRPCRouter = t.router;
 export const publicProcedure = t.procedure;
 
 /** Reusable middleware that enforces users are logged in before running the procedure. */
-const isAuthed = t.middleware((opts) => {
-  const { ctx } = opts;
-  if (!ctx.headers.has("access_token")) {
+const isAuthed = t.middleware(async (opts) => {
+  const session = await getServerAuthSession();
+  if (!session?.user.id) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
     });
@@ -112,7 +113,7 @@ const isAuthed = t.middleware((opts) => {
 
   return opts.next({
     ctx: {
-      access_token: ctx.headers.get("access_token"),
+      userId: session.user.id,
     },
   });
 });

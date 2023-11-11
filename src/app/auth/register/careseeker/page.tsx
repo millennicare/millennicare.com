@@ -62,7 +62,7 @@ export default function Page() {
   });
 
   const { toast } = useToast();
-  const mutation = api.user.register.useMutation();
+  const mutation = api.user.careseekerRegister.useMutation();
 
   async function submit() {
     try {
