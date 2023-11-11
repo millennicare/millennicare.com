@@ -3,10 +3,16 @@
 import Link from "next/link";
 
 import { api } from "~/trpc/react";
+import AppointmentCard from "./_components/AppointmentCard";
 
 export default function Page() {
   const user = api.user.getMe.useQuery();
+  const nextAppointment = api.appointment.getNextAppointment.useQuery();
+  const lastAppointment =
+    api.appointment.getLastCompletedAppointment.useQuery();
 
+  // @TODO: create getNextAppointment and getLastCompletedAppointment
+  // in appointment.router
   if (user.isLoading) {
     return <>Loading...</>;
   }
@@ -31,13 +37,13 @@ export default function Page() {
             </Link>
           </div>
           {/** if there is an id received, render a card */}
-          {/* {nextId ? (
-            <Link href={`appointments/${nextId}`}>
-              <AppointmentCard appointmentId={nextId} />
+          {nextAppointment.data ? (
+            <Link href={`appointments/${nextAppointment.data.id}`}>
+              <AppointmentCard id={nextAppointment.data.id} />
             </Link>
           ) : (
             <h4>No appointments</h4>
-          )} */}
+          )}
         </div>
         <div className="h-1/4 md:w-[45%]">
           <div className="mb-2 flex flex-col justify-between md:flex-row">
@@ -46,13 +52,13 @@ export default function Page() {
               <p className="text-primary hover:underline">VIEW ALL</p>
             </Link>
           </div>
-          {/* {recentId ? (
-            <Link href={`appointments/${recentId}`}>
-              <AppointmentCard appointmentId={recentId} />
+          {lastAppointment.data ? (
+            <Link href={`appointments/${lastAppointment.data.id}`}>
+              <AppointmentCard id={lastAppointment.data.id} />
             </Link>
           ) : (
             <h4>No appointments</h4>
-          )} */}
+          )}
         </div>
         <div className="h-1/4 w-[45%]">
           <p className="mb-2">FAVORITES</p>

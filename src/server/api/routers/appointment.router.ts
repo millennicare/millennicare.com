@@ -63,6 +63,13 @@ export const appointmentRouter = createTRPCRouter({
             },
           ],
         },
+        include: {
+          Service: {
+            select: {
+              price: true,
+            },
+          },
+        },
       });
 
       return appointment;
@@ -110,4 +117,72 @@ export const appointmentRouter = createTRPCRouter({
         },
       });
     }),
+  // get next appt
+  getNextAppointment: protectedProcedure.query(async ({ ctx }) => {
+    const { db, userId } = ctx;
+    const appointments = await db.appointment.findMany({
+      where: {
+        status: "finished",
+        OR: [
+          {
+            careseekerId: userId,
+          },
+          {
+            caregiverId: userId,
+          },
+        ],
+      },
+      include: {
+        Service: {
+          select: {
+            price: true,
+          },
+        },
+      },
+    });
+
+    const today = new Date();
+    const beforeDates = appointments.filter(
+      (app) => app.endTime.valueOf() - today.valueOf() < 0,
+    );
+
+    const appointment = beforeDates[0];
+
+    return appointment;
+  }),
+  // get last completed appt
+  getLastCompletedAppointment: protectedProcedure.query(async ({ ctx }) => {
+    const appointments = await ctx.db.appointment.findMany({
+      where: {
+        OR: [
+          {
+            caregiverId: ctx.userId,
+          },
+          {
+            caregiverId: ctx.userId,
+          },
+        ],
+      },
+      include: {
+        Service: {
+          select: {
+            price: true,
+          },
+        },
+      },
+    });
+
+    const today = new Date();
+    const beforeDates = appointments.filter((app) => {
+      return app.status === "confirmed" || app.status === "pending";
+    });
+    beforeDates.sort((a, b) => {
+      const distanceA = Math.abs(today.valueOf() - a.endTime.valueOf());
+      const distanceB = Math.abs(today.valueOf() - b.endTime.valueOf());
+      return distanceA - distanceB;
+    });
+
+    const appointment = beforeDates[0];
+    return appointment;
+  }),
 });
