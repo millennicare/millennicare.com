@@ -24,9 +24,6 @@ export const appointmentRouter = createTRPCRouter({
           serviceId: input.serviceId,
           status: input.status,
         },
-        include: {
-          service: true,
-        },
       });
 
       return appointment;
@@ -44,9 +41,6 @@ export const appointmentRouter = createTRPCRouter({
             caregiverId: userId,
           },
         ],
-      },
-      include: {
-        service: true,
       },
     });
 
@@ -68,9 +62,6 @@ export const appointmentRouter = createTRPCRouter({
               caregiverId: userId,
             },
           ],
-        },
-        include: {
-          service: true,
         },
       });
 

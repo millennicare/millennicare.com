@@ -162,7 +162,7 @@ model Appointment {
     status       AppointmentStatus @default(pending)
     Caregiver    Caregiver         @relation(fields: [caregiverId], references: [userId])
     Careseeker   Careseeker        @relation(fields: [careseekerId], references: [userId])
-    service      Service           @relation(fields: [serviceId], references: [id])
+    Service      Service           @relation(fields: [serviceId], references: [id])
 
     @@index([caregiverId])
     @@index([careseekerId])
