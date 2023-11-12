@@ -8,14 +8,15 @@ export default function Page() {
           <br></br>
           <h2 className="font-bold text-primary">
             {" "}
-            End-User License Agreement ("Agreement")
+            End-User License Agreement (&quot;Agreement&quot;)
           </h2>
           <br></br>
           <p>Last updated: January 20, 2023</p>
           <br></br>
           <p>
             Please read this End-User License Agreement carefully before
-            clicking the "I Agree" button, downloading or using MillenniCare.
+            clicking the &quot;I Agree&quot; button, downloading or using
+            MillenniCare.
           </p>
         </div>
         <br></br>
@@ -46,9 +47,10 @@ export default function Page() {
               Company downloaded by You to a Device, named MillenniCare
             </p>
             <p>
-              <b>Company</b> (referred to as either "the Company", "We", "Us" or
-              "Our" in this Agreement) refers to MillenniCare, 800 4th street
-              sw, Washington D.C., 20024 N812.
+              <b>Company</b> (referred to as either &quot;the Company&quot;,
+              &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this
+              Agreement) refers to MillenniCare, 800 4th street sw, Washington
+              D.C., 20024 N812.
             </p>
             <p>
               <b>Content</b> refers to content such as text, images, or other
@@ -82,11 +84,11 @@ export default function Page() {
           <h2>Acknowledgment</h2>
           <hr className="border-1 border-primary"></hr>
           <p>
-            By clicking the "I Agree" button, downloading or using the
+            By clicking the &quot;I Agree&quot; button, downloading or using the
             Application, You are agreeing to be bound by the terms and
             conditions of this Agreement. If You do not agree to the terms of
-            this Agreement, do not click on the "I Agree" button, do not
-            download or do not use the Application.
+            this Agreement, do not click on the &quot;I Agree&quot; button, do
+            not download or do not use the Application.
           </p>
           <br></br>
           <p>
@@ -207,11 +209,11 @@ export default function Page() {
           </p>
           <br></br>
           <p>
-            You must comply with applicable Third parties' Terms of agreement
-            when using the Application. Third-party Services and links thereto
-            are provided solely as a convenience to You and You access and use
-            them entirely at your own risk and subject to such third parties'
-            Terms and conditions.
+            You must comply with applicable Third parties&apos; Terms of
+            agreement when using the Application. Third-party Services and links
+            thereto are provided solely as a convenience to You and You access
+            and use them entirely at your own risk and subject to such third
+            parties&apos; Terms and conditions.
           </p>
         </div>
         <br></br>
@@ -259,10 +261,10 @@ export default function Page() {
           </p>
           <br></br>
           <p>
-            Termination of this Agreement will not limit any of the Company's
-            rights or remedies at law or in equity in case of breach by You
-            (during the term of this Agreement) of any of your obligations under
-            the present Agreement.
+            Termination of this Agreement will not limit any of the
+            Company&apos;s rights or remedies at law or in equity in case of
+            breach by You (during the term of this Agreement) of any of your
+            obligations under the present Agreement.
           </p>
         </div>
         <br></br>
@@ -275,9 +277,9 @@ export default function Page() {
             You agree to indemnify and hold the Company and its parents,
             subsidiaries, affiliates, officers, employees, agents, partners and
             licensors (if any) harmless from any claim or demand, including
-            reasonable attorneys' fees, due to or arising out of your: (a) use
-            of the Application; (b) violation of this Agreement or any law or
-            regulation; or (c) violation of any right of a third party.
+            reasonable attorneys&apos; fees, due to or arising out of your: (a)
+            use of the Application; (b) violation of this Agreement or any law
+            or regulation; or (c) violation of any right of a third party.
           </p>
         </div>
         <br></br>
@@ -287,20 +289,20 @@ export default function Page() {
           <h2>No Warranties</h2>
           <hr className="border-1 border-primary"></hr>
           <p>
-            The Application is provided to You "AS IS" and "AS AVAILABLE" and
-            with all faults and defects without warranty of any kind. To the
-            maximum extent permitted under applicable law, the Company, on its
-            own behalf and on behalf of its affiliates and its and their
-            respective licensors and service providers, expressly disclaims all
-            warranties, whether express, implied, statutory or otherwise, with
-            respect to the Application, including all implied warranties of
-            merchantability, fitness for a particular purpose, title and
-            non-infringement, and warranties that may arise out of course of
-            dealing, course of performance, usage or trade practice. Without
-            limitation to the foregoing, the Company provides no warranty or
-            undertaking, and makes no representation of any kind that the
-            Application will meet your requirements, achieve any intended
-            results, be compatible or work with any other software,
+            The Application is provided to You &quot;AS IS&quot; and &quot;AS
+            AVAILABLE&quot; and with all faults and defects without warranty of
+            any kind. To the maximum extent permitted under applicable law, the
+            Company, on its own behalf and on behalf of its affiliates and its
+            and their respective licensors and service providers, expressly
+            disclaims all warranties, whether express, implied, statutory or
+            otherwise, with respect to the Application, including all implied
+            warranties of merchantability, fitness for a particular purpose,
+            title and non-infringement, and warranties that may arise out of
+            course of dealing, course of performance, usage or trade practice.
+            Without limitation to the foregoing, the Company provides no
+            warranty or undertaking, and makes no representation of any kind
+            that the Application will meet your requirements, achieve any
+            intended results, be compatible or work with any other software,
             applications, systems or services, operate without interruption,
             meet any performance or reliability standards or be error free or
             that any errors or defects can or will be corrected.
@@ -308,15 +310,16 @@ export default function Page() {
           <br></br>
           <p>
             Without limiting the foregoing, neither the Company nor any of the
-            company's provider makes any representation or warranty of any kind,
-            express or implied: (i) as to the operation or availability of the
-            Application, or the information, content, and materials or products
-            included thereon; (ii) that the Application will be uninterrupted or
-            error-free; (iii) as to the accuracy, reliability, or currency of
-            any information or content provided through the Application; or (iv)
-            that the Application, its servers, the content, or e-mails sent from
-            or on behalf of the Company are free of viruses, scripts, trojan
-            horses, worms, malware, timebombs or other harmful components.
+            company&apos;s provider makes any representation or warranty of any
+            kind, express or implied: (i) as to the operation or availability of
+            the Application, or the information, content, and materials or
+            products included thereon; (ii) that the Application will be
+            uninterrupted or error-free; (iii) as to the accuracy, reliability,
+            or currency of any information or content provided through the
+            Application; or (iv) that the Application, its servers, the content,
+            or e-mails sent from or on behalf of the Company are free of
+            viruses, scripts, trojan horses, worms, malware, timebombs or other
+            harmful components.
           </p>
           <br></br>
           <p>
@@ -341,8 +344,8 @@ export default function Page() {
             liability of the Company and any of its suppliers under any
             provision of this Agreement and your exclusive remedy for all of the
             foregoing shall be limited to the amount actually paid by You for
-            the Application or through the Application or 100 USD if You haven't
-            purchased anything through the Application.
+            the Application or through the Application or 100 USD if You
+            haven&apos;t purchased anything through the Application.
           </p>
           <br></br>
           <p>
@@ -385,7 +388,7 @@ export default function Page() {
           <p>
             Except as provided herein, the failure to exercise a right or to
             require performance of an obligation under this Agreement shall not
-            effect a party's ability to exercise such right or require such
+            effect a party&apos;s ability to exercise such right or require such
             performance at any time thereafter nor shall the waiver of a breach
             constitute a waiver of any subsequent breach.
           </p>
@@ -409,8 +412,8 @@ export default function Page() {
           <p>
             You represent and warrant that (i) You are not located in a country
             that is subject to the United States government embargo, or that has
-            been designated by the United States government as a "terrorist
-            supporting" country, and (ii) You are not listed on any United
+            been designated by the United States government as a &quot;terrorist
+            supporting&quot; country, and (ii) You are not listed on any United
             States government list of prohibited or restricted parties.
           </p>
         </div>
@@ -423,9 +426,9 @@ export default function Page() {
           <p>
             The Company reserves the right, at its sole discretion, to modify or
             replace this Agreement at any time. If a revision is material we
-            will provide at least 30 days' notice prior to any new terms taking
-            effect. What constitutes a material change will be determined at the
-            sole discretion of the Company.
+            will provide at least 30 days&apos; notice prior to any new terms
+            taking effect. What constitutes a material change will be determined
+            at the sole discretion of the Company.
           </p>
           <br></br>
           <p>
@@ -463,8 +466,8 @@ export default function Page() {
           <br></br>
           <p>
             You may be subject to additional terms and conditions that apply
-            when You use or purchase other Company's services, which the Company
-            will provide to You at the time of such use or purchase.
+            when You use or purchase other Company&apos;s services, which the
+            Company will provide to You at the time of such use or purchase.
           </p>
         </div>
         <br></br>
