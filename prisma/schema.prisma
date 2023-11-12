@@ -182,10 +182,11 @@ model Contact {
 
 model Waitlist {
     id        String   @id @default(cuid())
-    email     String   @unique
-    contacted Boolean? @default(false)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    email     String   @unique
+    contacted Boolean? @default(false)
 }
 
 model Service {
