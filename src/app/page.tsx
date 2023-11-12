@@ -2,7 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "~/components/ui/button";
+
+import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
+
 import Navbar from "./_components/Navbar";
+import WaitlistForm from "./(legal)/_components/WaitlistForm";
 
 export default function Page() {
   return (
@@ -14,21 +18,27 @@ export default function Page() {
         className="flex h-[80vh] w-full flex-col items-center justify-center bg-cream md:flex-row md:space-x-48"
       >
         <div className="flex flex-col">
-          <div className="w-full space-y-3 self-center px-5 md:max-w-lg">
-            <h1 className="py-5 font-mono text-4xl md:max-w-lg md:text-5xl lg:text-6xl">
+          <div className="w-full space-y-5 self-center px-5 md:max-w-lg">
+            <h1 className="font-mono text-4xl md:max-w-lg md:text-5xl lg:text-6xl">
               Modernizing Affordable Childcare for the New Millenium
             </h1>
-            <h2 className="pb-2 font-mono text-2xl text-secondary md:text-3xl">
+            <h2 className=" font-mono text-2xl text-secondary md:text-3xl">
               COMING SOON
             </h2>
             <h3 className="pb-2 text-lg text-communityteal md:text-2xl">
               Low-monthly fee to access quality and affordable childcare
               services.
             </h3>
-            {/* display a modal onclick to sign up for a waitlist */}
-            <Button variant="default" size="lg" className="text-lg text-white">
-              Join the Waitlist
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button size="lg" className="text-lg">
+                  Join the Waitlist
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <WaitlistForm />
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
 
@@ -143,18 +153,19 @@ export default function Page() {
         <p className="pt-2 text-sm">Copyright © 2023 MillenniCare, Inc.</p>
         {/* Footer Links */}
         <div className="flex w-[390px] flex-col items-center justify-between pt-2 min-[420px]:flex-row">
-          <Link href="/eula">
-            <p className="hover:text-primary">EULA</p>
+          <Link href="/eula" className="hover:text-primary">
+            EULA
           </Link>
           <p className="max-[420px]:hidden">|</p>
-          <Link href="/privacy-policy">
-            <p className="hover:text-primary max-[420px]:py-2">
-              Privacy Policy
-            </p>
+          <Link
+            href="/privacy-policy"
+            className="hover:text-primary max-[420px]:py-2"
+          >
+            Privacy Policy
           </Link>
-          <p className="hover:text-primary max-[420px]:hidden">|</p>
-          <Link href="/contact-us">
-            <p>Contact Us</p>
+          <p className="max-[420px]:hidden">|</p>
+          <Link href="/contact-us" className="hover:text-primary">
+            Contact Us
           </Link>
         </div>
       </div>

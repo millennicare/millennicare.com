@@ -12,11 +12,8 @@ const navLinks = [
     title: "Our Commitment",
     href: "#commitment",
   },
-  {
-    title: "Meet Our Team",
-    href: "#team",
-  },
 ];
+
 export default function Navbar() {
   const navItems = navLinks.map(({ href, title }) => {
     return (
