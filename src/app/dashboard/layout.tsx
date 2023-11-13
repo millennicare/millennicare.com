@@ -18,7 +18,7 @@ export default async function DashboardLayout({
     <div className="flex h-screen w-screen flex-row">
       <SideNav />
       <div className="flex h-full w-full justify-center bg-palecream">
-        <div className="m-auto h-5/6 w-[90%] overflow-auto">{children}</div>
+        <div className="m-auto h-[90%] w-[90%] overflow-auto">{children}</div>
       </div>
     </div>
   );

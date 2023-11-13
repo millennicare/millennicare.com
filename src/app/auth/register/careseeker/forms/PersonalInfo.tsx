@@ -3,6 +3,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { TRPCClientError } from "@trpc/client";
 import validator from "validator";
 
 import { type FormProps } from "../page";
@@ -17,6 +18,7 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { useToast } from "~/components/ui/use-toast";
+import { api } from "~/trpc/react";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -42,30 +44,24 @@ export default function PersonalInfoForm({
     defaultValues: formValues,
     mode: "onSubmit",
   });
+  const mutation = api.user.findDuplicateEmail.useMutation();
 
   async function handleSave(values: z.infer<typeof formSchema>) {
-    // check if email is already in use
-    const response = await fetch(`/api/users?email=${values.email}`, {
-      method: "GET",
-    });
-
-    if (response?.ok) {
+    try {
+      await mutation.mutateAsync(values.email);
       setFormValues((prev) => ({ ...prev, ...values }));
       handleNext();
-    }
-
-    const { error } = (await response.json()) as { error: string };
-    if (response?.status === 401) {
+    } catch (error) {
+      if (error instanceof TRPCClientError) {
+        toast({
+          title: "Something went wrong.",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
       toast({
         title: "Something went wrong.",
-        description: error,
-        variant: "destructive",
-      });
-    }
-    if (response?.status === 500) {
-      toast({
-        title: "Something went wrong.",
-        description: error,
+        description: "Internal server error. Please try again later.",
         variant: "destructive",
       });
     }

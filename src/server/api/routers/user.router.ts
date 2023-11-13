@@ -12,6 +12,13 @@ export const userRouter = createTRPCRouter({
       where: {
         id: userId,
       },
+      include: {
+        careseeker: {
+          include: {
+            children: true,
+          },
+        },
+      },
     });
 
     return user;
@@ -134,5 +141,20 @@ export const userRouter = createTRPCRouter({
       });
 
       return { status: 201, message: "Sign up successful" };
+    }),
+  findDuplicateEmail: publicProcedure
+    .input(z.string().email())
+    .mutation(async ({ ctx, input }) => {
+      const duplicate = await ctx.db.user.findFirst({
+        where: {
+          email: input,
+        },
+      });
+      if (duplicate) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "A user already exists with this email address",
+        });
+      }
     }),
 });

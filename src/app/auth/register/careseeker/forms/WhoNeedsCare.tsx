@@ -12,7 +12,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 
@@ -66,7 +65,7 @@ export default function WhoNeedsCareForm({
       <form className="space-y-4" onSubmit={form.handleSubmit(handleSave)}>
         <ul>
           {fields.map((item, index) => (
-            <li key={item.id} className={`flex space-x-2 bg-red-200`}>
+            <li key={item.id} className={`flex space-x-2`}>
               <FormField
                 control={form.control}
                 name={`children.${index}.name`}
@@ -76,7 +75,6 @@ export default function WhoNeedsCareForm({
                     <FormControl>
                       <Input placeholder="Name" type="text" {...field} />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -90,7 +88,6 @@ export default function WhoNeedsCareForm({
                     <FormControl>
                       <Input placeholder="Age" type="number" {...field} />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -98,6 +95,7 @@ export default function WhoNeedsCareForm({
                 variant="destructive"
                 type="button"
                 onClick={() => remove(index)}
+                className="self-end"
               >
                 Delete
               </Button>
