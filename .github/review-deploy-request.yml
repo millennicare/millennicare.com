@@ -1,0 +1,50 @@
+name: review-deploy-request
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+    paths: ["prisma/schema.prisma"]
+
+jobs:
+  review-deploy-request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get deploy request
+        id: get_deploy_request
+        run: |
+          response=$(curl --request GET \
+          --url 'https://api.planetscale.com/v1/organizations/${{ secrets.PSCALE_ORG }}/databases/${{ secrets.PSCALE_DATABASE_NAME }}/deploy-requests?state=open&branch=dev&into_branch=main' \
+          --header 'Authorization: ${{ secrets.PSCALE_SERVICE_TOKEN_ID }}:${{ secrets.PSCALE_SERVICE_TOKEN }}' \
+          --header 'accept: application/json')
+
+          number=$(echo "$response" | jq -r '.data[0].number')
+          echo $number
+          echo "number=$number" >> $GITHUB_OUTPUT
+
+          deployment_state=$(echo "$response" | jq -r '.data[0].deployment_state')
+          echo $deployment_state
+          echo "deployment_state=$deployment_state" >> $GITHUB_OUTPUT
+
+      - name: Deploy deploy request (if PR merged and there are schema changes)
+        if: ${{ (github.event.pull_request.merged == true) && (steps.get_deploy_request.outputs.deployment_state != 'no_changes') }}
+        uses: planetscale/deploy-deploy-request-action@v1
+        with:
+          org_name: ${{ secrets.PSCALE_ORG }}
+          database_name: ${{ secrets.PSCALE_DATABASE_NAME }}
+          number: ${{ steps.get_deploy_request.outputs.number }}
+          wait: true
+        env:
+          PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PSCALE_SERVICE_TOKEN_ID }}
+          PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PSCALE_SERVICE_TOKEN }}
+
+      - name: Close deploy request (if PR closed or there are no schema changes)
+        if: ${{ (github.event.pull_request.merged == false) || (steps.get_deploy_request.outputs.deployment_state == 'no_changes') }}
+        run: |
+          curl --request PATCH \
+          --url https://api.planetscale.com/v1/organizations/${{ secrets.PSCALE_ORG }}/databases/${{ secrets.PSCALE_DATABASE_NAME }}/deploy-requests/${{ steps.get_deploy_request.outputs.number }} \
+          --header 'Authorization: ${{ secrets.PSCALE_SERVICE_TOKEN_ID }}:${{ secrets.PSCALE_SERVICE_TOKEN }}' \
+          --header 'accept: application/json' \
+          --header 'content-type: application/json' \
+          --data '{"state":"closed"}'

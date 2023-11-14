@@ -1,0 +1,21 @@
+name: create-deploy-request
+
+on:
+  pull_request:
+    branches: [main]
+    paths: ["prisma/schema.prisma"]
+
+jobs:
+  create-deploy-request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create a deploy request
+        uses: planetscale/create-deploy-request-action@v1
+        with:
+          org_name: ${{ secrets.PSCALE_ORG }}
+          database_name: ${{ secrets.PSCALE_DATABASE_NAME }}
+          branch_name: dev
+        env:
+          PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PSCALE_SERVICE_TOKEN_ID }}
+          PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PSCALE_SERVICE_TOKEN }}
