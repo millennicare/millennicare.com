@@ -80,8 +80,9 @@ model Address {
     longitude Float
     latitude  Float
     address   String
-    userId    String @unique
-    user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    unit      String?
+    userId    String  @unique
+    user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Careseeker {

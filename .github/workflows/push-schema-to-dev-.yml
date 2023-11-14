@@ -17,15 +17,15 @@ jobs:
         run: echo ${{ github.event_name }}
 
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Create .env file
         run: echo DATABASE_URL=${{ secrets.PSCALE_DEV_DATABASE_URL }} > .env
 
       - name: Install npm ${{ matrix.node-version }}
-        uses: npm/action-setup@v2
+        uses: npm/action-setup@v4
         with:
-          version: ${{ matrix.pnpm-version }}
+          version: ${{ matrix.node-version }}
 
       - name: Push schema changes
         run: npx prisma db push

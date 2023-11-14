@@ -91,7 +91,7 @@ export default function AdditionalInfoForm({
           name="birthdate"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Date of birth</FormLabel>
+              <FormLabel>Date of Birth</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
