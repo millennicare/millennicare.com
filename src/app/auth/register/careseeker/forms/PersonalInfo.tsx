@@ -58,6 +58,7 @@ export default function PersonalInfoForm({
           description: error.message,
           variant: "destructive",
         });
+        return;
       }
       toast({
         title: "Something went wrong.",
