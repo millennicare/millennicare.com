@@ -1,7 +1,7 @@
 "use client";
 
 import * as z from "zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
@@ -26,11 +26,15 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 import { Textarea } from "~/components/ui/textarea";
+import { useToast } from "~/components/ui/use-toast";
+
+const zipCodeReg = new RegExp(/^\b\d{5}(-\d{4})?\b$/);
 
 const formSchema = z.object({
   profilePicture: z.any(),
   birthdate: z.coerce.date(),
   biography: z.string().optional(),
+  zipCode: z.string(),
 });
 
 export default function AdditionalInfoForm({
@@ -45,11 +49,61 @@ export default function AdditionalInfoForm({
     defaultValues: formValues,
     mode: "onSubmit",
   });
+  const watchZipCode = form.watch("zipCode");
+
+  const { toast } = useToast();
 
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
+  const [suggestedCity, setSuggestedCity] = useState("");
+
+  useEffect(() => {
+    async function getSuggestions() {
+      try {
+        const res = await fetch("/api/locations/get-suggestions", {
+          method: "POST",
+          body: JSON.stringify({ zipCode: watchZipCode }),
+        });
+
+        const json = (await res.json()) as string;
+        setSuggestedCity(json);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (zipCodeReg.test(watchZipCode)) {
+      getSuggestions().catch((error) => console.error(error));
+    } else {
+      setSuggestedCity("");
+    }
+  }, [watchZipCode]);
 
   async function handleSave(values: z.infer<typeof formSchema>) {
+    let lat = 0,
+      long = 0;
+    try {
+      const res = await fetch("/api/locations/get-details", {
+        method: "POST",
+        body: JSON.stringify({ zipCode: watchZipCode }),
+      });
+
+      const { coordinates } = (await res.json()) as {
+        coordinates: {
+          latitude: number;
+          longitude: number;
+        };
+      };
+      lat = coordinates.latitude;
+      long = coordinates.longitude;
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong.",
+        description: "Error fetching location details.",
+      });
+    }
+
     setUploading(true);
     let profileLink: string | undefined = undefined;
 
@@ -78,8 +132,11 @@ export default function AdditionalInfoForm({
       ...prev,
       ...values,
       profilePicture: profileLink,
+      latitude: lat,
+      longitude: long,
     }));
 
+    console.log(formValues);
     handleNext();
   }
 
@@ -150,6 +207,25 @@ export default function AdditionalInfoForm({
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="zipCode"
+          render={({ field }) => (
+            <FormItem className="mt-5">
+              <FormLabel>Zip Code</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {suggestedCity ? (
+          <p className="pt-0 text-sm italic">{suggestedCity}</p>
+        ) : (
+          <></>
+        )}
 
         <FormField
           control={form.control}

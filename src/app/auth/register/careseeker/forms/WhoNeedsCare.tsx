@@ -103,7 +103,11 @@ export default function WhoNeedsCareForm({
           ))}
         </ul>
         <div>
-          <Button variant="ghost" onClick={() => append({ name: "", age: 0 })}>
+          <Button
+            variant="link"
+            className="p-0"
+            onClick={() => append({ name: "", age: 0 })}
+          >
             Add child
           </Button>
         </div>
