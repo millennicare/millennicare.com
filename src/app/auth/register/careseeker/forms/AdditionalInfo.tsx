@@ -57,7 +57,7 @@ export default function AdditionalInfoForm({
   const [uploading, setUploading] = useState<boolean>(false);
 
   async function handleSave(values: z.infer<typeof formSchema>) {
-    let locationId: string = "";
+    let locationId = "";
     try {
       const res = await fetch("/api/locations", {
         method: "POST",
@@ -75,7 +75,9 @@ export default function AdditionalInfoForm({
         return;
       }
 
-      const json: { locationId: string } = await res.json();
+      const json = (await res.json()) as {
+        locationId: string;
+      };
       locationId = json.locationId;
       console.log(locationId);
     } catch (error) {
@@ -118,7 +120,7 @@ export default function AdditionalInfoForm({
     }));
 
     console.log(formValues);
-    // handleNext();
+    handleNext();
   }
 
   return (
