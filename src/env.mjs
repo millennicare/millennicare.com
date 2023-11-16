@@ -33,6 +33,7 @@ export const env = createEnv({
     AWS_BUCKET: z.string(),
     AWS_REGION: z.string(),
     AWS_LOCATION_API_KEY: z.string(),
+    AWS_LOCATION_SUGGESTION_KEY: z.string(),
   },
 
   /**
@@ -58,6 +59,7 @@ export const env = createEnv({
     AWS_BUCKET: process.env.AWS_BUCKET,
     AWS_REGION: process.env.AWS_REGION,
     AWS_LOCATION_API_KEY: process.env.AWS_LOCATION_API_KEY,
+    AWS_LOCATION_SUGGESTION_KEY: process.env.AWS_LOCATION_SUGGESTION_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
