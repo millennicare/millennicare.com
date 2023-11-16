@@ -31,7 +31,8 @@ export type IUser = {
   profilePicture?: string;
   biography?: string;
   type: "careseeker";
-  locationId: string;
+  longitude: number;
+  latitude: number;
 };
 
 export type FormProps = {
@@ -60,7 +61,8 @@ export default function Page() {
     phoneNumber: "",
     type: "careseeker",
     children: [],
-    locationId: "",
+    latitude: 0,
+    longitude: 0,
   });
 
   const { toast } = useToast();
