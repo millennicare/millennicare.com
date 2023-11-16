@@ -26,11 +26,17 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 import { Textarea } from "~/components/ui/textarea";
+import { useToast } from "~/components/ui/use-toast";
+
+const zipCodeReg = /^\b\d{5}(-\d{4})?\b$/;
 
 const formSchema = z.object({
   profilePicture: z.any(),
   birthdate: z.coerce.date(),
   biography: z.string().optional(),
+  locationId: z
+    .string({ required_error: "Zip Code Required" })
+    .regex(new RegExp(zipCodeReg)),
 });
 
 export default function AdditionalInfoForm({
@@ -45,11 +51,41 @@ export default function AdditionalInfoForm({
     defaultValues: formValues,
     mode: "onSubmit",
   });
+  const { toast } = useToast();
 
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
 
   async function handleSave(values: z.infer<typeof formSchema>) {
+    let locationId: string = "";
+    try {
+      const res = await fetch("/api/locations", {
+        method: "POST",
+        body: JSON.stringify(values.locationId),
+      });
+
+      console.log(res);
+
+      if (!res.ok) {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong.",
+          description: "Please enter a valid zip code.",
+        });
+        return;
+      }
+
+      const json: { locationId: string } = await res.json();
+      locationId = json.locationId;
+      console.log(locationId);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong.",
+        description: "Error fetching location details.",
+      });
+    }
+
     setUploading(true);
     let profileLink: string | undefined = undefined;
 
@@ -78,9 +114,11 @@ export default function AdditionalInfoForm({
       ...prev,
       ...values,
       profilePicture: profileLink,
+      locationId: locationId,
     }));
 
-    handleNext();
+    console.log(formValues);
+    // handleNext();
   }
 
   return (
@@ -145,6 +183,20 @@ export default function AdditionalInfoForm({
                     if (files && files[0]) setFile(files[0]);
                   }}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="locationId"
+          render={({ field }) => (
+            <FormItem className="mt-5">
+              <FormLabel>Zip Code</FormLabel>
+              <FormControl>
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
