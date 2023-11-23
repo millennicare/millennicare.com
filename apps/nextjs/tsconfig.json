@@ -1,7 +1,6 @@
 {
   "extends": "@millennicare/tsconfig/base.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]
     },

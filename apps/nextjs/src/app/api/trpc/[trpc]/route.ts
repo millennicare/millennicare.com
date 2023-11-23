@@ -3,7 +3,6 @@ import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { appRouter, createTRPCContext } from "@millennicare/api";
 import { auth } from "@millennicare/auth";
 
-export const runtime = "edge";
 
 /**
  * Configure basic CORS headers
