@@ -2,8 +2,8 @@ name: push-schema-to-dev
 
 on:
   push:
-    branches: [dev]
-    paths: ["packages/db/schema"]
+    branches: [development]
+    paths: ["packages/db/schema/*"]
 
 jobs:
   deploy-migrations-to-dev:
@@ -11,7 +11,9 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.10.1]
+        node-version: [20.10.0]
+        pnpm-version: [8.10.5]
+
     steps:
       - name: Print event
         run: echo ${{ github.event_name }}
@@ -22,8 +24,10 @@ jobs:
       - name: Create .env file
         run: echo DATABASE_URL=${{ secrets.PSCALE_DEV_DATABASE_URL }} > .env
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
+      - name: Install pnpm ${{ matrix.pnpm-version }}
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ matrix.pnpm-version }}
 
       - name: Push schema changes
         run: pnpm db:push

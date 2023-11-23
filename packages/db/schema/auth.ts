@@ -2,17 +2,21 @@ import type { AdapterAccount } from "@auth/core/adapters";
 import { createId } from "@paralleldrive/cuid2";
 import { relations, sql } from "drizzle-orm";
 import {
+  boolean,
+  datetime,
   index,
   int,
   mysqlEnum,
-  primaryKey,
   text,
   timestamp,
   varchar,
 } from "drizzle-orm/mysql-core";
 
 import { mySqlTable } from "./_table";
+import { addresses } from "./address";
 import { children } from "./child";
+import { forgotPasswordTokens } from "./forgot-password-token";
+import { reviews } from "./review";
 
 const userColumns = {
   // needed for next auth
@@ -26,35 +30,63 @@ const userColumns = {
   }).default(sql`CURRENT_TIMESTAMP(3)`),
   image: varchar("image", { length: 255 }),
   // app specific fields
-  userType: mysqlEnum("userType", ["careseeker", "caregiver", "admin"]),
   firstName: varchar("firstName", { length: 255 }).notNull(),
   lastName: varchar("lastName", { length: 255 }).notNull(),
   password: varchar("password", { length: 255 }).notNull(),
   phoneNumber: varchar("password", { length: 255 }).notNull(),
   biography: varchar("biography", { length: 255 }),
   profilePicture: varchar("profilePicture", { length: 255 }),
+  birthdate: datetime("birthdate", { mode: "date" }).notNull(),
+  userType: mysqlEnum("userType", [
+    "careseeker",
+    "caregiver",
+    "admin",
+  ]).notNull(),
 };
 
 export const users = mySqlTable("user", {
   ...userColumns,
 });
 
+export const userRelations = relations(users, ({ many, one }) => ({
+  accounts: many(accounts),
+  address: many(addresses),
+  forgotPasswordToken: one(forgotPasswordTokens, {
+    fields: [users.id],
+    references: [forgotPasswordTokens.id],
+  }),
+}));
+
 export const careseekers = mySqlTable("careseeker", {
-  ...userColumns,
+  id: varchar("id", { length: 128 })
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  userId: varchar("user_id", { length: 128 }).references(() => users.id),
 });
 
 export const careseekerRelations = relations(careseekers, ({ many }) => ({
   children: many(children),
+  reviews: many(reviews),
 }));
 
-export const usersRelations = relations(users, ({ many }) => ({
-  accounts: many(accounts),
+export const caregivers = mySqlTable("caregiver", {
+  id: varchar("id", { length: 128 })
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  userId: varchar("user_id", { length: 128 }).references(() => users.id),
+  backgroundCheckCompleted: boolean("background_check_completed").default(
+    false,
+  ),
+});
+
+export const caregiverRelations = relations(caregivers, ({ many }) => ({
+  reviews: many(reviews),
 }));
 
 export const accounts = mySqlTable(
   "account",
   {
-    userId: varchar("userId", { length: 255 }).notNull(),
+    userId: varchar("user_id", { length: 255 }).notNull(),
     type: varchar("type", { length: 255 })
       .$type<AdapterAccount["type"]>()
       .notNull(),
@@ -69,13 +101,16 @@ export const accounts = mySqlTable(
     session_state: varchar("session_state", { length: 255 }),
   },
   (account) => ({
-    compoundKey: primaryKey(account.provider, account.providerAccountId),
+    compoundKey: [account.provider, account.providerAccountId],
     userIdIdx: index("userId_idx").on(account.userId),
   }),
 );
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
-  user: one(users, { fields: [accounts.userId], references: [users.id] }),
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
 }));
 
 export const sessions = mySqlTable(
@@ -84,7 +119,7 @@ export const sessions = mySqlTable(
     sessionToken: varchar("sessionToken", { length: 255 })
       .notNull()
       .primaryKey(),
-    userId: varchar("userId", { length: 255 }).notNull(),
+    userId: varchar("user_id", { length: 255 }).notNull(),
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (session) => ({
@@ -93,7 +128,10 @@ export const sessions = mySqlTable(
 );
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
-  user: one(users, { fields: [sessions.userId], references: [users.id] }),
+  user: one(users, {
+    fields: [sessions.userId],
+    references: [users.id],
+  }),
 }));
 
 export const verificationTokens = mySqlTable(
@@ -104,6 +142,6 @@ export const verificationTokens = mySqlTable(
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (vt) => ({
-    compoundKey: primaryKey(vt.identifier, vt.token),
+    compoundKey: [vt.identifier, vt.token],
   }),
 );

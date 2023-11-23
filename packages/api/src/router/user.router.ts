@@ -1,12 +1,16 @@
 import { TRPCError } from "@trpc/server";
 import * as argon from "argon2";
 import * as dotenv from "dotenv";
-// import * as jwt from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 import validator from "validator";
 import * as z from "zod";
 
 import { eq } from "@millennicare/db";
-import { careseekers, users as userSchema } from "@millennicare/db/schema/auth";
+import {
+  careseekers as careseekerSchema,
+  users as userSchema,
+} from "@millennicare/db/schema/auth";
+import { children as childSchema } from "@millennicare/db/schema/child";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
@@ -14,23 +18,19 @@ dotenv.config({
   path: "../../../../.env",
 });
 
-// function generateToken(userId: string) {
-//   if (!process.env.JWT_SECRET) {
-//     throw new Error("JWT_SECRET is not set");
-//   }
+function generateToken(userId: string) {
+  if (!process.env.JWT_SECRET) {
+    throw new Error("JWT_SECRET is not set");
+  }
 
-//   const token = jwt.sign(userId, process.env.JWT_SECRET, { expiresIn: "24h" });
+  const token = jwt.sign(userId, process.env.JWT_SECRET, { expiresIn: "24h" });
 
-//   return token;
-// }
+  return token;
+}
 
 export const userRouter = createTRPCRouter({
   getMe: protectedProcedure.query(async ({ ctx }) => {
     const { db, session } = ctx;
-    // const user = await db
-    //   .select()
-    //   .from(users)
-    //   .where(eq(users.id, session.user.id));
     const user = await db.query.users.findFirst({
       where: eq(userSchema.id, session.user.id),
     });
@@ -47,6 +47,7 @@ export const userRouter = createTRPCRouter({
         birthdate: z.date(),
         profilePicture: z.union([z.string(), z.undefined()]),
         phoneNumber: z.string().refine(validator.isMobilePhone),
+        userType: z.enum(["careseeker", "caregiver", "admin"]),
         // careseeker fields
         children: z.array(
           z.object({
@@ -71,17 +72,34 @@ export const userRouter = createTRPCRouter({
       }
 
       const hashedPassword = await argon.hash(input.password);
-      const values = {
-        ...input,
-        password: hashedPassword,
-      };
+      const { children, ...rest } = input;
 
-      // const newUser = await db.insert(careseekers).values(values);
-      await db.insert(careseekers).values(values);
+      const res = await db.transaction(async (tx) => {
+        // first create user record
+        const user = await tx
+          .insert(userSchema)
+          .values({ ...rest, password: hashedPassword });
+
+        // then careseeker record
+        const careseeker = await tx
+          .insert(careseekerSchema)
+          .values({ userId: user.insertId });
+
+        // create child record
+        const careseekerId = careseeker.insertId;
+        await tx.insert(childSchema).values(
+          children.map((child) => {
+            return { name: child.name, age: child.age, careseekerId };
+          }),
+        );
+
+        return user.insertId;
+      });
+
       // send confirmation email
-      // const token = generateToken(id);
+      const token = generateToken(res);
 
-      return { message: "Sign up successful." };
+      return { message: "Sign up successful.", token };
     }),
   findDuplicateEmail: publicProcedure
     .input(z.object({ email: z.string().email() }))
