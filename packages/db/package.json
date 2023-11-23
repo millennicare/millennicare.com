@@ -9,7 +9,7 @@
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "push": "drizzle-kit push:mysql",
+    "push": "drizzle-kit push:mysql --config=drizzle.config.ts",
     "generate": "drizzle-kit generate:mysql",
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit"
