@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
     types: [closed]
-    paths: ["prisma/schema.prisma"]
+    paths: ["packages/db/schema"]
 
 jobs:
   review-deploy-request:

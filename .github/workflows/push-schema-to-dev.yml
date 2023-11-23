@@ -3,7 +3,7 @@ name: push-schema-to-dev
 on:
   push:
     branches: [dev]
-    paths: ["prisma/schema.prisma"]
+    paths: ["packages/db/schema"]
 
 jobs:
   deploy-migrations-to-dev:
@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.8.1]
+        node-version: [20.10.1]
     steps:
       - name: Print event
         run: echo ${{ github.event_name }}
@@ -22,10 +22,8 @@ jobs:
       - name: Create .env file
         run: echo DATABASE_URL=${{ secrets.PSCALE_DEV_DATABASE_URL }} > .env
 
-      - name: Install npm ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          version: ${{ matrix.node-version }}
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.4.0
 
       - name: Push schema changes
-        run: npx prisma db push
+        run: pnpm db:push
