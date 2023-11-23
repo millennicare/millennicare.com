@@ -7,6 +7,7 @@ const config = {
   ],
   rules: {
     "react/prop-types": "off",
+    "jsx-a11y/heading-has-content": "off",
   },
   globals: {
     React: "writable",
