@@ -8,6 +8,8 @@ export const env = createEnv({
       .optional()
       .transform((v) => (v ? `https://${v}` : undefined)),
     PORT: z.coerce.number().default(3000),
+    AUTH_SECRET: z.string(),
+    AUTH_URL: z.string(),
   },
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app isn't
@@ -21,6 +23,9 @@ export const env = createEnv({
     AWS_BUCKET: z.string(),
     AWS_LOCATION_API_KEY: z.string(),
     AWS_LOCATION_SUGGESTION_KEY: z.string(),
+    STRIPE_PUBLISHABLE_KEY: z.string(),
+    STRIPE_SECRET_KEY: z.string(),
+    JWT_SECRET: z.string(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -42,6 +47,11 @@ export const env = createEnv({
     AWS_BUCKET: process.env.AWS_BUCKET,
     AWS_LOCATION_API_KEY: process.env.AWS_LOCATION_API_KEY,
     AWS_LOCATION_SUGGESTION_KEY: process.env.AWS_LOCATION_SUGGESTION_KEY,
+    JWT_SECRET: process.env.JWT_SECRET,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
+    AUTH_URL: process.env.AUTH_URL,
+    AUTH_SECRET: process.env.AUTH_SECRET,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   skipValidation:
