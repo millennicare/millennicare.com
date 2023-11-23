@@ -198,49 +198,49 @@ importers:
         version: link:../../packages/db
       '@radix-ui/react-dialog':
         specifier: ^1.0.5
-        version: 1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-dropdown-menu':
         specifier: ^2.0.6
-        version: 2.0.6(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 2.0.6(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-icons':
         specifier: ^1.3.0
-        version: 1.3.0(react@apps+nextjs+@vercel+analytics+react)
+        version: 1.3.0(react@18.2.0)
       '@radix-ui/react-label':
         specifier: ^2.0.2
-        version: 2.0.2(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 2.0.2(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-popover':
         specifier: ^1.0.7
-        version: 1.0.7(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 1.0.7(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-progress':
         specifier: ^1.0.3
-        version: 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-separator':
         specifier: ^1.0.3
-        version: 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-toast':
         specifier: ^1.1.5
-        version: 1.1.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 1.1.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@t3-oss/env-nextjs':
         specifier: ^0.7.1
         version: 0.7.1(typescript@5.3.2)(zod@3.22.4)
       '@tanstack/react-query':
         specifier: ^5.8.1
-        version: 5.8.4(react-dom@18.2.0)(react-native@0.72.7)(react@apps+nextjs+@vercel+analytics+react)
+        version: 5.8.4(react-dom@18.2.0)(react-native@0.72.7)(react@18.2.0)
       '@tanstack/react-query-devtools':
         specifier: ^5.8.1
-        version: 5.8.4(@tanstack/react-query@5.8.4)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 5.8.4(@tanstack/react-query@5.8.4)(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-query-next-experimental':
         specifier: 5.8.1
-        version: 5.8.1(@tanstack/react-query@5.8.4)(next@14.0.3)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 5.8.1(@tanstack/react-query@5.8.4)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/client':
         specifier: next
         version: 11.0.0-alpha-next-2023-11-21-11-13-12.106(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)
       '@trpc/next':
         specifier: next
-        version: 11.0.0-alpha-next-2023-11-21-11-13-12.106(@tanstack/react-query@5.8.4)(@trpc/client@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/react-query@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)(next@14.0.3)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 11.0.0-alpha-next-2023-11-21-11-13-12.106(@tanstack/react-query@5.8.4)(@trpc/client@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/react-query@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/react-query':
         specifier: next
-        version: 11.0.0-alpha-next-2023-11-21-11-13-12.106(@tanstack/react-query@5.8.4)(@trpc/client@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 11.0.0-alpha-next-2023-11-21-11-13-12.106(@tanstack/react-query@5.8.4)(@trpc/client@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
         specifier: next
         version: 11.0.0-alpha-next-2023-11-21-11-13-12.106
@@ -261,19 +261,19 @@ importers:
         version: 2.29.4
       next:
         specifier: ^14.0.2
-        version: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
       react:
-        specifier: link:@vercel/analytics/react
-        version: link:@vercel/analytics/react
+        specifier: 18.2.0
+        version: 18.2.0
       react-day-picker:
         specifier: ^8.9.1
-        version: 8.9.1(date-fns@2.30.0)(react@apps+nextjs+@vercel+analytics+react)
+        version: 8.9.1(date-fns@2.30.0)(react@18.2.0)
       react-dom:
         specifier: 18.2.0
-        version: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+        version: 18.2.0(react@18.2.0)
       react-hook-form:
         specifier: ^7.48.2
-        version: 7.48.2(react@apps+nextjs+@vercel+analytics+react)
+        version: 7.48.2(react@18.2.0)
       superjson:
         specifier: 2.2.0
         version: 2.2.0
@@ -401,7 +401,7 @@ importers:
         version: 0.7.1(typescript@5.3.2)(zod@3.22.4)
       next:
         specifier: ^14.0.2
-        version: 14.0.3(react-dom@18.2.0)(react@18.2.0)
+        version: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 5.0.0-beta.3
         version: 5.0.0-beta.3(next@14.0.3)(react@18.2.0)
@@ -4429,15 +4429,15 @@ packages:
       '@floating-ui/utils': 0.1.6
     dev: false
 
-  /@floating-ui/react-dom@2.0.4(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@floating-ui/react-dom@2.0.4(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-CF8k2rgKeh/49UrnIBs4BdxPUV6vize/Db1d/YbCLyp9GiVZ0BEwf5AiDSxJRCr6yOkGqTFHtmrULxkEfYZ7dQ==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
       '@floating-ui/dom': 1.5.3
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@floating-ui/utils@0.1.6:
@@ -4471,7 +4471,7 @@ packages:
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.48.2(react@apps+nextjs+@vercel+analytics+react)
+      react-hook-form: 7.48.2(react@18.2.0)
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
@@ -4888,6 +4888,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -4958,7 +4959,7 @@ packages:
       '@babel/runtime': 7.23.4
     dev: false
 
-  /@radix-ui/react-arrow@1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-arrow@1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-wSP+pHsB/jQRaL6voubsQ/ZlrGBHHrOjmBnr19hxYgtS0WvAFwZhK2WP/YY5yF9uKECCEEDGxuLxq1NBK51wFA==}
     peerDependencies:
       '@types/react': '*'
@@ -4972,14 +4973,14 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-collection@1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-collection@1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-3SzW+0PW7yBBoQlT8wNcGtaxaD0XSu0uLUFgrtHY08Acx05TaHaOmVLR73c0j/cqpDy53KBMO7s0dx2wmOIDIA==}
     peerDependencies:
       '@types/react': '*'
@@ -4993,14 +4994,14 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@radix-ui/react-compose-refs@1.0.0(react@18.2.0):
@@ -5012,7 +5013,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@radix-ui/react-compose-refs@1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-compose-refs@1.0.1(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-fDSBgd44FKHa1FRMU59qBMPFcl2PZE+2nmqunj+BWFyYYjnhIDWL2ItDs3rrbJDQOtzt5nIebLCQc4QRfz6LJw==}
     peerDependencies:
       '@types/react': '*'
@@ -5023,10 +5024,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-context@1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-context@1.0.1(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-ebbrdFoYTcuZ0v4wG5tedGnp9tzcV8awzsxYph7gXUyvnNLuTIcCk1q17JEbnVhXAKG9oX3KtchwiMIAYp9NLg==}
     peerDependencies:
       '@types/react': '*'
@@ -5037,10 +5038,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-dialog@1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-dialog@1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-GjWJX/AUpB703eEBanuBnIWdIXg6NvJFCXcNlSZk4xdszCdhrJgBoUd1cGk67vFO+WdA2pfI/plOpqz/5GUP6Q==}
     peerDependencies:
       '@types/react': '*'
@@ -5055,26 +5056,26 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@radix-ui/primitive': 1.0.1
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-dismissable-layer': 1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-focus-guards': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-focus-scope': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-id': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-portal': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-dismissable-layer': 1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-focus-guards': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-focus-scope': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-id': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-portal': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
       aria-hidden: 1.2.3
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
-      react-remove-scroll: 2.5.5(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-remove-scroll: 2.5.5(@types/react@18.2.38)(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-direction@1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-direction@1.0.1(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-RXcvnXgyvYvBEOhCBuddKecVkoMiI10Jcm5cTI7abJRAHYfFxeu+FBQs/DvdxSYucxR5mna0dNsL6QFlds5TMA==}
     peerDependencies:
       '@types/react': '*'
@@ -5085,10 +5086,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-dismissable-layer@1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-dismissable-layer@1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-aJeDjQhywg9LBu2t/At58hCvr7pEm0o2Ke1x33B+MhjNmmZ17sy4KImo0KPLgsnc/zN7GPdce8Cnn0SWvwZO7g==}
     peerDependencies:
       '@types/react': '*'
@@ -5103,17 +5104,17 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@radix-ui/primitive': 1.0.1
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-escape-keydown': 1.0.3(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-use-escape-keydown': 1.0.3(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-dropdown-menu@2.0.6(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-dropdown-menu@2.0.6(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-i6TuFOoWmLWq+M/eCLGd/bQ2HfAX1RJgvrBQ6AQLmzfvsLdefxbWu8G9zczcPFfcSPehz9GcpF6K9QYreFV8hA==}
     peerDependencies:
       '@types/react': '*'
@@ -5128,19 +5129,19 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@radix-ui/primitive': 1.0.1
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-id': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-menu': 2.0.6(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-id': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-menu': 2.0.6(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-focus-guards@1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-focus-guards@1.0.1(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-Rect2dWbQ8waGzhMavsIbmSVCgYxkXLxxR3ZvCX79JOglzdEy4JXMb98lq4hPxUbLr77nP0UOGf4rcMU+s1pUA==}
     peerDependencies:
       '@types/react': '*'
@@ -5151,10 +5152,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-focus-scope@1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-focus-scope@1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-sL04Mgvf+FmyvZeYfNu1EPAaaxD+aw7cYeIB9L9Fvq8+urhltTRaEo5ysKOpHuKPclsZcSUMKlN05x4u+CINpA==}
     peerDependencies:
       '@types/react': '*'
@@ -5168,24 +5169,24 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-icons@1.3.0(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-icons@1.3.0(react@18.2.0):
     resolution: {integrity: sha512-jQxj/0LKgp+j9BiTXz3O3sgs26RNet2iLWmsPyRz2SIcR4q/4SbazXfnYwbAr+vLYKSfc7qxzyGQA1HLlYiuNw==}
     peerDependencies:
       react: ^16.x || ^17.x || ^18.x
     dependencies:
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-id@1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-id@1.0.1(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-tI7sT/kqYp8p96yGWY1OAnLHrqDgzHefRBKQ2YAkBS5ja7QLcZ9Z/uY7bEjPUatf8RomoXM8/1sMj1IJaE5UzQ==}
     peerDependencies:
       '@types/react': '*'
@@ -5195,12 +5196,12 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-label@2.0.2(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-label@2.0.2(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-N5ehvlM7qoTLx7nWPodsPYPgMzA5WM8zZChQg8nyFJKnDO5WHdba1vv5/H6IO5LtJMfD2Q3wh1qHFGNtK0w3bQ==}
     peerDependencies:
       '@types/react': '*'
@@ -5214,14 +5215,14 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-menu@2.0.6(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-menu@2.0.6(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-BVkFLS+bUC8HcImkRKPSiVumA1VPOOEC5WBMiT+QAVsPzW1FJzI9KnqgGxVDPBcql5xXrHkD3JOVoXWEXD8SYA==}
     peerDependencies:
       '@types/react': '*'
@@ -5236,30 +5237,30 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@radix-ui/primitive': 1.0.1
-      '@radix-ui/react-collection': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-direction': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-dismissable-layer': 1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-focus-guards': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-focus-scope': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-id': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-popper': 1.1.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-portal': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-roving-focus': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-collection': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-direction': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-dismissable-layer': 1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-focus-guards': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-focus-scope': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-id': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-popper': 1.1.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-portal': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-roving-focus': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
       aria-hidden: 1.2.3
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
-      react-remove-scroll: 2.5.5(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-remove-scroll: 2.5.5(@types/react@18.2.38)(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-popover@1.0.7(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-popover@1.0.7(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-shtvVnlsxT6faMnK/a7n0wptwBD23xc1Z5mdrtKLwVEfsEMXodS0r5s0/g5P0hX//EKYZS2sxUjqfzlg52ZSnQ==}
     peerDependencies:
       '@types/react': '*'
@@ -5274,27 +5275,27 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@radix-ui/primitive': 1.0.1
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-dismissable-layer': 1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-focus-guards': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-focus-scope': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-id': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-popper': 1.1.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-portal': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-dismissable-layer': 1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-focus-guards': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-focus-scope': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-id': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-popper': 1.1.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-portal': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
       aria-hidden: 1.2.3
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
-      react-remove-scroll: 2.5.5(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-remove-scroll: 2.5.5(@types/react@18.2.38)(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-popper@1.1.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-popper@1.1.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-cKpopj/5RHZWjrbF2846jBNacjQVwkP068DfmgrNJXpvVWrOvlAmE9xSiy5OqeE+Gi8D9fP+oDhUnPqNMY8/5w==}
     peerDependencies:
       '@types/react': '*'
@@ -5308,23 +5309,23 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@floating-ui/react-dom': 2.0.4(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-arrow': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-rect': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-size': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@floating-ui/react-dom': 2.0.4(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-arrow': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-use-rect': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-use-size': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@radix-ui/rect': 1.0.1
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-portal@1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-portal@1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Qki+C/EuGUVCQTOTD5vzJzJuMUlewbzuKyUy+/iHM2uwGiru9gZeBJtHAPKAEkB5KWGi9mP/CHKcY0wt1aW45Q==}
     peerDependencies:
       '@types/react': '*'
@@ -5338,14 +5339,14 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-presence@1.0.1(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-presence@1.0.1(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-UXLW4UAbIY5ZjcvzjfRFo5gxva8QirC9hF7wRE4U5gz+TP0DbRk+//qyuAQ1McDxBt1xNMBTaciFGvEmJvAZCg==}
     peerDependencies:
       '@types/react': '*'
@@ -5359,15 +5360,15 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-primitive@1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-primitive@1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-yi58uVyoAcK/Nq1inRY56ZSjKypBNKTa/1mcL8qdl6oJeEaDbOldlzrGn7P6Q3Id5d+SYNGc5AJgc4vGhjs5+g==}
     peerDependencies:
       '@types/react': '*'
@@ -5381,14 +5382,14 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-progress@1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-progress@1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-5G6Om/tYSxjSeEdrb1VfKkfZfn/1IlPWd731h2RfPuSbIfNUgfqAwbKfJCg/PP6nuUCTrYzalwHSpSinoWoCag==}
     peerDependencies:
       '@types/react': '*'
@@ -5402,15 +5403,15 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-roving-focus@1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-roving-focus@1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-2mUg5Mgcu001VkGy+FfzZyzbmuUWzgWkj3rvv4yu+mLw03+mTzbxZHvfcGyFp2b8EkQeMkpRQ5FiA2Vr2O6TeQ==}
     peerDependencies:
       '@types/react': '*'
@@ -5425,21 +5426,21 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@radix-ui/primitive': 1.0.1
-      '@radix-ui/react-collection': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-direction': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-id': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-collection': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-direction': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-id': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-separator@1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-separator@1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-itYmTy/kokS21aiV5+Z56MZB54KrhPgn6eHDKkFeOLR34HMN2s8PaN47qZZAGnvupcjxHaFZnW4pQEh0BvvVuw==}
     peerDependencies:
       '@types/react': '*'
@@ -5453,11 +5454,11 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@radix-ui/react-slot@1.0.1(react@18.2.0):
@@ -5470,7 +5471,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@radix-ui/react-slot@1.0.2(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-slot@1.0.2(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-YeTpuq4deV+6DusvVUW4ivBgnkHwECUu0BiN43L5UCDFgdhsRUWAghhTF5MbvNTPzmiFOx90asDSUjWuCNapwg==}
     peerDependencies:
       '@types/react': '*'
@@ -5480,12 +5481,12 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-toast@1.1.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-toast@1.1.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-fRLn227WHIBRSzuRzGJ8W+5YALxofH23y0MlPLddaIpLpCDqdE0NZlS2NRQDRiptfxDeeCjgFIpexB1/zkxDlw==}
     peerDependencies:
       '@types/react': '*'
@@ -5500,24 +5501,24 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@radix-ui/primitive': 1.0.1
-      '@radix-ui/react-collection': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-dismissable-layer': 1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-portal': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      '@radix-ui/react-visually-hidden': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-collection': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-dismissable-layer': 1.0.5(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-portal': 1.0.4(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.38)(react@18.2.0)
+      '@radix-ui/react-visually-hidden': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@radix-ui/react-use-callback-ref@1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-use-callback-ref@1.0.1(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-D94LjX4Sp0xJFVaoQOd3OO9k7tpBYNOXdVhkltUbGv2Qb9OXdrg/CpsjlZv7ia14Sylv398LswWBVVu5nqKzAQ==}
     peerDependencies:
       '@types/react': '*'
@@ -5528,10 +5529,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-use-controllable-state@1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-use-controllable-state@1.0.1(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-Svl5GY5FQeN758fWKrjM6Qb7asvXeiZltlT4U2gVfl8Gx5UAv2sMR0LWo8yhsIZh2oQ0eFdZ59aoOOMV7b47VA==}
     peerDependencies:
       '@types/react': '*'
@@ -5541,12 +5542,12 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-use-escape-keydown@1.0.3(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-use-escape-keydown@1.0.3(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-vyL82j40hcFicA+M4Ex7hVkB9vHgSse1ZWomAqV2Je3RleKGO5iM8KMOEtfoSB0PnIelMd2lATjTGMYqN5ylTg==}
     peerDependencies:
       '@types/react': '*'
@@ -5556,12 +5557,12 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-use-layout-effect@1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-use-layout-effect@1.0.1(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-v/5RegiJWYdoCvMnITBkNNx6bCj20fiaJnWtRkU18yITptraXjffz5Qbn05uOiQnOvi+dbkznkoaMltz1GnszQ==}
     peerDependencies:
       '@types/react': '*'
@@ -5572,10 +5573,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.4
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-use-rect@1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-use-rect@1.0.1(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-Cq5DLuSiuYVKNU8orzJMbl15TXilTnJKUCltMVQg53BQOF1/C5toAaGrowkgksdBQ9H+SRL23g0HDmg9tvmxXw==}
     peerDependencies:
       '@types/react': '*'
@@ -5587,10 +5588,10 @@ packages:
       '@babel/runtime': 7.23.4
       '@radix-ui/rect': 1.0.1
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-use-size@1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-use-size@1.0.1(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-ibay+VqrgcaI6veAojjofPATwledXiSmX+C0KrBk/xgpX9rBzPV3OsfwlhQdUOFbh+LKQorLYT+xTXW9V8yd0g==}
     peerDependencies:
       '@types/react': '*'
@@ -5600,12 +5601,12 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-use-layout-effect': 1.0.1(@types/react@18.2.38)(react@18.2.0)
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /@radix-ui/react-visually-hidden@1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@radix-ui/react-visually-hidden@1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-D4w41yN5YRKtu464TLnByKzMDG/JlMPHtfZgQAu9v6mNakUqGUI9vUrfQKz8NK41VMm/xbZbh76NUTVtIYqOMA==}
     peerDependencies:
       '@types/react': '*'
@@ -5619,11 +5620,11 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.4
-      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.17)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.38
       '@types/react-dom': 18.2.17
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@radix-ui/rect@1.0.1:
@@ -6720,7 +6721,7 @@ packages:
     resolution: {integrity: sha512-F1dRbITNt9tMUoM9WCH8WQ2c54116hv52m/PKK8ZiN/pO2wGVzTZtKuLanF8pFpwmNchjIixcMw/a57HY5ivcw==}
     dev: false
 
-  /@tanstack/react-query-devtools@5.8.4(@tanstack/react-query@5.8.4)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@tanstack/react-query-devtools@5.8.4(@tanstack/react-query@5.8.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-mffs51FJqXU/5rwhbwv393DccL6et7uK2pRLwOcmMrWbPyW8vpxr9oidaghHX4cdVeP/7u5owW9yMpBhBAJfcQ==}
     peerDependencies:
       '@tanstack/react-query': ^5.8.4
@@ -6728,12 +6729,12 @@ packages:
       react-dom: ^18.0.0
     dependencies:
       '@tanstack/query-devtools': 5.8.4
-      '@tanstack/react-query': 5.8.4(react-dom@18.2.0)(react-native@0.72.7)(react@apps+nextjs+@vercel+analytics+react)
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      '@tanstack/react-query': 5.8.4(react-dom@18.2.0)(react-native@0.72.7)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@tanstack/react-query-next-experimental@5.8.1(@tanstack/react-query@5.8.4)(next@14.0.3)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@tanstack/react-query-next-experimental@5.8.1(@tanstack/react-query@5.8.4)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-qk1VnkGl17Ypmj1ydyWSVDipoQV4UK+8HXsllIVLus+eLEmg0kzpV4xNzuzKKIAtto5V+0S6BjFy1o+q0BWe4w==}
     peerDependencies:
       '@tanstack/react-query': ^5.8.1
@@ -6741,10 +6742,10 @@ packages:
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
-      '@tanstack/react-query': 5.8.4(react-dom@18.2.0)(react-native@0.72.7)(react@apps+nextjs+@vercel+analytics+react)
-      next: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
+      '@tanstack/react-query': 5.8.4(react-dom@18.2.0)(react-native@0.72.7)(react@18.2.0)
+      next: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@tanstack/react-query@5.8.4(react-dom@18.2.0)(react-native@0.72.7)(react@18.2.0):
@@ -6765,24 +6766,6 @@ packages:
       react-native: 0.72.7(@babel/core@7.23.3)(@babel/preset-env@7.23.3)(react@18.2.0)
     dev: false
 
-  /@tanstack/react-query@5.8.4(react-dom@18.2.0)(react-native@0.72.7)(react@apps+nextjs+@vercel+analytics+react):
-    resolution: {integrity: sha512-CD+AkXzg8J72JrE6ocmuBEJfGzEzu/bzkD6sFXFDDB5yji9N20JofXZlN6n0+CaPJuIi+e4YLCbGsyPFKkfNQA==}
-    peerDependencies:
-      react: ^18.0.0
-      react-dom: ^18.0.0
-      react-native: '*'
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-    dependencies:
-      '@tanstack/query-core': 5.8.3
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
-      react-native: 0.72.7(@babel/core@7.23.3)(@babel/preset-env@7.23.3)(react@apps+nextjs+@vercel+analytics+react)
-    dev: false
-
   /@tootallnate/quickjs-emscripten@0.23.0:
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
     dev: true
@@ -6795,7 +6778,7 @@ packages:
       '@trpc/server': 11.0.0-alpha-next-2023-11-21-11-13-12.106
     dev: false
 
-  /@trpc/next@11.0.0-alpha-next-2023-11-21-11-13-12.106(@tanstack/react-query@5.8.4)(@trpc/client@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/react-query@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)(next@14.0.3)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
+  /@trpc/next@11.0.0-alpha-next-2023-11-21-11-13-12.106(@tanstack/react-query@5.8.4)(@trpc/client@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/react-query@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)(next@14.0.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-RcXjvtSYqL241B45ELp1r/k4sFMn2EFxoDL7eT6kC+fIh+gSUNZItDD78Xx/sOMB6KqhAbAjnuYeWP+V8TtBzA==}
     peerDependencies:
       '@tanstack/react-query': ^5.0.0
@@ -6806,14 +6789,14 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@tanstack/react-query': 5.8.4(react-dom@18.2.0)(react-native@0.72.7)(react@apps+nextjs+@vercel+analytics+react)
+      '@tanstack/react-query': 5.8.4(react-dom@18.2.0)(react-native@0.72.7)(react@18.2.0)
       '@trpc/client': 11.0.0-alpha-next-2023-11-21-11-13-12.106(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)
-      '@trpc/react-query': 11.0.0-alpha-next-2023-11-21-11-13-12.106(@tanstack/react-query@5.8.4)(@trpc/client@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
+      '@trpc/react-query': 11.0.0-alpha-next-2023-11-21-11-13-12.106(@tanstack/react-query@5.8.4)(@trpc/client@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server': 11.0.0-alpha-next-2023-11-21-11-13-12.106
-      next: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react)
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
-      react-ssr-prepass: 1.5.0(react@apps+nextjs+@vercel+analytics+react)
+      next: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-ssr-prepass: 1.5.0(react@18.2.0)
     dev: false
 
   /@trpc/react-query@11.0.0-alpha-next-2023-11-21-11-13-12.106(@tanstack/react-query@5.8.4)(@trpc/client@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)(react-dom@18.2.0)(react@18.2.0):
@@ -6830,22 +6813,6 @@ packages:
       '@trpc/server': 11.0.0-alpha-next-2023-11-21-11-13-12.106
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /@trpc/react-query@11.0.0-alpha-next-2023-11-21-11-13-12.106(@tanstack/react-query@5.8.4)(@trpc/client@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
-    resolution: {integrity: sha512-5oJmgYykcgFwRYEWTm+dzrbK90qxMcT0jvsNyfwJF+Bv47dsZ+MhrvHYhLPzEbiFF594lsgrarAE2ljYj8Im2A==}
-    peerDependencies:
-      '@tanstack/react-query': ^5.0.0
-      '@trpc/client': 11.0.0-alpha-next-2023-11-21-11-13-12.106+fd86afd65
-      '@trpc/server': 11.0.0-alpha-next-2023-11-21-11-13-12.106+fd86afd65
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@tanstack/react-query': 5.8.4(react-dom@18.2.0)(react-native@0.72.7)(react@apps+nextjs+@vercel+analytics+react)
-      '@trpc/client': 11.0.0-alpha-next-2023-11-21-11-13-12.106(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)
-      '@trpc/server': 11.0.0-alpha-next-2023-11-21-11-13-12.106
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
     dev: false
 
   /@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106:
@@ -12518,6 +12485,10 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
+    dev: true
+
   /nativewind@4.0.13(@babel/core@7.23.3)(react-native-reanimated@3.3.0)(react-native-safe-area-context@4.6.3)(react-native@0.72.7)(react@18.2.0)(tailwindcss@3.3.5):
     resolution: {integrity: sha512-iLbilVaeCabUcuNaRquSD76TC0LggZKPIeUlG5q3P5wNvMYuET6kn4OKZDaWxC5kpIOO323HYJHCj8DCg3E1Pw==}
     engines: {node: '>=16'}
@@ -12574,7 +12545,7 @@ packages:
         optional: true
     dependencies:
       '@auth/core': 0.18.0
-      next: 14.0.3(react-dom@18.2.0)(react@18.2.0)
+      next: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: false
 
@@ -12582,46 +12553,7 @@ packages:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
     dev: true
 
-  /next@14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@apps+nextjs+@vercel+analytics+react):
-    resolution: {integrity: sha512-AbYdRNfImBr3XGtvnwOxq8ekVCwbFTv/UJoLwmaX89nk9i051AEY4/HAWzU0YpaTDw8IofUpmuIlvzWF13jxIw==}
-    engines: {node: '>=18.17.0'}
-    hasBin: true
-    peerDependencies:
-      '@opentelemetry/api': ^1.1.0
-      react: ^18.2.0
-      react-dom: ^18.2.0
-      sass: ^1.3.0
-    peerDependenciesMeta:
-      '@opentelemetry/api':
-        optional: true
-      sass:
-        optional: true
-    dependencies:
-      '@next/env': 14.0.3
-      '@swc/helpers': 0.5.2
-      busboy: 1.6.0
-      caniuse-lite: 1.0.30001564
-      postcss: 8.4.31
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-dom: 18.2.0(react@apps+nextjs+@vercel+analytics+react)
-      styled-jsx: 5.1.1(@babel/core@7.23.3)(react@apps+nextjs+@vercel+analytics+react)
-      watchpack: 2.4.0
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 14.0.3
-      '@next/swc-darwin-x64': 14.0.3
-      '@next/swc-linux-arm64-gnu': 14.0.3
-      '@next/swc-linux-arm64-musl': 14.0.3
-      '@next/swc-linux-x64-gnu': 14.0.3
-      '@next/swc-linux-x64-musl': 14.0.3
-      '@next/swc-win32-arm64-msvc': 14.0.3
-      '@next/swc-win32-ia32-msvc': 14.0.3
-      '@next/swc-win32-x64-msvc': 14.0.3
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-    dev: false
-
-  /next@14.0.3(react-dom@18.2.0)(react@18.2.0):
+  /next@14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-AbYdRNfImBr3XGtvnwOxq8ekVCwbFTv/UJoLwmaX89nk9i051AEY4/HAWzU0YpaTDw8IofUpmuIlvzWF13jxIw==}
     engines: {node: '>=18.17.0'}
     hasBin: true
@@ -12643,7 +12575,7 @@ packages:
       postcss: 8.4.31
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      styled-jsx: 5.1.1(react@18.2.0)
+      styled-jsx: 5.1.1(@babel/core@7.23.3)(react@18.2.0)
       watchpack: 2.4.0
     optionalDependencies:
       '@next/swc-darwin-arm64': 14.0.3
@@ -13692,14 +13624,14 @@ packages:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
 
-  /react-day-picker@8.9.1(date-fns@2.30.0)(react@apps+nextjs+@vercel+analytics+react):
+  /react-day-picker@8.9.1(date-fns@2.30.0)(react@18.2.0):
     resolution: {integrity: sha512-W0SPApKIsYq+XCtfGeMYDoU0KbsG3wfkYtlw8l+vZp6KoBXGOlhzBUp4tNx1XiwiOZwhfdGOlj7NGSCKGSlg5Q==}
     peerDependencies:
       date-fns: ^2.28.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       date-fns: 2.30.0
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
   /react-devtools-core@4.28.5:
@@ -13719,16 +13651,6 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       react: 18.2.0
-      scheduler: 0.23.0
-    dev: false
-
-  /react-dom@18.2.0(react@apps+nextjs+@vercel+analytics+react):
-    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
-    peerDependencies:
-      react: ^18.2.0
-    dependencies:
-      loose-envify: 1.4.0
-      react: link:apps/nextjs/@vercel/analytics/react
       scheduler: 0.23.0
     dev: false
 
@@ -13760,13 +13682,13 @@ packages:
       shallowequal: 1.1.0
     dev: false
 
-  /react-hook-form@7.48.2(react@apps+nextjs+@vercel+analytics+react):
+  /react-hook-form@7.48.2(react@18.2.0):
     resolution: {integrity: sha512-H0T2InFQb1hX7qKtDIZmvpU1Xfn/bdahWBN1fH19gSe4bBEqTfmlr7H3XWTaVtiK4/tpPaI1F3355GPMZYge+A==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
     dependencies:
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
   /react-is@16.13.1:
@@ -13833,7 +13755,7 @@ packages:
       react-native: '>=0.56'
     dependencies:
       fast-base64-decode: 1.0.0
-      react-native: 0.72.7(@babel/core@7.23.3)(@babel/preset-env@7.23.3)(react@apps+nextjs+@vercel+analytics+react)
+      react-native: 0.72.7(@babel/core@7.23.3)(@babel/preset-env@7.23.3)(react@18.2.0)
     dev: false
 
   /react-native-reanimated@3.3.0(@babel/core@7.23.3)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.72.7)(react@18.2.0):
@@ -13889,7 +13811,7 @@ packages:
     peerDependencies:
       react-native: '*'
     dependencies:
-      react-native: 0.72.7(@babel/core@7.23.3)(@babel/preset-env@7.23.3)(react@apps+nextjs+@vercel+analytics+react)
+      react-native: 0.72.7(@babel/core@7.23.3)(@babel/preset-env@7.23.3)(react@18.2.0)
       whatwg-url-without-unicode: 8.0.0-3
     dev: false
 
@@ -13946,65 +13868,12 @@ packages:
       - utf-8-validate
     dev: false
 
-  /react-native@0.72.7(@babel/core@7.23.3)(@babel/preset-env@7.23.3)(react@apps+nextjs+@vercel+analytics+react):
-    resolution: {integrity: sha512-dqVFojOO9rOvyFbbM3/v9/GJR355OSuBhEY4NQlMIRc2w0Xch5MT/2uPoq3+OvJ+5h7a8LFAco3fucSffG0FbA==}
-    engines: {node: '>=16'}
-    hasBin: true
-    peerDependencies:
-      react: 18.2.0
-    dependencies:
-      '@jest/create-cache-key-function': 29.7.0
-      '@react-native-community/cli': 11.3.10(@babel/core@7.23.3)
-      '@react-native-community/cli-platform-android': 11.3.10
-      '@react-native-community/cli-platform-ios': 11.3.10
-      '@react-native/assets-registry': 0.72.0
-      '@react-native/codegen': 0.72.7(@babel/preset-env@7.23.3)
-      '@react-native/gradle-plugin': 0.72.11
-      '@react-native/js-polyfills': 0.72.1
-      '@react-native/normalize-colors': 0.72.0
-      '@react-native/virtualized-lists': 0.72.8(react-native@0.72.7)
-      abort-controller: 3.0.0
-      anser: 1.4.10
-      base64-js: 1.5.1
-      deprecated-react-native-prop-types: 4.2.3
-      event-target-shim: 5.0.1
-      flow-enums-runtime: 0.0.5
-      invariant: 2.2.4
-      jest-environment-node: 29.7.0
-      jsc-android: 250231.0.0
-      memoize-one: 5.2.1
-      metro-runtime: 0.76.8
-      metro-source-map: 0.76.8
-      mkdirp: 0.5.6
-      nullthrows: 1.1.1
-      pretty-format: 26.6.2
-      promise: 8.3.0
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-devtools-core: 4.28.5
-      react-refresh: 0.4.3
-      react-shallow-renderer: 16.15.0(react@apps+nextjs+@vercel+analytics+react)
-      regenerator-runtime: 0.13.11
-      scheduler: 0.24.0-canary-efb381bbf-20230505
-      stacktrace-parser: 0.1.10
-      use-sync-external-store: 1.2.0(react@apps+nextjs+@vercel+analytics+react)
-      whatwg-fetch: 3.6.19
-      ws: 6.2.2
-      yargs: 17.7.2
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@babel/preset-env'
-      - bufferutil
-      - encoding
-      - supports-color
-      - utf-8-validate
-    dev: false
-
   /react-refresh@0.4.3:
     resolution: {integrity: sha512-Hwln1VNuGl/6bVwnd0Xdn1e84gT/8T9aYNL+HAKDArLCS7LWjwr7StE30IEYbIkx0Vi3vs+coQxe+SQDbGbbpA==}
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /react-remove-scroll-bar@2.3.4(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /react-remove-scroll-bar@2.3.4(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-63C4YQBUt0m6ALadE9XV56hV8BgJWDmmTPY758iIJjfQKt2nYwoUrPk0LXRXcB/yIj82T1/Ixfdpdk68LwIB0A==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -14015,12 +13884,12 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-style-singleton: 2.2.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-style-singleton: 2.2.1(@types/react@18.2.38)(react@18.2.0)
       tslib: 2.6.2
     dev: false
 
-  /react-remove-scroll@2.5.5(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /react-remove-scroll@2.5.5(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-ImKhrzJJsyXJfBZ4bzu8Bwpka14c/fQt0k+cyFp/PBhTfyDnU5hjOtM4AG/0AMyy8oKzOTR0lDgJIM7pYXI0kw==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -14031,12 +13900,12 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-remove-scroll-bar: 2.3.4(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      react-style-singleton: 2.2.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      react: 18.2.0
+      react-remove-scroll-bar: 2.3.4(@types/react@18.2.38)(react@18.2.0)
+      react-style-singleton: 2.2.1(@types/react@18.2.38)(react@18.2.0)
       tslib: 2.6.2
-      use-callback-ref: 1.3.0(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
-      use-sidecar: 1.1.2(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react)
+      use-callback-ref: 1.3.0(@types/react@18.2.38)(react@18.2.0)
+      use-sidecar: 1.1.2(@types/react@18.2.38)(react@18.2.0)
     dev: false
 
   /react-shallow-renderer@16.15.0(react@18.2.0):
@@ -14049,25 +13918,15 @@ packages:
       react-is: 18.2.0
     dev: false
 
-  /react-shallow-renderer@16.15.0(react@apps+nextjs+@vercel+analytics+react):
-    resolution: {integrity: sha512-oScf2FqQ9LFVQgA73vr86xl2NaOIX73rh+YFqcOp68CWj56tSfgtGKrEbyhCj0rSijyG9M1CYprTh39fBi5hzA==}
-    peerDependencies:
-      react: ^16.0.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      object-assign: 4.1.1
-      react: link:apps/nextjs/@vercel/analytics/react
-      react-is: 18.2.0
-    dev: false
-
-  /react-ssr-prepass@1.5.0(react@apps+nextjs+@vercel+analytics+react):
+  /react-ssr-prepass@1.5.0(react@18.2.0):
     resolution: {integrity: sha512-yFNHrlVEReVYKsLI5lF05tZoHveA5pGzjFbFJY/3pOqqjGOmMmqx83N4hIjN2n6E1AOa+eQEUxs3CgRnPmT0RQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
     dev: false
 
-  /react-style-singleton@2.2.1(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /react-style-singleton@2.2.1(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -14080,7 +13939,7 @@ packages:
       '@types/react': 18.2.38
       get-nonce: 1.0.1
       invariant: 2.2.4
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
       tslib: 2.6.2
     dev: false
 
@@ -15008,7 +14867,7 @@ packages:
     resolution: {integrity: sha512-0MP/Cxx5SzeeZ10p/bZI0S6MpgD+yxAhi1BOQ34jgnMXsCq3j1t6tQnZu+KdlL7dvJTLT3g9xN8tl10TqgFMcg==}
     dev: false
 
-  /styled-jsx@5.1.1(@babel/core@7.23.3)(react@apps+nextjs+@vercel+analytics+react):
+  /styled-jsx@5.1.1(@babel/core@7.23.3)(react@18.2.0):
     resolution: {integrity: sha512-pW7uC1l4mBZ8ugbiZrcIsiIvVx1UmTfw7UkC3Um2tmfUq9Bhk8IiyEIPl6F8agHgjzku6j0xQEZbfA5uSgSaCw==}
     engines: {node: '>= 12.0.0'}
     peerDependencies:
@@ -15022,23 +14881,6 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.23.3
-      client-only: 0.0.1
-      react: link:apps/nextjs/@vercel/analytics/react
-    dev: false
-
-  /styled-jsx@5.1.1(react@18.2.0):
-    resolution: {integrity: sha512-pW7uC1l4mBZ8ugbiZrcIsiIvVx1UmTfw7UkC3Um2tmfUq9Bhk8IiyEIPl6F8agHgjzku6j0xQEZbfA5uSgSaCw==}
-    engines: {node: '>= 12.0.0'}
-    peerDependencies:
-      '@babel/core': '*'
-      babel-plugin-macros: '*'
-      react: '>= 16.8.0 || 17.x.x || ^18.0.0-0'
-    peerDependenciesMeta:
-      '@babel/core':
-        optional: true
-      babel-plugin-macros:
-        optional: true
-    dependencies:
       client-only: 0.0.1
       react: 18.2.0
     dev: false
@@ -15846,7 +15688,7 @@ packages:
     resolution: {integrity: sha512-Qp95D4TPJl1kC9SKigDcqgyM2VDVO4RiJc2d4qe5GrYm+zbIQCWWKAFaJNQ4BhdFeDGwBmAxqJBwWSJDb9T3BQ==}
     dev: true
 
-  /use-callback-ref@1.3.0(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /use-callback-ref@1.3.0(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-3FT9PRuRdbB9HfXhEq35u4oZkvpJ5kuYbpqhCfmiZyReuRgpnhDlbr2ZEnnuS0RrJAPn6l23xjFg9kpDM+Ms7w==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -15857,7 +15699,7 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.2.38
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
       tslib: 2.6.2
     dev: false
 
@@ -15869,7 +15711,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /use-sidecar@1.1.2(@types/react@18.2.38)(react@apps+nextjs+@vercel+analytics+react):
+  /use-sidecar@1.1.2(@types/react@18.2.38)(react@18.2.0):
     resolution: {integrity: sha512-epTbsLuzZ7lPClpz2TyryBfztm7m+28DlEv2ZCQ3MDr5ssiwyOwGH/e5F9CkfWjJ1t4clvI58yF822/GUkjjhw==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -15881,7 +15723,7 @@ packages:
     dependencies:
       '@types/react': 18.2.38
       detect-node-es: 1.1.0
-      react: link:apps/nextjs/@vercel/analytics/react
+      react: 18.2.0
       tslib: 2.6.2
     dev: false
 
@@ -15891,14 +15733,6 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
-    dev: false
-
-  /use-sync-external-store@1.2.0(react@apps+nextjs+@vercel+analytics+react):
-    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: link:apps/nextjs/@vercel/analytics/react
     dev: false
 
   /util-deprecate@1.0.2:
