@@ -2,6 +2,8 @@ import type { AdapterAccount } from "@auth/core/adapters";
 import { createId } from "@paralleldrive/cuid2";
 import { relations, sql } from "drizzle-orm";
 import {
+  boolean,
+  datetime,
   index,
   int,
   mysqlEnum,
@@ -14,6 +16,8 @@ import {
 import { mySqlTable } from "./_table";
 import { addresses } from "./address";
 import { children } from "./child";
+import { forgotPasswordTokens } from "./forgot-password-token";
+import { reviews } from "./review";
 
 const userColumns = {
   // needed for next auth
@@ -27,30 +31,62 @@ const userColumns = {
   }).default(sql`CURRENT_TIMESTAMP(3)`),
   image: varchar("image", { length: 255 }),
   // app specific fields
-  userType: mysqlEnum("userType", ["careseeker", "caregiver", "admin"]),
   firstName: varchar("firstName", { length: 255 }).notNull(),
   lastName: varchar("lastName", { length: 255 }).notNull(),
   password: varchar("password", { length: 255 }).notNull(),
   phoneNumber: varchar("password", { length: 255 }).notNull(),
   biography: varchar("biography", { length: 255 }),
   profilePicture: varchar("profilePicture", { length: 255 }),
+  birthdate: datetime("birthdate", { mode: "string" }).notNull(),
+  userType: mysqlEnum("userType", ["careseeker", "caregiver", "admin"]),
 };
 
 export const users = mySqlTable("user", {
   ...userColumns,
+
+  caregiverId: varchar("caregiverId", { length: 128 }),
+  careseekerId: varchar("careseekerId", { length: 128 }),
 });
 
+export const userRelations = relations(users, ({ many, one }) => ({
+  accounts: many(accounts),
+  address: many(addresses),
+  careseeker: one(careseekers, {
+    fields: [users.id],
+    references: [careseekers.id],
+  }),
+  caregiver: one(caregivers, {
+    fields: [users.id],
+    references: [caregivers.id],
+  }),
+  forgotPasswordToken: one(forgotPasswordTokens, {
+    fields: [users.id],
+    references: [forgotPasswordTokens.id],
+  }),
+}));
+
 export const careseekers = mySqlTable("careseeker", {
-  ...userColumns,
+  id: varchar("userId", { length: 128 })
+    .primaryKey()
+    .$defaultFn(() => createId()),
 });
 
 export const careseekerRelations = relations(careseekers, ({ many }) => ({
   children: many(children),
+  reviews: many(reviews),
 }));
 
-export const usersRelations = relations(users, ({ many }) => ({
-  accounts: many(accounts),
-  address: many(addresses),
+export const caregivers = mySqlTable("caregiver", {
+  id: varchar("userId", { length: 128 })
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  backgroundCheckCompleted: boolean("background_check_completed").default(
+    false,
+  ),
+});
+
+export const caregiverRelations = relations(caregivers, ({ many }) => ({
+  reviews: many(reviews),
 }));
 
 export const accounts = mySqlTable(
@@ -77,7 +113,10 @@ export const accounts = mySqlTable(
 );
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
-  user: one(users, { fields: [accounts.userId], references: [users.id] }),
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
 }));
 
 export const sessions = mySqlTable(
@@ -95,7 +134,10 @@ export const sessions = mySqlTable(
 );
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
-  user: one(users, { fields: [sessions.userId], references: [users.id] }),
+  user: one(users, {
+    fields: [sessions.userId],
+    references: [users.id],
+  }),
 }));
 
 export const verificationTokens = mySqlTable(

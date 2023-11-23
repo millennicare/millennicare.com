@@ -8,12 +8,6 @@ export const env = createEnv({
       .optional()
       .transform((v) => (v ? `https://${v}` : undefined)),
     PORT: z.coerce.number().default(3000),
-    AWS_REGION: z.string(),
-    AWS_SECRET_ACCESS_KEY: z.string(),
-    AWS_ACCESS_KEY_ID: z.string(),
-    AWS_BUCKET: z.string(),
-    AWS_LOCATION_API_KEY: z.string(),
-    AWS_LOCATION_SUGGESTION_KEY: z.string(),
   },
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app isn't
@@ -21,6 +15,12 @@ export const env = createEnv({
    */
   server: {
     DATABASE_URL: z.string().url(),
+    AWS_REGION: z.string(),
+    AWS_SECRET_ACCESS_KEY: z.string(),
+    AWS_ACCESS_KEY_ID: z.string(),
+    AWS_BUCKET: z.string(),
+    AWS_LOCATION_API_KEY: z.string(),
+    AWS_LOCATION_SUGGESTION_KEY: z.string(),
   },
   /**
    * Specify your client-side environment variables schema here.

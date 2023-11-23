@@ -6,7 +6,11 @@ import validator from "validator";
 import * as z from "zod";
 
 import { eq } from "@millennicare/db";
-import { careseekers, users as userSchema } from "@millennicare/db/schema/auth";
+import {
+  careseekers as careseekerSchema,
+  users as userSchema,
+} from "@millennicare/db/schema/auth";
+import { children as childSchema } from "@millennicare/db/schema/child";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
@@ -47,6 +51,7 @@ export const userRouter = createTRPCRouter({
         birthdate: z.date(),
         profilePicture: z.union([z.string(), z.undefined()]),
         phoneNumber: z.string().refine(validator.isMobilePhone),
+        userType: z.enum(["careseeker", "caregiver", "admin"]),
         // careseeker fields
         children: z.array(
           z.object({
@@ -75,9 +80,22 @@ export const userRouter = createTRPCRouter({
         ...input,
         password: hashedPassword,
       };
+      // create child record
+      const response = await db.transaction(async (tx) => {
+        await db.insert(childSchema).values(
+          input.children.map((child) => {
+            return { name: child.name, age: child.age };
+          }),
+        );
 
+        await db.insert(careseekerSchema).values()
+      });
+      // then careseeker record
+      // then user record
+
+      const careseeker = await db.insert(careseekerSchema).values();
       // const newUser = await db.insert(careseekers).values(values);
-      await db.insert(careseekers).values(values);
+      await db.insert(userSchema).values(values);
       // send confirmation email
       // const token = generateToken(id);
 
