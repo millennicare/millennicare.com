@@ -12,6 +12,7 @@ import {
 } from "drizzle-orm/mysql-core";
 
 import { mySqlTable } from "./_table";
+import { addresses } from "./address";
 import { children } from "./child";
 
 const userColumns = {
@@ -49,6 +50,7 @@ export const careseekerRelations = relations(careseekers, ({ many }) => ({
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
+  address: many(addresses),
 }));
 
 export const accounts = mySqlTable(
