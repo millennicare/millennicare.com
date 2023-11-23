@@ -1,0 +1,27 @@
+name: Deploy a deploy request
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  deploy_deploy_request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup pscale
+        uses: planetscale/setup-pscale-action@v1
+      - name: Use pscale
+        env:
+          PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+          PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
+        run: |
+          pscale deploy-request list my-db --org my-org
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Deploy a deploy request
+        uses: planetscale/deploy-deploy-request-action@v4
+        with:
+          org_name: ${{ secrets.PSCALE_ORG }}
+          database_name: ${{ secrets.PSCALE_DATABASE_NAME }}
+        env:
+          PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+          PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
