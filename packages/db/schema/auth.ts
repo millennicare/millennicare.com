@@ -61,7 +61,9 @@ export const careseekers = mySqlTable("careseeker", {
   id: varchar("id", { length: 128 })
     .primaryKey()
     .$defaultFn(() => createId()),
-  userId: varchar("user_id", { length: 128 }).references(() => users.id),
+  userId: varchar("user_id", { length: 128 })
+    .references(() => users.id)
+    .unique(),
 });
 
 export const careseekerRelations = relations(careseekers, ({ many }) => ({
@@ -73,7 +75,9 @@ export const caregivers = mySqlTable("caregiver", {
   id: varchar("id", { length: 128 })
     .primaryKey()
     .$defaultFn(() => createId()),
-  userId: varchar("user_id", { length: 128 }).references(() => users.id),
+  userId: varchar("user_id", { length: 128 })
+    .references(() => users.id)
+    .unique(),
   backgroundCheckCompleted: boolean("background_check_completed").default(
     false,
   ),
@@ -86,7 +90,7 @@ export const caregiverRelations = relations(caregivers, ({ many }) => ({
 export const accounts = mySqlTable(
   "account",
   {
-    userId: varchar("user_id", { length: 255 }).notNull(),
+    userId: varchar("user_id", { length: 255 }).notNull().unique(),
     type: varchar("type", { length: 255 })
       .$type<AdapterAccount["type"]>()
       .notNull(),
@@ -119,7 +123,7 @@ export const sessions = mySqlTable(
     sessionToken: varchar("sessionToken", { length: 255 })
       .notNull()
       .primaryKey(),
-    userId: varchar("user_id", { length: 255 }).notNull(),
+    userId: varchar("user_id", { length: 255 }).notNull().unique(),
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (session) => ({
@@ -138,7 +142,7 @@ export const verificationTokens = mySqlTable(
   "verificationToken",
   {
     identifier: varchar("identifier", { length: 255 }).notNull(),
-    token: varchar("token", { length: 255 }).notNull(),
+    token: varchar("token", { length: 255 }).notNull().unique(),
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (vt) => ({

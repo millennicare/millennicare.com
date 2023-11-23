@@ -16,7 +16,8 @@ export const reviews = mySqlTable(
   {
     id: varchar("id", { length: 128 })
       .$defaultFn(() => createId())
-      .primaryKey(),
+      .primaryKey()
+      .unique(),
     createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
     updatedAt: timestamp("updated_at").onUpdateNow(),
 
