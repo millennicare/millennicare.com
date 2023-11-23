@@ -13,7 +13,8 @@ export const forgotPasswordTokens = mySqlTable(
       .primaryKey(),
     userId: varchar("userId", { length: 128 })
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id)
+      .unique(),
     expiresIn: bigint("expiresIn", { mode: "number" }).notNull(),
     token: varchar("token", { length: 255 }).notNull(),
   },

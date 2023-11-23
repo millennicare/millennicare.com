@@ -20,7 +20,9 @@ export const addresses = mySqlTable(
     unit: varchar("unit", { length: 255 }),
     userId: varchar("user_id", { length: 128 })
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id)
+      .notNull()
+      .unique(),
   },
   (address) => ({
     userIdIdx: index("userId_idx").on(address.userId),

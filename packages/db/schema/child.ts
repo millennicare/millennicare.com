@@ -18,7 +18,8 @@ export const children = mySqlTable(
     name: varchar("name", { length: 255 }).notNull(),
     careseekerId: varchar("careseeker_id", { length: 128 })
       .notNull()
-      .references(() => careseekers.id),
+      .references(() => careseekers.id)
+      .unique(),
   },
   (child) => ({
     careseekerIdIdx: index("careseekerId_idx").on(child.careseekerId),
