@@ -30,7 +30,7 @@ export type IUser = {
   birthdate: Date;
   profilePicture?: string;
   biography?: string;
-  type: "careseeker";
+  userType: "careseeker" | "caregiver" | "admin";
   longitude: number;
   latitude: number;
 };
@@ -59,7 +59,7 @@ export default function Page() {
     birthdate: new Date(),
     profilePicture: undefined,
     phoneNumber: "",
-    type: "careseeker",
+    userType: "careseeker",
     children: [],
     latitude: 0,
     longitude: 0,

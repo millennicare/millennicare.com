@@ -7,7 +7,6 @@ import {
   index,
   int,
   mysqlEnum,
-  primaryKey,
   text,
   timestamp,
   varchar,
@@ -37,28 +36,21 @@ const userColumns = {
   phoneNumber: varchar("password", { length: 255 }).notNull(),
   biography: varchar("biography", { length: 255 }),
   profilePicture: varchar("profilePicture", { length: 255 }),
-  birthdate: datetime("birthdate", { mode: "string" }).notNull(),
-  userType: mysqlEnum("userType", ["careseeker", "caregiver", "admin"]),
+  birthdate: datetime("birthdate", { mode: "date" }).notNull(),
+  userType: mysqlEnum("userType", [
+    "careseeker",
+    "caregiver",
+    "admin",
+  ]).notNull(),
 };
 
 export const users = mySqlTable("user", {
   ...userColumns,
-
-  caregiverId: varchar("caregiverId", { length: 128 }),
-  careseekerId: varchar("careseekerId", { length: 128 }),
 });
 
 export const userRelations = relations(users, ({ many, one }) => ({
   accounts: many(accounts),
   address: many(addresses),
-  careseeker: one(careseekers, {
-    fields: [users.id],
-    references: [careseekers.id],
-  }),
-  caregiver: one(caregivers, {
-    fields: [users.id],
-    references: [caregivers.id],
-  }),
   forgotPasswordToken: one(forgotPasswordTokens, {
     fields: [users.id],
     references: [forgotPasswordTokens.id],
@@ -66,9 +58,10 @@ export const userRelations = relations(users, ({ many, one }) => ({
 }));
 
 export const careseekers = mySqlTable("careseeker", {
-  id: varchar("userId", { length: 128 })
+  id: varchar("id", { length: 128 })
     .primaryKey()
     .$defaultFn(() => createId()),
+  userId: varchar("user_id", { length: 128 }).references(() => users.id),
 });
 
 export const careseekerRelations = relations(careseekers, ({ many }) => ({
@@ -77,9 +70,10 @@ export const careseekerRelations = relations(careseekers, ({ many }) => ({
 }));
 
 export const caregivers = mySqlTable("caregiver", {
-  id: varchar("userId", { length: 128 })
+  id: varchar("id", { length: 128 })
     .primaryKey()
     .$defaultFn(() => createId()),
+  userId: varchar("user_id", { length: 128 }).references(() => users.id),
   backgroundCheckCompleted: boolean("background_check_completed").default(
     false,
   ),
@@ -92,7 +86,7 @@ export const caregiverRelations = relations(caregivers, ({ many }) => ({
 export const accounts = mySqlTable(
   "account",
   {
-    userId: varchar("userId", { length: 255 }).notNull(),
+    userId: varchar("user_id", { length: 255 }).notNull(),
     type: varchar("type", { length: 255 })
       .$type<AdapterAccount["type"]>()
       .notNull(),
@@ -107,7 +101,7 @@ export const accounts = mySqlTable(
     session_state: varchar("session_state", { length: 255 }),
   },
   (account) => ({
-    compoundKey: primaryKey(account.provider, account.providerAccountId),
+    compoundKey: [account.provider, account.providerAccountId],
     userIdIdx: index("userId_idx").on(account.userId),
   }),
 );
@@ -125,7 +119,7 @@ export const sessions = mySqlTable(
     sessionToken: varchar("sessionToken", { length: 255 })
       .notNull()
       .primaryKey(),
-    userId: varchar("userId", { length: 255 }).notNull(),
+    userId: varchar("user_id", { length: 255 }).notNull(),
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (session) => ({
@@ -148,6 +142,6 @@ export const verificationTokens = mySqlTable(
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (vt) => ({
-    compoundKey: primaryKey(vt.identifier, vt.token),
+    compoundKey: [vt.identifier, vt.token],
   }),
 );
