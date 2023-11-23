@@ -1,4 +1,4 @@
-import { Quicksand, Montserrat } from "next/font/google";
+import { Montserrat, Quicksand } from "next/font/google";
 
 // default font
 export const montserrat = Montserrat({

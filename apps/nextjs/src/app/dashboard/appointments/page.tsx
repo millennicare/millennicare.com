@@ -1,6 +1,7 @@
 export default function Page() {
   return (
     <>
-    <p>Appointments Page</p></>
-  )
+      <p>Appointments Page</p>
+    </>
+  );
 }

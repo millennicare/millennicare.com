@@ -4,8 +4,9 @@ import {
   LocationClient,
   SearchPlaceIndexForSuggestionsCommand,
 } from "@aws-sdk/client-location";
-import { env } from "~/env.mjs";
 import { withAPIKey } from "@aws/amazon-location-utilities-auth-helper";
+
+import { env } from "~/env.mjs";
 
 const apiKey = env.AWS_LOCATION_SUGGESTION_KEY;
 const authHelper = await withAPIKey(apiKey);

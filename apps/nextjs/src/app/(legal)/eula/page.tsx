@@ -6,7 +6,7 @@ export default function Page() {
       <div className="mx-16 flex flex-col">
         <div className="flex flex-col">
           <br></br>
-          <h2 className="font-bold text-primary">
+          <h2 className="text-primary font-bold">
             {" "}
             End-User License Agreement (&quot;Agreement&quot;)
           </h2>

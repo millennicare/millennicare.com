@@ -1,16 +1,16 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import clsx from "clsx";
 import {
-  HomeIcon,
   CalendarIcon,
+  ExitIcon,
+  HomeIcon,
   MagnifyingGlassIcon,
   PersonIcon,
-  ExitIcon,
 } from "@radix-ui/react-icons";
-import Image from "next/image";
+import clsx from "clsx";
 import { signOut } from "next-auth/react";
 
 const links = [

@@ -7,7 +7,7 @@ export default function Page() {
         {/* MAIN HEADER */}
         <div>
           <br></br>
-          <h2 className="font-bold text-primary">Privacy Policy</h2>
+          <h2 className="text-primary font-bold">Privacy Policy</h2>
           <br></br>
           <p>Last updated: January 20, 2023</p>
           <br></br>
@@ -49,9 +49,10 @@ export default function Page() {
               our Service or parts of our Service.
             </p>
             <p>
-              <b>Company</b> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or
-              &quot;Our&quot; in this Agreement) refers to MillenniCare PBC, 800 4th
-              Street sw, Washington D.C., 20024 N812.
+              <b>Company</b> (referred to as either &quot;the Company&quot;,
+              &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this
+              Agreement) refers to MillenniCare PBC, 800 4th Street sw,
+              Washington D.C., 20024 N812.
             </p>
             <p>
               <b>Cookies</b> are small files that are placed on Your computer,
@@ -103,7 +104,7 @@ export default function Page() {
         <div>
           <h2>Collecting and Using Your Personal Data</h2>
           <hr className="border-1 border-primary"></hr>
-          <b className="text-lg text-primary">Types of Data Collected</b>
+          <b className="text-primary text-lg">Types of Data Collected</b>
           <br></br>
           <b className="text-primary">Personal Data</b>
           <p>
@@ -125,11 +126,11 @@ export default function Page() {
           <p>Usage Data is collected automatically when using the Service.</p>
           <br></br>
           <p>
-            Usage Data may include information such as Your Device&apos;s Internet
-            Protocol address (e.g. IP address), browser type, browser version,
-            the pages of our Service that You visit, the time and date of Your
-            visit, the time spent on those pages, unique device identifiers and
-            other diagnostic data.
+            Usage Data may include information such as Your Device&apos;s
+            Internet Protocol address (e.g. IP address), browser type, browser
+            version, the pages of our Service that You visit, the time and date
+            of Your visit, the time spent on those pages, unique device
+            identifiers and other diagnostic data.
           </p>
           <br></br>
           <p>
@@ -174,11 +175,11 @@ export default function Page() {
           </li>
           <br></br>
           <p>
-            Cookies can be &quot;Persistent&quot; or &quot;Session&quot; Cookies. Persistent Cookies
-            remain on Your personal computer or mobile device when You go
-            offline, while Session Cookies are deleted as soon as You close Your
-            web browser. You can learn more about cookies on TermsFeed website
-            article.
+            Cookies can be &quot;Persistent&quot; or &quot;Session&quot;
+            Cookies. Persistent Cookies remain on Your personal computer or
+            mobile device when You go offline, while Session Cookies are deleted
+            as soon as You close Your web browser. You can learn more about
+            cookies on TermsFeed website article.
           </p>
           <br></br>
           <p>
@@ -247,10 +248,11 @@ export default function Page() {
             <p>
               <b>To contact You:</b> To contact You by email, telephone calls,
               SMS, or other equivalent forms of electronic communication, such
-              as a mobile application&apos;s push notifications regarding updates or
-              informative communications related to the functionalities,
-              products or contracted services, including the security updates,
-              when necessary or reasonable for their implementation.
+              as a mobile application&apos;s push notifications regarding
+              updates or informative communications related to the
+              functionalities, products or contracted services, including the
+              security updates, when necessary or reasonable for their
+              implementation.
             </p>
             <p>
               <b>To provide You</b> with news, special offers and general
@@ -388,7 +390,7 @@ export default function Page() {
           <br></br>
           <b className="text-primary">Disclosure of Your Personal Data</b>
           <br></br>
-          <b className="text-sm text-primary">Business Transactions</b>
+          <b className="text-primary text-sm">Business Transactions</b>
           <p>
             If the Company is involved in a merger, acquisition or asset sale,
             Your Personal Data may be transferred. We will provide notice before
@@ -396,7 +398,7 @@ export default function Page() {
             Privacy Policy.
           </p>
           <br></br>
-          <b className="text-sm text-primary">Law enforcement</b>
+          <b className="text-primary text-sm">Law enforcement</b>
           <p>
             Under certain circumstances, the Company may be required to disclose
             Your Personal Data if required to do so by law or in response to
@@ -404,7 +406,7 @@ export default function Page() {
             agency).
           </p>
           <br></br>
-          <b className="text-sm text-primary">Other legal requirements</b>
+          <b className="text-primary text-sm">Other legal requirements</b>
           <p>
             The Company may disclose Your Personal Data in the good faith belief
             that such action is necessary to:
@@ -421,7 +423,7 @@ export default function Page() {
           </li>
           <li>Protect against legal liability</li>
           <br></br>
-          <b className="text-sm text-primary">Security of Your Personal Data</b>
+          <b className="text-primary text-sm">Security of Your Personal Data</b>
           <p>
             The security of Your Personal Data is important to Us, but remember
             that no method of transmission over the Internet, or method of

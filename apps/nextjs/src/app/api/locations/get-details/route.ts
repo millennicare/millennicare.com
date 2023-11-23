@@ -5,6 +5,7 @@ import {
   SearchPlaceIndexForTextCommand,
 } from "@aws-sdk/client-location";
 import { withAPIKey } from "@aws/amazon-location-utilities-auth-helper";
+
 import { env } from "~/env.mjs";
 
 const apiKey = env.AWS_LOCATION_API_KEY;

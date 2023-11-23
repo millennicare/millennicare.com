@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -70,7 +70,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col justify-center bg-palecream py-12 sm:px-6 lg:px-8">
+    <div className="bg-palecream flex min-h-screen flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="space-y-4 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
           <Link className="flex items-center text-white" href="/">

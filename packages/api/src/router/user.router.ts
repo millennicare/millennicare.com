@@ -58,33 +58,30 @@ export const userRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
-      try {
-        const existingUser = await db.query.users.findFirst({
-          where: eq(userSchema.email, input.email),
+
+      const existingUser = await db.query.users.findFirst({
+        where: eq(userSchema.email, input.email),
+      });
+
+      if (existingUser) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "A user already exists with this email address.",
         });
-
-        if (existingUser) {
-          throw new TRPCError({
-            code: "CONFLICT",
-            message: "A user already exists with this email address.",
-          });
-        }
-
-        const hashedPassword = await argon.hash(input.password);
-        const values = {
-          ...input,
-          password: hashedPassword,
-        };
-
-        // const newUser = await db.insert(careseekers).values(values);
-        await db.insert(careseekers).values(values);
-        // send confirmation email
-        // const token = generateToken(id);
-
-        return { message: "Sign up successful." };
-      } catch (error) {
-        console.log(error);
       }
+
+      const hashedPassword = await argon.hash(input.password);
+      const values = {
+        ...input,
+        password: hashedPassword,
+      };
+
+      // const newUser = await db.insert(careseekers).values(values);
+      await db.insert(careseekers).values(values);
+      // send confirmation email
+      // const token = generateToken(id);
+
+      return { message: "Sign up successful." };
     }),
   findDuplicateEmail: publicProcedure
     .input(z.object({ email: z.string().email() }))

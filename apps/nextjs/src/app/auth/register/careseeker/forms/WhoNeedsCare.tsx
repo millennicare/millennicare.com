@@ -1,10 +1,9 @@
 "use client";
 
-import * as z from "zod";
-import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useFieldArray, useForm } from "react-hook-form";
+import * as z from "zod";
 
-import type { FormProps } from "../page";
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -14,6 +13,7 @@ import {
   FormLabel,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import type { FormProps } from "../page";
 
 const formSchema = z.object({
   children: z.array(

@@ -2,9 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "~/components/ui/button";
-
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
-
 import Navbar from "./_components/Navbar";
 import WaitlistForm from "./(legal)/_components/WaitlistForm";
 
@@ -15,17 +13,17 @@ export default function Page() {
 
       <div
         id="hero"
-        className="flex h-[80vh] w-full flex-col items-center justify-center bg-cream md:flex-row md:space-x-48"
+        className="bg-cream flex h-[80vh] w-full flex-col items-center justify-center md:flex-row md:space-x-48"
       >
         <div className="flex flex-col">
           <div className="w-full space-y-5 self-center px-5 md:max-w-lg">
             <h1 className="font-mono text-4xl md:max-w-lg md:text-5xl lg:text-6xl">
               Modernizing Affordable Childcare for the New Millenium
             </h1>
-            <h2 className=" font-mono text-2xl text-secondary md:text-3xl">
+            <h2 className=" text-secondary font-mono text-2xl md:text-3xl">
               COMING SOON
             </h2>
-            <h3 className="pb-2 text-lg text-communityteal md:text-2xl">
+            <h3 className="text-communityteal pb-2 text-lg md:text-2xl">
               Low-monthly fee to access quality and affordable childcare
               services.
             </h3>
@@ -53,7 +51,7 @@ export default function Page() {
 
       <div
         id="about"
-        className="flex flex-col-reverse items-center justify-center bg-cream px-20 pt-10 md:flex-row  md:space-x-48 md:pb-5 lg:pb-0"
+        className="bg-cream flex flex-col-reverse items-center justify-center px-20 pt-10 md:flex-row  md:space-x-48 md:pb-5 lg:pb-0"
       >
         <Image
           className="max-h-2xl h-auto min-w-[20rem] max-w-xs self-center px-5 pt-3"
@@ -63,7 +61,7 @@ export default function Page() {
           alt="Dashboard screenshot"
         />
         <div className="w-full space-y-3 px-5 text-center md:max-w-lg md:px-0 lg:text-left">
-          <h1 className="flex justify-center text-4xl text-primary">
+          <h1 className="text-primary flex justify-center text-4xl">
             About Us
           </h1>
           <h2 className="flex justify-center text-2xl">MILLENNICARE</h2>
@@ -85,9 +83,9 @@ export default function Page() {
 
       <div
         id="commitment"
-        className="flex h-full flex-col justify-center bg-palecream py-12 lg:h-[65vh] lg:px-36"
+        className="bg-palecream flex h-full flex-col justify-center py-12 lg:h-[65vh] lg:px-36"
       >
-        <h1 className="justify-center text-center text-4xl text-primary md:m-8">
+        <h1 className="text-primary justify-center text-center text-4xl md:m-8">
           Our Commitment
         </h1>
 
@@ -141,7 +139,7 @@ export default function Page() {
 
       <div
         id="footer"
-        className="flex w-full flex-col content-around items-center bg-palecream py-10"
+        className="bg-palecream flex w-full flex-col content-around items-center py-10"
       >
         <Image
           src="/millennicare_logo_with_text.svg"

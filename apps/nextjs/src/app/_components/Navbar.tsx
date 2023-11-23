@@ -30,7 +30,7 @@ export default function Navbar() {
   return (
     <div
       id="navbar"
-      className="flex w-full items-center justify-between bg-palecream px-4 py-6"
+      className="bg-palecream flex w-full items-center justify-between px-4 py-6"
     >
       <Link href="/">
         <Image
