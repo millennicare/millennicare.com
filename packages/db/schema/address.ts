@@ -18,11 +18,7 @@ export const addresses = mySqlTable(
     latitude: float("latitude").notNull(),
     address: varchar("address", { length: 255 }),
     unit: varchar("unit", { length: 255 }),
-    userId: varchar("user_id", { length: 128 })
-      .notNull()
-      .references(() => users.id)
-      .notNull()
-      .unique(),
+    userId: varchar("user_id", { length: 128 }).notNull().notNull().unique(),
   },
   (address) => ({
     userIdIdx: index("userId_idx").on(address.userId),

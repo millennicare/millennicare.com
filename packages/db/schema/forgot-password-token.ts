@@ -11,7 +11,7 @@ export const forgotPasswordTokens = mySqlTable(
     id: varchar("id", { length: 128 })
       .$defaultFn(() => createId())
       .primaryKey(),
-    userId: varchar("userId", { length: 128 })
+    userId: varchar("user_id", { length: 128 })
       .notNull()
       .references(() => users.id)
       .unique(),
