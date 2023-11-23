@@ -14,7 +14,7 @@ jobs:
           PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
           PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
         run: |
-          pscale deploy-request list my-db --org my-org
+          pscale deploy-request list ${{ secrets.PSCALE_DATABASE_NAME }} --org ${{ secrets.PSCALE_ORG }}
       - name: checkout
         uses: actions/checkout@v3
       - name: Create a deploy request
