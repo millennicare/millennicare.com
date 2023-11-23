@@ -1,0 +1,4 @@
+{
+  "extends": "@millennicare/tsconfig/base.json",
+  "include": ["routes"]
+}
