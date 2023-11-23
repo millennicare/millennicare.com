@@ -29,5 +29,8 @@ jobs:
         with:
           version: ${{ matrix.pnpm-version }}
 
+      - name: install deps
+        run: pnpm i
+
       - name: Push schema changes
         run: pnpm db:push
