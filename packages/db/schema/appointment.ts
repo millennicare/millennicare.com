@@ -1,12 +1,6 @@
 import { createId } from "@paralleldrive/cuid2";
 import { relations, sql } from "drizzle-orm";
-import {
-  foreignKey,
-  index,
-  mysqlEnum,
-  timestamp,
-  varchar,
-} from "drizzle-orm/mysql-core";
+import { index, mysqlEnum, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 import { mySqlTable } from "./_table";
 import { caregivers, careseekers } from "./auth";
