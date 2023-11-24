@@ -31,32 +31,15 @@ export const appointments = mySqlTable(
       "confirmed",
       "finished",
     ]).notNull(),
-    serviceId: varchar("serviceId", { length: 128 })
-      .notNull()
-      .references(() => services.id),
-    careseekerId: varchar("careseekerId", { length: 128 })
-      .notNull()
-      .references(() => careseekers.id),
-    caregiverId: varchar("caregiverId", { length: 128 })
-      .notNull()
-      .references(() => caregivers.id),
+    serviceId: varchar("service_id", { length: 128 }).notNull(),
+    careseekerId: varchar("careseeker_id", { length: 128 }).notNull(),
+    caregiverId: varchar("caregiver_id", { length: 128 }).notNull(),
   },
-  (appointment) => {
-    return {
-      parentRef: foreignKey({
-        columns: [
-          appointment.serviceId,
-          appointment.caregiverId,
-          appointment.careseekerId,
-        ],
-        foreignColumns: [services.id, caregivers.id, careseekers.id],
-        name: "appointment_fk",
-      }),
-      serviceIdIdx: index("serviceId_idx").on(appointment.serviceId),
-      careseekerIdIdx: index("careseekerId_idx").on(appointment.careseekerId),
-      caregiverIdIdx: index("caregiverId_idx").on(appointment.caregiverId),
-    };
-  },
+  (appointment) => ({
+    serviceIdIdx: index("serviceId_idx").on(appointment.serviceId),
+    careseekerIdIdx: index("careseekerId_idx").on(appointment.careseekerId),
+    caregiverIdIdx: index("caregiverId_idx").on(appointment.caregiverId),
+  }),
 );
 
 export const appointmentsRelations = relations(appointments, ({ one }) => ({

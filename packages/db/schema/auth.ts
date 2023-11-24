@@ -18,7 +18,7 @@ import { children } from "./child";
 import { forgotPasswordTokens } from "./forgot-password-token";
 import { reviews } from "./review";
 
-const userColumns = {
+export const users = mySqlTable("user", {
   // needed for next auth
   id: varchar("id", { length: 128 })
     .$defaultFn(() => createId())
@@ -42,10 +42,7 @@ const userColumns = {
     "caregiver",
     "admin",
   ]).notNull(),
-};
-
-export const users = mySqlTable("user", {
-  ...userColumns,
+  forgotPasswordTokenId: varchar("forgot_password_token_id", { length: 128 }),
 });
 
 export const userRelations = relations(users, ({ many, one }) => ({
@@ -57,31 +54,39 @@ export const userRelations = relations(users, ({ many, one }) => ({
   }),
 }));
 
-export const careseekers = mySqlTable("careseeker", {
-  id: varchar("id", { length: 128 })
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  userId: varchar("user_id", { length: 128 })
-    .references(() => users.id)
-    .unique(),
-});
+export const careseekers = mySqlTable(
+  "careseeker",
+  {
+    id: varchar("id", { length: 128 })
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    userId: varchar("user_id", { length: 128 }).unique(),
+  },
+  (careseeker) => ({
+    careseekerIdIdx: index("careseekerId_idx").on(careseeker.id),
+  }),
+);
 
 export const careseekerRelations = relations(careseekers, ({ many }) => ({
   children: many(children),
   reviews: many(reviews),
 }));
 
-export const caregivers = mySqlTable("caregiver", {
-  id: varchar("id", { length: 128 })
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  userId: varchar("user_id", { length: 128 })
-    .references(() => users.id)
-    .unique(),
-  backgroundCheckCompleted: boolean("background_check_completed").default(
-    false,
-  ),
-});
+export const caregivers = mySqlTable(
+  "caregiver",
+  {
+    id: varchar("id", { length: 128 })
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    userId: varchar("user_id", { length: 128 }).unique(),
+    backgroundCheckCompleted: boolean("background_check_completed").default(
+      false,
+    ),
+  },
+  (caregiver) => ({
+    caregiverIdIdx: index("caregiverId_idx").on(caregiver.id),
+  }),
+);
 
 export const caregiverRelations = relations(caregivers, ({ many }) => ({
   reviews: many(reviews),
