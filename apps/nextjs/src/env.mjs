@@ -8,14 +8,14 @@ export const env = createEnv({
       .optional()
       .transform((v) => (v ? `https://${v}` : undefined)),
     PORT: z.coerce.number().default(3000),
-    AUTH_SECRET: z.string(),
-    AUTH_URL: z.string(),
   },
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app isn't
    * built with invalid env vars.
    */
   server: {
+    AUTH_SECRET: z.string(),
+    AUTH_URL: z.string(),
     DATABASE_URL: z.string().url(),
     AWS_REGION: z.string(),
     AWS_SECRET_ACCESS_KEY: z.string(),
