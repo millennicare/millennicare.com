@@ -26,8 +26,8 @@ const formSchema = z.object({
   email: z.string().email(),
   password: z
     .string()
-    .min(6, "Password must be between 6 and 20 characters.")
-    .max(20, "Password must be between 6 and 20 characters."),
+    .min(6, "Password must be between 8 and 20 characters.")
+    .max(20, "Password must be between 8 and 20 characters."),
   phoneNumber: z.string().refine(validator.isMobilePhone),
 });
 

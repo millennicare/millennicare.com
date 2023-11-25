@@ -136,7 +136,6 @@ export default function AdditionalInfoForm({
       longitude: long,
     }));
 
-    console.log(formValues);
     handleNext();
   }
 

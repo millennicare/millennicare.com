@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { isClerkAPIResponseError, useSignIn } from "@clerk/nextjs";
+import { useSignIn } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TRPCClientError } from "@trpc/client";
 import { useForm } from "react-hook-form";
@@ -58,7 +58,7 @@ export default function LoginForm() {
         await setActive({ session: result.createdSessionId });
         router.push("/dashboard");
       }
-    } catch (error: any) {
+    } catch (error) {
       if (error instanceof TRPCClientError) {
         toast({
           title: error.message,

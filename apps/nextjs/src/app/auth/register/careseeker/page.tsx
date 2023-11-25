@@ -73,24 +73,26 @@ export default function Page() {
 
   async function submit() {
     if (!isLoaded) {
-      console.log("not loaded");
       return null;
     }
-
+    console.log("formValues", JSON.stringify(formValues, null, 2));
     try {
       const res = await signUp.create({
         emailAddress: formValues.email,
         password: formValues.password,
       });
-
+      if (res.status === "complete") {
+        console.log(res);
+        setActive({ session: res.createdSessionId });
+      } else {
+        console.log("something went wrong");
+        console.log(res);
+      }
       const id = res.createdUserId;
-
       if (!id) {
-        // some error occurred
+        console.log("no id generated");
         return;
       }
-      // after user has been created in clerk, initiate registration process
-      // in backend
       await mutation.mutateAsync({
         id: id,
         firstName: formValues.firstName,
@@ -104,16 +106,8 @@ export default function Page() {
         latitude: formValues.latitude,
         longitude: formValues.longitude,
       });
-
-      await setActive({ session: res.createdSessionId });
       router.push("/dashboard");
-    } catch (error: any) {
-      if (error.code === 422) {
-        toast({
-          title: "Please use a more secure password",
-          variant: "destructive",
-        });
-      }
+    } catch (error) {
       console.log(error);
     }
   }

@@ -5,7 +5,7 @@ import { ZodError } from "zod";
 
 import { db } from "@millennicare/db";
 
-export const createContext = async () => {
+export const createContext = () => {
   const session = auth();
   return {
     auth: session,
