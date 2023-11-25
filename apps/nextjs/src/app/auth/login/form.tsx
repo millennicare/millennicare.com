@@ -57,8 +57,13 @@ export default function LoginForm() {
       showToast("Success!", "Going to dashboard", "default");
       router.push("/dashboard");
     }
-    if (res?.status === 401 && res.error) {
-      showToast("Something went wrong.", res.error, "destructive");
+
+    if (res?.status === 401) {
+      showToast(
+        "Something went wrong.",
+        "Incorrect email or password, please try again.",
+        "destructive",
+      );
     }
     if (res?.status === 500) {
       showToast(

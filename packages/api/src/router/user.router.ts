@@ -6,6 +6,7 @@ import validator from "validator";
 import * as z from "zod";
 
 import { eq } from "@millennicare/db";
+import { addresses as addressSchema } from "@millennicare/db/schema/address";
 import {
   careseekers as careseekerSchema,
   users as userSchema,
@@ -23,7 +24,9 @@ function generateToken(userId: string) {
     throw new Error("JWT_SECRET is not set");
   }
 
-  const token = jwt.sign(userId, process.env.JWT_SECRET, { expiresIn: "24h" });
+  const token = jwt.sign({ userId: userId }, process.env.JWT_SECRET, {
+    expiresIn: "24h",
+  });
 
   return token;
 }
@@ -48,6 +51,9 @@ export const userRouter = createTRPCRouter({
         profilePicture: z.union([z.string(), z.undefined()]),
         phoneNumber: z.string().refine(validator.isMobilePhone),
         userType: z.enum(["careseeker", "caregiver", "admin"]),
+        longitude: z.number(),
+        latitude: z.number(),
+        biography: z.string().optional(),
         // careseeker fields
         children: z.array(
           z.object({
@@ -72,28 +78,53 @@ export const userRouter = createTRPCRouter({
       }
 
       const hashedPassword = await argon.hash(input.password);
-      const { children, ...rest } = input;
 
       const res = await db.transaction(async (tx) => {
-        // first create user record
-        const user = await tx
-          .insert(userSchema)
-          .values({ ...rest, password: hashedPassword });
-
+        // first create user record and retrieve created id
+        await tx.insert(userSchema).values({
+          firstName: input.firstName,
+          lastName: input.lastName,
+          email: input.email,
+          password: hashedPassword,
+          phoneNumber: input.phoneNumber,
+          biography: input.biography,
+          profilePicture: input.profilePicture,
+          birthdate: input.birthdate,
+          userType: "careseeker",
+        });
+        const user = await tx.query.users.findFirst({
+          where: eq(userSchema.email, input.email),
+        });
+        if (!user) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+        }
         // then careseeker record
-        const careseeker = await tx
-          .insert(careseekerSchema)
-          .values({ userId: user.insertId });
+        await tx.insert(careseekerSchema).values({ userId: user.id });
 
-        // create child record
-        const careseekerId = careseeker.insertId;
+        const careseeker = await tx.query.careseekers.findFirst({
+          where: eq(careseekerSchema.userId, user.id),
+        });
+
+        if (!careseeker) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+        }
+        // then create child record
         await tx.insert(childSchema).values(
-          children.map((child) => {
-            return { name: child.name, age: child.age, careseekerId };
+          input.children.map((child) => {
+            return {
+              name: child.name,
+              age: child.age,
+              careseekerId: careseeker.id,
+            };
           }),
         );
-
-        return user.insertId;
+        // lastly, create location record
+        await tx.insert(addressSchema).values({
+          latitude: input.latitude,
+          longitude: input.longitude,
+          userId: user.id,
+        });
+        return user.id;
       });
 
       // send confirmation email
@@ -109,7 +140,7 @@ export const userRouter = createTRPCRouter({
         where: eq(userSchema.email, input.email),
       });
 
-      if (!user) {
+      if (user) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "A user already exists with this email address.",

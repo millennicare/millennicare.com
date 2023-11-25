@@ -72,7 +72,7 @@ export default function Page() {
     try {
       const response = await mutation.mutateAsync(formValues);
       toast({ title: response.message });
-
+      console.log(response);
       //@TODO: redirect to /auth/verify-email
     } catch (error) {
       if (error instanceof TRPCClientError) {

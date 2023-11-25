@@ -27,7 +27,7 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
-  adapter: DrizzleAdapter(db, tableCreator),
+  adapter: DrizzleAdapter(db),
   providers: [
     Credentials({
       id: "credentials",
@@ -49,13 +49,13 @@ export const {
           throw new Error("Please enter an email and password");
         }
 
-        console.log(credentials);
         const user = await db.query.users.findFirst({
           where: eq(users.email, credentials.email as string),
         });
+        console.log(user);
+
         if (!user) {
-          console.log("no user");
-          throw new Error("Incorrect email or password, please try again.");
+          return null;
         }
 
         const passwordsMatch = await verify(
@@ -64,14 +64,10 @@ export const {
         );
 
         if (!passwordsMatch) {
-          throw new Error("Incorrect email or password, please try again.");
+          return null;
         }
 
-        return {
-          id: user.id,
-          email: user.email,
-          name: `${user.firstName} ${user.lastName}`,
-        };
+        return user;
       },
     }),
   ],
@@ -83,19 +79,10 @@ export const {
         id: user.id,
       },
     }),
-    jwt: ({ user, token }) => {
-      if (user) {
-        token.id = user.id;
-      }
-      return token;
-    },
   },
 
-  session: {
-    strategy: "jwt",
-  },
-  jwt: { encode, decode },
   pages: {
     signIn: "/auth/login",
   },
+  trustHost: true,
 });

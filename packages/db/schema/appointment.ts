@@ -12,8 +12,7 @@ export const appointments = mySqlTable(
     id: varchar("id", { length: 128 })
       .$defaultFn(() => createId())
       .primaryKey()
-      .notNull()
-      .unique(),
+      .notNull(),
     createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
     updatedAt: timestamp("updatedAt").onUpdateNow(),
 
