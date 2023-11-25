@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useClerk } from "@clerk/nextjs";
 import {
   CalendarIcon,
   ExitIcon,
@@ -11,7 +12,6 @@ import {
   PersonIcon,
 } from "@radix-ui/react-icons";
 import clsx from "clsx";
-import { signOut } from "next-auth/react";
 
 const links = [
   { name: "Home", href: "/dashboard", icon: HomeIcon },
@@ -22,6 +22,7 @@ const links = [
 
 export default function SideNav() {
   const pathname = usePathname();
+  const { signOut } = useClerk();
 
   return (
     <section className="min-h-scren bg-cream w-20 border border-slate-300 duration-300 md:w-72">

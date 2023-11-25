@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { isClerkAPIResponseError, useSignIn } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
+import { TRPCClientError } from "@trpc/client";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -27,6 +28,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const { isLoaded, signIn, setActive } = useSignIn();
   const { toast } = useToast();
   const router = useRouter();
 
@@ -38,39 +40,35 @@ export default function LoginForm() {
     },
   });
 
-  function showToast(
-    title: string,
-    description: string,
-    variant: "default" | "destructive",
-  ) {
-    return toast({
-      title,
-      description,
-      variant,
-    });
-  }
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await signIn("credentials", { ...values, redirect: false });
-
-    if (res?.ok) {
-      showToast("Success!", "Going to dashboard", "default");
-      router.push("/dashboard");
+    if (!isLoaded) {
+      return null;
     }
 
-    if (res?.status === 401) {
-      showToast(
-        "Something went wrong.",
-        "Incorrect email or password, please try again.",
-        "destructive",
-      );
-    }
-    if (res?.status === 500) {
-      showToast(
-        "Uh-oh, something went wrong.",
-        "Please try again later.",
-        "destructive",
-      );
+    try {
+      const result = await signIn?.create({
+        identifier: values.email,
+        password: values.password,
+      });
+      if (result.status === "complete") {
+        toast({
+          title: "Going to dashboard!",
+        });
+        console.log(result);
+        await setActive({ session: result.createdSessionId });
+        router.push("/dashboard");
+      }
+    } catch (error: any) {
+      if (error instanceof TRPCClientError) {
+        toast({
+          title: error.message,
+          variant: "destructive",
+        });
+      }
+      toast({
+        variant: "destructive",
+        title: "Incorrect email or password.",
+      });
     }
   }
 

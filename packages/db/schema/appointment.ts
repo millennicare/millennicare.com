@@ -42,10 +42,10 @@ export const appointmentsRelations = relations(appointments, ({ one }) => ({
   }),
   careseeker: one(careseekers, {
     fields: [appointments.id],
-    references: [careseekers.id],
+    references: [careseekers.userId],
   }),
   caregiver: one(caregivers, {
     fields: [appointments.id],
-    references: [caregivers.id],
+    references: [caregivers.userId],
   }),
 }));

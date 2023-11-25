@@ -1,7 +1,3 @@
-import { redirect } from "next/navigation";
-
-import { auth } from "@millennicare/auth";
-
 import SideNav from "./_components/sidenav";
 
 export default async function DashboardLayout({
@@ -9,12 +5,6 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
-
-  if (!session?.user) {
-    redirect("/");
-  }
-
   return (
     <div className="flex h-screen w-screen flex-row">
       <SideNav />

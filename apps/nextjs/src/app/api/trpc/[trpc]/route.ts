@@ -1,7 +1,6 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-import { appRouter, createTRPCContext } from "@millennicare/api";
-import { auth } from "@millennicare/auth";
+import { appRouter, createContext } from "@millennicare/api";
 
 /**
  * Configure basic CORS headers
@@ -22,19 +21,18 @@ export function OPTIONS() {
   return response;
 }
 
-const handler = auth(async (req) => {
+const handler = async (req: Request) => {
   const response = await fetchRequestHandler({
     endpoint: "/api/trpc",
     router: appRouter,
     req,
-    createContext: () => createTRPCContext({ auth: req.auth, req }),
     onError({ error, path }) {
-      console.error(`>>> tRPC Error on '${path}'`, error);
+      console.error(`>>> tRpc error on '${path}'`, error);
     },
+    createContext: () => createContext(),
   });
 
   setCorsHeaders(response);
   return response;
-});
-
+};
 export { handler as GET, handler as POST };

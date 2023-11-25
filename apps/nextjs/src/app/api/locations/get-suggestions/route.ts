@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       }),
     );
     if (!response.Results) {
-      return;
+      return NextResponse.json({ status: 400, message: "Bad request" });
     }
     const suggestion = response.Results[0];
     const elems = suggestion!.Text!.split(",");

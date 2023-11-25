@@ -26,8 +26,8 @@ const formSchema = z.object({
   email: z.string().email(),
   password: z
     .string()
-    .min(4, "Password must be between 4 and 20 characters.")
-    .max(20, "Password must be between 4 and 20 characters."),
+    .min(6, "Password must be between 6 and 20 characters.")
+    .max(20, "Password must be between 6 and 20 characters."),
   phoneNumber: z.string().refine(validator.isMobilePhone),
 });
 
@@ -54,8 +54,7 @@ export default function PersonalInfoForm({
     } catch (error) {
       if (error instanceof TRPCClientError) {
         toast({
-          title: "Something went wrong.",
-          description: error.message,
+          title: error.message,
           variant: "destructive",
         });
         return;

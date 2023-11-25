@@ -12,11 +12,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@millennicare/auth": "workspace:^0.1.0",
+    "@clerk/nextjs": "^4.27.2",
     "@millennicare/db": "workspace:^0.1.0",
     "@trpc/client": "next",
     "@trpc/server": "next",
-    "jsonwebtoken": "^9.0.2",
     "superjson": "2.2.0",
     "validator": "^13.11.0",
     "zod": "^3.22.2"
@@ -25,9 +24,9 @@
     "@millennicare/eslint-config": "workspace:^0.2.0",
     "@millennicare/prettier-config": "workspace:^0.1.0",
     "@millennicare/tsconfig": "workspace:^0.1.0",
-    "eslint": "^8.53.0",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/validator": "^13.11.7",
+    "eslint": "^8.53.0",
     "prettier": "^3.1.0",
     "typescript": "^5.2.2"
   },

@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { TRPCClientError } from "@trpc/client";
+import { useRouter } from "next/navigation";
+import { useSignUp } from "@clerk/nextjs";
 
 import { useToast } from "~/components/ui/use-toast";
 import { api } from "~/utils/api";
@@ -50,6 +51,8 @@ const titles = [
 ];
 
 export default function Page() {
+  const router = useRouter();
+  const { isLoaded, signUp, setActive } = useSignUp();
   const [step, setStep] = useState<number>(0);
   const [formValues, setFormValues] = useState<IUser>({
     firstName: "",
@@ -69,25 +72,49 @@ export default function Page() {
   const mutation = api.user.careseekerRegister.useMutation();
 
   async function submit() {
+    if (!isLoaded) {
+      console.log("not loaded");
+      return null;
+    }
+
     try {
-      const response = await mutation.mutateAsync(formValues);
-      toast({ title: response.message });
-      console.log(response);
-      //@TODO: redirect to /auth/verify-email
-    } catch (error) {
-      if (error instanceof TRPCClientError) {
-        toast({
-          title: "Uh-oh",
-          description: error.message,
-          variant: "destructive",
-        });
+      const res = await signUp.create({
+        emailAddress: formValues.email,
+        password: formValues.password,
+      });
+
+      const id = res.createdUserId;
+
+      if (!id) {
+        // some error occurred
         return;
       }
-      toast({
-        title: "Uh-oh",
-        description: "Something went wrong, please try again later.",
-        variant: "destructive",
+      // after user has been created in clerk, initiate registration process
+      // in backend
+      await mutation.mutateAsync({
+        id: id,
+        firstName: formValues.firstName,
+        lastName: formValues.lastName,
+        email: formValues.email,
+        birthdate: formValues.birthdate,
+        profilePicture: formValues.profilePicture,
+        phoneNumber: formValues.phoneNumber,
+        userType: "careseeker",
+        children: formValues.children,
+        latitude: formValues.latitude,
+        longitude: formValues.longitude,
       });
+
+      await setActive({ session: res.createdSessionId });
+      router.push("/dashboard");
+    } catch (error: any) {
+      if (error.code === 422) {
+        toast({
+          title: "Please use a more secure password",
+          variant: "destructive",
+        });
+      }
+      console.log(error);
     }
   }
 
