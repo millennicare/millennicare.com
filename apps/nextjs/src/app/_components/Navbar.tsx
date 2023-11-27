@@ -54,7 +54,7 @@ export default function Navbar() {
       <div className="flex">
         {navItems}
         <Button variant="secondary" size="lg" className="text-lg text-white">
-          <Link href="/auth/login">Login</Link>
+          <Link href="/sign-in">Login</Link>
         </Button>
       </div>
     </div>

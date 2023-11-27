@@ -32,8 +32,7 @@ export type IUser = {
   profilePicture?: string;
   biography?: string;
   userType: "careseeker" | "caregiver" | "admin";
-  longitude: number;
-  latitude: number;
+  zipCode: string;
 };
 
 export type FormProps = {
@@ -52,8 +51,12 @@ const titles = [
 
 export default function Page() {
   const router = useRouter();
+  const [step, setStep] = useState(0);
+  // States needed to track clerk verification
+  const [verifying, setVerifying] = useState(false);
+  const [code, setCode] = useState("");
   const { isLoaded, signUp, setActive } = useSignUp();
-  const [step, setStep] = useState<number>(0);
+
   const [formValues, setFormValues] = useState<IUser>({
     firstName: "",
     lastName: "",
@@ -64,37 +67,84 @@ export default function Page() {
     phoneNumber: "",
     userType: "careseeker",
     children: [],
-    latitude: 0,
-    longitude: 0,
+    zipCode: "",
   });
 
   const { toast } = useToast();
   const mutation = api.user.careseekerRegister.useMutation();
 
-  async function submit() {
-    if (!isLoaded) {
-      return null;
-    }
-    console.log("formValues", JSON.stringify(formValues, null, 2));
+  async function handleClerkSubmit() {
+    if (!isLoaded) return;
+
     try {
-      const res = await signUp.create({
+      await signUp.create({
         emailAddress: formValues.email,
         password: formValues.password,
       });
-      if (res.status === "complete") {
-        console.log(res);
-        setActive({ session: res.createdSessionId });
-      } else {
-        console.log("something went wrong");
-        console.log(res);
+
+      await signUp.prepareEmailAddressVerification({
+        strategy: "email_code",
+      });
+
+      setVerifying(true);
+    } catch (error) {
+      console.error("Error", JSON.stringify(error, null, 2));
+    }
+  }
+
+  async function handleVerify(e: React.FormEvent) {
+    e.preventDefault();
+    if (!isLoaded) return;
+
+    try {
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code,
+      });
+
+      if (completeSignUp.status !== "complete") {
+        console.log(JSON.stringify(completeSignUp, null, 2));
       }
-      const id = res.createdUserId;
-      if (!id) {
-        console.log("no id generated");
+
+      if (completeSignUp.status === "complete") {
+        await setActive({ session: completeSignUp.createdSessionId });
+      }
+
+      const userId = completeSignUp.createdUserId;
+
+      if (!userId) {
+        console.log("user id not created");
         return;
       }
+      await completeCareseekerRegistration(userId);
+    } catch (error) {
+      console.error("Error:", JSON.stringify(error, null, 2));
+    }
+  }
+
+  async function completeCareseekerRegistration(userId: string) {
+    try {
+      const locationRes = await fetch("/api/locations/get-details", {
+        method: "POST",
+        body: JSON.stringify({ zipCode: formValues.zipCode }),
+      });
+
+      if (!locationRes.ok) {
+        toast({
+          title: "Something went wrong.",
+          description: "Please try again later.",
+          variant: "destructive",
+        });
+        return;
+      }
+      const { coordinates } = (await locationRes.json()) as {
+        coordinates: {
+          latitude: number;
+          longitude: number;
+        };
+      };
+
       await mutation.mutateAsync({
-        id: id,
+        id: userId,
         firstName: formValues.firstName,
         lastName: formValues.lastName,
         email: formValues.email,
@@ -103,12 +153,18 @@ export default function Page() {
         phoneNumber: formValues.phoneNumber,
         userType: "careseeker",
         children: formValues.children,
-        latitude: formValues.latitude,
-        longitude: formValues.longitude,
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
       });
       router.push("/dashboard");
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      if (error.errors[0].message) {
+        console.error("error", error.errors[0].message);
+        toast({
+          title: "Incorrect email or password.",
+          variant: "destructive",
+        });
+      }
     }
   }
 
@@ -155,10 +211,25 @@ export default function Page() {
 
   function handleNext() {
     if (step === 2) {
-      void submit();
+      void handleClerkSubmit();
       return;
     }
     setStep((prev) => prev + 1);
+  }
+
+  if (verifying) {
+    return (
+      <form onSubmit={handleVerify}>
+        <label id="code">Code</label>
+        <input
+          value={code}
+          id="code"
+          name="code"
+          onChange={(e) => setCode(e.target.value)}
+        />
+        <button type="submit">Complete Sign Up</button>
+      </form>
+    );
   }
 
   return (

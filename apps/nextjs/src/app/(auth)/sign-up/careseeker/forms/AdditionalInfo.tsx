@@ -24,7 +24,6 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 import { Textarea } from "~/components/ui/textarea";
-import { useToast } from "~/components/ui/use-toast";
 import { cn } from "~/lib/utils";
 import type { FormProps } from "../page";
 
@@ -34,7 +33,7 @@ const formSchema = z.object({
   profilePicture: z.any(),
   birthdate: z.coerce.date(),
   biography: z.string().optional(),
-  zipCode: z.string(),
+  zipCode: z.string().regex(zipCodeReg),
 });
 
 export default function AdditionalInfoForm({
@@ -50,8 +49,6 @@ export default function AdditionalInfoForm({
     mode: "onSubmit",
   });
   const watchZipCode = form.watch("zipCode");
-
-  const { toast } = useToast();
 
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
@@ -80,30 +77,6 @@ export default function AdditionalInfoForm({
   }, [watchZipCode]);
 
   async function handleSave(values: z.infer<typeof formSchema>) {
-    let lat = 0,
-      long = 0;
-    try {
-      const res = await fetch("/api/locations/get-details", {
-        method: "POST",
-        body: JSON.stringify({ zipCode: watchZipCode }),
-      });
-
-      const { coordinates } = (await res.json()) as {
-        coordinates: {
-          latitude: number;
-          longitude: number;
-        };
-      };
-      lat = coordinates.latitude;
-      long = coordinates.longitude;
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Something went wrong.",
-        description: "Error fetching location details.",
-      });
-    }
-
     setUploading(true);
     let profileLink: string | undefined = undefined;
 
@@ -132,10 +105,7 @@ export default function AdditionalInfoForm({
       ...prev,
       ...values,
       profilePicture: profileLink,
-      latitude: lat,
-      longitude: long,
     }));
-
     handleNext();
   }
 

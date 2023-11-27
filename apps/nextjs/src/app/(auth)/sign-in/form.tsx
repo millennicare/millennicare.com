@@ -46,7 +46,7 @@ export default function LoginForm() {
     }
 
     try {
-      const result = await signIn?.create({
+      const result = await signIn.create({
         identifier: values.email,
         password: values.password,
       });
@@ -54,11 +54,17 @@ export default function LoginForm() {
         toast({
           title: "Going to dashboard!",
         });
-        console.log(result);
         await setActive({ session: result.createdSessionId });
         router.push("/dashboard");
       }
-    } catch (error) {
+    } catch (error: any) {
+      // this is a clerk error
+      if (error.errors[0].message) {
+        toast({
+          title: "Incorrect email or password.",
+          variant: "destructive",
+        });
+      }
       if (error instanceof TRPCClientError) {
         toast({
           title: error.message,
@@ -142,13 +148,13 @@ export default function LoginForm() {
 
             <div className="mb-2 mt-4 flex items-center justify-between">
               <Button variant="link" className="p-0">
-                <Link href="/auth/forgot-password">
+                <Link href="/forgot-password">
                   <p className="text-center text-sm">Forgot password?</p>
                 </Link>
               </Button>
 
               <Button variant="link" className="p-0">
-                <Link href="register">
+                <Link href="/sign-up">
                   <p className="text-center text-sm">
                     Don&apos;t have an account?
                   </p>
