@@ -41,9 +41,7 @@ export default function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!isLoaded) {
-      return null;
-    }
+    if (!isLoaded) return null;
 
     try {
       const result = await signIn.create({
@@ -84,11 +82,10 @@ export default function LoginForm() {
         <div className="flex justify-center">
           <Link className="flex items-center text-white" href="/">
             <Image
-              className="h-24 w-auto"
               src="/millennicare_logo.png"
               alt="Workflow"
-              height={300}
-              width={300}
+              height={96}
+              width={96}
               priority={true}
             />
           </Link>

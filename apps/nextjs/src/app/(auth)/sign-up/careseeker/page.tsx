@@ -10,38 +10,10 @@ import { api } from "~/utils/api";
 import {
   AdditionalInfoForm,
   PersonalInfoForm,
+  VerifyForm,
   WhoNeedsCareForm,
 } from "./forms";
-
-export type IChild = {
-  name: string;
-  age: number;
-};
-
-export type IUser = {
-  // first step
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  password: string;
-  // second step
-  children: IChild[];
-  // third step
-  birthdate: Date;
-  profilePicture?: string;
-  biography?: string;
-  userType: "careseeker" | "caregiver" | "admin";
-  zipCode: string;
-};
-
-export type FormProps = {
-  formValues: IUser;
-  setFormValues: React.Dispatch<React.SetStateAction<IUser>>;
-  handleBack: () => void;
-  handleNext: () => void;
-  step: number;
-};
+import type { IUser } from "./types";
 
 const titles = [
   "Personal Information",
@@ -53,9 +25,8 @@ export default function Page() {
   const router = useRouter();
   const [step, setStep] = useState(0);
   // States needed to track clerk verification
-  const [verifying, setVerifying] = useState(false);
-  const [code, setCode] = useState("");
-  const { isLoaded, signUp, setActive } = useSignUp();
+  const [userId, setUserId] = useState("");
+  const { isLoaded, signUp } = useSignUp();
 
   const [formValues, setFormValues] = useState<IUser>({
     firstName: "",
@@ -73,55 +44,91 @@ export default function Page() {
   const { toast } = useToast();
   const mutation = api.user.careseekerRegister.useMutation();
 
+  function displayStep(step: number) {
+    switch (step) {
+      case 0:
+        return (
+          <PersonalInfoForm
+            formValues={formValues}
+            setFormValues={setFormValues}
+            handleBack={handleBack}
+            handleNext={handleNext}
+            step={step}
+          />
+        );
+      case 1:
+        return (
+          <WhoNeedsCareForm
+            formValues={formValues}
+            setFormValues={setFormValues}
+            handleBack={handleBack}
+            handleNext={handleNext}
+            step={step}
+          />
+        );
+      case 2:
+        return (
+          <AdditionalInfoForm
+            formValues={formValues}
+            setFormValues={setFormValues}
+            handleBack={handleBack}
+            handleNext={handleNext}
+            step={step}
+          />
+        );
+      case 3:
+        return (
+          <VerifyForm
+            formValues={formValues}
+            setFormValues={setFormValues}
+            handleBack={handleBack}
+            handleNext={handleNext}
+            step={step}
+            setUserId={setUserId}
+          />
+        );
+      default:
+        console.log("no step");
+    }
+  }
+
+  function handleBack() {
+    if (step !== 0) setStep((prev) => prev - 1);
+  }
+
+  function handleNext() {
+    if (step === 2) {
+      void handleClerkSubmit();
+      return;
+    }
+    if (step === 3) {
+      void finishRegister();
+      return;
+    }
+    setStep((prev) => prev + 1);
+  }
+
   async function handleClerkSubmit() {
     if (!isLoaded) return;
 
+    const promise1 = signUp.create({
+      emailAddress: formValues.email,
+      password: formValues.password,
+    });
+    const promise2 = signUp.prepareEmailAddressVerification({
+      strategy: "email_code",
+    });
     try {
-      await signUp.create({
-        emailAddress: formValues.email,
-        password: formValues.password,
-      });
-
-      await signUp.prepareEmailAddressVerification({
-        strategy: "email_code",
-      });
-
-      setVerifying(true);
+      await Promise.all([promise1, promise2]);
+      console.log("going to verify form");
+      handleNext();
     } catch (error) {
       console.error("Error", JSON.stringify(error, null, 2));
     }
   }
 
-  async function handleVerify(e: React.FormEvent) {
-    e.preventDefault();
-    if (!isLoaded) return;
-
-    try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code,
-      });
-
-      if (completeSignUp.status !== "complete") {
-        console.log(JSON.stringify(completeSignUp, null, 2));
-      }
-
-      if (completeSignUp.status === "complete") {
-        await setActive({ session: completeSignUp.createdSessionId });
-      }
-
-      const userId = completeSignUp.createdUserId;
-
-      if (!userId) {
-        console.log("user id not created");
-        return;
-      }
-      await completeCareseekerRegistration(userId);
-    } catch (error) {
-      console.error("Error:", JSON.stringify(error, null, 2));
-    }
-  }
-
-  async function completeCareseekerRegistration(userId: string) {
+  async function finishRegister() {
+    console.log("in finish register");
     try {
       const locationRes = await fetch("/api/locations/get-details", {
         method: "POST",
@@ -156,6 +163,7 @@ export default function Page() {
         latitude: coordinates.latitude,
         longitude: coordinates.longitude,
       });
+
       router.push("/dashboard");
     } catch (error: any) {
       if (error.errors[0].message) {
@@ -168,79 +176,15 @@ export default function Page() {
     }
   }
 
-  function displayStep(step: number) {
-    switch (step) {
-      case 0:
-        return (
-          <PersonalInfoForm
-            formValues={formValues}
-            setFormValues={setFormValues}
-            handleBack={handleBack}
-            handleNext={handleNext}
-            step={step}
-          />
-        );
-      case 1:
-        return (
-          <WhoNeedsCareForm
-            formValues={formValues}
-            setFormValues={setFormValues}
-            handleBack={handleBack}
-            handleNext={handleNext}
-            step={step}
-          />
-        );
-      case 2:
-        return (
-          <AdditionalInfoForm
-            formValues={formValues}
-            setFormValues={setFormValues}
-            handleBack={handleBack}
-            handleNext={handleNext}
-            step={step}
-          />
-        );
-      default:
-        console.log("no step");
-    }
-  }
-
-  function handleBack() {
-    if (step !== 0) setStep((prev) => prev - 1);
-  }
-
-  function handleNext() {
-    if (step === 2) {
-      void handleClerkSubmit();
-      return;
-    }
-    setStep((prev) => prev + 1);
-  }
-
-  if (verifying) {
-    return (
-      <form onSubmit={handleVerify}>
-        <label id="code">Code</label>
-        <input
-          value={code}
-          id="code"
-          name="code"
-          onChange={(e) => setCode(e.target.value)}
-        />
-        <button type="submit">Complete Sign Up</button>
-      </form>
-    );
-  }
-
   return (
     <div className="bg-palecream flex min-h-screen flex-col items-center justify-center space-y-4 py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex flex-col items-center justify-center space-y-4">
           <Image
             src="/millennicare_logo.png"
-            alt="Workflow"
-            height={85}
-            width={85}
+            alt="MillenniCare logo"
+            height={96}
+            width={96}
             priority={true}
           />
           <h2 className="text-xl">{titles[step]}</h2>

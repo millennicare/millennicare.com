@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
 import {
   CalendarIcon,
@@ -13,6 +13,8 @@ import {
 } from "@radix-ui/react-icons";
 import clsx from "clsx";
 
+import { router } from "@millennicare/api/src/trpc";
+
 const links = [
   { name: "Home", href: "/dashboard", icon: HomeIcon },
   { name: "Appointments", href: "/dashboard/appointments", icon: CalendarIcon },
@@ -22,6 +24,7 @@ const links = [
 
 export default function SideNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const { signOut } = useClerk();
 
   return (
@@ -59,8 +62,8 @@ export default function SideNav() {
 
         <button
           className="flex cursor-pointer flex-row items-center justify-start border-t border-slate-300 py-4 hover:bg-slate-300 md:w-full md:pl-6"
-          onClick={() => signOut()}
-          onKeyDown={() => signOut()}
+          onClick={() => signOut(() => router.push("/"))}
+          onKeyDown={() => signOut(() => router.push("/"))}
         >
           <ExitIcon className="w-6" />
           <p className="ml-3 hidden md:block">Logout</p>

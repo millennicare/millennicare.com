@@ -41,11 +41,12 @@ export default function Page() {
         </div>
 
         <Image
-          className="max-h-2xl h-auto min-w-[20rem] max-w-xs self-center px-5 pt-3"
+          className="max-w-xs"
           src="/welcome_screen_portrait.png"
-          height={700}
+          height={100}
           width={400}
           alt="Welcome screen portrait"
+          priority={true}
         />
       </div>
 
@@ -54,7 +55,7 @@ export default function Page() {
         className="bg-cream flex flex-col-reverse items-center justify-center px-20 pt-10 md:flex-row  md:space-x-48 md:pb-5 lg:pb-0"
       >
         <Image
-          className="max-h-2xl h-auto min-w-[20rem] max-w-xs self-center px-5 pt-3"
+          className="max-w-xs"
           src="/dashboard_screen.png"
           height={700}
           width={400}

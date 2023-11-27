@@ -25,7 +25,7 @@ import {
 } from "~/components/ui/popover";
 import { Textarea } from "~/components/ui/textarea";
 import { cn } from "~/lib/utils";
-import type { FormProps } from "../page";
+import type { FormProps } from "../types";
 
 const zipCodeReg = new RegExp(/^\b\d{5}(-\d{4})?\b$/);
 
