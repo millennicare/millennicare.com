@@ -94,7 +94,7 @@ export default function Page() {
     if (step !== 0) setStep((prev) => prev - 1);
   }
 
-  async function handleNext() {
+  function handleNext() {
     if (step === 3) {
       void finishRegister();
       return;

@@ -4,7 +4,7 @@ export interface IChild {
 }
 
 export interface IUser {
-  userId: string
+  userId: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;

@@ -28,7 +28,6 @@ interface IVerifyFormProps extends FormProps {
 export default function VerifyForm({
   handleNext,
   formValues,
-  setFormValues,
   userIdRef,
 }: IVerifyFormProps) {
   const { isLoaded, signUp, setActive } = useSignUp();
