@@ -141,14 +141,11 @@ export default function Page() {
         });
 
         router.push("/dashboard");
-      } catch (error: any) {
-        if (error.errors[0].message) {
-          console.error("error", error.errors[0].message);
-          toast({
-            title: "Incorrect email or password.",
-            variant: "destructive",
-          });
-        }
+      } catch (error) {
+        toast({
+          title: "Incorrect email or password.",
+          variant: "destructive",
+        });
       }
     }
 

@@ -13,8 +13,6 @@ import {
 } from "@radix-ui/react-icons";
 import clsx from "clsx";
 
-import { router } from "@millennicare/api/src/trpc";
-
 const links = [
   { name: "Home", href: "/dashboard", icon: HomeIcon },
   { name: "Appointments", href: "/dashboard/appointments", icon: CalendarIcon },
