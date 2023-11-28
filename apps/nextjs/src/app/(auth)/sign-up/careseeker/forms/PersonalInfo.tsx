@@ -18,7 +18,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { useToast } from "~/components/ui/use-toast";
 import { api } from "~/utils/api";
-import type { FormProps } from "../page";
+import type { FormProps } from "../types";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -26,8 +26,8 @@ const formSchema = z.object({
   email: z.string().email(),
   password: z
     .string()
-    .min(4, "Password must be between 4 and 20 characters.")
-    .max(20, "Password must be between 4 and 20 characters."),
+    .min(8, "Password must be between 8 and 20 characters.")
+    .max(20, "Password must be between 8 and 20 characters."),
   phoneNumber: z.string().refine(validator.isMobilePhone),
 });
 
@@ -42,7 +42,7 @@ export default function PersonalInfoForm({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: formValues,
-    mode: "onSubmit",
+    mode: "onTouched",
   });
   const mutation = api.user.findDuplicateEmail.useMutation();
 
@@ -54,8 +54,7 @@ export default function PersonalInfoForm({
     } catch (error) {
       if (error instanceof TRPCClientError) {
         toast({
-          title: "Something went wrong.",
-          description: error.message,
+          title: error.message,
           variant: "destructive",
         });
         return;

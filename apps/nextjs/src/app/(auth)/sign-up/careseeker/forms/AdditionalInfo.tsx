@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSignUp } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import format from "date-fns/format";
@@ -26,7 +27,7 @@ import {
 import { Textarea } from "~/components/ui/textarea";
 import { useToast } from "~/components/ui/use-toast";
 import { cn } from "~/lib/utils";
-import type { FormProps } from "../page";
+import type { FormProps } from "../types";
 
 const zipCodeReg = new RegExp(/^\b\d{5}(-\d{4})?\b$/);
 
@@ -34,7 +35,7 @@ const formSchema = z.object({
   profilePicture: z.any(),
   birthdate: z.coerce.date(),
   biography: z.string().optional(),
-  zipCode: z.string(),
+  zipCode: z.string().regex(zipCodeReg),
 });
 
 export default function AdditionalInfoForm({
@@ -44,14 +45,15 @@ export default function AdditionalInfoForm({
   handleNext,
   step,
 }: FormProps) {
+  const { isLoaded, signUp } = useSignUp();
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: formValues,
     mode: "onSubmit",
   });
   const watchZipCode = form.watch("zipCode");
-
-  const { toast } = useToast();
 
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
@@ -80,30 +82,6 @@ export default function AdditionalInfoForm({
   }, [watchZipCode]);
 
   async function handleSave(values: z.infer<typeof formSchema>) {
-    let lat = 0,
-      long = 0;
-    try {
-      const res = await fetch("/api/locations/get-details", {
-        method: "POST",
-        body: JSON.stringify({ zipCode: watchZipCode }),
-      });
-
-      const { coordinates } = (await res.json()) as {
-        coordinates: {
-          latitude: number;
-          longitude: number;
-        };
-      };
-      lat = coordinates.latitude;
-      long = coordinates.longitude;
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Something went wrong.",
-        description: "Error fetching location details.",
-      });
-    }
-
     setUploading(true);
     let profileLink: string | undefined = undefined;
 
@@ -132,12 +110,30 @@ export default function AdditionalInfoForm({
       ...prev,
       ...values,
       profilePicture: profileLink,
-      latitude: lat,
-      longitude: long,
     }));
+    await handleClerkSubmit();
+  }
 
-    console.log(formValues);
-    handleNext();
+  async function handleClerkSubmit() {
+    if (!isLoaded) return;
+
+    try {
+      await signUp.create({
+        emailAddress: formValues.email,
+        password: formValues.password,
+      });
+      await signUp.prepareEmailAddressVerification({
+        strategy: "email_code",
+      });
+      handleNext();
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Uh-oh, something went wrong.",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    }
   }
 
   return (

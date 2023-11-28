@@ -1,38 +1,28 @@
 import { TRPCError } from "@trpc/server";
-import * as argon from "argon2";
 import * as dotenv from "dotenv";
-import * as jwt from "jsonwebtoken";
 import validator from "validator";
 import * as z from "zod";
 
 import { eq } from "@millennicare/db";
+import { addresses as addressSchema } from "@millennicare/db/schema/address";
 import {
   careseekers as careseekerSchema,
   users as userSchema,
 } from "@millennicare/db/schema/auth";
 import { children as childSchema } from "@millennicare/db/schema/child";
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 dotenv.config({
   path: "../../../../.env",
 });
 
-function generateToken(userId: string) {
-  if (!process.env.JWT_SECRET) {
-    throw new Error("JWT_SECRET is not set");
-  }
-
-  const token = jwt.sign(userId, process.env.JWT_SECRET, { expiresIn: "24h" });
-
-  return token;
-}
-
-export const userRouter = createTRPCRouter({
+export const userRouter = router({
   getMe: protectedProcedure.query(async ({ ctx }) => {
-    const { db, session } = ctx;
+    const { userId, db } = ctx;
+
     const user = await db.query.users.findFirst({
-      where: eq(userSchema.id, session.user.id),
+      where: eq(userSchema.id, userId),
     });
 
     return user;
@@ -40,78 +30,72 @@ export const userRouter = createTRPCRouter({
   careseekerRegister: publicProcedure
     .input(
       z.object({
+        id: z.string(),
         firstName: z.string(),
         lastName: z.string(),
-        email: z.string().email(),
-        password: z.string(),
+        email: z.string(),
         birthdate: z.date(),
-        profilePicture: z.union([z.string(), z.undefined()]),
+        profilePicture: z.string().optional(),
         phoneNumber: z.string().refine(validator.isMobilePhone),
-        userType: z.enum(["careseeker", "caregiver", "admin"]),
-        // careseeker fields
+        userType: z.enum(["careseeker", "caregiver"]),
         children: z.array(
           z.object({
+            age: z.number(),
             name: z.string(),
-            age: z.number().int(),
           }),
         ),
+        latitude: z.number(),
+        longitude: z.number(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
-      const existingUser = await db.query.users.findFirst({
-        where: eq(userSchema.email, input.email),
-      });
-
-      if (existingUser) {
-        throw new TRPCError({
-          code: "CONFLICT",
-          message: "A user already exists with this email address.",
-        });
-      }
-
-      const hashedPassword = await argon.hash(input.password);
-      const { children, ...rest } = input;
-
-      const res = await db.transaction(async (tx) => {
+      await db.transaction(async (tx) => {
         // first create user record
-        const user = await tx
-          .insert(userSchema)
-          .values({ ...rest, password: hashedPassword });
+        await tx.insert(userSchema).values({
+          id: input.id,
+          firstName: input.firstName,
+          lastName: input.lastName,
+          email: input.email,
+          birthdate: input.birthdate,
+          profilePicture: input.profilePicture,
+          phoneNumber: input.phoneNumber,
+          userType: "careseeker",
+        });
+        // then location
+        await tx.insert(addressSchema).values({
+          userId: input.id,
+          latitude: input.latitude,
+          longitude: input.longitude,
+        });
+        // then careseeker
+        await tx.insert(careseekerSchema).values({
+          userId: input.id,
+        });
 
-        // then careseeker record
-        const careseeker = await tx
-          .insert(careseekerSchema)
-          .values({ userId: user.insertId });
-
-        // create child record
-        const careseekerId = careseeker.insertId;
+        // then kids
         await tx.insert(childSchema).values(
-          children.map((child) => {
-            return { name: child.name, age: child.age, careseekerId };
+          input.children.map((child) => {
+            return {
+              careseekerId: input.id,
+              age: child.age,
+              name: child.name,
+            };
           }),
         );
-
-        return user.insertId;
       });
-
-      // send confirmation email
-      const token = generateToken(res);
-
-      return { message: "Sign up successful.", token };
     }),
   findDuplicateEmail: publicProcedure
     .input(z.object({ email: z.string().email() }))
     .mutation(async ({ ctx, input }) => {
-      const { db } = ctx;
-      const user = await db.query.users.findFirst({
+      const user = await ctx.db.query.users.findFirst({
         where: eq(userSchema.email, input.email),
       });
 
-      if (!user) {
+      if (user) {
         throw new TRPCError({
-          code: "UNAUTHORIZED",
+          code: "CONFLICT",
           message: "A user already exists with this email address.",
         });
       }

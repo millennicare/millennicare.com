@@ -24,6 +24,10 @@ export async function POST(request: NextRequest) {
     const body = (await request.json()) as {
       zipCode: string;
     };
+
+    if (body.zipCode.length !== 5) {
+      return NextResponse.json({ status: 400, message: "Bad request" });
+    }
     const response = await client.send(
       new SearchPlaceIndexForTextCommand({
         IndexName: "UsEastPlaceIndex",

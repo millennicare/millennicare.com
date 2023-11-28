@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSignIn } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
+import { TRPCClientError } from "@trpc/client";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -27,6 +28,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const { isLoaded, signIn, setActive } = useSignIn();
   const { toast } = useToast();
   const router = useRouter();
 
@@ -38,34 +40,39 @@ export default function LoginForm() {
     },
   });
 
-  function showToast(
-    title: string,
-    description: string,
-    variant: "default" | "destructive",
-  ) {
-    return toast({
-      title,
-      description,
-      variant,
-    });
-  }
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await signIn("credentials", { ...values, redirect: false });
+    if (!isLoaded) return null;
 
-    if (res?.ok) {
-      showToast("Success!", "Going to dashboard", "default");
-      router.push("/dashboard");
-    }
-    if (res?.status === 401 && res.error) {
-      showToast("Something went wrong.", res.error, "destructive");
-    }
-    if (res?.status === 500) {
-      showToast(
-        "Uh-oh, something went wrong.",
-        "Please try again later.",
-        "destructive",
-      );
+    try {
+      const result = await signIn.create({
+        identifier: values.email,
+        password: values.password,
+      });
+      if (result.status === "complete") {
+        toast({
+          title: "Going to dashboard!",
+        });
+        await setActive({ session: result.createdSessionId });
+        router.push("/dashboard");
+      }
+    } catch (error: any) {
+      // this is a clerk error
+      if (error.errors[0].message) {
+        toast({
+          title: "Incorrect email or password.",
+          variant: "destructive",
+        });
+      }
+      if (error instanceof TRPCClientError) {
+        toast({
+          title: error.message,
+          variant: "destructive",
+        });
+      }
+      toast({
+        variant: "destructive",
+        title: "Incorrect email or password.",
+      });
     }
   }
 
@@ -75,11 +82,10 @@ export default function LoginForm() {
         <div className="flex justify-center">
           <Link className="flex items-center text-white" href="/">
             <Image
-              className="h-24 w-auto"
               src="/millennicare_logo.png"
               alt="Workflow"
-              height={300}
-              width={300}
+              height={96}
+              width={96}
               priority={true}
             />
           </Link>
@@ -139,13 +145,13 @@ export default function LoginForm() {
 
             <div className="mb-2 mt-4 flex items-center justify-between">
               <Button variant="link" className="p-0">
-                <Link href="/auth/forgot-password">
+                <Link href="/forgot-password">
                   <p className="text-center text-sm">Forgot password?</p>
                 </Link>
               </Button>
 
               <Button variant="link" className="p-0">
-                <Link href="register">
+                <Link href="/sign-up">
                   <p className="text-center text-sm">
                     Don&apos;t have an account?
                   </p>

@@ -13,7 +13,7 @@ import {
   FormLabel,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import type { FormProps } from "../page";
+import type { FormProps } from "../types";
 
 const formSchema = z.object({
   children: z.array(

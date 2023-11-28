@@ -12,8 +12,7 @@ export const appointments = mySqlTable(
     id: varchar("id", { length: 128 })
       .$defaultFn(() => createId())
       .primaryKey()
-      .notNull()
-      .unique(),
+      .notNull(),
     createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
     updatedAt: timestamp("updatedAt").onUpdateNow(),
 
@@ -43,10 +42,10 @@ export const appointmentsRelations = relations(appointments, ({ one }) => ({
   }),
   careseeker: one(careseekers, {
     fields: [appointments.id],
-    references: [careseekers.id],
+    references: [careseekers.userId],
   }),
   caregiver: one(caregivers, {
     fields: [appointments.id],
-    references: [caregivers.id],
+    references: [caregivers.userId],
   }),
 }));
