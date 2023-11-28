@@ -28,10 +28,10 @@ export const reviews = mySqlTable(
 export const reviewRelations = relations(reviews, ({ one }) => ({
   caregiver: one(caregivers, {
     fields: [reviews.id],
-    references: [caregivers.id],
+    references: [caregivers.userId],
   }),
   careseeker: one(careseekers, {
     fields: [reviews.id],
-    references: [careseekers.id],
+    references: [careseekers.userId],
   }),
 }));

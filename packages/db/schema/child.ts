@@ -26,6 +26,6 @@ export const children = mySqlTable(
 export const childRelations = relations(children, ({ one }) => ({
   careseeker: one(careseekers, {
     fields: [children.id],
-    references: [careseekers.id],
+    references: [careseekers.userId],
   }),
 }));

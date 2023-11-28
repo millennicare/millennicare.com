@@ -10,7 +10,7 @@ export default function Page() {
         <div className="flex w-1/2 flex-col space-y-3 rounded-xl border border-gray-500 bg-white p-4">
           <p className="text-xl font-semibold">I am a careseeker</p>
           <p>Create a profile and start your search</p>
-          <Link href="/auth/register/careseeker">
+          <Link href="/sign-up/careseeker">
             <Button variant="secondary" className="w-full">
               Find care
             </Button>
@@ -20,7 +20,7 @@ export default function Page() {
         <div className="flex w-1/2 flex-col space-y-3 rounded-xl border border-gray-500 bg-white p-4">
           <p className="text-xl font-semibold">I am a caregiver</p>
           <p>Create a profile and search for jobs</p>
-          <Link href="/auth/register/caregiver">
+          <Link href="/sign-up/caregiver">
             <Button variant="secondary" className="w-full">
               Find jobs
             </Button>
