@@ -44,7 +44,7 @@ export default function PersonalInfoForm({
     defaultValues: formValues,
     mode: "onTouched",
   });
-  const mutation = api.user.findDuplicateEmail.useMutation();
+  const mutation = api.auth.findDuplicateEmail.useMutation();
 
   async function handleSave(values: z.infer<typeof formSchema>) {
     try {
