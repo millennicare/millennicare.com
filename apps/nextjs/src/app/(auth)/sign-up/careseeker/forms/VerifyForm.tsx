@@ -72,10 +72,16 @@ export default function VerifyForm({
 
   return (
     <Form {...form}>
-      <p className="text-sm">
-        We`&apos;'ve sent an email to <strong>{formValues.email}</strong>.
-        Please verify your email by entering the code you received.
-      </p>
+      <div className="text-center">
+        <p className="text-sm">
+          We&apos;ve sent an email to{" "}
+          <span className="font-medium">{formValues.email}</span>.
+        </p>
+        <p className="text-sm">
+          Please verify your email by entering the code you received.
+        </p>
+      </div>
+
       <form
         onSubmit={form.handleSubmit(handleVerify)}
         className="mt-4 flex flex-col justify-center space-y-4"
@@ -93,10 +99,9 @@ export default function VerifyForm({
             </FormItem>
           )}
         />
-        <div className="flex justify-end">
-          <Button type="submit" className="w-1/3">
-            Verify
-          </Button>
+        <div className="flex justify-end space-x-4">
+          <Button variant="outline">Resend email</Button>
+          <Button type="submit">Verify</Button>
         </div>
       </form>
     </Form>
