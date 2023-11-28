@@ -24,16 +24,19 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
     if (!isLoaded) return null;
 
-    await signIn
-      .create({
+    try {
+      await signIn.create({
         strategy: "reset_password_email_code",
         identifier: email,
-      })
-      .then((_) => {
-        console.log("sent email");
-        setSuccessfulCreation(true);
-      })
-      .catch((err: any) => console.error("Error", err.errors[0].longMessage));
+      });
+      setSuccessfulCreation(true);
+    } catch (error: unknown) {
+      toast({
+        title: "Uh-oh, something went wrong.",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    }
   }
 
   async function reset() {
