@@ -1,5 +1,4 @@
 import { TRPCError } from "@trpc/server";
-import * as dotenv from "dotenv";
 import validator from "validator";
 import * as z from "zod";
 
@@ -13,10 +12,6 @@ import { children as childSchema } from "@millennicare/db/schema/child";
 
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
-dotenv.config({
-  path: "../../../../.env",
-});
-
 export const userRouter = router({
   getMe: protectedProcedure.query(async ({ ctx }) => {
     const { userId, db } = ctx;
@@ -25,6 +20,11 @@ export const userRouter = router({
       where: eq(userSchema.id, userId),
     });
 
+    if (!user) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+      });
+    }
     return user;
   }),
   careseekerRegister: publicProcedure

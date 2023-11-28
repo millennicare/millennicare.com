@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -24,10 +24,10 @@ const titles = [
 export default function Page() {
   const router = useRouter();
   const [step, setStep] = useState(0);
-  // States needed to track clerk verification
-  const [userId, setUserId] = useState("");
+  const userIdRef = useRef("");
 
   const [formValues, setFormValues] = useState<IUser>({
+    userId: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -76,7 +76,6 @@ export default function Page() {
           />
         );
       case 3:
-        console.log("in step 3");
         return (
           <VerifyForm
             formValues={formValues}
@@ -84,7 +83,7 @@ export default function Page() {
             handleBack={handleBack}
             handleNext={handleNext}
             step={step}
-            setUserId={setUserId}
+            userIdRef={userIdRef}
           />
         );
       default:
@@ -95,16 +94,15 @@ export default function Page() {
     if (step !== 0) setStep((prev) => prev - 1);
   }
 
-  async function handleNext() {
+  function handleNext() {
     if (step === 3) {
-      await finishRegister();
+      void finishRegister();
       return;
     }
     setStep((prev) => prev + 1);
   }
 
   async function finishRegister() {
-    console.log("in finish register");
     try {
       const locationRes = await fetch("/api/locations/get-details", {
         method: "POST",
@@ -127,7 +125,7 @@ export default function Page() {
       };
 
       await mutation.mutateAsync({
-        id: userId,
+        id: userIdRef.current,
         firstName: formValues.firstName,
         lastName: formValues.lastName,
         email: formValues.email,
