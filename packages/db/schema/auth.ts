@@ -12,7 +12,6 @@ import {
 import { mySqlTable } from "./_table";
 import { addresses } from "./address";
 import { children } from "./child";
-import { forgotPasswordTokens } from "./forgot-password-token";
 import { reviews } from "./review";
 
 export const users = mySqlTable("user", {
@@ -35,7 +34,7 @@ export const users = mySqlTable("user", {
   ]).notNull(),
 });
 
-export const userRelations = relations(users, ({ many, one }) => ({
+export const userRelations = relations(users, ({ many }) => ({
   address: many(addresses),
 }));
 

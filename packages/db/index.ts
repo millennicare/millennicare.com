@@ -5,7 +5,6 @@ import * as address from "./schema/address";
 import * as appointment from "./schema/appointment";
 import * as auth from "./schema/auth";
 import * as child from "./schema/child";
-import * as forgotPasswordToken from "./schema/forgot-password-token";
 import * as review from "./schema/review";
 import * as service from "./schema/service";
 import * as waitlist from "./schema/waitlist";
@@ -18,7 +17,6 @@ export const schema = {
   ...service,
   ...waitlist,
   ...review,
-  ...forgotPasswordToken,
 };
 
 export { mySqlTable as tableCreator } from "./schema/_table";

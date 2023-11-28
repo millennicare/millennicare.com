@@ -73,8 +73,8 @@ export default function VerifyForm({
   return (
     <Form {...form}>
       <p className="text-sm">
-        We've sent an email to <strong>{formValues.email}</strong>. Please
-        verify your email by entering the code you received.
+        We`&apos;'ve sent an email to <strong>{formValues.email}</strong>.
+        Please verify your email by entering the code you received.
       </p>
       <form
         onSubmit={form.handleSubmit(handleVerify)}
