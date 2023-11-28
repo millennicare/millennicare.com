@@ -21,13 +21,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create .env file
-        run: echo DATABASE_URL=${{ secrets.PSCALE_DEV_DATABASE_URL }} > .env
-
       - name: Install pnpm ${{ matrix.pnpm-version }}
         uses: pnpm/action-setup@v2
         with:
           version: ${{ matrix.pnpm-version }}
 
+      - name: Install dependencies
+        run: pnpm i
+
       - name: Push schema changes
-        run: cd packages/db && pnpm drizzle-kit push:mysql
+        run: cd packages/db && pnpm drizzle-kit push:mysql --uri=${{ secrets.PSCALE_DEV_DATABASE_URL }}
