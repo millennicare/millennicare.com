@@ -17,18 +17,19 @@ import {
 import { Input } from "~/components/ui/input";
 import type { FormProps } from "../types";
 
-interface IVerifyFormProps extends FormProps {
-  setUserId: React.Dispatch<React.SetStateAction<string>>;
-}
-
 const formSchema = z.object({
   code: z.string().min(6).max(6),
 });
 
+interface IVerifyFormProps extends FormProps {
+  userIdRef: React.MutableRefObject<string>;
+}
+
 export default function VerifyForm({
   handleNext,
-  setUserId,
   formValues,
+  setFormValues,
+  userIdRef,
 }: IVerifyFormProps) {
   const { isLoaded, signUp, setActive } = useSignUp();
 
@@ -48,6 +49,12 @@ export default function VerifyForm({
         code: values.code,
       });
 
+      const userId = completeSignUp.createdUserId;
+      if (userId) {
+        console.log(userId);
+        userIdRef.current = userId;
+      }
+
       if (completeSignUp.status !== "complete") {
         console.log(JSON.stringify(completeSignUp, null, 2));
       }
@@ -55,16 +62,8 @@ export default function VerifyForm({
       if (completeSignUp.status === "complete") {
         console.log("sign up completed, going back to parent form");
         await setActive({ session: completeSignUp.createdSessionId });
+        handleNext();
       }
-
-      const userId = completeSignUp.createdUserId;
-
-      if (!userId) {
-        console.log("user id not created");
-        return;
-      }
-      setUserId(userId);
-      handleNext();
     } catch (error) {
       console.error("Error:", JSON.stringify(error, null, 2));
     }
