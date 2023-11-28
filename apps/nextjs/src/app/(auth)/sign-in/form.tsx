@@ -55,14 +55,17 @@ export default function LoginForm() {
         await setActive({ session: result.createdSessionId });
         router.push("/dashboard");
       }
-    } catch (error: any) {
+    } catch (error) {
       // this is a clerk error
-      if (error.errors[0].message) {
-        toast({
-          title: "Incorrect email or password.",
-          variant: "destructive",
-        });
+      if (error instanceof Object) {
+        if (Object.hasOwn(error, "errors")) {
+          toast({
+            title: "Incorrect email or password.",
+            variant: "destructive",
+          });
+        }
       }
+
       if (error instanceof TRPCClientError) {
         toast({
           title: error.message,

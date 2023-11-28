@@ -41,22 +41,22 @@ export default function ForgotPasswordPage() {
 
   async function reset() {
     if (!isLoaded) return null;
-    await signIn
-      .attemptFirstFactor({
+    try {
+      const result = await signIn.attemptFirstFactor({
         strategy: "reset_password_email_code",
         code,
         password,
-      })
-      .then((result) => {
-        if (result.status === "complete") {
-          setActive({ session: result.createdSessionId });
-          setComplete(true);
-          router.push("/dashboard");
-        } else {
-          console.log(result);
-        }
-      })
-      .catch((err) => console.error("error", err.errors[0].longMessage));
+      });
+
+      if (result.status === "complete") {
+        await setActive({ session: result.createdSessionId });
+        setComplete(true);
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      // @TODO: fix error feedback
+      console.log(error);
+    }
   }
 
   return (
@@ -94,8 +94,8 @@ export default function ForgotPasswordPage() {
             <div className="flex flex-col">
               {!successfulCreation ? (
                 <p className="text-sm">
-                  Enter the email address you used when you joined and we'll
-                  send you a code to reset your password.
+                  Enter the email address you used when you joined and
+                  we`&apos;`ll send you a code to reset your password.
                 </p>
               ) : (
                 <p>yer</p>
