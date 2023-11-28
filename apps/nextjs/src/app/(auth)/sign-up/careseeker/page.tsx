@@ -41,7 +41,7 @@ export default function Page() {
   });
 
   const { toast } = useToast();
-  const mutation = api.user.careseekerRegister.useMutation();
+  const mutation = api.careseeker.careseekerRegister.useMutation();
 
   function displayStep(currentStep: number) {
     switch (currentStep) {

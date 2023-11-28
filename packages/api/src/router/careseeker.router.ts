@@ -1,8 +1,6 @@
-import { TRPCError } from "@trpc/server";
 import validator from "validator";
 import * as z from "zod";
 
-import { eq } from "@millennicare/db";
 import { addresses as addressSchema } from "@millennicare/db/schema/address";
 import {
   careseekers as careseekerSchema,
@@ -10,23 +8,9 @@ import {
 } from "@millennicare/db/schema/auth";
 import { children as childSchema } from "@millennicare/db/schema/child";
 
-import { protectedProcedure, publicProcedure, router } from "../trpc";
+import { publicProcedure, router } from "../trpc";
 
-export const userRouter = router({
-  getMe: protectedProcedure.query(async ({ ctx }) => {
-    const { userId, db } = ctx;
-
-    const user = await db.query.users.findFirst({
-      where: eq(userSchema.id, userId),
-    });
-
-    if (!user) {
-      throw new TRPCError({
-        code: "BAD_REQUEST",
-      });
-    }
-    return user;
-  }),
+export const careseekerRouter = router({
   careseekerRegister: publicProcedure
     .input(
       z.object({
@@ -85,19 +69,5 @@ export const userRouter = router({
           }),
         );
       });
-    }),
-  findDuplicateEmail: publicProcedure
-    .input(z.object({ email: z.string().email() }))
-    .mutation(async ({ ctx, input }) => {
-      const user = await ctx.db.query.users.findFirst({
-        where: eq(userSchema.email, input.email),
-      });
-
-      if (user) {
-        throw new TRPCError({
-          code: "CONFLICT",
-          message: "A user already exists with this email address.",
-        });
-      }
     }),
 });

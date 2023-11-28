@@ -14,6 +14,7 @@
   "dependencies": {
     "@clerk/nextjs": "^4.27.2",
     "@millennicare/db": "workspace:^0.1.0",
+    "@millennicare/lib": "workspace:^0.1.0",
     "@trpc/client": "next",
     "@trpc/server": "next",
     "superjson": "2.2.0",

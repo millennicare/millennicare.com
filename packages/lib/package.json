@@ -1,5 +1,5 @@
 {
-  "name": "@millennicare/email",
+  "name": "@millennicare/lib",
   "private": true,
   "version": "0.1.0",
   "exports": {
@@ -23,7 +23,6 @@
     "@millennicare/eslint-config": "workspace:^0.2.0",
     "@millennicare/prettier-config": "workspace:^0.1.0",
     "@millennicare/tsconfig": "workspace:^0.1.0",
-    "@types/nodemailer": "6.4.14",
     "eslint": "^8.53.0",
     "typescript": "^5.2.2"
   },
@@ -34,7 +33,7 @@
   },
   "prettier": "@millennicare/prettier-config",
   "dependencies": {
-    "@aws-sdk/client-ses": "^3.460.0",
-    "nodemailer": "^6.9.7"
+    "dotenv": "^16.3.1",
+    "stripe": "^14.5.0"
   }
 }

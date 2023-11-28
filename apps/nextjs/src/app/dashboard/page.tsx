@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 // import AppointmentCard from "./_components/AppointmentCard";
 
 export default function DashboardPage() {
-  const user = api.user.getMe.useQuery();
+  const user = api.auth.getMe.useQuery();
   // const nextAppointment = api.appointment.getNextAppointment.useQuery();
   // const lastAppointment =
   //   api.appointment.getLastCompletedAppointment.useQuery();
