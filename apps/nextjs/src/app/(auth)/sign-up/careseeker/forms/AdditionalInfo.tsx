@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSignUp } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import format from "date-fns/format";
@@ -24,6 +25,7 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 import { Textarea } from "~/components/ui/textarea";
+import { useToast } from "~/components/ui/use-toast";
 import { cn } from "~/lib/utils";
 import type { FormProps } from "../types";
 
@@ -43,6 +45,9 @@ export default function AdditionalInfoForm({
   handleNext,
   step,
 }: FormProps) {
+  const { isLoaded, signUp } = useSignUp();
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: formValues,
@@ -106,7 +111,29 @@ export default function AdditionalInfoForm({
       ...values,
       profilePicture: profileLink,
     }));
-    handleNext();
+    await handleClerkSubmit();
+  }
+
+  async function handleClerkSubmit() {
+    if (!isLoaded) return;
+
+    try {
+      await signUp.create({
+        emailAddress: formValues.email,
+        password: formValues.password,
+      });
+      await signUp.prepareEmailAddressVerification({
+        strategy: "email_code",
+      });
+      handleNext();
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Uh-oh, something went wrong.",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    }
   }
 
   return (
