@@ -28,6 +28,7 @@ export const deleteAccount = async (stripe_id: string) => {
 export const getAccountLink = async (stripe_id: string) => {
   return stripe.accountLinks.create({
     account: stripe_id,
+    // @TODO: these need to change when sign up flow has been created
     refresh_url: "https://millennicare.com/sign-up/caregiver",
     return_url: "https://millennicare.com/sign-up/caregiver",
     type: "account_onboarding",
