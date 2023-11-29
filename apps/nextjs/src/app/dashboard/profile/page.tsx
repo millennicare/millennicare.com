@@ -14,7 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { api } from "~/utils/api";
 
 export default function ProfilePage() {
-  const userQuery = api.user.getMe.useQuery();
+  const userQuery = api.auth.getMe.useQuery();
 
   // function formatAddress(address: string) {
   //   const city = address.split(",")[0];

@@ -1,9 +1,17 @@
 {
-  "name": "@millennicare/api",
-  "version": "0.1.0",
+  "name": "@millennicare/lib",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "version": "0.1.0",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
@@ -11,30 +19,21 @@
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "@clerk/nextjs": "^4.27.2",
-    "@millennicare/db": "workspace:^0.1.0",
-    "@millennicare/lib": "workspace:^0.1.0",
-    "@trpc/client": "next",
-    "@trpc/server": "next",
-    "superjson": "2.2.0",
-    "validator": "^13.11.0",
-    "zod": "^3.22.2"
-  },
   "devDependencies": {
     "@millennicare/eslint-config": "workspace:^0.2.0",
     "@millennicare/prettier-config": "workspace:^0.1.0",
     "@millennicare/tsconfig": "workspace:^0.1.0",
-    "@types/validator": "^13.11.7",
     "eslint": "^8.53.0",
-    "prettier": "^3.1.0",
     "typescript": "^5.2.2"
   },
   "eslintConfig": {
-    "root": true,
     "extends": [
       "@millennicare/eslint-config/base"
     ]
   },
-  "prettier": "@millennicare/prettier-config"
+  "prettier": "@millennicare/prettier-config",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "stripe": "^14.5.0"
+  }
 }

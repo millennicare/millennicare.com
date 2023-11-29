@@ -66,9 +66,11 @@ export const caregivers = mySqlTable(
     backgroundCheckCompleted: boolean("background_check_completed").default(
       false,
     ),
+    stripeId: varchar("stripe_id", { length: 255 }).notNull(),
   },
   (caregiver) => ({
     userIdIdx: index("userId_idx").on(caregiver.userId),
+    stripeIdIdx: index("stripeId_idx").on(caregiver.stripeId),
   }),
 );
 
