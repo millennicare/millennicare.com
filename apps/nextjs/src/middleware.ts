@@ -15,7 +15,6 @@ export default authMiddleware({
     "/api/locations/get-details",
     "/api/trpc/contactUs.sendMessage",
   ],
-  debug: true,
 });
 
 export const config = {

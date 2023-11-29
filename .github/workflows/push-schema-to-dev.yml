@@ -30,4 +30,4 @@ jobs:
         run: pnpm i
 
       - name: Push schema changes
-        run: cd packages/db && pnpm drizzle-kit push:mysql --connectionString=${{ secrets.PSCALE_DEV_DATABASE_URL }}
+        run: cd packages/db && pnpm drizzle-kit push:mysql
