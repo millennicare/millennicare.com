@@ -13,6 +13,7 @@ export default authMiddleware({
     "/api/trpc/user.findDuplicateEmail",
     "/api/locations/get-suggestions",
     "/api/locations/get-details",
+    "/api/trpc/contactUs.sendMessage",
   ],
   debug: true,
 });

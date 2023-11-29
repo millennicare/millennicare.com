@@ -1,9 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import validator from "validator";
 import { useForm } from "react-hook-form";
+import validator from "validator";
+import * as z from "zod";
+
+import { Button } from "~/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,9 +16,12 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
-import { Button } from "~/components/ui/button";
+import { useToast } from "~/components/ui/use-toast";
+import { api } from "~/utils/api";
 
 export default function ContactUsForm() {
+  const sendContactUsMessage = api.contactUs.sendMessage.useMutation();
+  const { toast } = useToast();
   const contactSchema = z.object({
     email: z
       .string({
@@ -47,17 +52,40 @@ export default function ContactUsForm() {
       email: "",
       firstName: "",
       lastName: "",
-      phoneNumber: "",
+      phoneNumber: undefined,
       message: "",
     },
   });
 
-  const handleContactSubmit = () => {};
+  const handleContactSubmit = async (values: z.infer<typeof contactSchema>) => {
+    try {
+      await sendContactUsMessage.mutateAsync({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phoneNumber: values.phoneNumber,
+        message: values.message,
+      });
+
+      toast({
+        title: "We received your message!",
+        variant: "default",
+      });
+
+      contactForm.reset();
+    } catch (error) {
+      toast({
+        title: "Something went wrong.",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <Form {...contactForm}>
       <form
-        className="flex flex-col space-y-4"
+        className="flex flex-col space-y-4 rounded bg-white p-10 shadow-md"
         onSubmit={contactForm.handleSubmit(handleContactSubmit)}
       >
         {/* First Name */}
