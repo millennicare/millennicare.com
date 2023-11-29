@@ -62,7 +62,7 @@ export const careseekerRouter = router({
         await tx.insert(childSchema).values(
           input.children.map((child) => {
             return {
-              careseekerId: input.id,
+              userId: input.id,
               age: child.age,
               name: child.name,
             };
