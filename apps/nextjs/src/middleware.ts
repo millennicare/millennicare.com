@@ -14,6 +14,7 @@ export default authMiddleware({
     "/api/locations/get-suggestions",
     "/api/locations/get-details",
     "/api/trpc/contactUs.sendMessage",
+    "/api/(.*)",
   ],
 });
 
