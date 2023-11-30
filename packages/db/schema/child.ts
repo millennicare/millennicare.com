@@ -19,13 +19,13 @@ export const children = mySqlTable(
     careseekerId: varchar("careseeker_id", { length: 128 }).notNull().unique(),
   },
   (child) => ({
-    careseekerIdIdx: index("careseekerId_idx").on(child.careseekerId),
+    careseeekerIdIdx: index("careseekerId_idx").on(child.careseekerId),
   }),
 );
 
 export const childRelations = relations(children, ({ one }) => ({
   careseeker: one(careseekers, {
     fields: [children.id],
-    references: [careseekers.userId],
+    references: [careseekers.id],
   }),
 }));

@@ -1,6 +1,8 @@
+import { TRPCError } from "@trpc/server";
 import validator from "validator";
 import * as z from "zod";
 
+import { eq } from "@millennicare/db";
 import { addresses as addressSchema } from "@millennicare/db/schema/address";
 import {
   careseekers as careseekerSchema,
@@ -58,11 +60,21 @@ export const careseekerRouter = router({
           userId: input.id,
         });
 
+        // fetch careseeker since drizzle doesn't return for mysql statement insert
+        const careseeker = await tx.query.careseekers.findFirst({
+          where: eq(careseekerSchema.userId, input.id),
+        });
+        if (!careseeker) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "Try again later.",
+          });
+        }
         // then kids
         await tx.insert(childSchema).values(
           input.children.map((child) => {
             return {
-              careseekerId: input.id,
+              careseekerId: careseeker.id,
               age: child.age,
               name: child.name,
             };

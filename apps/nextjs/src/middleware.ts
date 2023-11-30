@@ -1,22 +1,24 @@
+import { NextResponse } from "next/server";
 import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
+  afterAuth(auth, req) {
+    const path = req.nextUrl.pathname;
+    if (!auth.userId && !auth.isPublicRoute && path !== "sign-in") {
+      return NextResponse.redirect(new URL("/sign-in", req.url));
+    }
+  },
   publicRoutes: [
+    "/api/(.*)",
     "/",
     "/eula",
     "/privacy-policy",
     "/contact-us",
-    "/sign-in",
-    "/sign-up",
     "/sign-up/careseeker",
-    "/forgot-password",
-    "/api/trpc/user.findDuplicateEmail",
-    "/api/locations/get-suggestions",
-    "/api/locations/get-details",
-    "/api/trpc/contactUs.sendMessage",
+    "/sign-up/caregiver",
   ],
 });
 
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };
