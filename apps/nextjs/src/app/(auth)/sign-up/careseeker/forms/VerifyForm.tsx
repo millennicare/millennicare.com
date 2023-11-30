@@ -1,6 +1,6 @@
 "use client";
 
-import { useSignUp } from "@clerk/nextjs";
+import { isClerkAPIResponseError, useSignUp } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { useToast } from "~/components/ui/use-toast";
 import type { FormProps } from "../types";
 
 const formSchema = z.object({
@@ -23,14 +24,17 @@ const formSchema = z.object({
 
 interface IVerifyFormProps extends FormProps {
   userIdRef: React.MutableRefObject<string>;
+  handleClerkSubmit: (retry: boolean) => Promise<void>;
 }
 
 export default function VerifyForm({
   handleNext,
   formValues,
   userIdRef,
+  handleClerkSubmit,
 }: IVerifyFormProps) {
   const { isLoaded, signUp, setActive } = useSignUp();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,12 +63,29 @@ export default function VerifyForm({
       }
 
       if (completeSignUp.status === "complete") {
-        console.log("sign up completed, going back to parent form");
         await setActive({ session: completeSignUp.createdSessionId });
         handleNext();
       }
-    } catch (error) {
-      console.error("Error:", JSON.stringify(error, null, 2));
+    } catch (error: unknown) {
+      if (isClerkAPIResponseError(error)) {
+        // code is invalid
+        if (error.status === 400) {
+          toast({
+            title: "Your code has expired.",
+            description: "Please try again.",
+            variant: "destructive",
+          });
+        }
+        // incorrect code
+        else if (error.status === 422) {
+          toast({
+            title: "Incorrect code.",
+            description: "Please re-enter the correct code.",
+            variant: "destructive",
+          });
+        }
+      }
+      // console.error("Error:", JSON.stringify(error, null, 2));
     }
   }
 
@@ -98,8 +119,16 @@ export default function VerifyForm({
           )}
         />
         <div className="flex justify-end space-x-4">
-          <Button variant="outline">Resend email</Button>
-          <Button type="submit">Verify</Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              console.log("resend email");
+              void handleClerkSubmit(true);
+            }}
+          >
+            Resend email
+          </Button>
+          <Button type="submit">Verify email</Button>
         </div>
       </form>
     </Form>

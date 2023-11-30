@@ -93,7 +93,7 @@ export default function LoginForm() {
             />
           </Link>
         </div>
-        <h2 className="text-center text-3xl">Welcome Back</h2>
+        <h2 className="text-center font-mono text-3xl">Welcome Back</h2>
       </div>
       <div className="mt-4 px-4 sm:mx-auto sm:w-full sm:max-w-md md:p-0">
         <div className="rounded-lg bg-white px-2 py-4 shadow sm:px-10">

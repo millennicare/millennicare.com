@@ -26,13 +26,14 @@ const handler = async (req: Request) => {
     endpoint: "/api/trpc",
     router: appRouter,
     req,
-    onError({ error, path }) {
-      console.error(`>>> tRpc error on '${path}'`, error);
-    },
     createContext: () => createContext(),
+    onError({ error, path }) {
+      console.error(`>>> tRPC Error on '${path}'`, error);
+    },
   });
 
   setCorsHeaders(response);
   return response;
 };
+
 export { handler as GET, handler as POST };

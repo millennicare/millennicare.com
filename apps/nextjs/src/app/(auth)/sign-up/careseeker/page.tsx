@@ -3,6 +3,7 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useSignUp } from "@clerk/nextjs";
 
 import { useToast } from "~/components/ui/use-toast";
 import { api } from "~/utils/api";
@@ -25,6 +26,7 @@ export default function Page() {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const userIdRef = useRef("");
+  const { isLoaded, signUp } = useSignUp();
 
   const [formValues, setFormValues] = useState<IUser>({
     userId: "",
@@ -73,6 +75,7 @@ export default function Page() {
             handleBack={handleBack}
             handleNext={handleNext}
             step={step}
+            handleClerkSubmit={handleClerkSubmit}
           />
         );
       case 3:
@@ -84,12 +87,14 @@ export default function Page() {
             handleNext={handleNext}
             step={step}
             userIdRef={userIdRef}
+            handleClerkSubmit={handleClerkSubmit}
           />
         );
       default:
         console.log("no step");
     }
   }
+
   function handleBack() {
     if (step !== 0) setStep((prev) => prev - 1);
   }
@@ -100,6 +105,29 @@ export default function Page() {
       return;
     }
     setStep((prev) => prev + 1);
+  }
+
+  async function handleClerkSubmit(retry?: boolean) {
+    if (!isLoaded) return;
+
+    try {
+      await signUp.create({
+        emailAddress: formValues.email,
+        password: formValues.password,
+      });
+      await signUp.prepareEmailAddressVerification({
+        strategy: "email_code",
+      });
+      if (!retry) {
+        handleNext();
+      }
+    } catch (error) {
+      toast({
+        title: "Uh-oh, something went wrong.",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    }
   }
 
   async function finishRegister() {
@@ -138,6 +166,10 @@ export default function Page() {
         longitude: coordinates.longitude,
       });
 
+      toast({
+        title: "Success!",
+        description: "Going to dashboard.",
+      });
       router.push("/dashboard");
     } catch (error) {
       toast({
@@ -163,7 +195,7 @@ export default function Page() {
         {/* @TODO: Stepper */}
       </div>
 
-      <div className="w-2/5 rounded-lg bg-white px-4 py-3 shadow">
+      <div className="rounded-lg bg-white px-4 py-3 shadow sm:max-w-md">
         {displayStep(step)}
       </div>
     </div>
