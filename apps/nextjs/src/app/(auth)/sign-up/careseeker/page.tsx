@@ -107,7 +107,7 @@ export default function Page() {
     setStep((prev) => prev + 1);
   }
 
-  async function handleClerkSubmit() {
+  async function handleClerkSubmit(retry?: boolean) {
     if (!isLoaded) return;
 
     try {
@@ -118,7 +118,9 @@ export default function Page() {
       await signUp.prepareEmailAddressVerification({
         strategy: "email_code",
       });
-      handleNext();
+      if (!retry) {
+        handleNext();
+      }
     } catch (error) {
       toast({
         title: "Uh-oh, something went wrong.",
@@ -193,7 +195,7 @@ export default function Page() {
         {/* @TODO: Stepper */}
       </div>
 
-      <div className="w-2/5 rounded-lg bg-white px-4 py-3 shadow">
+      <div className="rounded-lg bg-white px-4 py-3 shadow sm:max-w-md">
         {displayStep(step)}
       </div>
     </div>

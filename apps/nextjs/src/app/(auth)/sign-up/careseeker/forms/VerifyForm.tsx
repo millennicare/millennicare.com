@@ -24,7 +24,7 @@ const formSchema = z.object({
 
 interface IVerifyFormProps extends FormProps {
   userIdRef: React.MutableRefObject<string>;
-  handleClerkSubmit: () => Promise<void>;
+  handleClerkSubmit: (retry: boolean) => Promise<void>;
 }
 
 export default function VerifyForm({
@@ -123,12 +123,12 @@ export default function VerifyForm({
             variant="outline"
             onClick={() => {
               console.log("resend email");
-              handleClerkSubmit();
+              void handleClerkSubmit(true);
             }}
           >
             Resend email
           </Button>
-          <Button type="submit">Verify</Button>
+          <Button type="submit">Verify email</Button>
         </div>
       </form>
     </Form>
