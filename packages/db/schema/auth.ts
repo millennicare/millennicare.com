@@ -23,9 +23,9 @@ export const users = mySqlTable("user", {
   // app specific fields
   firstName: varchar("firstName", { length: 255 }).notNull(),
   lastName: varchar("lastName", { length: 255 }).notNull(),
-  phoneNumber: varchar("phoneNumber", { length: 500 }).notNull(),
+  phoneNumber: varchar("phoneNumber", { length: 255 }).notNull(),
   biography: varchar("biography", { length: 255 }),
-  profilePicture: varchar("profilePicture", { length: 255 }),
+  profilePicture: varchar("profilePicture", { length: 500 }),
   birthdate: datetime("birthdate", { mode: "date" }).notNull(),
   userType: mysqlEnum("userType", [
     "careseeker",
