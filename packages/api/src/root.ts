@@ -1,3 +1,4 @@
+import { appointmentRouter } from "./router/appointment.router";
 import { authRouter } from "./router/auth.router";
 import { caregiverRouter } from "./router/caregiver.router";
 import { careseekerRouter } from "./router/careseeker.router";
@@ -9,6 +10,7 @@ export const appRouter = router({
   caregiver: caregiverRouter,
   careseeker: careseekerRouter,
   contactUs: contactUsRouter,
+  appointment: appointmentRouter,
 });
 
 // export type definition of API

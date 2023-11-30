@@ -1,7 +1,24 @@
+"use client";
+
+import { api } from "~/utils/api";
+
 export default function Page() {
-  return (
-    <>
-      <p>Appointments Page</p>
-    </>
-  );
+  const apptQuery = api.appointment.getAppointmentsByUserId.useQuery();
+
+  if (apptQuery.isLoading) {
+    return <>Loading...</>;
+  }
+
+  if (apptQuery.isError) {
+    return <>Error fetching appointments</>;
+  }
+
+  if (apptQuery.data) {
+    console.log(apptQuery.data);
+    return (
+      <>
+        <p>Appointments Page</p>
+      </>
+    );
+  }
 }
