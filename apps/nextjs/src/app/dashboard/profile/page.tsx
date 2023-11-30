@@ -39,8 +39,8 @@ export default function ProfilePage() {
             src={
               userQuery.data.profilePicture ?? "/default_profile_picture.png"
             }
-            height={80}
-            width={80}
+            height={100}
+            width={100}
             className="rounded-full"
             alt="Profile picture"
           />
