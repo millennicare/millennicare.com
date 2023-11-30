@@ -16,7 +16,7 @@ export const children = mySqlTable(
 
     age: int("age").notNull(),
     name: varchar("name", { length: 255 }).notNull(),
-    careseekerId: varchar("careseeker_id", { length: 128 }).notNull().unique(),
+    careseekerId: varchar("careseeker_id", { length: 128 }).notNull(),
   },
   (child) => ({
     careseeekerIdIdx: index("careseekerId_idx").on(child.careseekerId),
