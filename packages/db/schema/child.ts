@@ -16,10 +16,10 @@ export const children = mySqlTable(
 
     age: int("age").notNull(),
     name: varchar("name", { length: 255 }).notNull(),
-    userId: varchar("user_id", { length: 128 }).notNull().unique(),
+    careseekerId: varchar("careseeker_id", { length: 128 }).notNull().unique(),
   },
   (child) => ({
-    userIdIdx: index("userId_idx").on(child.userId),
+    careseeekerIdIdx: index("careseekerId_idx").on(child.careseekerId),
   }),
 );
 
