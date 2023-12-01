@@ -16,16 +16,16 @@ export const children = mySqlTable(
 
     age: int("age").notNull(),
     name: varchar("name", { length: 255 }).notNull(),
-    careseekerId: varchar("careseeker_id", { length: 128 }).notNull(),
+    userId: varchar("user_id", { length: 128 }).notNull(),
   },
   (child) => ({
-    careseeekerIdIdx: index("careseekerId_idx").on(child.careseekerId),
+    userIdIdx: index("userId_idx").on(child.userId),
   }),
 );
 
 export const childRelations = relations(children, ({ one }) => ({
   careseeker: one(careseekers, {
     fields: [children.id],
-    references: [careseekers.id],
+    references: [careseekers.userId],
   }),
 }));

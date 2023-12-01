@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Pencil2Icon } from "@radix-ui/react-icons";
+import { useQuery } from "@tanstack/react-query";
 
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
@@ -15,6 +17,12 @@ import { api } from "~/utils/api";
 
 export default function ProfilePage() {
   const userQuery = api.auth.getMe.useQuery();
+
+  const { data } = useQuery({
+    queryKey: ["profilePicture", userQuery.data?.profilePicture],
+    queryFn: getLink,
+    enabled: !!userQuery.data?.profilePicture,
+  });
 
   // function formatAddress(address: string) {
   //   const city = address.split(",")[0];
@@ -31,14 +39,25 @@ export default function ProfilePage() {
     return <>Error fetching data.</>;
   }
 
+  async function getLink() {
+    const res = await fetch(
+      `/api/documents?key=${userQuery.data?.profilePicture}`,
+    );
+    if (!res.ok) {
+      throw new Error("Error fetching profile picture");
+    }
+    const json = (await res.json()) as { url: string };
+    return json.url;
+  }
+
   if (userQuery.isSuccess && userQuery.data) {
     return (
       <div className="flex h-full max-w-xl flex-col gap-2">
         <div className="flex items-center gap-4 border-b border-slate-300 p-3">
           <Image
-            src={
-              userQuery.data.profilePicture ?? "/default_profile_picture.png"
-            }
+            src={data ?? "/default_profile_picture.png"}
+            placeholder="blur"
+            blurDataURL="/default_profile_picture.png"
             height={100}
             width={100}
             className="rounded-full"
