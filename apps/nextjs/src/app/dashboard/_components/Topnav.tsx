@@ -5,7 +5,7 @@ import { BellIcon } from "@radix-ui/react-icons";
 import { Button } from "~/components/ui/button";
 import { api } from "~/utils/api";
 
-export default function TopNav() {
+export function TopNav() {
   const user = api.auth.getMe.useQuery();
 
   if (user.isLoading) {

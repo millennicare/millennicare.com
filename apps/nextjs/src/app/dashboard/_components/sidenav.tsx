@@ -23,7 +23,7 @@ const links = [
   { name: "Profile", href: "/dashboard/profile", icon: PersonIcon },
 ];
 
-export default function SideNav() {
+export function SideNav() {
   const router = useRouter();
   const pathname = usePathname();
   const { signOut } = useClerk();
