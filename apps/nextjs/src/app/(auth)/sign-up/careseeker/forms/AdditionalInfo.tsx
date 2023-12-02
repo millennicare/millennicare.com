@@ -94,9 +94,9 @@ export default function AdditionalInfoForm({
         });
 
         const json = (await response.json()) as {
-          url: string;
+          fileKey: string;
         };
-        profileLink = json.url;
+        profileLink = json.fileKey;
       } catch (error) {
         console.error(error);
       }

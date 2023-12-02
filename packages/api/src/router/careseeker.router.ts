@@ -1,3 +1,4 @@
+import { clerkClient } from "@clerk/nextjs";
 import { TRPCError } from "@trpc/server";
 import validator from "validator";
 import * as z from "zod";
@@ -9,8 +10,9 @@ import {
   users as userSchema,
 } from "@millennicare/db/schema/auth";
 import { children as childSchema } from "@millennicare/db/schema/child";
+import { deleteObject } from "@millennicare/lib";
 
-import { publicProcedure, router } from "../trpc";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 export const careseekerRouter = router({
   careseekerRegister: publicProcedure
@@ -32,6 +34,7 @@ export const careseekerRouter = router({
         ),
         latitude: z.number(),
         longitude: z.number(),
+        zipCode: z.string().length(5),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -54,27 +57,18 @@ export const careseekerRouter = router({
           userId: input.id,
           latitude: input.latitude,
           longitude: input.longitude,
+          zipCode: input.zipCode,
         });
         // then careseeker
         await tx.insert(careseekerSchema).values({
           userId: input.id,
         });
 
-        // fetch careseeker since drizzle doesn't return for mysql statement insert
-        const careseeker = await tx.query.careseekers.findFirst({
-          where: eq(careseekerSchema.userId, input.id),
-        });
-        if (!careseeker) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: "Try again later.",
-          });
-        }
         // then kids
         await tx.insert(childSchema).values(
           input.children.map((child) => {
             return {
-              careseekerId: careseeker.id,
+              userId: input.id,
               age: child.age,
               name: child.name,
             };
@@ -82,4 +76,36 @@ export const careseekerRouter = router({
         );
       });
     }),
+  // update
+  delete: protectedProcedure.mutation(async ({ ctx }) => {
+    const { db, userId } = ctx;
+
+    try {
+      // get user info
+      const user = await db.query.users.findFirst({
+        where: eq(userSchema.id, userId),
+      });
+      if (!user) {
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      }
+
+      // need to delete address, children, user
+      await db.transaction(async (tx) => {
+        await tx.delete(addressSchema).where(eq(addressSchema.userId, userId));
+        await tx.delete(childSchema).where(eq(childSchema.userId, userId));
+        await tx
+          .delete(careseekerSchema)
+          .where(eq(careseekerSchema.id, userId));
+        await tx.delete(userSchema).where(eq(userSchema.id, userId));
+      });
+
+      // need to delete s3, clerk from lib
+      await clerkClient.users.deleteUser(userId);
+      if (user.profilePicture) {
+        await deleteObject(user.profilePicture);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }),
 });

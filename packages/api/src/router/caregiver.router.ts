@@ -26,6 +26,7 @@ export const caregiverRouter = router({
         userType: z.enum(["careseeker", "caregiver"]),
         latitude: z.number(),
         longitude: z.number(),
+        zipCode: z.string().length(5),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -48,6 +49,7 @@ export const caregiverRouter = router({
           userId: input.id,
           latitude: input.latitude,
           longitude: input.longitude,
+          zipCode: input.zipCode,
         });
         // use lib/stripe to create Stripe account
         const account = await createAccount(input.email);

@@ -1,44 +1,8 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import type { PutObjectCommandInput } from "@aws-sdk/client-s3";
-import {
-  GetObjectCommand,
-  PutObjectCommand,
-  S3Client,
-} from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { v4 as uuid } from "uuid";
 
-import { env } from "~/env.mjs";
-
-const client = new S3Client({
-  region: env.AWS_REGION,
-  credentials: {
-    secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
-    accessKeyId: env.AWS_ACCESS_KEY_ID,
-  },
-});
-
-async function uploadImageToS3(
-  file: Buffer,
-  fileName: string,
-  type: string,
-): Promise<string> {
-  const params: PutObjectCommandInput = {
-    Bucket: env.AWS_BUCKET,
-    Key: `${Date.now()}-${fileName}`,
-    Body: file,
-    ContentType: type,
-  };
-
-  const command = new PutObjectCommand(params);
-  await client.send(command);
-
-  const getCommand = new GetObjectCommand(params);
-  const url = await getSignedUrl(client, getCommand);
-
-  return url;
-}
+import { getPresignedUrl, uploadFile } from "@millennicare/lib";
 
 export async function POST(request: NextRequest) {
   try {
@@ -52,17 +16,28 @@ export async function POST(request: NextRequest) {
     const fileExtension = mimeType.split("/")[1];
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const url = await uploadImageToS3(
+    const fileKey = await uploadFile(
       buffer,
       uuid() + "." + fileExtension,
       mimeType,
     );
 
-    return NextResponse.json({ success: true, url });
+    return NextResponse.json({ status: 201, fileKey });
   } catch (error) {
     return NextResponse.json({
-      success: false,
-      message: "Error uploading image",
+      status: 400,
+      error: "Error uploading image",
     });
   }
+}
+
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const key = searchParams.get("key");
+
+  if (!key) {
+    return NextResponse.json({ error: "Key is required" }, { status: 400 });
+  }
+  const url = await getPresignedUrl(key);
+  return NextResponse.json({ url });
 }

@@ -16,6 +16,7 @@ export default authMiddleware({
     "/contact-us",
     "/sign-up/careseeker",
     "/sign-up/caregiver",
+    "/tester",
   ],
 });
 

@@ -3,17 +3,14 @@
 import Link from "next/link";
 
 import { api } from "~/utils/api";
-
-// import AppointmentCard from "./_components/AppointmentCard";
+import AppointmentCard from "./_components/AppointmentCard";
 
 export default function DashboardPage() {
   const user = api.auth.getMe.useQuery();
-  // const nextAppointment = api.appointment.getNextAppointment.useQuery();
-  // const lastAppointment =
-  //   api.appointment.getLastCompletedAppointment.useQuery();
+  const nextAppointment = api.appointment.getNextAppointment.useQuery();
+  const lastAppointment =
+    api.appointment.getLastCompletedAppointment.useQuery();
 
-  // @TODO: create getNextAppointment and getLastCompletedAppointment
-  // in appointment.router
   if (user.isLoading) {
     return <>Loading...</>;
   }
@@ -38,13 +35,13 @@ export default function DashboardPage() {
             </Link>
           </div>
           {/** if there is an id received, render a card */}
-          {/* {nextAppointment.data ? (
+          {nextAppointment.data ? (
             <Link href={`appointments/${nextAppointment.data.id}`}>
               <AppointmentCard id={nextAppointment.data.id} />
             </Link>
           ) : (
             <h4>No appointments</h4>
-          )} */}
+          )}
         </div>
         <div className="h-1/4 md:w-[45%]">
           <div className="mb-2 flex flex-col justify-between md:flex-row">
@@ -53,13 +50,13 @@ export default function DashboardPage() {
               <p className="text-primary hover:underline">VIEW ALL</p>
             </Link>
           </div>
-          {/* {lastAppointment.data ? (
+          {lastAppointment.data ? (
             <Link href={`appointments/${lastAppointment.data.id}`}>
               <AppointmentCard id={lastAppointment.data.id} />
             </Link>
           ) : (
             <h4>No appointments</h4>
-          )} */}
+          )}
         </div>
         <div className="h-1/4 w-[45%]">
           <p className="mb-2">FAVORITES</p>

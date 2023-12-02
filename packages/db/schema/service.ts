@@ -4,6 +4,7 @@ import { double, mysqlEnum, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 import { mySqlTable } from "./_table";
 import { appointments } from "./appointment";
+import { caregivers } from "./auth";
 
 export const services = mySqlTable("service", {
   id: varchar("id", { length: 128 })
@@ -22,8 +23,13 @@ export const services = mySqlTable("service", {
     "housekeeping",
     "petcare",
   ]),
+  caregiverId: varchar("caregiver_id", { length: 128 }).notNull(),
 });
 
-export const servicesRelations = relations(services, ({ many }) => ({
+export const servicesRelations = relations(services, ({ many, one }) => ({
   appointments: many(appointments),
+  caregiver: one(caregivers, {
+    fields: [services.id],
+    references: [caregivers.id],
+  }),
 }));
