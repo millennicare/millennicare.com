@@ -9,7 +9,7 @@ export default function TopNav() {
   const user = api.auth.getMe.useQuery();
 
   if (user.isLoading) {
-    return <>Loading</>
+    return <>Loading</>;
   }
 
   if (user.isError) {
