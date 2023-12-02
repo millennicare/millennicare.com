@@ -14,7 +14,7 @@ export default function Topnav() {
 
   if (user.isSuccess && user.data) {
     return (
-      <div className="h-1/8 flex w-full items-center justify-between py-6">
+      <div className="flex items-center justify-between py-6">
         <h2 className="font-mono text-xl font-semibold">
           Good Morning, {user.data.firstName}
         </h2>

@@ -13,7 +13,7 @@ export default function DashboardLayout({
       </div>
       <div className="h-full w-full px-4 py-6">
         <Topnav />
-        <div className="h-full">{children}</div>
+        <div className="h-4/5">{children}</div>
       </div>
     </div>
   );
