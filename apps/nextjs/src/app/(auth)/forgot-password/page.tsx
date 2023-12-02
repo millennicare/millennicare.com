@@ -95,7 +95,7 @@ export default function ForgotPasswordPage() {
               {!successfulCreation ? (
                 <p className="text-sm">
                   Enter the email address you used when you joined and
-                  we`&apos;`ll send you a code to reset your password.
+                  we&apos;ll send you a code to reset your password.
                 </p>
               ) : (
                 <p>yer</p>
