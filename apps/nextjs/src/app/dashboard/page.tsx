@@ -20,7 +20,7 @@ export default function DashboardPage() {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <main className="flex h-1/2 flex-wrap justify-between space-y-4 md:space-y-0">
+      <main className="flex h-3/5 flex-wrap justify-between space-y-4 md:space-y-0">
         <Card className="h-2/5 w-full md:w-1/2">
           <CardHeader>
             <CardTitle>Next Appointment</CardTitle>

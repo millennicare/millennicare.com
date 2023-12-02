@@ -47,15 +47,20 @@ export default function SideNav() {
         {links.map((link) => {
           const LinkIcon = link.icon;
           return (
-            <Button asChild className="text-black" size="lg" key={link.name}>
+            <Button
+              asChild
+              className={clsx(
+                "bg-white text-black shadow-none hover:bg-gray-300",
+                {
+                  "bg-gray-200": pathname === link.href,
+                },
+              )}
+              size="lg"
+              key={link.name}
+            >
               <Link
                 href={link.href}
-                className={clsx(
-                  "flex w-full cursor-pointer items-center justify-center bg-white py-4 text-black shadow-none hover:bg-gray-300 md:justify-start md:pl-6",
-                  {
-                    "bg-gray-200": pathname === link.href,
-                  },
-                )}
+                className="flex w-full cursor-pointer items-center justify-center py-4 md:justify-start md:pl-6"
               >
                 <LinkIcon className="w-6" />
                 <p className="ml-3 hidden md:block">{link.name}</p>
