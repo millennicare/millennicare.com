@@ -88,11 +88,7 @@ export const careseekerRouter = router({
       if (!user) {
         throw new TRPCError({ code: "BAD_REQUEST" });
       }
-      // need to delete s3, clerk from lib
-      await clerkClient.users.deleteUser(userId);
-      if (user.profilePicture) {
-        await deleteObject(user.profilePicture);
-      }
+
       // need to delete address, children, user
       await db.transaction(async (tx) => {
         await tx.delete(addressSchema).where(eq(addressSchema.userId, userId));
@@ -102,6 +98,12 @@ export const careseekerRouter = router({
           .where(eq(careseekerSchema.id, userId));
         await tx.delete(userSchema).where(eq(userSchema.id, userId));
       });
+
+      // need to delete s3, clerk from lib
+      await clerkClient.users.deleteUser(userId);
+      if (user.profilePicture) {
+        await deleteObject(user.profilePicture);
+      }
     } catch (error) {
       console.log(error);
     }
