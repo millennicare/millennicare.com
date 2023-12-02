@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { api } from "~/utils/api";
-import AppointmentCard from "./_components/AppointmentCard";
+import AppointmentCard from "./components/AppointmentCard";
 
 export default function DashboardPage() {
   const nextAppointment = api.appointment.getNextAppointment.useQuery();
