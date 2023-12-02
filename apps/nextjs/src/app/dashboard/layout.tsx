@@ -1,4 +1,5 @@
-import SideNav from "./_components/sidenav";
+import SideNav from "./_components/Sidenav";
+import Topnav from "./_components/Topnav";
 
 export default function DashboardLayout({
   children,
@@ -6,10 +7,13 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen w-screen flex-row">
-      <SideNav />
-      <div className="bg-palecream flex h-full w-full justify-center">
-        <div className="m-auto h-[90%] w-[90%] overflow-auto">{children}</div>
+    <div className="flex h-screen w-screen flex-row bg-gray-200">
+      <div className="h-full px-4 py-6">
+        <SideNav />
+      </div>
+      <div className="h-full w-full px-4 py-6">
+        <Topnav />
+        <div className="h-full">{children}</div>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
 import {
   CalendarIcon,
@@ -13,6 +13,9 @@ import {
 } from "@radix-ui/react-icons";
 import clsx from "clsx";
 
+import { Button } from "~/components/ui/button";
+import { Separator } from "~/components/ui/separator";
+
 const links = [
   { name: "Home", href: "/dashboard", icon: HomeIcon },
   { name: "Appointments", href: "/dashboard/appointments", icon: CalendarIcon },
@@ -22,43 +25,52 @@ const links = [
 
 export default function SideNav() {
   const router = useRouter();
+  const pathname = usePathname();
   const { signOut } = useClerk();
 
   return (
-    <section className="min-h-scren bg-cream w-20 border border-slate-300 duration-300 md:w-72">
-      <div className="flex w-full flex-row items-center justify-center py-4 md:justify-start md:pl-6">
+    <section className="h-full space-y-8 rounded-lg bg-white px-4 py-6 duration-300 md:w-max ">
+      <div className="flex w-full items-center justify-center">
         <Image
           src="/millennicare_logo.png"
-          alt="Millennicare logo"
-          height={40}
+          alt="MillenniCare logo"
           width={40}
+          height={40}
+          priority
         />
-        <h3 className="ml-3 hidden text-lg md:block">
+        <h3 className="ml-3 hidden text-xl md:block">
           MILLENNI<span className="font-bold">CARE</span>
         </h3>
       </div>
-      <div className="flex flex-col items-center justify-center">
+
+      <div className="flex flex-col items-center justify-center space-y-3">
         {links.map((link) => {
           const LinkIcon = link.icon;
           return (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="hover:bg-cream/100 flex w-full cursor-pointer flex-row items-center justify-center py-4 md:justify-start md:pl-6"
-            >
-              <LinkIcon className="w-6" />
-              <p className="ml-3 hidden md:block">{link.name}</p>
-            </Link>
+            <Button asChild className="text-black" size="lg" key={link.name}>
+              <Link
+                href={link.href}
+                className={clsx(
+                  "flex w-full cursor-pointer items-center justify-center bg-white py-4 text-black shadow-none hover:bg-gray-300 md:justify-start md:pl-6",
+                  {
+                    "bg-gray-200": pathname === link.href,
+                  },
+                )}
+              >
+                <LinkIcon className="w-6" />
+                <p className="ml-3 hidden md:block">{link.name}</p>
+              </Link>
+            </Button>
           );
         })}
-
-        <div
-          className="flex w-full cursor-pointer flex-row items-center justify-center border-t border-slate-200 py-4 md:w-full md:justify-start md:pl-6"
+        <Separator />
+        <Button
+          className="flex w-full cursor-pointer flex-row items-center justify-center bg-white py-4 text-black shadow-none hover:bg-gray-300 md:justify-start md:pl-6"
           onClick={() => signOut(() => router.push("/"))}
         >
           <ExitIcon className="w-6" />
           <p className="ml-3 hidden md:block">Logout</p>
-        </div>
+        </Button>
       </div>
     </section>
   );

@@ -125,7 +125,7 @@ export const appointmentRouter = router({
         ),
       );
 
-    if (!appointments) {
+    if (!appointments || appointments.length === 0) {
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "No appointments found",
@@ -142,7 +142,11 @@ export const appointmentRouter = router({
       return distanceA - distanceB;
     });
 
-    return beforeDates[0];
+    const date = beforeDates[0];
+    if (!date) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+    return date;
   }),
   getLastCompletedAppointment: protectedProcedure.query(async ({ ctx }) => {
     const { db, userId } = ctx;
@@ -160,7 +164,7 @@ export const appointmentRouter = router({
           eq(appointmentSchema.status, "finished"),
         ),
       );
-    if (!appointments) {
+    if (!appointments || appointments.length === 0) {
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "No appointments found",
@@ -174,6 +178,10 @@ export const appointmentRouter = router({
       (app) => app.endTime.valueOf() - today.valueOf() < 0,
     );
 
-    return beforeDates[0];
+    const date = beforeDates[0];
+    if (!date) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+    return date;
   }),
 });

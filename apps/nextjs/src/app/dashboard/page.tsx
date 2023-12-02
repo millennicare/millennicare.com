@@ -2,39 +2,102 @@
 
 import Link from "next/link";
 
+import { Button } from "~/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
 import { api } from "~/utils/api";
 import AppointmentCard from "./_components/AppointmentCard";
 
 export default function DashboardPage() {
-  const user = api.auth.getMe.useQuery();
   const nextAppointment = api.appointment.getNextAppointment.useQuery();
   const lastAppointment =
     api.appointment.getLastCompletedAppointment.useQuery();
 
-  if (user.isLoading) {
-    return <>Loading...</>;
-  }
+  return (
+    <div className="flex h-full w-full flex-col">
+      <main className="flex h-1/2 flex-wrap justify-between space-y-4 md:space-y-0">
+        <Card className="h-2/5 w-full md:w-1/2">
+          <CardHeader>
+            <CardTitle>Next Appointment</CardTitle>
+            <CardDescription>
+              <Button
+                variant="link"
+                className="p-0 text-gray-400 underline"
+                asChild
+              >
+                <Link href="/dashboard/appointments">View All</Link>
+              </Button>
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {nextAppointment.data ? (
+              <Link href={`appointments/${nextAppointment.data.id}`}>
+                <AppointmentCard id={nextAppointment.data.id} />
+              </Link>
+            ) : (
+              <h4>No appointments</h4>
+            )}
+          </CardContent>
+        </Card>
+        <Card className="h-2/5 w-full md:w-2/5">
+          <CardHeader>
+            <CardTitle>Upcoming Appointments</CardTitle>
+            <CardDescription>Description</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>Card Content</p>
+          </CardContent>
+        </Card>
+        <Card className="h-2/5 w-full md:w-1/2">
+          <CardHeader>
+            <CardTitle>Last Appointment</CardTitle>
+            <CardDescription>
+              <Button
+                variant="link"
+                className="p-0 text-gray-400 underline"
+                asChild
+              >
+                <Link href="/dashboard/appointments">View All</Link>
+              </Button>
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {lastAppointment.data ? (
+              <Link href={`appointments/${lastAppointment.data.id}`}>
+                <AppointmentCard id={lastAppointment.data.id} />
+              </Link>
+            ) : (
+              <h4>No appointments</h4>
+            )}
+          </CardContent>
+        </Card>
+        <Card className="h-2/5 w-full md:w-2/5">
+          <CardHeader>
+            <CardTitle>Upcoming Appointments</CardTitle>
+            <CardDescription>Description</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>Card Content</p>
+          </CardContent>
+        </Card>
+      </main>
+    </div>
+  );
+}
 
-  if (user.isError) {
-    return <>Error fetching data</>;
-  }
-
-  if (user.isSuccess && user.data) {
-    return (
-      <div className="flex h-full w-full flex-1 flex-wrap justify-between">
-        <div className="mb-2 h-12 w-full border-b border-slate-300">
-          <h2 className="font-mono text-xl font-semibold">
-            Hello, {user.data.firstName}!
-          </h2>
-        </div>
-        <div className="h-1/4 md:w-[45%]">
+/**
+ *  <div className="h-1/4 md:w-[45%]">
           <div className="mb-2 flex flex-col justify-between md:flex-row">
             <p>UPCOMING APPOINTMENTS</p>
             <Link href="/dashboard/appointments">
               <p className="text-primary hover:underline">VIEW ALL</p>
             </Link>
           </div>
-          {/** if there is an id received, render a card */}
           {nextAppointment.data ? (
             <Link href={`appointments/${nextAppointment.data.id}`}>
               <AppointmentCard id={nextAppointment.data.id} />
@@ -87,7 +150,4 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
-      </div>
-    );
-  }
-}
+ */
