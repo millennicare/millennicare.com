@@ -34,6 +34,7 @@ export const careseekerRouter = router({
         ),
         latitude: z.number(),
         longitude: z.number(),
+        zipCode: z.string().length(5),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -56,6 +57,7 @@ export const careseekerRouter = router({
           userId: input.id,
           latitude: input.latitude,
           longitude: input.longitude,
+          zipCode: input.zipCode,
         });
         // then careseeker
         await tx.insert(careseekerSchema).values({
@@ -100,6 +102,8 @@ export const careseekerRouter = router({
           .where(eq(careseekerSchema.id, userId));
         await tx.delete(userSchema).where(eq(userSchema.id, userId));
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }),
 });

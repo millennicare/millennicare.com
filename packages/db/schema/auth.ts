@@ -13,6 +13,7 @@ import { mySqlTable } from "./_table";
 import { addresses } from "./address";
 import { children } from "./child";
 import { reviews } from "./review";
+import { services } from "./service";
 
 export const users = mySqlTable("user", {
   // needed for next auth
@@ -63,9 +64,9 @@ export const caregivers = mySqlTable(
       .primaryKey()
       .$defaultFn(() => createId()),
     userId: varchar("user_id", { length: 128 }).unique().notNull(),
-    backgroundCheckCompleted: boolean("background_check_completed").default(
-      false,
-    ),
+    backgroundCheckCompleted: boolean("background_check_completed")
+      .default(false)
+      .notNull(),
     stripeId: varchar("stripe_id", { length: 255 }).notNull(),
   },
   (caregiver) => ({
@@ -76,4 +77,5 @@ export const caregivers = mySqlTable(
 
 export const caregiverRelations = relations(caregivers, ({ many }) => ({
   reviews: many(reviews),
+  services: many(services),
 }));

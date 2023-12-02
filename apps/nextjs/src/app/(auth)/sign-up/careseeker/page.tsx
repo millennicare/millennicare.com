@@ -151,7 +151,6 @@ export default function Page() {
           longitude: number;
         };
       };
-
       await mutation.mutateAsync({
         id: userIdRef.current,
         firstName: formValues.firstName,
@@ -164,6 +163,7 @@ export default function Page() {
         children: formValues.children,
         latitude: coordinates.latitude,
         longitude: coordinates.longitude,
+        zipCode: formValues.zipCode,
       });
 
       toast({
@@ -172,8 +172,9 @@ export default function Page() {
       });
       router.push("/dashboard");
     } catch (error) {
+      console.log(error);
       toast({
-        title: "Incorrect email or password.",
+        title: "Something went wrong. Please try again later.",
         variant: "destructive",
       });
     }

@@ -3,6 +3,7 @@ import { authRouter } from "./router/auth.router";
 import { caregiverRouter } from "./router/caregiver.router";
 import { careseekerRouter } from "./router/careseeker.router";
 import { contactUsRouter } from "./router/contact-us.router";
+import { serviceRouter } from "./router/service.router";
 import { router } from "./trpc";
 
 export const appRouter = router({
@@ -11,6 +12,7 @@ export const appRouter = router({
   careseeker: careseekerRouter,
   contactUs: contactUsRouter,
   appointment: appointmentRouter,
+  service: serviceRouter,
 });
 
 // export type definition of API

@@ -141,18 +141,6 @@ importers:
 
   apps/nextjs:
     dependencies:
-      '@aws-sdk/client-location':
-        specifier: ^3.454.0
-        version: 3.454.0
-      '@aws-sdk/client-s3':
-        specifier: ^3.456.0
-        version: 3.456.0
-      '@aws-sdk/s3-request-presigner':
-        specifier: ^3.456.0
-        version: 3.456.0
-      '@aws/amazon-location-utilities-auth-helper':
-        specifier: ^1.0.3
-        version: 1.0.3(react-native@0.72.6)
       '@clerk/nextjs':
         specifier: ^4.27.2
         version: 4.27.2(next@14.0.3)(react-dom@18.2.0)(react@18.2.0)
@@ -230,7 +218,7 @@ importers:
         version: 2.29.4
       next:
         specifier: ^14.0.2
-        version: 14.0.3(@babel/core@7.23.5)(react-dom@18.2.0)(react@18.2.0)
+        version: 14.0.3(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -319,6 +307,9 @@ importers:
       '@trpc/server':
         specifier: next
         version: 11.0.0-alpha-next-2023-11-21-11-13-12.106
+      drizzle-zod:
+        specifier: ^0.5.1
+        version: 0.5.1(drizzle-orm@0.29.1)(zod@3.22.4)
       superjson:
         specifier: 2.2.0
         version: 2.2.0
@@ -393,12 +384,18 @@ importers:
 
   packages/lib:
     dependencies:
+      '@aws-sdk/client-location':
+        specifier: ^3.454.0
+        version: 3.454.0
       '@aws-sdk/client-s3':
         specifier: ^3.456.0
         version: 3.456.0
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.456.0
         version: 3.456.0
+      '@aws/amazon-location-utilities-auth-helper':
+        specifier: ^1.0.3
+        version: 1.0.3(react-native@0.72.6)
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
@@ -1767,7 +1764,7 @@ packages:
       '@aws-amplify/core': 5.8.6(react-native@0.72.6)
       '@aws-sdk/client-location': 3.454.0
       '@aws-sdk/credential-providers': 3.454.0
-      '@aws-sdk/types': 3.451.0
+      '@aws-sdk/types': 3.460.0
     transitivePeerDependencies:
       - aws-crt
       - encoding
@@ -4493,7 +4490,7 @@ packages:
       '@clerk/clerk-sdk-node': 4.12.22(react@18.2.0)
       '@clerk/shared': 1.1.1(react@18.2.0)
       '@clerk/types': 3.58.0
-      next: 14.0.3(@babel/core@7.23.5)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.0.3(react-dom@18.2.0)(react@18.2.0)
       path-to-regexp: 6.2.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -7581,7 +7578,7 @@ packages:
       react-dom: ^18.0.0
     dependencies:
       '@tanstack/react-query': 5.8.4(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0)
-      next: 14.0.3(@babel/core@7.23.5)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.0.3(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
@@ -7631,7 +7628,7 @@ packages:
       '@trpc/client': 11.0.0-alpha-next-2023-11-21-11-13-12.106(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)
       '@trpc/react-query': 11.0.0-alpha-next-2023-11-21-11-13-12.106(@tanstack/react-query@5.8.4)(@trpc/client@11.0.0-alpha-next-2023-11-21-11-13-12.106)(@trpc/server@11.0.0-alpha-next-2023-11-21-11-13-12.106)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server': 11.0.0-alpha-next-2023-11-21-11-13-12.106
-      next: 14.0.3(@babel/core@7.23.5)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.0.3(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-ssr-prepass: 1.5.0(react@18.2.0)
@@ -9792,6 +9789,16 @@ packages:
     dependencies:
       '@planetscale/database': 1.11.0
       mysql2: 3.6.5
+    dev: false
+
+  /drizzle-zod@0.5.1(drizzle-orm@0.29.1)(zod@3.22.4):
+    resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
+    peerDependencies:
+      drizzle-orm: '>=0.23.13'
+      zod: '*'
+    dependencies:
+      drizzle-orm: 0.29.1(@planetscale/database@1.11.0)(mysql2@3.6.5)
+      zod: 3.22.4
     dev: false
 
   /ee-first@1.1.1:
@@ -13147,7 +13154,7 @@ packages:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
     dev: true
 
-  /next@14.0.3(@babel/core@7.23.5)(react-dom@18.2.0)(react@18.2.0):
+  /next@14.0.3(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-AbYdRNfImBr3XGtvnwOxq8ekVCwbFTv/UJoLwmaX89nk9i051AEY4/HAWzU0YpaTDw8IofUpmuIlvzWF13jxIw==}
     engines: {node: '>=18.17.0'}
     hasBin: true
@@ -13169,7 +13176,7 @@ packages:
       postcss: 8.4.31
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      styled-jsx: 5.1.1(@babel/core@7.23.5)(react@18.2.0)
+      styled-jsx: 5.1.1(react@18.2.0)
       watchpack: 2.4.0
     optionalDependencies:
       '@next/swc-darwin-arm64': 14.0.3
@@ -15272,7 +15279,7 @@ packages:
     resolution: {integrity: sha512-0MP/Cxx5SzeeZ10p/bZI0S6MpgD+yxAhi1BOQ34jgnMXsCq3j1t6tQnZu+KdlL7dvJTLT3g9xN8tl10TqgFMcg==}
     dev: false
 
-  /styled-jsx@5.1.1(@babel/core@7.23.5)(react@18.2.0):
+  /styled-jsx@5.1.1(react@18.2.0):
     resolution: {integrity: sha512-pW7uC1l4mBZ8ugbiZrcIsiIvVx1UmTfw7UkC3Um2tmfUq9Bhk8IiyEIPl6F8agHgjzku6j0xQEZbfA5uSgSaCw==}
     engines: {node: '>= 12.0.0'}
     peerDependencies:
@@ -15285,7 +15292,6 @@ packages:
       babel-plugin-macros:
         optional: true
     dependencies:
-      '@babel/core': 7.23.5
       client-only: 0.0.1
       react: 18.2.0
     dev: false

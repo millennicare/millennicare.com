@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Pencil2Icon } from "@radix-ui/react-icons";
 import { useQuery } from "@tanstack/react-query";

@@ -17,6 +17,7 @@
     "@millennicare/lib": "workspace:^0.1.0",
     "@trpc/client": "next",
     "@trpc/server": "next",
+    "drizzle-zod": "^0.5.1",
     "superjson": "2.2.0",
     "validator": "^13.11.0",
     "zod": "^3.22.2"
