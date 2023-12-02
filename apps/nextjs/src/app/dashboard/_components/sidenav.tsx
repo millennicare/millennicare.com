@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
 import {
   CalendarIcon,
@@ -21,13 +21,12 @@ const links = [
 ];
 
 export default function SideNav() {
-  const pathname = usePathname();
   const router = useRouter();
   const { signOut } = useClerk();
 
   return (
     <section className="min-h-scren bg-cream w-20 border border-slate-300 duration-300 md:w-72">
-      <div className="flex w-full flex-row items-center justify-start py-4 md:pl-6">
+      <div className="flex w-full flex-row items-center justify-center py-4 md:justify-start md:pl-6">
         <Image
           src="/millennicare_logo.png"
           alt="Millennicare logo"
@@ -45,12 +44,7 @@ export default function SideNav() {
             <Link
               key={link.name}
               href={link.href}
-              className={clsx(
-                "flex w-full cursor-pointer flex-row items-center justify-center py-4 hover:bg-slate-200 md:justify-start md:pl-6",
-                {
-                  "bg-slate-300": pathname === link.href,
-                },
-              )}
+              className="hover:bg-cream/100 flex w-full cursor-pointer flex-row items-center justify-center py-4 md:justify-start md:pl-6"
             >
               <LinkIcon className="w-6" />
               <p className="ml-3 hidden md:block">{link.name}</p>
@@ -58,14 +52,13 @@ export default function SideNav() {
           );
         })}
 
-        <button
-          className="flex cursor-pointer flex-row items-center justify-start border-t border-slate-300 py-4 hover:bg-slate-300 md:w-full md:pl-6"
+        <div
+          className="flex w-full cursor-pointer flex-row items-center justify-center border-t border-slate-200 py-4 md:w-full md:justify-start md:pl-6"
           onClick={() => signOut(() => router.push("/"))}
-          onKeyDown={() => signOut(() => router.push("/"))}
         >
           <ExitIcon className="w-6" />
           <p className="ml-3 hidden md:block">Logout</p>
-        </button>
+        </div>
       </div>
     </section>
   );
