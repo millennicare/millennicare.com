@@ -1,8 +1,14 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs";
 
 import { Button } from "~/components/ui/button";
 
 export default function Page() {
+  const { userId } = auth();
+  if (userId) {
+    redirect("/dashboard");
+  }
   return (
     <div className="bg-palecream flex h-screen w-screen flex-col items-center justify-center space-y-4">
       <p className="font-mono text-2xl">Which one describes you?</p>

@@ -29,7 +29,7 @@ export function SideNav() {
   const { signOut } = useClerk();
 
   return (
-    <section className="h-full space-y-8 rounded-lg bg-white px-4 py-6 duration-300 md:w-max ">
+    <section className="h-full space-y-8 rounded-lg bg-white px-2 py-6 duration-300 md:w-max md:px-4">
       <div className="flex w-full items-center justify-center">
         <Image
           src="/millennicare_logo.png"
