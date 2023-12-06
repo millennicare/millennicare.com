@@ -1,9 +1,18 @@
 "use client";
 
 import Image from "next/image";
+import { Pencil2Icon } from "@radix-ui/react-icons";
 // import { Pencil2Icon } from "@radix-ui/react-icons";
 import { useQuery } from "@tanstack/react-query";
 
+import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardHeader } from "~/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 // import { Button } from "~/components/ui/button";
 // import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 // import {
@@ -16,6 +25,7 @@ import { api } from "~/utils/api";
 
 export default function ProfilePage() {
   const userQuery = api.auth.getMe.useQuery();
+  const childrenQuery = api.careseeker.getChildren.useQuery();
 
   const { data } = useQuery({
     queryKey: ["profilePicture", userQuery.data?.profilePicture],
@@ -51,7 +61,7 @@ export default function ProfilePage() {
 
   if (userQuery.isSuccess && userQuery.data) {
     return (
-      <div className="flex h-full w-full flex-col">
+      <div className="flex h-full w-full flex-col space-y-4">
         <div className="flex items-center gap-4 rounded-lg bg-white p-3">
           <Image
             src={data ?? "/default_profile_picture.png"}
@@ -65,25 +75,50 @@ export default function ProfilePage() {
             <p>
               {userQuery.data.firstName} {userQuery.data.lastName}
             </p>
-            <p>{userQuery.data.userType}</p>
+            <p>{userQuery.data.email}</p>
+            <p>{userQuery.data.address[0]?.zipCode}</p>
           </div>
         </div>
+
+        <Card>
+          <CardHeader>Household</CardHeader>
+          <CardContent>
+            <div className="flex flex-1 flex-col flex-wrap justify-between md:flex-row">
+              {childrenQuery.data ? (
+                childrenQuery.data.map((child) => (
+                  <div
+                    className="flex w-full items-center justify-between py-2 md:w-2/5"
+                    key={child.name + "_" + child.age}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <p className="h-[40px] w-[40px] rounded-full bg-[#BDBDBD] text-center text-xl leading-10 text-white">
+                        {child.name.charAt(0).toUpperCase()}
+                      </p>
+                      <p>{child.age} Years Old</p>
+                    </div>
+                    <DropdownMenu>
+                      <Button variant="ghost" size="icon" className="" asChild>
+                        <DropdownMenuTrigger>
+                          <Pencil2Icon />
+                        </DropdownMenuTrigger>
+                      </Button>
+
+                      <DropdownMenuContent>
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem className="text-red-500">
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                ))
+              ) : (
+                <>No children</>
+              )}
+            </div>
+          </CardContent>
+        </Card>
       </div>
-      //     <div className="flex h-full max-w-xl flex-col gap-2">
-      //       <div className="flex items-center gap-4 border-b border-slate-300 p-3">
-      //         <Image
-      //           src={data ?? "/default_profile_picture.png"}
-      //           placeholder="blur"
-      //           blurDataURL="/default_profile_picture.png"
-      //           height={100}
-      //           width={100}
-      //           className="rounded-full"
-      //           alt="Profile picture"
-      //         />
-      //         <div className="flex flex-col">
-      //           <h4>
-      //             {userQuery.data.firstName} {userQuery.data.lastName}
-      //           </h4>
       //           <p>{userQuery.data.userType}</p>
       //           {/* <p>{formatAddress(user.location.address)}</p> */}
       //         </div>

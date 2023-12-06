@@ -12,6 +12,9 @@ export const authRouter = router({
 
     const user = await db.query.users.findFirst({
       where: eq(userSchema.id, userId),
+      with: {
+        address: true,
+      },
     });
 
     if (!user) {

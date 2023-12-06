@@ -28,7 +28,7 @@ export const addresses = mySqlTable(
 
 export const addressesRelations = relations(addresses, ({ one }) => ({
   user: one(users, {
-    fields: [addresses.id],
+    fields: [addresses.userId],
     references: [users.id],
   }),
 }));
