@@ -29,13 +29,13 @@ import AddChildForm from "./forms/AddChildForm";
 import EditChildForm from "./forms/EditChildForm";
 
 export function HouseholdCard() {
-  const [open, setOpen] = useState(false);
+  const [openAddForm, setOpenAddForm] = useState(false);
+  const [openEditForm, setOpenEditForm] = useState(false);
   const { toast } = useToast();
   const utils = api.useUtils();
   const childrenQuery = api.children.getByCareseekerId.useQuery();
   const deleteMutation = api.children.delete.useMutation({
     onSuccess() {
-      // clear child cache so it will refetch after deletion
       utils.children.invalidate();
     },
   });
@@ -56,29 +56,27 @@ export function HouseholdCard() {
       <Card>
         <CardHeader className="flex flex-row justify-between">
           <>Household</>
-          <Dialog open={open} onOpenChange={setOpen}>
+          <Dialog open={openAddForm} onOpenChange={setOpenAddForm}>
             <Button asChild variant="link" className="h-fit p-0 underline">
               <DialogTrigger>Add child</DialogTrigger>
             </Button>
             <DialogContent>
-              <AddChildForm setOpen={setOpen} />
+              <AddChildForm setOpenAddForm={setOpenAddForm} />
             </DialogContent>
           </Dialog>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-1 flex-col flex-wrap justify-between md:flex-row">
+          <div className="flex flex-1 flex-wrap justify-between md:flex-row">
             {childrenQuery.data.length !== 0 ? (
               childrenQuery.data.map((child) => (
                 <div
-                  className="flex w-full items-center justify-between py-2 md:w-2/5"
+                  className="flex w-2/5 items-center justify-between py-2"
                   key={child.id}
                 >
-                  <div className="flex items-center space-x-3">
-                    <p className="h-[40px] w-[40px] rounded-full bg-[#BDBDBD] text-center text-xl leading-10 text-white">
-                      {child.name.charAt(0).toUpperCase()}
-                    </p>
-                    <p>{child.age} Years Old</p>
-                  </div>
+                  <p className="h-10 w-10 rounded-full bg-gray-500 text-center text-xl leading-10 text-white">
+                    {child.name.charAt(0).toUpperCase()}
+                  </p>
+                  <p>{child.age} Years Old</p>
 
                   <DropdownMenu>
                     <DropdownMenuTrigger>
@@ -92,7 +90,10 @@ export function HouseholdCard() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <Dialog>
+                      <Dialog
+                        open={openEditForm}
+                        onOpenChange={setOpenEditForm}
+                      >
                         <DialogTrigger asChild>
                           <DropdownMenuItem
                             onSelect={(e) => e.preventDefault()}
@@ -101,7 +102,10 @@ export function HouseholdCard() {
                           </DropdownMenuItem>
                         </DialogTrigger>
                         <DialogContent>
-                          <EditChildForm childId={child.id} />
+                          <EditChildForm
+                            child={child}
+                            setOpenEditForm={setOpenEditForm}
+                          />
                         </DialogContent>
                       </Dialog>
 

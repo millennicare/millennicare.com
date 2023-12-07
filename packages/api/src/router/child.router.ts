@@ -23,14 +23,16 @@ export const childRouter = router({
         userId: ctx.userId,
       });
     }),
-  getById: publicProcedure
+  getById: protectedProcedure
     .input(z.object({ childId: z.string().cuid2() }))
     .query(async ({ ctx, input }) => {
       const { db } = ctx;
-      const child = await db
-        .select()
-        .from(childSchema)
-        .where(eq(childSchema.id, input.childId));
+      const child = await db.query.children.findFirst({
+        where: and(
+          eq(childSchema.id, input.childId),
+          eq(childSchema.userId, ctx.userId),
+        ),
+      });
 
       if (!child) {
         throw new TRPCError({ code: "NOT_FOUND" });
@@ -38,7 +40,6 @@ export const childRouter = router({
 
       return child;
     }),
-
   getByCareseekerId: protectedProcedure.query(async ({ ctx }) => {
     const { db, userId } = ctx;
 
@@ -52,10 +53,9 @@ export const childRouter = router({
   update: protectedProcedure
     .input(
       z.object({
-        userId: z.string(),
         childId: z.string().cuid2(),
         name: z.string(),
-        age: z.number().int().min(0),
+        age: z.coerce.number().int().gte(0).lte(18),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -63,7 +63,10 @@ export const childRouter = router({
 
       await db
         .update(childSchema)
-        .set(input)
+        .set({
+          name: input.name,
+          age: input.age,
+        })
         .where(
           and(
             eq(childSchema.id, input.childId),

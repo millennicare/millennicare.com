@@ -17,7 +17,7 @@ import { Input } from "~/components/ui/input";
 import { api } from "~/utils/api";
 
 interface Props {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenAddForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const formSchema = z.object({
@@ -25,7 +25,7 @@ const formSchema = z.object({
   name: z.string(),
 });
 
-export default function AddChildForm({ setOpen }: Props) {
+export default function AddChildForm({ setOpenAddForm }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,7 +38,7 @@ export default function AddChildForm({ setOpen }: Props) {
     onSuccess() {
       // clear child cache so it will refetch after deletion
       utils.children.invalidate();
-      setOpen(false);
+      setOpenAddForm(false);
     },
   });
 
@@ -54,7 +54,7 @@ export default function AddChildForm({ setOpen }: Props) {
   }
 
   return (
-    <div>
+    <>
       <h1>Add child</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -93,6 +93,6 @@ export default function AddChildForm({ setOpen }: Props) {
           </Button>
         </form>
       </Form>
-    </div>
+    </>
   );
 }
