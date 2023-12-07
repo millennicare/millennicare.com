@@ -1,0 +1,65 @@
+"use client";
+
+import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+
+import { api } from "~/utils/api";
+
+export function InfoCard() {
+  const userQuery = api.auth.getMe.useQuery();
+
+  const { data } = useQuery({
+    queryKey: ["profilePicture", userQuery.data?.profilePicture],
+    queryFn: getLink,
+    enabled: !!userQuery.data?.profilePicture,
+  });
+
+  // function formatAddress(address: string) {
+  //   const city = address.split(",")[0];
+  //   const state = address.split(",")[1]?.split(" ")[1];
+
+  //   return city + ", " + state;
+  // }
+
+  if (userQuery.isLoading) {
+    return <>Loading...</>;
+  }
+
+  if (userQuery.isError) {
+    return <>Error fetching data.</>;
+  }
+
+  async function getLink() {
+    const res = await fetch(
+      `/api/documents?key=${userQuery.data?.profilePicture}`,
+    );
+    if (!res.ok) {
+      throw new Error("Error fetching profile picture");
+    }
+    const json = (await res.json()) as { url: string };
+    return json.url;
+  }
+
+  if (userQuery.isSuccess && userQuery.data) {
+    return (
+      <div className="flex items-center gap-4 rounded-lg bg-white p-3">
+        <Image
+          src={data ?? "/default_profile_picture.png"}
+          height={100}
+          width={100}
+          className="rounded-full"
+          alt={`${userQuery.data.firstName} profile picture`}
+          priority
+        />
+
+        <div>
+          <p>
+            {userQuery.data.firstName} {userQuery.data.lastName}
+          </p>
+          <p>{userQuery.data.email}</p>
+          <p>{userQuery.data.address[0]?.zipCode}</p>
+        </div>
+      </div>
+    );
+  }
+}

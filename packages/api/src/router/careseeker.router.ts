@@ -108,12 +108,4 @@ export const careseekerRouter = router({
       console.log(error);
     }
   }),
-  getChildren: protectedProcedure.query(async ({ ctx }) => {
-    const { db, userId } = ctx;
-    const children = await db
-      .select()
-      .from(childSchema)
-      .where(eq(childSchema.userId, userId));
-    return children;
-  }),
 });
