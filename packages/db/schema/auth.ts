@@ -16,12 +16,10 @@ import { reviews } from "./review";
 import { services } from "./service";
 
 export const users = mySqlTable("user", {
-  // needed for next auth
   id: varchar("id", { length: 128 }).primaryKey(),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp("updatedAt").onUpdateNow(),
   email: varchar("email", { length: 255 }).notNull().unique(),
-  // app specific fields
   firstName: varchar("firstName", { length: 255 }).notNull(),
   lastName: varchar("lastName", { length: 255 }).notNull(),
   phoneNumber: varchar("phoneNumber", { length: 255 }).notNull(),

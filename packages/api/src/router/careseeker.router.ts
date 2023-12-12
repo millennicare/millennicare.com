@@ -76,7 +76,9 @@ export const careseekerRouter = router({
         );
       });
     }),
-  // update
+  update: protectedProcedure
+    .input(z.object({}).optional)
+    .mutation(async ({ ctx, input }) => {}),
   delete: protectedProcedure.mutation(async ({ ctx }) => {
     const { db, userId } = ctx;
 
