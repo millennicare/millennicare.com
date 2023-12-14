@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server";
 import validator from "validator";
 import * as z from "zod";
 
-import { eq } from "@millennicare/db";
+import { and, eq } from "@millennicare/db";
 import { addresses as addressSchema } from "@millennicare/db/schema/address";
 import {
   careseekers as careseekerSchema,
@@ -78,7 +78,14 @@ export const careseekerRouter = router({
     }),
   update: protectedProcedure
     .input(z.object({}).optional)
-    .mutation(async ({ ctx, input }) => {}),
+    .mutation(async ({ ctx, input }) => {
+      const { db, userId } = ctx;
+
+      await db
+        .update(careseekerSchema)
+        .set({})
+        .where(eq(careseekerSchema.userId, userId));
+    }),
   delete: protectedProcedure.mutation(async ({ ctx }) => {
     const { db, userId } = ctx;
 

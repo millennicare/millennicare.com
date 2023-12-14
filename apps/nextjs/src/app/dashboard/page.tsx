@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BellIcon } from "@radix-ui/react-icons";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -11,15 +12,34 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { api } from "~/utils/api";
-import AppointmentCard from "./components/AppointmentCard";
+import AppointmentCard from "./_components/AppointmentCard";
 
 export default function DashboardPage() {
+  const user = api.auth.getMe.useQuery();
+
   const nextAppointment = api.appointment.getNextAppointment.useQuery();
   const lastAppointment =
     api.appointment.getLastCompletedAppointment.useQuery();
 
+  if (user.isError) {
+    return <>Error fetching data</>;
+  }
+
   return (
     <div className="flex h-full w-full flex-col">
+      <div className="flex items-center justify-between py-6">
+        <h2 className="font-mono text-xl font-semibold">
+          Hello{user.data ? ` ${user.data.firstName}` : ""}!
+        </h2>
+
+        <Button
+          size="icon"
+          variant="ghost"
+          className="h-10 w-10 rounded-full bg-transparent p-2 text-black hover:bg-gray-300"
+        >
+          <BellIcon className="h-full w-full" />
+        </Button>
+      </div>
       <main className="flex h-3/5 flex-wrap justify-between space-y-4 md:space-y-0">
         <Card className="h-2/5 w-full md:w-1/2">
           <CardHeader>

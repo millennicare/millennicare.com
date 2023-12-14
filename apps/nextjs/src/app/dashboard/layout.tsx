@@ -1,5 +1,4 @@
-import { SideNav } from "./components/sidenav";
-import { TopNav } from "./components/topnav";
+import { SideNav } from "./_components/side-nav";
 
 export default function DashboardLayout({
   children,
@@ -11,10 +10,7 @@ export default function DashboardLayout({
       <div className="h-full px-4 py-6">
         <SideNav />
       </div>
-      <div className="h-full w-full px-4 py-6">
-        <TopNav />
-        <div className="h-4/5">{children}</div>
-      </div>
+      <div className="h-full w-full px-4 py-6">{children}</div>
     </div>
   );
 }

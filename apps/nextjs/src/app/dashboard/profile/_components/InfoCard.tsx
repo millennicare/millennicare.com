@@ -3,10 +3,7 @@
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 
-import { Button } from "~/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import { api } from "~/utils/api";
-import EditProfileForm from "./forms/EditProfileForm";
 
 export function InfoCard() {
   const userQuery = api.auth.getMe.useQuery();
@@ -16,13 +13,6 @@ export function InfoCard() {
     queryFn: getLink,
     enabled: !!userQuery.data?.profilePicture,
   });
-
-  // function formatAddress(address: string) {
-  //   const city = address.split(",")[0];
-  //   const state = address.split(",")[1]?.split(" ")[1];
-
-  //   return city + ", " + state;
-  // }
 
   if (userQuery.isLoading) {
     return <>Loading...</>;
@@ -63,16 +53,6 @@ export function InfoCard() {
             <p>{userQuery.data.email}</p>
             <p>{userQuery.data.address[0]?.zipCode}</p>
           </div>
-        </div>
-        <div>
-          <Dialog>
-            <Button variant="outline" asChild>
-              <DialogTrigger>Edit Profile</DialogTrigger>
-            </Button>
-            <DialogContent>
-              <EditProfileForm careseeker={userQuery.data} />
-            </DialogContent>
-          </Dialog>
         </div>
       </div>
     );

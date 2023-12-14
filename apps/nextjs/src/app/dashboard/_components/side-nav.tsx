@@ -10,6 +10,7 @@ import {
   HomeIcon,
   MagnifyingGlassIcon,
   PersonIcon,
+  GearIcon
 } from "@radix-ui/react-icons";
 import clsx from "clsx";
 
@@ -21,6 +22,7 @@ const links = [
   { name: "Appointments", href: "/dashboard/appointments", icon: CalendarIcon },
   { name: "Search", href: "/dashboard/search", icon: MagnifyingGlassIcon },
   { name: "Profile", href: "/dashboard/profile", icon: PersonIcon },
+  { name: "Settings", href: "/dashboard/settings", icon: GearIcon }
 ];
 
 export function SideNav() {

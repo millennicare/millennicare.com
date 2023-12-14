@@ -38,4 +38,24 @@ export const authRouter = router({
         });
       }
     }),
+  update: protectedProcedure
+    .input(
+      z.object({
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        phoneNumber: z.string().optional(),
+        email: z.string().email().optional(),
+        biography: z.string().optional().nullish(),
+        profilePicture: z.string().url().optional(),
+        birthdate: z.date().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { db, userId } = ctx;
+
+      await db
+        .update(userSchema)
+        .set({ ...input })
+        .where(eq(userSchema.id, userId));
+    }),
 });
