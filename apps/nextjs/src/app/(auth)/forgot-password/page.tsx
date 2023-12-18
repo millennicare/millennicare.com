@@ -74,7 +74,7 @@ export default function ForgotPasswordPage() {
           <h2 className="text-center text-2xl">Forgot password?</h2>
         </div>
 
-        <div className="mx-auto w-2/5 rounded-lg bg-white px-4 py-3 shadow">
+        <div className="bg-background mx-auto w-2/5 rounded-lg px-4 py-3 shadow">
           <div className="flex flex-col space-y-2">
             {!successfulCreation && (
               <p className="text-sm">

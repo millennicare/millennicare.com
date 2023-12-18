@@ -23,7 +23,7 @@ export const careseekerRouter = router({
         lastName: z.string(),
         email: z.string(),
         birthdate: z.date(),
-        profilePicture: z.string().optional(),
+        profilePicture: z.string().url().optional(),
         phoneNumber: z.string().refine(validator.isMobilePhone),
         userType: z.enum(["careseeker", "caregiver"]),
         children: z.array(

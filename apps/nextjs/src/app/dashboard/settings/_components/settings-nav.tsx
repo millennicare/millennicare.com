@@ -9,6 +9,7 @@ import { cn } from "~/lib/utils";
 const links = [
   { name: "Profile", href: "/dashboard/settings" },
   { name: "Account", href: "/dashboard/settings/account" },
+  { name: "Payment", href: "/dashboard/settings/payment" },
 ];
 
 export function SettingsNav({
@@ -18,9 +19,9 @@ export function SettingsNav({
   const pathname = usePathname();
 
   return (
-    <div className="relative">
+    <div className="relative bg-background rounded-lg py-2">
       <ScrollArea className="max-w-[600px] lg:max-w-none">
-        <div className={cn("mb-4 flex items-center", className)} {...props}>
+        <div className={cn("flex items-center", className)} {...props}>
           {links.map((link) => (
             <Link
               href={link.href}

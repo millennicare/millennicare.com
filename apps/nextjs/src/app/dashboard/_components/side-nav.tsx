@@ -7,10 +7,10 @@ import { useClerk } from "@clerk/nextjs";
 import {
   CalendarIcon,
   ExitIcon,
+  GearIcon,
   HomeIcon,
   MagnifyingGlassIcon,
   PersonIcon,
-  GearIcon
 } from "@radix-ui/react-icons";
 import clsx from "clsx";
 
@@ -22,7 +22,7 @@ const links = [
   { name: "Appointments", href: "/dashboard/appointments", icon: CalendarIcon },
   { name: "Search", href: "/dashboard/search", icon: MagnifyingGlassIcon },
   { name: "Profile", href: "/dashboard/profile", icon: PersonIcon },
-  { name: "Settings", href: "/dashboard/settings", icon: GearIcon }
+  { name: "Settings", href: "/dashboard/settings", icon: GearIcon },
 ];
 
 export function SideNav() {
@@ -31,7 +31,7 @@ export function SideNav() {
   const { signOut } = useClerk();
 
   return (
-    <section className="h-full space-y-8 rounded-lg bg-white px-2 py-6 duration-300 md:w-max md:px-4">
+    <section className="bg-background h-full space-y-8 rounded-lg px-2 py-6 duration-300 md:w-max md:px-4">
       <div className="flex w-full items-center justify-center">
         <Image
           src="/millennicare_logo.png"
@@ -52,7 +52,7 @@ export function SideNav() {
             <Button
               asChild
               className={clsx(
-                "bg-white text-black shadow-none hover:bg-gray-300",
+                "bg-background text-black shadow-none hover:bg-gray-300",
                 {
                   "bg-gray-200": pathname === link.href,
                 },
@@ -72,7 +72,7 @@ export function SideNav() {
         })}
         <Separator />
         <Button
-          className="flex w-full cursor-pointer flex-row items-center justify-center bg-white py-4 text-black shadow-none hover:bg-gray-300 md:justify-start md:pl-6"
+          className="bg-background flex w-full cursor-pointer flex-row items-center justify-center py-4 text-black shadow-none hover:bg-gray-300 md:justify-start md:pl-6"
           onClick={() => signOut(() => router.push("/"))}
         >
           <ExitIcon className="w-6" />

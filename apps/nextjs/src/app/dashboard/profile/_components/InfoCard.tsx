@@ -35,7 +35,7 @@ export function InfoCard() {
 
   if (userQuery.isSuccess && userQuery.data) {
     return (
-      <div className="flex flex-col items-center justify-between gap-4 rounded-lg bg-white p-3 md:flex-row">
+      <div className="bg-background flex flex-col items-center justify-between gap-4 rounded-lg p-3 md:flex-row">
         <div className="flex w-full flex-col items-center space-y-4 text-center md:flex-row md:space-x-4 md:space-y-0 md:text-left">
           <Image
             src={data ?? "/default_profile_picture.png"}

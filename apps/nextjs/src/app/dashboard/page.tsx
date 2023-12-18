@@ -143,29 +143,29 @@ export default function DashboardPage() {
         </div>
         <div className="h-1/4 w-[45%]">
           <p className="mb-2">FAVORITES</p>
-          <div className="h-[140px] rounded-md bg-white shadow-md">{"  "}</div>
+          <div className="h-[140px] rounded-md bg-background shadow-md">{"  "}</div>
         </div>
 
         <div className="h-1/4 w-[45%]">
           <p className="mb-2">MILLENNICARE CREDITS</p>
-          <div className="h-[140px] rounded-md bg-white shadow-md">{"  "}</div>
+          <div className="h-[140px] rounded-md bg-background shadow-md">{"  "}</div>
         </div>
         <div className="mb-2 h-1/4 w-full">
           <p className="mb-2">RECCOMENDED</p>
           <div className="flex flex-row space-x-2 overflow-x-hidden">
-            <div className="h-[140px] w-1/5 rounded-md bg-white shadow-md">
+            <div className="h-[140px] w-1/5 rounded-md bg-background shadow-md">
               {"  "}
             </div>
-            <div className="h-[140px] w-1/5 rounded-md bg-white shadow-md">
+            <div className="h-[140px] w-1/5 rounded-md bg-background shadow-md">
               {"  "}
             </div>
-            <div className="h-[140px] w-1/5 rounded-md bg-white shadow-md">
+            <div className="h-[140px] w-1/5 rounded-md bg-background shadow-md">
               {"  "}
             </div>
-            <div className="h-[140px] w-1/5 rounded-md bg-white shadow-md">
+            <div className="h-[140px] w-1/5 rounded-md bg-background shadow-md">
               {"  "}
             </div>
-            <div className="h-[140px] w-1/5 rounded-md bg-white shadow-md">
+            <div className="h-[140px] w-1/5 rounded-md bg-background shadow-md">
               {"  "}
             </div>
           </div>

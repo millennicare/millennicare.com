@@ -85,7 +85,7 @@ export default function ContactUsForm() {
   return (
     <Form {...contactForm}>
       <form
-        className="flex flex-col space-y-4 rounded bg-white p-10 shadow-md"
+        className="bg-background flex flex-col space-y-4 rounded p-10 shadow-md"
         onSubmit={contactForm.handleSubmit(handleContactSubmit)}
       >
         {/* First Name */}

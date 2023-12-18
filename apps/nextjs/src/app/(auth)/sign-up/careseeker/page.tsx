@@ -196,7 +196,7 @@ export default function Page() {
         {/* @TODO: Stepper */}
       </div>
 
-      <div className="rounded-lg bg-white px-4 py-3 shadow sm:max-w-md">
+      <div className="bg-background rounded-lg px-4 py-3 shadow sm:max-w-md">
         {displayStep(step)}
       </div>
     </div>

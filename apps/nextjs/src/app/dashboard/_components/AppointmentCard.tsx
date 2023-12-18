@@ -48,7 +48,7 @@ const AppointmentCard = ({ id }: Params) => {
   //   caregiverQuery.data
   // ) {
   //   return (
-  //     <div className="flex h-max w-full flex-row justify-between rounded-md border bg-white p-4 shadow-md">
+  //     <div className="flex h-max w-full flex-row justify-between rounded-md border bg-background p-4 shadow-md">
   //       <div className="flex flex-row items-center">
   //         <Image
   //           src={
