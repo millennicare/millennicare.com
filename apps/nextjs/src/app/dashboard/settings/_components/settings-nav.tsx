@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { ScrollArea } from "~/components/ui/scroll-area";
+import { Separator } from "~/components/ui/separator";
 import { cn } from "~/lib/utils";
 
 const links = [
@@ -19,15 +20,15 @@ export function SettingsNav({
   const pathname = usePathname();
 
   return (
-    <div className="relative bg-background rounded-lg py-2">
-      <ScrollArea className="max-w-[600px] lg:max-w-none">
-        <div className={cn("flex items-center", className)} {...props}>
+    <div className="bg-background relative rounded-lg py-3">
+      <ScrollArea className="max-w-[600px] lg:max-w-none mb-3">
+        <div className={cn("flex items-center space-x-4", className)} {...props}>
           {links.map((link) => (
             <Link
               href={link.href}
               key={link.href}
               className={cn(
-                "flex items-center px-4",
+                "flex items-center",
                 pathname === link.href
                   ? "font-bold"
                   : "text-muted-foreground font-medium",
@@ -38,6 +39,7 @@ export function SettingsNav({
           ))}
         </div>
       </ScrollArea>
+      <Separator />
     </div>
   );
 }

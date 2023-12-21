@@ -12,8 +12,8 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
           <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
           <p className="text-muted-foreground">Manage your account</p>
         </div>
-        <SettingsNav />
-        <div className="bg-background overflow-hidden rounded-lg">
+        <div className="px-4 bg-background overflow-hidden rounded-lg">
+          <SettingsNav />
           {children}
         </div>
       </div>
