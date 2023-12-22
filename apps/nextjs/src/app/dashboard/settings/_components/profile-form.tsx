@@ -18,23 +18,19 @@ import { Textarea } from "~/components/ui/textarea";
 import { api } from "~/trpc/react";
 
 type EditProfileFormProps = {
-  firstName: string;
-  lastName: string;
   email: string;
   biography: string | null;
+  profilePicture: string | null;
 };
 
 const formSchema = z.object({
   email: z.string().email(),
   biography: z.string().optional(),
   password: z.string(),
-  firstName: z.string(),
-  lastName: z.string(),
+  profilePicutre: z.any(),
 });
 
 export default function EditProfileForm({
-  firstName,
-  lastName,
   email,
   biography,
 }: EditProfileFormProps) {
@@ -46,8 +42,6 @@ export default function EditProfileForm({
       email: email,
       password: "",
       biography: biography ?? undefined,
-      firstName: firstName,
-      lastName: lastName,
     },
     mode: "onTouched",
   });
@@ -67,40 +61,35 @@ export default function EditProfileForm({
       >
         <FormField
           control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>First Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Last Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email Address</FormLabel>
               <FormControl>
                 <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="profilePicture"
+          render={() => (
+            <FormItem>
+              <FormLabel>Profile Picture</FormLabel>
+              <FormControl>
+                <Input
+                  type="file"
+                  accept="image*"
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    if (files?.item(0) !== undefined) {
+                      setFile(files[0] ?? null);
+                    }
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

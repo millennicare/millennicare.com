@@ -7,8 +7,6 @@ import { db } from "@millennicare/db";
 
 export const createTRPCContext = (opts: { headers: Headers }) => {
   const session = auth();
-  const source = opts.headers.get("x-trpc-source") ?? "unknown";
-  console.log(">>> tRPC Request from", source, "by", session?.user);
 
   return {
     auth: session,

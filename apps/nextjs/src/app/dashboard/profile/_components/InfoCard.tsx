@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { api } from "~/trpc/react";
 
 export function InfoCard() {
@@ -39,8 +40,8 @@ export function InfoCard() {
         <div className="flex w-full flex-col items-center space-y-4 text-center md:flex-row md:space-x-4 md:space-y-0 md:text-left">
           <Image
             src={data ?? "/default_profile_picture.png"}
-            height={100}
-            width={100}
+            height={80}
+            width={80}
             className="rounded-full"
             alt={`${userQuery.data.firstName} profile picture`}
             priority
