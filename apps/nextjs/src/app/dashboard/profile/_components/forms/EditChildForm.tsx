@@ -16,7 +16,7 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { useToast } from "~/components/ui/use-toast";
-import { api } from "~/trpc/api";
+import { api } from "~/trpc/react";
 
 interface Props {
   readonly child: {

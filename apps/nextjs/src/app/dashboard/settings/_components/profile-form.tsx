@@ -26,7 +26,7 @@ type EditProfileFormProps = {
 
 const formSchema = z.object({
   email: z.string().email(),
-  biography: z.string().nullish(),
+  biography: z.string().optional(),
   password: z.string(),
   firstName: z.string(),
   lastName: z.string(),
