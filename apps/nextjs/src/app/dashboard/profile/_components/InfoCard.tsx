@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 
-import { api } from "~/utils/api";
+import { api } from "~/trpc/react";
 
 export function InfoCard() {
   const userQuery = api.auth.getMe.useQuery();

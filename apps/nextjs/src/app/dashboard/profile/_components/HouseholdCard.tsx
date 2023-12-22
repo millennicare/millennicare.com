@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Card, CardHeader } from "~/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
-import { api } from "~/utils/api";
+import { api } from "~/trpc/react";
 import ChildCard from "./ChildCard";
 import AddChildForm from "./forms/AddChildForm";
 
@@ -29,7 +29,7 @@ export function HouseholdCard() {
             </Dialog>
           </CardHeader>
         </Card>
-        <div className="flex flex-col space-y-2 md:space-y-0 flex-wrap md:justify-between md:flex-row">
+        <div className="flex flex-col flex-wrap space-y-2 md:flex-row md:justify-between md:space-y-0">
           {childrenQuery.data.length !== 0 ? (
             childrenQuery.data.map((child) => (
               <ChildCard child={child} key={child.id} />

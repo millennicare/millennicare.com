@@ -26,7 +26,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { useToast } from "~/components/ui/use-toast";
-import { api } from "~/utils/api";
+import { api } from "~/trpc/react";
 
 type Props = {
   readonly careseeker: {

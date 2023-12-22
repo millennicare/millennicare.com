@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { api } from "~/utils/api";
+import { api } from "~/trpc/react";
 import AppointmentCard from "./_components/AppointmentCard";
 
 export default function DashboardPage() {

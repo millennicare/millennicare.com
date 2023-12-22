@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useSignUp } from "@clerk/nextjs";
 
 import { useToast } from "~/components/ui/use-toast";
-import { api } from "~/utils/api";
+import { api } from "~/trpc/react";
 import {
   AdditionalInfoForm,
   PersonalInfoForm,

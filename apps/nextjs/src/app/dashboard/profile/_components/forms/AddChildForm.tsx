@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { api } from "~/utils/api";
+import { api } from "~/trpc/react";
 
 interface Props {
   setOpenAddForm: React.Dispatch<React.SetStateAction<boolean>>;

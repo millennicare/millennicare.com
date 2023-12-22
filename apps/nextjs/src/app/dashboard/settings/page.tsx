@@ -1,7 +1,7 @@
 "use client";
 
 import { Separator } from "~/components/ui/separator";
-import { api } from "~/utils/api";
+import { api } from "~/trpc/react";
 import EditProfileForm from "./_components/profile-form";
 
 export default function SettingsPage() {

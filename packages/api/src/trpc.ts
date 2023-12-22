@@ -5,14 +5,17 @@ import { ZodError } from "zod";
 
 import { db } from "@millennicare/db";
 
-export const createContext = () => {
+export const createTRPCContext = (opts: { headers: Headers }) => {
   const session = auth();
+  const source = opts.headers.get("x-trpc-source") ?? "unknown";
+  console.log(">>> tRPC Request from", source, "by", session?.user);
+
   return {
     auth: session,
     db,
   };
 };
-export type Context = Awaited<ReturnType<typeof createContext>>;
+export type Context = Awaited<ReturnType<typeof createTRPCContext>>;
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
