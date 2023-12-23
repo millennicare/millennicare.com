@@ -3,6 +3,8 @@ import { getChildren } from "../_actions/child";
 import { HouseholdCard } from "./_components/HouseholdCard";
 import { InfoCard } from "./_components/InfoCard";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProfilePage() {
   const user = await getUserData();
   const children = await getChildren();

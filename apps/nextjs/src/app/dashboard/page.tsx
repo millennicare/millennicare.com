@@ -3,6 +3,8 @@ import { getUserData } from "./_actions/auth";
 import AppointmentTile from "./_components/appointment-tile";
 import TopNav from "./_components/top-nav";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const user = await getUserData();
   const nextAppt = await getNextAppointment();

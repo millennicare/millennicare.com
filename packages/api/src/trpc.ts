@@ -5,9 +5,9 @@ import { ZodError } from "zod";
 
 import { db } from "@millennicare/db";
 
-export const createTRPCContext = () => {
+export const createTRPCContext = (opts: { headers: Headers }) => {
   const session = auth();
-
+  console.log(opts.headers);
   return {
     auth: session,
     db,

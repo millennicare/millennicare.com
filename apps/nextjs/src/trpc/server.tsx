@@ -16,7 +16,7 @@ const createContext = cache(async () => {
   const heads = new Headers(headers());
   heads.set("x-trpc-source", "rsc");
 
-  return createTRPCContext();
+  return createTRPCContext({ headers: heads });
 });
 
 export const api = createTRPCClient<typeof appRouter>({
