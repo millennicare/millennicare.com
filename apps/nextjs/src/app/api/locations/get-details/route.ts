@@ -3,6 +3,8 @@ import type { NextRequest } from "next/server";
 
 import { getLocationDetails } from "@millennicare/lib";
 
+export const runtime = "edge";
+
 /**
  * @returns The latitude/longitude coordinates
  */

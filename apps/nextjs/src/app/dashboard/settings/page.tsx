@@ -2,7 +2,7 @@ import { Separator } from "~/components/ui/separator";
 import { api } from "~/trpc/server";
 import EditProfileForm from "./_components/profile-form";
 
-export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 export default async function SettingsPage() {
   const query = await api.auth.getMe.query();

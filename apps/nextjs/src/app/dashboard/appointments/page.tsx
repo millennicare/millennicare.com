@@ -1,6 +1,6 @@
 import { getAllAppointments } from "../_actions/appointment";
 
-export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 export default async function AppointmentsPage() {
   const appointments = await getAllAppointments();
