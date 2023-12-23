@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { api } from "~/trpc/react";
+
+type InfoCardProps = {}
 
 export function InfoCard() {
   const userQuery = api.auth.getMe.useQuery();

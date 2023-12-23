@@ -1,7 +1,7 @@
 import validator from "validator";
 import * as z from "zod";
 
-import { contactUs as contactUsSchema } from "@millennicare/db/schema/contact-us";
+import { schema } from "@millennicare/db";
 
 import { publicProcedure, router } from "../trpc";
 
@@ -19,7 +19,7 @@ export const contactUsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
-      await db.insert(contactUsSchema).values({
+      await db.insert(schema.contactUs).values({
         firstName: input.firstName,
         lastName: input.lastName,
         email: input.email,

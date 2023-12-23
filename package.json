@@ -28,10 +28,5 @@
     "turbo": "^1.11.2",
     "typescript": "^5.3.3"
   },
-  "pnpm": {
-    "overrides": {
-      "@auth/core": "0.18.0"
-    }
-  },
   "prettier": "@millennicare/prettier-config"
 }

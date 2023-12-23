@@ -1,10 +1,9 @@
 import { TRPCError } from "@trpc/server";
 import * as z from "zod";
 
-import { and, eq } from "@millennicare/db";
-import { children as childSchema } from "@millennicare/db/schema/child";
+import { and, eq, schema } from "@millennicare/db";
 
-import { protectedProcedure, publicProcedure, router } from "../trpc";
+import { protectedProcedure, router } from "../trpc";
 
 export const childRouter = router({
   create: protectedProcedure
@@ -17,7 +16,7 @@ export const childRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
-      await db.insert(childSchema).values({
+      await db.insert(schema.children).values({
         name: input.name,
         age: input.age,
         userId: ctx.userId,
@@ -29,8 +28,8 @@ export const childRouter = router({
       const { db } = ctx;
       const child = await db.query.children.findFirst({
         where: and(
-          eq(childSchema.id, input.childId),
-          eq(childSchema.userId, ctx.userId),
+          eq(schema.children.id, input.childId),
+          eq(schema.children.userId, ctx.userId),
         ),
       });
 
@@ -45,8 +44,8 @@ export const childRouter = router({
 
     const children = await db
       .select()
-      .from(childSchema)
-      .where(eq(childSchema.userId, userId));
+      .from(schema.children)
+      .where(eq(schema.children.userId, userId));
 
     return children;
   }),
@@ -62,15 +61,15 @@ export const childRouter = router({
       const { db, userId } = ctx;
 
       await db
-        .update(childSchema)
+        .update(schema.children)
         .set({
           name: input.name,
           age: input.age,
         })
         .where(
           and(
-            eq(childSchema.id, input.childId),
-            eq(childSchema.userId, userId),
+            eq(schema.children.id, input.childId),
+            eq(schema.children.userId, userId),
           ),
         );
     }),
@@ -84,11 +83,11 @@ export const childRouter = router({
       const { db, userId } = ctx;
 
       await db
-        .delete(childSchema)
+        .delete(schema.children)
         .where(
           and(
-            eq(childSchema.id, input.childId),
-            eq(childSchema.userId, userId),
+            eq(schema.children.id, input.childId),
+            eq(schema.children.userId, userId),
           ),
         );
     }),

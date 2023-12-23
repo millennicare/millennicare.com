@@ -3,13 +3,7 @@ import { TRPCError } from "@trpc/server";
 import validator from "validator";
 import * as z from "zod";
 
-import { and, eq } from "@millennicare/db";
-import { addresses as addressSchema } from "@millennicare/db/schema/address";
-import {
-  careseekers as careseekerSchema,
-  users as userSchema,
-} from "@millennicare/db/schema/auth";
-import { children as childSchema } from "@millennicare/db/schema/child";
+import { eq, schema } from "@millennicare/db";
 import { deleteObject } from "@millennicare/lib";
 
 import { protectedProcedure, publicProcedure, router } from "../trpc";
@@ -42,7 +36,7 @@ export const careseekerRouter = router({
 
       await db.transaction(async (tx) => {
         // first create user record
-        await tx.insert(userSchema).values({
+        await tx.insert(schema.users).values({
           id: input.id,
           firstName: input.firstName,
           lastName: input.lastName,
@@ -53,19 +47,19 @@ export const careseekerRouter = router({
           userType: "careseeker",
         });
         // then location
-        await tx.insert(addressSchema).values({
+        await tx.insert(schema.addresses).values({
           userId: input.id,
           latitude: input.latitude,
           longitude: input.longitude,
           zipCode: input.zipCode,
         });
         // then careseeker
-        await tx.insert(careseekerSchema).values({
+        await tx.insert(schema.careseekers).values({
           userId: input.id,
         });
 
         // then kids
-        await tx.insert(childSchema).values(
+        await tx.insert(schema.children).values(
           input.children.map((child) => {
             return {
               userId: input.id,
@@ -82,9 +76,9 @@ export const careseekerRouter = router({
       const { db, userId } = ctx;
 
       await db
-        .update(careseekerSchema)
+        .update(schema.careseekers)
         .set({})
-        .where(eq(careseekerSchema.userId, userId));
+        .where(eq(schema.careseekers.userId, userId));
     }),
   delete: protectedProcedure.mutation(async ({ ctx }) => {
     const { db, userId } = ctx;
@@ -92,7 +86,7 @@ export const careseekerRouter = router({
     try {
       // get user info
       const user = await db.query.users.findFirst({
-        where: eq(userSchema.id, userId),
+        where: eq(schema.users.id, userId),
       });
       if (!user) {
         throw new TRPCError({ code: "BAD_REQUEST" });
@@ -100,12 +94,16 @@ export const careseekerRouter = router({
 
       // need to delete address, children, user
       await db.transaction(async (tx) => {
-        await tx.delete(addressSchema).where(eq(addressSchema.userId, userId));
-        await tx.delete(childSchema).where(eq(childSchema.userId, userId));
         await tx
-          .delete(careseekerSchema)
-          .where(eq(careseekerSchema.id, userId));
-        await tx.delete(userSchema).where(eq(userSchema.id, userId));
+          .delete(schema.addresses)
+          .where(eq(schema.addresses.userId, userId));
+        await tx
+          .delete(schema.children)
+          .where(eq(schema.children.userId, userId));
+        await tx
+          .delete(schema.careseekers)
+          .where(eq(schema.careseekers.id, userId));
+        await tx.delete(schema.users).where(eq(schema.users.id, userId));
       });
 
       // need to delete s3, clerk from lib

@@ -1,10 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import * as z from "zod";
 
-import { eq } from "@millennicare/db";
-import { addresses as addressSchema } from "@millennicare/db/schema/address";
-import { caregivers as caregiverSchema } from "@millennicare/db/schema/auth";
-import { services as serviceSchema } from "@millennicare/db/schema/service";
+import { eq, schema } from "@millennicare/db";
 import { getLocationDetails } from "@millennicare/lib";
 
 import { protectedProcedure, publicProcedure, router } from "../trpc";
@@ -65,7 +62,7 @@ export const serviceRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { db, userId } = ctx;
       const caregiver = await db.query.caregivers.findFirst({
-        where: eq(caregiverSchema.userId, userId),
+        where: eq(schema.caregivers.userId, userId),
       });
       if (!caregiver) {
         throw new TRPCError({
@@ -74,7 +71,7 @@ export const serviceRouter = router({
       }
 
       await db
-        .insert(serviceSchema)
+        .insert(schema.services)
         .values({ ...input, caregiverId: caregiver.id });
     }),
   update: protectedProcedure
@@ -97,7 +94,7 @@ export const serviceRouter = router({
       const { db, userId } = ctx;
 
       const caregiver = await db.query.caregivers.findFirst({
-        where: eq(caregiverSchema.userId, userId),
+        where: eq(schema.caregivers.userId, userId),
         columns: {
           id: true,
         },
@@ -107,14 +104,14 @@ export const serviceRouter = router({
       }
 
       await db
-        .update(serviceSchema)
+        .update(schema.services)
         .set({ ...input, caregiverId: caregiver.id });
     }),
   getByCaregiver: publicProcedure
     .input(z.object({ caregiverId: z.string().cuid2() }))
     .query(async ({ ctx, input }) => {
       const services = await ctx.db.query.services.findMany({
-        where: eq(caregiverSchema.id, input.caregiverId),
+        where: eq(schema.caregivers.id, input.caregiverId),
       });
 
       if (!services) {
@@ -126,7 +123,7 @@ export const serviceRouter = router({
     .input(z.object({ serviceId: z.string().cuid2() }))
     .query(async ({ ctx, input }) => {
       const service = await ctx.db.query.services.findFirst({
-        where: eq(serviceSchema.id, input.serviceId),
+        where: eq(schema.services.id, input.serviceId),
       });
       if (!service) {
         throw new TRPCError({
@@ -142,8 +139,8 @@ export const serviceRouter = router({
       const { db } = ctx;
 
       await db
-        .delete(serviceSchema)
-        .where(eq(serviceSchema.id, input.serviceId));
+        .delete(schema.services)
+        .where(eq(schema.services.id, input.serviceId));
     }),
   // finds services by a custom radius search query (default 5 mile)
   getByZipCode: publicProcedure
@@ -166,7 +163,7 @@ export const serviceRouter = router({
       // get all caregivers in given radius from zipcode
       // 1. check if the supplied zip code is already in address table
       const location = await ctx.db.query.addresses.findFirst({
-        where: eq(addressSchema.zipCode, input.zipCode),
+        where: eq(schema.addresses.zipCode, input.zipCode),
       });
 
       // if not present, fetch from aws location api
@@ -194,27 +191,27 @@ export const serviceRouter = router({
         .as(
           db
             .select()
-            .from(caregiverSchema)
+            .from(schema.caregivers)
             .innerJoin(
-              serviceSchema,
-              eq(serviceSchema.category, input.category),
+              schema.services,
+              eq(schema.services.category, input.category),
             ),
         );
       // then join that result with users/services and addresses
       const result = await db
         .with(sq)
         .select({
-          zipCode: addressSchema.zipCode,
-          longitude: addressSchema.longitude,
-          latitude: addressSchema.latitude,
+          zipCode: schema.addresses.zipCode,
+          longitude: schema.addresses.longitude,
+          latitude: schema.addresses.latitude,
           caregiverId: sq.caregiver.id,
           userId: sq.caregiver.userId,
           serviceId: sq.service.id,
         })
         .from(sq)
         .innerJoin(
-          addressSchema,
-          eq(addressSchema.userId, sq.caregiver.userId),
+          schema.addresses,
+          eq(schema.addresses.userId, sq.caregiver.userId),
         );
 
       // 3. filter caregivers list based on zip code

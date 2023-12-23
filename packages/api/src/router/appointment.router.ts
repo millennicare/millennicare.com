@@ -1,8 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import * as z from "zod";
 
-import { and, eq, or } from "@millennicare/db";
-import { appointments as appointmentSchema } from "@millennicare/db/schema/appointment";
+import { and, eq, or, schema } from "@millennicare/db";
 
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
@@ -20,7 +19,7 @@ export const appointmentRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
-      await db.insert(appointmentSchema).values(input);
+      await db.insert(schema.appointments).values(input);
     }),
   updateAppointment: protectedProcedure
     .input(
@@ -39,15 +38,15 @@ export const appointmentRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { db, userId } = ctx;
       await db
-        .update(appointmentSchema)
+        .update(schema.appointments)
         .set(input)
         .where(
           and(
             or(
-              eq(appointmentSchema.caregiverId, userId),
-              eq(appointmentSchema.careseekerId, userId),
+              eq(schema.appointments.caregiverId, userId),
+              eq(schema.appointments.careseekerId, userId),
             ),
-            eq(appointmentSchema.id, input.id),
+            eq(schema.appointments.id, input.id),
           ),
         );
     }),
@@ -58,10 +57,10 @@ export const appointmentRouter = router({
       const appointment = await db.query.appointments.findFirst({
         where: and(
           or(
-            eq(appointmentSchema.caregiverId, userId),
-            eq(appointmentSchema.careseekerId, userId),
+            eq(schema.appointments.caregiverId, userId),
+            eq(schema.appointments.careseekerId, userId),
           ),
-          eq(appointmentSchema.id, input.id),
+          eq(schema.appointments.id, input.id),
         ),
       });
       if (!appointment) {
@@ -77,8 +76,8 @@ export const appointmentRouter = router({
     const { db, userId } = ctx;
     const appointments = await db.query.appointments.findMany({
       where: or(
-        eq(appointmentSchema.caregiverId, userId),
-        eq(appointmentSchema.careseekerId, userId),
+        eq(schema.appointments.caregiverId, userId),
+        eq(schema.appointments.careseekerId, userId),
       ),
     });
 
@@ -96,14 +95,14 @@ export const appointmentRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { db, userId } = ctx;
       await db
-        .delete(appointmentSchema)
+        .delete(schema.appointments)
         .where(
           and(
             or(
-              eq(appointmentSchema.caregiverId, userId),
-              eq(appointmentSchema.careseekerId, userId),
+              eq(schema.appointments.caregiverId, userId),
+              eq(schema.appointments.careseekerId, userId),
             ),
-            eq(appointmentSchema.id, input.id),
+            eq(schema.appointments.id, input.id),
           ),
         );
     }),
@@ -111,16 +110,16 @@ export const appointmentRouter = router({
     const { db, userId } = ctx;
     const appointments = await db
       .select()
-      .from(appointmentSchema)
+      .from(schema.appointments)
       .where(
         and(
           or(
-            eq(appointmentSchema.careseekerId, userId),
-            eq(appointmentSchema.caregiverId, userId),
+            eq(schema.appointments.careseekerId, userId),
+            eq(schema.appointments.caregiverId, userId),
           ),
           or(
-            eq(appointmentSchema.status, "pending"),
-            eq(appointmentSchema.status, "confirmed"),
+            eq(schema.appointments.status, "pending"),
+            eq(schema.appointments.status, "confirmed"),
           ),
         ),
       );
@@ -154,14 +153,14 @@ export const appointmentRouter = router({
     // and if the careseeker/giver id matches the userId from ctx
     const appointments = await db
       .select()
-      .from(appointmentSchema)
+      .from(schema.appointments)
       .where(
         and(
           or(
-            eq(appointmentSchema.careseekerId, userId),
-            eq(appointmentSchema.caregiverId, userId),
+            eq(schema.appointments.careseekerId, userId),
+            eq(schema.appointments.caregiverId, userId),
           ),
-          eq(appointmentSchema.status, "finished"),
+          eq(schema.appointments.status, "finished"),
         ),
       );
     if (!appointments || appointments.length === 0) {
