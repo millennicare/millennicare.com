@@ -125,10 +125,7 @@ export const appointmentRouter = router({
       );
 
     if (!appointments || appointments.length === 0) {
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "No appointments found",
-      });
+      return null;
     }
 
     const today = new Date();
@@ -164,10 +161,7 @@ export const appointmentRouter = router({
         ),
       );
     if (!appointments || appointments.length === 0) {
-      throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "No appointments found",
-      });
+      return null;
     }
 
     // find last completed appointment

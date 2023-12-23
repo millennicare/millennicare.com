@@ -14,7 +14,10 @@ export const env = createEnv({
    * built with invalid env vars.
    */
   server: {
-    DATABASE_URL: z.string().url(),
+    DB_USERNAME: z.string(),
+    DB_NAME: z.string(),
+    DB_PASSWORD: z.string(),
+    DB_HOST: z.string(),
     AWS_REGION: z.string(),
     AWS_SECRET_ACCESS_KEY: z.string(),
     AWS_ACCESS_KEY_ID: z.string(),
@@ -44,7 +47,10 @@ export const env = createEnv({
   runtimeEnv: {
     VERCEL_URL: process.env.VERCEL_URL,
     PORT: process.env.PORT,
-    DATABASE_URL: process.env.DATABASE_URL,
+    DB_NAME: process.env.DB_NAME,
+    DB_HOST: process.env.DB_HOST,
+    DB_PASSWORD: process.env.DB_PASSWORD,
+    DB_USERNAME: process.env.DB_USERNAME,
     AWS_REGION: process.env.AWS_REGION,
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,

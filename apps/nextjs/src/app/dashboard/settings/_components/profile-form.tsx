@@ -15,7 +15,6 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
-import { api } from "~/trpc/react";
 
 type EditProfileFormProps = {
   email: string;
@@ -34,8 +33,6 @@ export default function EditProfileForm({
   email,
   biography,
 }: EditProfileFormProps) {
-  const utils = api.useUtils();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -73,7 +70,7 @@ export default function EditProfileForm({
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="profilePicture"
           render={() => (
@@ -94,7 +91,7 @@ export default function EditProfileForm({
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <FormField
           control={form.control}

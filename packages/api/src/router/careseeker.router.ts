@@ -71,7 +71,11 @@ export const careseekerRouter = router({
       });
     }),
   update: protectedProcedure
-    .input(z.object({}).optional)
+    .input(
+      z.object({
+        email: z.string().email(),
+      }).optional,
+    )
     .mutation(async ({ ctx, input }) => {
       const { db, userId } = ctx;
 
