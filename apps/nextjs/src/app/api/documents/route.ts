@@ -4,8 +4,6 @@ import { v4 as uuid } from "uuid";
 
 import { getPresignedUrl, uploadFile } from "@millennicare/lib";
 
-export const runtime = "edge";
-
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
