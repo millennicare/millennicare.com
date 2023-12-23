@@ -21,3 +21,8 @@ export async function getLastAppointment() {
 
   return lastAppointment;
 }
+
+export async function getAllAppointments() {
+  const response = await api.appointment.getAppointmentsByUserId.query();
+  return response;
+}

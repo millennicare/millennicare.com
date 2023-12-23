@@ -1,7 +1,7 @@
+import { getLastAppointment, getNextAppointment } from "./_actions/appointment";
+import { getUserData } from "./_actions/auth";
 import AppointmentTile from "./_components/appointment-tile";
 import TopNav from "./_components/top-nav";
-import { getLastAppointment, getNextAppointment } from "./actions/appointment";
-import { getUserData } from "./actions/auth";
 
 export default async function DashboardPage() {
   const user = await getUserData();

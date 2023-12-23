@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { getAppointmentData } from "../actions/appointment";
+import { getAppointmentData } from "../_actions/appointment";
 import AppointmentCard from "../appointments/_components/appointment-card";
 
 interface AppointmentTileProps {

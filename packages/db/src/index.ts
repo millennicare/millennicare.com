@@ -21,6 +21,8 @@ export const schema = {
   ...waitlist,
 };
 
+export * from "./validations";
+
 export { mySqlTable as tableCreator } from "./schema/_table";
 
 export * from "drizzle-orm";

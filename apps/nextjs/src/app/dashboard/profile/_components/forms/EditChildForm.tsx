@@ -35,12 +35,7 @@ const formSchema = z.object({
 export default function EditChildForm({ child, setOpenEditForm }: Props) {
   const { toast } = useToast();
   const utils = api.useUtils();
-  const updateMutation = api.children.update.useMutation({
-    onSuccess() {
-      utils.children.invalidate();
-      setOpenEditForm(false);
-    },
-  });
+  const { mutateAsync: editChild } = api.children.update.useMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,7 +48,9 @@ export default function EditChildForm({ child, setOpenEditForm }: Props) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const data = { ...values, childId: child.id };
-      await updateMutation.mutateAsync(data);
+      await editChild(data);
+      utils.children.invalidate();
+      setOpenEditForm(false);
     } catch (error) {
       console.error(error);
       if (error instanceof TRPCClientError) {
