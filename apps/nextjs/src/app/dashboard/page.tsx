@@ -14,11 +14,11 @@ export default async function DashboardPage() {
       <main className="flex h-3/5 flex-wrap justify-between">
         <AppointmentTile
           title="Next Appointment"
-          id={nextAppt ? nextAppt.id : undefined}
+          id={nextAppt?.id ?? undefined}
         />
         <AppointmentTile
           title="Last Appointment"
-          id={lastAppt ? lastAppt.id : undefined}
+          id={lastAppt?.id ?? undefined}
         />
       </main>
     </div>

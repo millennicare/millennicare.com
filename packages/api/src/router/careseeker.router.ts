@@ -74,11 +74,11 @@ export const careseekerRouter = router({
     .input(
       z.object({
         email: z.string().email(),
-      }).optional,
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { db, userId } = ctx;
-
+      console.log(input);
       await db
         .update(schema.careseekers)
         .set({})

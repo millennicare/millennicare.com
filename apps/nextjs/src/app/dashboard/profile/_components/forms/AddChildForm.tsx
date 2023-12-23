@@ -34,20 +34,17 @@ export default function AddChildForm({ setOpenAddForm }: Props) {
     },
   });
   const utils = api.useUtils();
-  const createMutation = api.children.create.useMutation({
-    onSuccess() {
-      // clear child cache so it will refetch after deletion
-      utils.children.invalidate();
-      setOpenAddForm(false);
-    },
-  });
+  const createMutation = api.children.create.useMutation();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await createMutation.mutateAsync({
+      await createMutation.mutateAsync({
         name: values.name,
         age: values.age,
       });
+
+      setOpenAddForm(false);
+      utils.children.invalidate();
     } catch (error) {
       console.log(error);
     }

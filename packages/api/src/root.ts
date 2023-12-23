@@ -14,7 +14,7 @@ export const appRouter = router({
   contactUs: contactUsRouter,
   appointment: appointmentRouter,
   service: serviceRouter,
-  children: childRouter
+  children: childRouter,
 });
 
 // export type definition of API

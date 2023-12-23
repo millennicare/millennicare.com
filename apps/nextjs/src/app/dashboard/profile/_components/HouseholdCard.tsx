@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { z } from "zod";
+import type { z } from "zod";
 
-import { selectChildrenSchema } from "@millennicare/db";
+import type { selectChildrenSchema } from "@millennicare/db";
 
 import { Button } from "~/components/ui/button";
 import { Card, CardHeader } from "~/components/ui/card";
@@ -12,9 +12,10 @@ import ChildCard from "./ChildCard";
 import AddChildForm from "./forms/AddChildForm";
 
 interface HouseHoldCardProps {
-  children: z.infer<typeof selectChildrenSchema>[];
+  data: z.infer<typeof selectChildrenSchema>[];
 }
-export function HouseholdCard({ children }: HouseHoldCardProps) {
+
+export function HouseholdCard({ data }: HouseHoldCardProps) {
   const [openAddForm, setOpenAddForm] = useState(false);
 
   return (
@@ -33,8 +34,8 @@ export function HouseholdCard({ children }: HouseHoldCardProps) {
         </CardHeader>
       </Card>
       <div className="flex flex-col flex-wrap space-y-2 md:flex-row md:justify-between md:space-y-0">
-        {children.length !== 0 ? (
-          children.map((child) => <ChildCard child={child} key={child.id} />)
+        {data.length !== 0 ? (
+          data.map((child) => <ChildCard child={child} key={child.id} />)
         ) : (
           <>No children</>
         )}

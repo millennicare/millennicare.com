@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { z } from "zod";
+import type { z } from "zod";
 
-import { selectUserSchema } from "@millennicare/db";
+import type { selectUserSchema } from "@millennicare/db";
 
 type InfoCardProps = {
   user: z.infer<typeof selectUserSchema>;

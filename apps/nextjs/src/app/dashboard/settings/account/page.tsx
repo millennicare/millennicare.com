@@ -1,6 +1,6 @@
 import { Separator } from "~/components/ui/separator";
 
-export default async function AccountPage() {
+export default function AccountPage() {
   return (
     <div className="w-3/4 space-y-6 px-2 py-4">
       <div>

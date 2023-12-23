@@ -49,8 +49,8 @@ export default function EditChildForm({ child, setOpenEditForm }: Props) {
     try {
       const data = { ...values, childId: child.id };
       await editChild(data);
-      utils.children.invalidate();
       setOpenEditForm(false);
+      utils.children.invalidate();
     } catch (error) {
       console.error(error);
       if (error instanceof TRPCClientError) {

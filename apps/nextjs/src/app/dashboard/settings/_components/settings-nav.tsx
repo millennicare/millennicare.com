@@ -21,8 +21,11 @@ export function SettingsNav({
 
   return (
     <div className="bg-background relative rounded-lg py-3">
-      <ScrollArea className="max-w-[600px] lg:max-w-none mb-3">
-        <div className={cn("flex items-center space-x-4", className)} {...props}>
+      <ScrollArea className="mb-3 max-w-[600px] lg:max-w-none">
+        <div
+          className={cn("flex items-center space-x-4", className)}
+          {...props}
+        >
           {links.map((link) => (
             <Link
               href={link.href}

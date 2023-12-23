@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { getAppointmentData } from "../_actions/appointment";
+import { api } from "~/trpc/react";
 import AppointmentCard from "../appointments/_components/appointment-card";
 
 interface AppointmentTileProps {
@@ -18,16 +18,13 @@ interface AppointmentTileProps {
   title: string;
 }
 
-export default async function AppointmentTile({
-  id,
-  title,
-}: AppointmentTileProps) {
+export default function AppointmentTile({ id, title }: AppointmentTileProps) {
   if (!id) {
     return (
       <Card className="h-fit w-full md:w-1/2">
         <CardHeader>
           <CardTitle className="flex justify-between">
-            <h1>{title}</h1>
+            <>{title}</>
             <Button
               variant="link"
               className="p-0 text-gray-400 underline"
@@ -41,27 +38,46 @@ export default async function AppointmentTile({
       </Card>
     );
   }
-  const data = await getAppointmentData(id);
+  const query = api.appointment.getAppointmentById.useQuery({ id });
+  if (query.isLoading) {
+    return <>Loading...</>;
+  }
 
-  return (
-    <Card className="h-fit w-full md:w-1/2">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>
-          <Button
-            variant="link"
-            className="p-0 text-gray-400 underline"
-            asChild
-          >
-            <Link href="/dashboard/appointments">View All</Link>
-          </Button>
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Link href={`appointments/${data.id}`}>
-          <AppointmentCard id={data.id} />
-        </Link>
-      </CardContent>
-    </Card>
-  );
+  if (query.isError) {
+    return <>Error fetching data.</>;
+  }
+
+  if (query.data) {
+    return (
+      <Card className="h-fit w-full md:w-1/2">
+        <CardHeader>
+          <CardTitle className="flex justify-between">
+            <>{title}</>
+            <Button
+              variant="link"
+              className="p-0 text-gray-400 underline"
+              asChild
+            >
+              <Link href="/dashboard/appointments">View All</Link>
+            </Button>
+          </CardTitle>
+
+          <CardDescription>
+            <Button
+              variant="link"
+              className="p-0 text-gray-400 underline"
+              asChild
+            >
+              <Link href="/dashboard/appointments">View All</Link>
+            </Button>
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Link href={`appointments/${query.data.id}`}>
+            <AppointmentCard id={query.data.id} />
+          </Link>
+        </CardContent>
+      </Card>
+    );
+  }
 }

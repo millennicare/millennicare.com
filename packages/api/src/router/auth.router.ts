@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import * as z from "zod";
 
-import { eq, schema } from "@millennicare/db"
+import { eq, schema } from "@millennicare/db";
 
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
