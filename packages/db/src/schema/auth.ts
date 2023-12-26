@@ -44,6 +44,7 @@ export const careseekers = mySqlTable(
       .primaryKey()
       .$defaultFn(() => createId()),
     userId: varchar("user_id", { length: 128 }).unique().notNull(),
+    stripeId: varchar("stripe_id", { length: 128 }).notNull(),
   },
   (careseeker) => ({
     userIdIdx: index("userId_idx").on(careseeker.userId),

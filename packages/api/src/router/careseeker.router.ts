@@ -4,7 +4,7 @@ import validator from "validator";
 import * as z from "zod";
 
 import { eq, schema } from "@millennicare/db";
-import { deleteObject } from "@millennicare/lib";
+import { createCustomer, deleteObject } from "@millennicare/lib";
 
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
@@ -17,7 +17,7 @@ export const careseekerRouter = router({
         lastName: z.string(),
         email: z.string(),
         birthdate: z.date(),
-        profilePicture: z.string().url().optional(),
+        profilePicture: z.string().optional(),
         phoneNumber: z.string().refine(validator.isMobilePhone),
         userType: z.enum(["careseeker", "caregiver"]),
         children: z.array(
@@ -33,6 +33,11 @@ export const careseekerRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
+      const stripe = await createCustomer(
+        input.firstName,
+        input.lastName,
+        input.email,
+      );
 
       await db.transaction(async (tx) => {
         // first create user record
@@ -56,6 +61,7 @@ export const careseekerRouter = router({
         // then careseeker
         await tx.insert(schema.careseekers).values({
           userId: input.id,
+          stripeId: stripe.id,
         });
 
         // then kids
