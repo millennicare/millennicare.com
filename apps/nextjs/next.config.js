@@ -11,6 +11,17 @@ const config = {
   ],
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname:
+          process.env.NODE_ENV === "development"
+            ? "millennicare-dev.s3.us-east-1.amazonaws.com"
+            : "millennicare-app-files.s3.us-east-1.amazonaws.com",
+      },
+    ],
+  },
 };
 
 export default config;
