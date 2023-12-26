@@ -30,7 +30,6 @@ export const env = createEnv({
     AWS_LOCATION_SUGGESTION_KEY: z.string(),
     STRIPE_PUBLISHABLE_KEY: z.string(),
     STRIPE_SECRET_KEY: z.string(),
-    JWT_SECRET: z.string(),
     CLERK_SECRET_KEY: z.string(),
   },
   /**
@@ -61,7 +60,6 @@ export const env = createEnv({
     AWS_BUCKET: process.env.AWS_BUCKET,
     AWS_LOCATION_API_KEY: process.env.AWS_LOCATION_API_KEY,
     AWS_LOCATION_SUGGESTION_KEY: process.env.AWS_LOCATION_SUGGESTION_KEY,
-    JWT_SECRET: process.env.JWT_SECRET,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
