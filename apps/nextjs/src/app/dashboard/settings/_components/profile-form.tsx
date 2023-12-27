@@ -52,7 +52,7 @@ export default function EditProfileForm({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // call server action
-    await updateProfile(user.id, careseeker.stripeId, values);
+    await updateProfile(careseeker.stripeId, values);
   }
 
   // shows profile info

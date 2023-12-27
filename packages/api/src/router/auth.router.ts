@@ -51,7 +51,6 @@ export const authRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { db, userId } = ctx;
-
       await db
         .update(schema.users)
         .set({ ...input })

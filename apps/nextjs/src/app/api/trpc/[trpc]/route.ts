@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { appRouter, createTRPCContext } from "@millennicare/api";
@@ -28,7 +29,11 @@ const handler = async (req: Request) => {
     endpoint: "/api/trpc",
     router: appRouter,
     req,
-    createContext: () => createTRPCContext(),
+    createContext: () =>
+      createTRPCContext({
+        headers: req.headers,
+        auth: auth(),
+      }),
     onError({ error, path }) {
       console.error(`>>> tRPC Error on '${path}'`, error);
     },
