@@ -21,8 +21,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { useToast } from "~/components/ui/use-toast";
-import { api } from "~/trpc/react";
+import { deleteChild } from "../../_actions/child";
 import EditChildForm from "./forms/EditChildForm";
 
 type Props = {
@@ -35,21 +34,10 @@ type Props = {
 
 export default function ChildCard({ child }: Props) {
   const [openEditForm, setOpenEditForm] = useState(false);
-  const { toast } = useToast();
-  const utils = api.useUtils();
-
-  const deleteMutation = api.children.delete.useMutation({
-    onSuccess() {
-      utils.children.invalidate();
-    },
-  });
 
   async function handleDelete(childId: string) {
     try {
-      await deleteMutation.mutateAsync({ childId });
-      toast({
-        title: "Child deleted",
-      });
+      await deleteChild(childId);
     } catch (error) {
       console.log(error);
     }

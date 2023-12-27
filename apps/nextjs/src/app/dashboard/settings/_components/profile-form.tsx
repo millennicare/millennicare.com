@@ -4,6 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import type {
+  selectCareseekerSchema,
+  selectUserSchema,
+} from "@millennicare/db";
+
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -15,36 +20,39 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
+import { updateProfile } from "../../_actions/auth";
 
 type EditProfileFormProps = {
-  email: string;
-  biography: string | null;
-  profilePicture: string | null;
+  user: z.infer<typeof selectUserSchema>;
+  careseeker: z.infer<typeof selectCareseekerSchema>;
 };
 
 const formSchema = z.object({
   email: z.string().email(),
   biography: z.string().optional(),
-  password: z.string(),
   profilePicutre: z.any(),
+  firstName: z.string(),
+  lastName: z.string(),
 });
 
 export default function EditProfileForm({
-  email,
-  biography,
+  user,
+  careseeker,
 }: EditProfileFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: email,
-      password: "",
-      biography: biography ?? undefined,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      biography: user.biography ?? undefined,
     },
     mode: "onTouched",
   });
 
-  async function onSubmit() {
-    // if email has been changed, update stripe and clerk info
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    // call server action
+    await updateProfile(user.id, careseeker.stripeId, values);
   }
 
   // shows profile info
@@ -56,6 +64,33 @@ export default function EditProfileForm({
         className="flex flex-col space-y-6"
         onSubmit={form.handleSubmit(onSubmit)}
       >
+        <FormField
+          control={form.control}
+          name="firstName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>First Name</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="lastName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"

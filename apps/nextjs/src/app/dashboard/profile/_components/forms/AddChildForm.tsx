@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import { addChild } from "~/app/dashboard/_actions/child";
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -14,7 +15,6 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { api } from "~/trpc/react";
 
 interface Props {
   setOpenAddForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,18 +33,12 @@ export default function AddChildForm({ setOpenAddForm }: Props) {
       age: 0,
     },
   });
-  const utils = api.useUtils();
-  const createMutation = api.children.create.useMutation();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await createMutation.mutateAsync({
-        name: values.name,
-        age: values.age,
-      });
+      await addChild({ name: values.name, age: values.age });
 
       setOpenAddForm(false);
-      utils.children.invalidate();
     } catch (error) {
       console.log(error);
     }

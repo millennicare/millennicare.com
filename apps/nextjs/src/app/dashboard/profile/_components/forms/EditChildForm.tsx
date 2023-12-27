@@ -5,6 +5,7 @@ import { TRPCClientError } from "@trpc/client";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
+import { editChild } from "~/app/dashboard/_actions/child";
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -16,7 +17,6 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { useToast } from "~/components/ui/use-toast";
-import { api } from "~/trpc/react";
 
 interface Props {
   readonly child: {
@@ -34,8 +34,6 @@ const formSchema = z.object({
 
 export default function EditChildForm({ child, setOpenEditForm }: Props) {
   const { toast } = useToast();
-  const utils = api.useUtils();
-  const { mutateAsync: editChild } = api.children.update.useMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,7 +48,6 @@ export default function EditChildForm({ child, setOpenEditForm }: Props) {
       const data = { ...values, childId: child.id };
       await editChild(data);
       setOpenEditForm(false);
-      utils.children.invalidate();
     } catch (error) {
       console.error(error);
       if (error instanceof TRPCClientError) {

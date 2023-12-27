@@ -14,14 +14,8 @@ export default async function DashboardPage() {
     <div className="flex h-full w-full flex-col">
       <TopNav firstName={user.firstName} />
       <main className="flex h-3/5 flex-wrap justify-between">
-        <AppointmentTile
-          title="Next Appointment"
-          id={nextAppt?.id ?? undefined}
-        />
-        <AppointmentTile
-          title="Last Appointment"
-          id={lastAppt?.id ?? undefined}
-        />
+        <AppointmentTile title="Next Appointment" id={nextAppt?.id} />
+        <AppointmentTile title="Last Appointment" id={lastAppt?.id} />
       </main>
     </div>
   );

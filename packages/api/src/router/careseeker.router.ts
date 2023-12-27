@@ -9,6 +9,18 @@ import { createCustomer, deleteObject } from "@millennicare/lib";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 export const careseekerRouter = router({
+  getCareseeker: protectedProcedure.query(async ({ ctx }) => {
+    const { db, userId } = ctx;
+
+    const careseeker = await db.query.careseekers.findFirst({
+      where: eq(schema.careseekers.userId, userId),
+    });
+    if (!careseeker) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+
+    return careseeker;
+  }),
   careseekerRegister: publicProcedure
     .input(
       z.object({

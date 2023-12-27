@@ -1,12 +1,12 @@
 import { Separator } from "~/components/ui/separator";
-import { api } from "~/trpc/server";
-import { getUserData } from "../_actions/auth";
+import { getCareseekerData, getUserData } from "../_actions/auth";
 import EditProfileForm from "./_components/profile-form";
 
 export const runtime = "edge";
 
 export default async function SettingsPage() {
-  const query = await getUserData();
+  const user = await getUserData();
+  const careseeker = await getCareseekerData();
 
   return (
     <div className="w-3/4 space-y-6 px-2 py-3">
@@ -17,11 +17,7 @@ export default async function SettingsPage() {
         </p>
       </div>
       <Separator />
-      <EditProfileForm
-        profilePicture={query.profilePicture}
-        email={query.email}
-        biography={query.biography}
-      />
+      <EditProfileForm user={user} careseeker={careseeker} />
     </div>
   );
 }

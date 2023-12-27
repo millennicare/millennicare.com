@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { headers } from "next/headers";
+import { auth } from "@clerk/nextjs";
 import { createTRPCClient, loggerLink, TRPCClientError } from "@trpc/client";
 import { callProcedure } from "@trpc/server";
 import { observable } from "@trpc/server/observable";
@@ -15,8 +16,12 @@ import { appRouter, createTRPCContext } from "@millennicare/api";
 const createContext = cache(async () => {
   const heads = new Headers(headers());
   heads.set("x-trpc-source", "rsc");
+  const data = auth();
 
-  return createTRPCContext();
+  return createTRPCContext({
+    headers: heads,
+    auth: data,
+  });
 });
 
 export const api = createTRPCClient<typeof appRouter>({
