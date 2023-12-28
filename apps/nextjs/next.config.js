@@ -22,6 +22,9 @@ const config = {
       },
     ],
   },
+  experimental: {
+    serverComponentsExternalPackages: ["@clerk/nextjs/server"],
+  },
 };
 
 export default config;

@@ -1,8 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { clerkClient } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 import { updateCustomer } from "@millennicare/lib";
 
@@ -28,21 +27,21 @@ export async function updateProfile(
     throw new Error("You must be signed in to update your profile.");
   }
 
-  const data = {
+  const customer = await updateCustomer(customer_id, {
     email: values.email,
-    firstName: values.firstName,
-    lastName: values.lastName,
-  };
-  await updateCustomer(customer_id, data);
-
-  const user = await clerkClient.users.updateUser(userId, {
-    firstName: values.firstName,
-    lastName: values.lastName,
-    primaryEmailAddressID: values.email,
+    name: `${values.firstName} ${values.lastName}`,
   });
+  console.log(customer);
+
+  const params = {
+    firstName: values.firstName,
+    lastName: values.lastName,
+    email: "stevenarce650@gmail.com",
+  };
+  const user = await clerkClient.users.updateUser(userId, params);
   console.log(user);
 
-  await api.auth.update.mutate({ ...data });
+  await api.auth.update.mutate({ ...values });
 
   revalidatePath("dashboard/settings");
 }

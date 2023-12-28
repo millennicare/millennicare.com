@@ -16,9 +16,7 @@ export const createCustomer = async (
 
 export type UpdateCustomerInput = {
   email?: string;
-  phone?: string;
-  firstName?: string;
-  lastName?: string;
+  name?: string;
 };
 // update customer
 export const updateCustomer = async (
@@ -27,7 +25,7 @@ export const updateCustomer = async (
 ) => {
   const values = {
     email: input.email,
-    name: `${input.firstName} ${input.lastName}`,
+    name: input.name,
   };
 
   const customer = await stripe.customers.update(customer_id, values);

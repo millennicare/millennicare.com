@@ -17,7 +17,6 @@ export default authMiddleware({
     "/forgot-password",
     "/sign-up/careseeker",
     "/sign-up/caregiver",
-    "/tester",
   ],
 });
 

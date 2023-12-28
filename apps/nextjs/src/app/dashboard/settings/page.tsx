@@ -9,7 +9,7 @@ export default async function SettingsPage() {
   const careseeker = await getCareseekerData();
 
   return (
-    <div className="w-3/4 space-y-6 px-2 py-3">
+    <div className="w-full space-y-6 px-2 py-3 lg:w-3/4">
       <div>
         <h3 className="text-lg font-medium">Profile</h3>
         <p className="text-muted-foreground text-sm">
