@@ -3,6 +3,8 @@ import type { NextRequest } from "next/server";
 
 import { getLocationSuggestion } from "@millennicare/lib";
 
+export const runetim = "edge";
+
 export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as {

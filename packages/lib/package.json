@@ -20,11 +20,11 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@millennicare/eslint-config": "workspace:^0.2.0",
-    "@millennicare/prettier-config": "workspace:^0.1.0",
-    "@millennicare/tsconfig": "workspace:^0.1.0",
-    "eslint": "^8.53.0",
-    "typescript": "^5.2.2"
+    "@millennicare/eslint-config": "workspace:^",
+    "@millennicare/prettier-config": "workspace:^",
+    "@millennicare/tsconfig": "workspace:^",
+    "eslint": "^8.55.0",
+    "typescript": "^5.3.3"
   },
   "eslintConfig": {
     "extends": [
@@ -33,11 +33,10 @@
   },
   "prettier": "@millennicare/prettier-config",
   "dependencies": {
-    "@aws-sdk/client-location": "^3.454.0",
-    "@aws-sdk/client-s3": "^3.456.0",
-    "@aws-sdk/s3-request-presigner": "^3.456.0",
+    "@aws-sdk/client-location": "^3.478.0",
+    "@aws-sdk/client-s3": "^3.478.0",
+    "@aws-sdk/s3-request-presigner": "^3.478.0",
     "@aws/amazon-location-utilities-auth-helper": "^1.0.3",
-    "dotenv": "^16.3.1",
-    "stripe": "^14.5.0"
+    "stripe": "^14.10.0"
   }
 }

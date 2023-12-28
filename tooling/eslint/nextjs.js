@@ -5,6 +5,7 @@ const config = {
     "@next/next/no-html-link-for-pages": "off",
     "jsx-a11y/heading-has-content": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/require-await": "off",
   },
 };
 

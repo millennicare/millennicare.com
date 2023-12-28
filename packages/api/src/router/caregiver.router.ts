@@ -2,12 +2,7 @@ import { TRPCError } from "@trpc/server";
 import validator from "validator";
 import * as z from "zod";
 
-import { eq } from "@millennicare/db";
-import { addresses as addressSchema } from "@millennicare/db/schema/address";
-import {
-  caregivers as caregiverSchema,
-  users as userSchema,
-} from "@millennicare/db/schema/auth";
+import { eq, schema } from "@millennicare/db";
 import { createAccount, getAccountLink } from "@millennicare/lib";
 
 import { publicProcedure, router } from "../trpc";
@@ -34,7 +29,7 @@ export const caregiverRouter = router({
 
       await db.transaction(async (tx) => {
         // first create user record
-        await tx.insert(userSchema).values({
+        await tx.insert(schema.users).values({
           id: input.id,
           firstName: input.firstName,
           lastName: input.lastName,
@@ -45,7 +40,7 @@ export const caregiverRouter = router({
           userType: "caregiver",
         });
         // then location
-        await tx.insert(addressSchema).values({
+        await tx.insert(schema.addresses).values({
           userId: input.id,
           latitude: input.latitude,
           longitude: input.longitude,
@@ -54,14 +49,14 @@ export const caregiverRouter = router({
         // use lib/stripe to create Stripe account
         const account = await createAccount(input.email);
         // then caregiver
-        await tx.insert(caregiverSchema).values({
+        await tx.insert(schema.caregivers).values({
           userId: input.id,
           stripeId: account.id,
         });
       });
 
       const caregiver = await db.query.caregivers.findFirst({
-        where: eq(caregiverSchema.id, input.id),
+        where: eq(schema.caregivers.id, input.id),
       });
 
       if (!caregiver) {

@@ -1,24 +1,13 @@
-"use client";
+import { getAllAppointments } from "../_actions/appointment";
 
-import { api } from "~/utils/api";
+export const runtime = "edge";
 
-export default function Page() {
-  const apptQuery = api.appointment.getAppointmentsByUserId.useQuery();
-
-  if (apptQuery.isLoading) {
-    return <>Loading...</>;
-  }
-
-  if (apptQuery.isError) {
-    return <>Error fetching appointments</>;
-  }
-
-  if (apptQuery.data) {
-    console.log(apptQuery.data);
-    return (
-      <>
-        <p>Appointments Page</p>
-      </>
-    );
-  }
+export default async function AppointmentsPage() {
+  const appointments = await getAllAppointments();
+  console.log(appointments);
+  return (
+    <div>
+      <h1>Appointment page</h1>
+    </div>
+  );
 }

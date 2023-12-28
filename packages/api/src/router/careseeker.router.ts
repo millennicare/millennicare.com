@@ -3,18 +3,24 @@ import { TRPCError } from "@trpc/server";
 import validator from "validator";
 import * as z from "zod";
 
-import { eq } from "@millennicare/db";
-import { addresses as addressSchema } from "@millennicare/db/schema/address";
-import {
-  careseekers as careseekerSchema,
-  users as userSchema,
-} from "@millennicare/db/schema/auth";
-import { children as childSchema } from "@millennicare/db/schema/child";
-import { deleteObject } from "@millennicare/lib";
+import { eq, schema } from "@millennicare/db";
+import { createCustomer, deleteObject } from "@millennicare/lib";
 
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 export const careseekerRouter = router({
+  getCareseeker: protectedProcedure.query(async ({ ctx }) => {
+    const { db, userId } = ctx;
+
+    const careseeker = await db.query.careseekers.findFirst({
+      where: eq(schema.careseekers.userId, userId),
+    });
+    if (!careseeker) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+
+    return careseeker;
+  }),
   careseekerRegister: publicProcedure
     .input(
       z.object({
@@ -39,10 +45,15 @@ export const careseekerRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
+      const stripe = await createCustomer(
+        input.firstName,
+        input.lastName,
+        input.email,
+      );
 
       await db.transaction(async (tx) => {
         // first create user record
-        await tx.insert(userSchema).values({
+        await tx.insert(schema.users).values({
           id: input.id,
           firstName: input.firstName,
           lastName: input.lastName,
@@ -53,19 +64,20 @@ export const careseekerRouter = router({
           userType: "careseeker",
         });
         // then location
-        await tx.insert(addressSchema).values({
+        await tx.insert(schema.addresses).values({
           userId: input.id,
           latitude: input.latitude,
           longitude: input.longitude,
           zipCode: input.zipCode,
         });
         // then careseeker
-        await tx.insert(careseekerSchema).values({
+        await tx.insert(schema.careseekers).values({
           userId: input.id,
+          stripeId: stripe.id,
         });
 
         // then kids
-        await tx.insert(childSchema).values(
+        await tx.insert(schema.children).values(
           input.children.map((child) => {
             return {
               userId: input.id,
@@ -76,14 +88,27 @@ export const careseekerRouter = router({
         );
       });
     }),
-  // update
+  update: protectedProcedure
+    .input(
+      z.object({
+        email: z.string().email(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { db, userId } = ctx;
+      console.log(input);
+      await db
+        .update(schema.careseekers)
+        .set({})
+        .where(eq(schema.careseekers.userId, userId));
+    }),
   delete: protectedProcedure.mutation(async ({ ctx }) => {
     const { db, userId } = ctx;
 
     try {
       // get user info
       const user = await db.query.users.findFirst({
-        where: eq(userSchema.id, userId),
+        where: eq(schema.users.id, userId),
       });
       if (!user) {
         throw new TRPCError({ code: "BAD_REQUEST" });
@@ -91,12 +116,16 @@ export const careseekerRouter = router({
 
       // need to delete address, children, user
       await db.transaction(async (tx) => {
-        await tx.delete(addressSchema).where(eq(addressSchema.userId, userId));
-        await tx.delete(childSchema).where(eq(childSchema.userId, userId));
         await tx
-          .delete(careseekerSchema)
-          .where(eq(careseekerSchema.id, userId));
-        await tx.delete(userSchema).where(eq(userSchema.id, userId));
+          .delete(schema.addresses)
+          .where(eq(schema.addresses.userId, userId));
+        await tx
+          .delete(schema.children)
+          .where(eq(schema.children.userId, userId));
+        await tx
+          .delete(schema.careseekers)
+          .where(eq(schema.careseekers.id, userId));
+        await tx.delete(schema.users).where(eq(schema.users.id, userId));
       });
 
       // need to delete s3, clerk from lib

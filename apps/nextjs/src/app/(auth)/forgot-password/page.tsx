@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSignIn } from "@clerk/nextjs";
 
@@ -60,92 +59,81 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="bg-palecream h-screen w-screen">
-      {/* nav buttons */}
-      <div className="flex justify-between px-4">
-        <Button variant="link" className="p-0" onClick={() => router.back()}>
-          Go back
-        </Button>
-        <p>
-          Not a member?{" "}
-          <Link href="sign-up">
-            <Button variant="link" className="p-0">
-              Sign up now
-            </Button>
-          </Link>
-        </p>
-      </div>
+    <div className="bg-palecream flex h-screen w-screen flex-col items-center justify-center">
       <div className="flex h-full w-full flex-col justify-center">
         <div className="space-y-4 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="flex justify-center">
             <Image
               src="/millennicare_logo.png"
               alt="Millennicare logo"
-              height={96}
-              width={96}
+              height={80}
+              width={80}
               priority={true}
             />
           </div>
           <h2 className="text-center text-2xl">Forgot password?</h2>
         </div>
 
-        <div className="mt-4 px-4 sm:mx-auto sm:w-full sm:max-w-md md:p-0">
-          <div className="rounded-lg bg-white px-2 py-4 shadow sm:px-10">
-            <div className="flex flex-col">
-              {!successfulCreation ? (
-                <p className="text-sm">
-                  Enter the email address you used when you joined and
-                  we`&apos;`ll send you a code to reset your password.
-                </p>
-              ) : (
-                <p>yer</p>
-              )}
-              <form
-                onSubmit={!successfulCreation ? create : reset}
-                className="mt-6"
-              >
-                {!successfulCreation && !complete && (
-                  <div className="flex flex-col space-y-2">
-                    <label htmlFor="email" className="font-medium">
-                      Email Address
-                    </label>
+        <div className="bg-background mx-auto w-2/5 rounded-lg px-4 py-3 shadow">
+          <div className="flex flex-col space-y-2">
+            {!successfulCreation && (
+              <p className="text-sm">
+                Enter the email address you used when you created an account and
+                we&apos;ll send you a code to reset your password.
+              </p>
+            )}
+            <form
+              onSubmit={!successfulCreation ? create : reset}
+              className="mt-6"
+            >
+              {!successfulCreation && !complete && (
+                <div className="flex flex-col space-y-2">
+                  <label htmlFor="email" className="font-medium">
+                    Email Address
+                  </label>
 
-                    <Input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <Button type="submit" size="lg" className="w-full">
-                      Send Reset Instructions
+                  <Input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <div className="flex justify-end space-x-4">
+                    <Button
+                      variant="outline"
+                      onClick={() => router.back()}
+                      className="disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
+                    >
+                      Cancel
                     </Button>
+                    <Button type="submit">Submit</Button>
                   </div>
-                )}
+                </div>
+              )}
 
-                {successfulCreation && !complete && (
-                  <>
-                    <label htmlFor="password">New password</label>
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
+              {successfulCreation && !complete && (
+                <>
+                  <label htmlFor="password">New password</label>
+                  <Input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
 
-                    <label htmlFor="password">Reset password code</label>
-                    <input
-                      type="text"
-                      value={code}
-                      onChange={(e) => setCode(e.target.value)}
-                    />
+                  <label htmlFor="password">Reset password code</label>
+                  <Input
+                    type="text"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                  />
 
-                    <Button type="submit" size="lg" className="w-full">
-                      Reset Password
-                    </Button>
-                  </>
-                )}
+                  <Button type="submit" size="lg" className="w-full">
+                    Reset Password
+                  </Button>
+                </>
+              )}
 
-                {complete && "You successfully changed you password"}
-              </form>
-            </div>
+              {complete && "You successfully changed you password"}
+            </form>
           </div>
         </div>
       </div>

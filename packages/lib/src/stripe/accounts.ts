@@ -1,11 +1,4 @@
-import * as dotenv from "dotenv";
-import Stripe from "stripe";
-
-dotenv.config({
-  path: "../../.env",
-});
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+import { stripe } from ".";
 
 /**
  * Accounts are created when a careseeker registers

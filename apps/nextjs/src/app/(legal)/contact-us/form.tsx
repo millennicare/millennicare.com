@@ -17,7 +17,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
 import { useToast } from "~/components/ui/use-toast";
-import { api } from "~/utils/api";
+import { api } from "~/trpc/react";
 
 export default function ContactUsForm() {
   const sendContactUsMessage = api.contactUs.sendMessage.useMutation();
@@ -85,7 +85,7 @@ export default function ContactUsForm() {
   return (
     <Form {...contactForm}>
       <form
-        className="flex flex-col space-y-4 rounded bg-white p-10 shadow-md"
+        className="bg-background flex flex-col space-y-4 rounded p-10 shadow-md"
         onSubmit={contactForm.handleSubmit(handleContactSubmit)}
       >
         {/* First Name */}

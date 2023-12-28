@@ -3,6 +3,10 @@ import { z } from "zod";
 
 export const env = createEnv({
   shared: {
+    NODE_ENV: z
+      .enum(["development", "production", "test"])
+      .default("development"),
+    VERCEL_ENV: z.enum(["development", "preview", "production"]).optional(),
     VERCEL_URL: z
       .string()
       .optional()
@@ -14,7 +18,10 @@ export const env = createEnv({
    * built with invalid env vars.
    */
   server: {
-    DATABASE_URL: z.string().url(),
+    DB_USERNAME: z.string(),
+    DB_NAME: z.string(),
+    DB_PASSWORD: z.string(),
+    DB_HOST: z.string(),
     AWS_REGION: z.string(),
     AWS_SECRET_ACCESS_KEY: z.string(),
     AWS_ACCESS_KEY_ID: z.string(),
@@ -23,7 +30,6 @@ export const env = createEnv({
     AWS_LOCATION_SUGGESTION_KEY: z.string(),
     STRIPE_PUBLISHABLE_KEY: z.string(),
     STRIPE_SECRET_KEY: z.string(),
-    JWT_SECRET: z.string(),
     CLERK_SECRET_KEY: z.string(),
   },
   /**
@@ -44,14 +50,16 @@ export const env = createEnv({
   runtimeEnv: {
     VERCEL_URL: process.env.VERCEL_URL,
     PORT: process.env.PORT,
-    DATABASE_URL: process.env.DATABASE_URL,
+    DB_NAME: process.env.DB_NAME,
+    DB_HOST: process.env.DB_HOST,
+    DB_PASSWORD: process.env.DB_PASSWORD,
+    DB_USERNAME: process.env.DB_USERNAME,
     AWS_REGION: process.env.AWS_REGION,
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
     AWS_BUCKET: process.env.AWS_BUCKET,
     AWS_LOCATION_API_KEY: process.env.AWS_LOCATION_API_KEY,
     AWS_LOCATION_SUGGESTION_KEY: process.env.AWS_LOCATION_SUGGESTION_KEY,
-    JWT_SECRET: process.env.JWT_SECRET,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:

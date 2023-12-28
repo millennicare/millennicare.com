@@ -14,9 +14,9 @@ export default authMiddleware({
     "/eula",
     "/privacy-policy",
     "/contact-us",
+    "/forgot-password",
     "/sign-up/careseeker",
     "/sign-up/caregiver",
-    "/tester",
   ],
 });
 
