@@ -1,6 +1,9 @@
+import { auth } from "@clerk/nextjs";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-import { appRouter, createContext } from "@millennicare/api";
+import { appRouter, createTRPCContext } from "@millennicare/api";
+
+export const runtime = "edge";
 
 /**
  * Configure basic CORS headers
@@ -26,7 +29,11 @@ const handler = async (req: Request) => {
     endpoint: "/api/trpc",
     router: appRouter,
     req,
-    createContext: () => createContext(),
+    createContext: () =>
+      createTRPCContext({
+        headers: req.headers,
+        auth: auth(),
+      }),
     onError({ error, path }) {
       console.error(`>>> tRPC Error on '${path}'`, error);
     },

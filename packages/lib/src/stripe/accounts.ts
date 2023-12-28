@@ -1,4 +1,4 @@
-import { stripe } from "../utils/stripe";
+import { stripe } from ".";
 
 /**
  * Accounts are created when a careseeker registers

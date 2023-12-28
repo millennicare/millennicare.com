@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useSignUp } from "@clerk/nextjs";
 
 import { useToast } from "~/components/ui/use-toast";
-import { api } from "~/utils/api";
+import { api } from "~/trpc/react";
 import {
   AdditionalInfoForm,
   PersonalInfoForm,
@@ -151,7 +151,6 @@ export default function Page() {
           longitude: number;
         };
       };
-
       await mutation.mutateAsync({
         id: userIdRef.current,
         firstName: formValues.firstName,
@@ -164,6 +163,7 @@ export default function Page() {
         children: formValues.children,
         latitude: coordinates.latitude,
         longitude: coordinates.longitude,
+        zipCode: formValues.zipCode,
       });
 
       toast({
@@ -172,8 +172,9 @@ export default function Page() {
       });
       router.push("/dashboard");
     } catch (error) {
+      console.log(error);
       toast({
-        title: "Incorrect email or password.",
+        title: "Something went wrong. Please try again later.",
         variant: "destructive",
       });
     }
@@ -195,7 +196,7 @@ export default function Page() {
         {/* @TODO: Stepper */}
       </div>
 
-      <div className="rounded-lg bg-white px-4 py-3 shadow sm:max-w-md">
+      <div className="bg-background rounded-lg px-4 py-3 shadow sm:max-w-md">
         {displayStep(step)}
       </div>
     </div>

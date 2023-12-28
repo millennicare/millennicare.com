@@ -8,7 +8,7 @@ import WaitlistForm from "./(legal)/_components/WaitlistForm";
 
 export default function Page() {
   return (
-    <div className="flex flex-col">
+    <div>
       <Navbar />
 
       <div

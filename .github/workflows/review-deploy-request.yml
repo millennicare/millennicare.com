@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
     types: [closed]
-    paths: ["packages/db/schema/*"]
+    paths: ["packages/db/src/schema/*"]
 
 jobs:
   review-deploy-request:

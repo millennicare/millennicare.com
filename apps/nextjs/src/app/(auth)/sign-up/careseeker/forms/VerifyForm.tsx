@@ -54,7 +54,6 @@ export default function VerifyForm({
 
       const userId = completeSignUp.createdUserId;
       if (userId) {
-        console.log(userId);
         userIdRef.current = userId;
       }
 

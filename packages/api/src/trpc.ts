@@ -1,18 +1,25 @@
-import { auth } from "@clerk/nextjs";
+import type {
+  SignedInAuthObject,
+  SignedOutAuthObject,
+} from "@clerk/nextjs/server";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "@millennicare/db";
 
-export const createContext = () => {
-  const session = auth();
+interface AuthContext {
+  auth: SignedInAuthObject | SignedOutAuthObject;
+  headers: Headers;
+}
+
+export const createTRPCContext = (opts: AuthContext) => {
   return {
-    auth: session,
+    auth: opts.auth,
     db,
   };
 };
-export type Context = Awaited<ReturnType<typeof createContext>>;
+export type Context = Awaited<ReturnType<typeof createTRPCContext>>;
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
