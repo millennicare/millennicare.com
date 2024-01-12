@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.29.1",
+    "@clerk/nextjs": "^4.29.3",
     "@millennicare/db": "workspace:^",
     "@millennicare/lib": "workspace:^",
     "@trpc/client": "next",
