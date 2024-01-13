@@ -1,21 +1,11 @@
-import validator from "validator";
-import * as z from "zod";
-
 import { schema } from "@millennicare/db";
+import { CreateContactSchema } from "@millennicare/validators";
 
-import { publicProcedure, router } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
-export const contactUsRouter = router({
+export const contactUsRouter = createTRPCRouter({
   sendMessage: publicProcedure
-    .input(
-      z.object({
-        firstName: z.string(),
-        lastName: z.string(),
-        email: z.string(),
-        phoneNumber: z.string().refine(validator.isMobilePhone).optional(),
-        message: z.string(),
-      }),
-    )
+    .input(CreateContactSchema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 

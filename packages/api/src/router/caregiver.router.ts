@@ -5,9 +5,9 @@ import * as z from "zod";
 import { eq, schema } from "@millennicare/db";
 import { createAccount, getAccountLink } from "@millennicare/lib";
 
-import { publicProcedure, router } from "../trpc";
+import { publicProcedure, createTRPCRouter } from "../trpc";
 
-export const caregiverRouter = router({
+export const caregiverRouter = createTRPCRouter({
   caregiverRegister: publicProcedure
     .input(
       z.object({

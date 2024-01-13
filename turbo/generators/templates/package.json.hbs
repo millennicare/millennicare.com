@@ -1,35 +1,9 @@
-{
-  "name": "@millennicare/{{ name }}",
-  "private": true,
-  "version": "0.1.0",
-  "exports": {
-    ".": "./index.ts"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
-  },
-  "license": "MIT",
-  "scripts": {
-    "clean": "rm -rf .turbo node_modules",
-    "lint": "eslint .",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
-    "typecheck": "tsc --noEmit"
-  },
-  "devDependencies": {
-    "@millennicare/eslint-config": "workspace:^0.2.0",
-    "@millennicare/prettier-config": "workspace:^0.1.0",
-    "@millennicare/tsconfig": "workspace:^0.1.0",
-    "eslint": "^8.53.0",
-    "typescript": "^5.2.2"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@millennicare/eslint-config/base"
-    ]
-  },
-  "prettier": "@millennicare/prettier-config"
-}
+{ "name": "@millennicare/{{name}}", "private": true, "version": "0.1.0", "type":
+"module", "exports": { ".": "./src/index.ts" }, "license": "MIT", "scripts": {
+"clean": "rm -rf .turbo node_modules", "format": "prettier --check .
+--ignore-path ../../.gitignore", "lint": "eslint .", "typecheck": "tsc --noEmit"
+}, "devDependencies": { "@millennicare/eslint-config": "workspace:^0.2.0",
+"@millennicare/prettier-config": "workspace:^0.1.0", "@millennicare/tsconfig":
+"workspace:^0.1.0", "eslint": "^8.56.0", "prettier": "^3.1.1", "typescript":
+"^5.3.3" }, "eslintConfig": { "extends": [ "@millennicare/eslint-config/base" ]
+}, "prettier": "@millennicare/prettier-config" }

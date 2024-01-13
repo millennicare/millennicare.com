@@ -1,11 +1,11 @@
+import type {
+  SearchPlaceIndexForSuggestionsCommandInput,
+  SearchPlaceIndexForTextCommandInput,
+} from "@aws-sdk/client-location";
 import {
   LocationClient,
   SearchPlaceIndexForSuggestionsCommand,
   SearchPlaceIndexForTextCommand,
-} from "@aws-sdk/client-location";
-import type {
-  SearchPlaceIndexForSuggestionsCommandInput,
-  SearchPlaceIndexForTextCommandInput,
 } from "@aws-sdk/client-location";
 import { withAPIKey } from "@aws/amazon-location-utilities-auth-helper";
 

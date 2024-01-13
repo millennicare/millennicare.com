@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "exports": {
-    ".": "./index.ts"
+    ".": "./src/index.ts"
   },
   "typesVersions": {
     "*": {
@@ -23,7 +23,7 @@
     "@millennicare/eslint-config": "workspace:^",
     "@millennicare/prettier-config": "workspace:^",
     "@millennicare/tsconfig": "workspace:^",
-    "eslint": "^8.55.0",
+    "eslint": "^8.56.0",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {
@@ -33,10 +33,10 @@
   },
   "prettier": "@millennicare/prettier-config",
   "dependencies": {
-    "@aws-sdk/client-location": "^3.478.0",
-    "@aws-sdk/client-s3": "^3.478.0",
-    "@aws-sdk/s3-request-presigner": "^3.478.0",
+    "@aws-sdk/client-location": "^3.490.0",
+    "@aws-sdk/client-s3": "^3.490.0",
+    "@aws-sdk/s3-request-presigner": "^3.490.0",
     "@aws/amazon-location-utilities-auth-helper": "^1.0.3",
-    "stripe": "^14.10.0"
+    "stripe": "^14.12.0"
   }
 }

@@ -4,7 +4,7 @@ import * as z from "zod";
 import { eq, schema } from "@millennicare/db";
 import { getLocationDetails } from "@millennicare/lib";
 
-import { protectedProcedure, publicProcedure, router } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 const filterByLocation = (
   services: {
@@ -43,7 +43,7 @@ const filterByLocation = (
 
 const degreesToRadians = (point: number) => point * (Math.PI / 180);
 
-export const serviceRouter = router({
+export const serviceRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({

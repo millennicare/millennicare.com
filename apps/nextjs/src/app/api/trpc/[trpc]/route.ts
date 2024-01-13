@@ -1,7 +1,7 @@
-import { auth } from "@clerk/nextjs";
+import { appRouter, createTRPCContext } from "@millennicare/api";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-import { appRouter, createTRPCContext } from "@millennicare/api";
+import { getSession } from "~/app/actions";
 
 export const runtime = "edge";
 
@@ -25,14 +25,15 @@ export function OPTIONS() {
 }
 
 const handler = async (req: Request) => {
+  const session = await getSession();
   const response = await fetchRequestHandler({
     endpoint: "/api/trpc",
     router: appRouter,
     req,
     createContext: () =>
       createTRPCContext({
+        sessionToken: session.sessionToken,
         headers: req.headers,
-        auth: auth(),
       }),
     onError({ error, path }) {
       console.error(`>>> tRPC Error on '${path}'`, error);

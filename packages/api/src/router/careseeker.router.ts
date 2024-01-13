@@ -1,4 +1,3 @@
-import { clerkClient } from "@clerk/nextjs";
 import { TRPCError } from "@trpc/server";
 import validator from "validator";
 import * as z from "zod";
@@ -6,9 +5,9 @@ import * as z from "zod";
 import { eq, schema } from "@millennicare/db";
 import { createCustomer, deleteObject } from "@millennicare/lib";
 
-import { protectedProcedure, publicProcedure, router } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
-export const careseekerRouter = router({
+export const careseekerRouter = createTRPCRouter({
   getCareseeker: protectedProcedure.query(async ({ ctx }) => {
     const { db, userId } = ctx;
 
