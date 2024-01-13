@@ -11,6 +11,8 @@ import { TRPCReactProvider } from "~/trpc/react";
 
 import "~/app/globals.css";
 
+import { ThemeProvider } from "@millennicare/ui/theme";
+
 export const metadata: Metadata = {
   metadataBase: new URL(
     env.VERCEL_ENV === "production"
@@ -60,11 +62,17 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           quicksand.variable,
         )}
       >
-        <TRPCReactProvider headersPromise={getHeaders()}>
-          {props.children}
-        </TRPCReactProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+        >
+          <TRPCReactProvider headersPromise={getHeaders()}>
+            {props.children}
+          </TRPCReactProvider>
 
-        <Toaster richColors />
+          <Toaster richColors />
+        </ThemeProvider>
       </body>
     </html>
   );

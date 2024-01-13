@@ -14,7 +14,7 @@ const Footer = () => {
         width={200}
       />
 
-      <p className="pt-2 text-sm">Copyright © 2023 MillenniCare, Inc.</p>
+      <p className="pt-2 text-sm">Copyright © 2024 MillenniCare, Inc.</p>
       {/* Footer Links */}
       <div className="flex w-[390px] flex-col items-center justify-between pt-2 min-[420px]:flex-row">
         <Link href="/eula" className="hover:text-primary">

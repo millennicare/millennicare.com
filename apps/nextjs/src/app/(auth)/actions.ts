@@ -2,9 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+
+import { createCareseekerSchema } from "@millennicare/validators";
 
 import { api } from "~/trpc/server";
 import { getSession } from "../actions";
+import { CareseekerSignUp } from "./sign-up/careseeker/_components/form-store";
 
 export const login = async (values: { email: string; password: string }) => {
   try {
@@ -23,6 +27,13 @@ export const login = async (values: { email: string; password: string }) => {
   }
 };
 
-export const careseekerRegister = async (formData: FormData) => {};
+export const careseekerRegister = async (
+  values: z.infer<typeof createCareseekerSchema>,
+) => {
+  try {
+    
+    revalidatePath("/sign-up/careseeker");
+  } catch (error) {}
+};
 
 export const caregiverRegister = async (formData: FormData) => {};

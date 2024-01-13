@@ -4,6 +4,7 @@ import * as jose from "jose";
 import { z } from "zod";
 
 import { eq, schema } from "@millennicare/db";
+import { createCareseekerSchema } from "@millennicare/validators";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
@@ -52,7 +53,30 @@ export const authRouter = createTRPCRouter({
 
       return { sessionToken };
     }),
-  // careseekerRegister
+  careseekerRegister: publicProcedure
+    .input(createCareseekerSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { db } = ctx;
+
+      // hash password
+      const hashed = await bcrypt.hash(input.password, 10);
+      await db.transaction(async (tx) => {
+        // create user
+        await tx.insert(schema.users).values({
+          email: input.email,
+          password: hashed,
+          firstName: input.firstName,
+          lastName: input.lastName,
+          phoneNumber: input.phoneNumber,
+          biography: input.biography,
+          birthdate: input.birthdate,
+          userType: "careseeker",
+          profilePicture: input.profilePicture,
+        });
+        // create children
+        // create address
+      });
+    }),
   // caregiverRegister
   getMe: protectedProcedure.query(async ({ ctx }) => {
     const { db, userId } = ctx;

@@ -16,8 +16,8 @@
   "dependencies": {
     "@millennicare/api": "workspace:^0.1.0",
     "@millennicare/db": "workspace:^0.1.0",
-    "@millennicare/ui": "workspace:^0.1.0",
     "@millennicare/lib": "workspace:^0.1.0",
+    "@millennicare/ui": "workspace:^0.1.0",
     "@millennicare/validators": "workspace:^0.1.0",
     "@t3-oss/env-nextjs": "^0.7.1",
     "@tanstack/react-query": "^5.17.7",
@@ -32,7 +32,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "superjson": "2.2.1",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@millennicare/eslint-config": "workspace:^0.2.0",

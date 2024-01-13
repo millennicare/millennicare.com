@@ -31,7 +31,7 @@ type CardTypeProps = {
 
 function CardType({ type, description, variant }: CardTypeProps) {
   return (
-    <div className="flex w-full min-w-fit flex-col space-y-3 rounded-xl border border-gray-500 bg-background p-4 md:w-1/2">
+    <div className="flex w-full min-w-fit flex-col space-y-3 rounded-xl border bg-background p-4 md:w-1/2">
       <p className="text-xl font-semibold">I am a {type}</p>
       <p>Create a profile and {description}</p>
       <Link href={`/sign-up/${type}`}>

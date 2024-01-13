@@ -16,7 +16,9 @@ import { reviews } from "./review";
 import { services } from "./service";
 
 export const users = mySqlTable("user", {
-  id: varchar("id", { length: 128 }).primaryKey(),
+  id: varchar("id", { length: 128 })
+    .primaryKey()
+    .$defaultFn(() => createId()),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp("updatedAt").onUpdateNow(),
   email: varchar("email", { length: 255 }).notNull().unique(),
