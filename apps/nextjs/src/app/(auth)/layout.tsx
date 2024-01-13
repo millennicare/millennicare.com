@@ -1,12 +1,18 @@
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
-// export const runtime = "edge";
+import { getSession } from "../actions";
 
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getSession();
+  if (session.isLoggedIn) {
+    redirect("/dashboard");
+  }
+
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center space-y-6">
       <Image

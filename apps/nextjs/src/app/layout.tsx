@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { cache } from "react";
 import { Montserrat, Quicksand } from "next/font/google";
 import { headers } from "next/headers";
+
 import { cn } from "@millennicare/ui";
-import { ThemeProvider } from "@millennicare/ui/theme";
 import { Toaster } from "@millennicare/ui/toast";
 
 import { env } from "~/env";
@@ -60,13 +60,11 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           quicksand.variable,
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <TRPCReactProvider headersPromise={getHeaders()}>
-            {props.children}
-          </TRPCReactProvider>
+        <TRPCReactProvider headersPromise={getHeaders()}>
+          {props.children}
+        </TRPCReactProvider>
 
-          <Toaster />
-        </ThemeProvider>
+        <Toaster richColors />
       </body>
     </html>
   );

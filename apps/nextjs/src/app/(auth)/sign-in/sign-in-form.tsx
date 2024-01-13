@@ -1,6 +1,6 @@
 "use client";
 
-import { TRPCError } from "@trpc/server";
+import Link from "next/link";
 import { z } from "zod";
 
 import { Button } from "@millennicare/ui/button";
@@ -20,8 +20,13 @@ import { SubmitButton } from "~/app/_components/submit-btn";
 import { login } from "../actions";
 
 const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8).max(32),
+  email: z
+    .string({ required_error: "Email is required" })
+    .email()
+    .min(1, { message: "Email is required" }),
+  password: z
+    .string({ required_error: "Password is required" })
+    .min(1, { message: "Password is required" }),
 });
 
 export default function SignInForm() {
@@ -31,6 +36,7 @@ export default function SignInForm() {
       email: "",
       password: "",
     },
+    mode: "onTouched",
   });
 
   async function onSubmit(formData: FormData) {
@@ -40,12 +46,10 @@ export default function SignInForm() {
 
     try {
       await login(values);
-      toast.success("Going to dashboard!");
     } catch (error) {
-      if (error instanceof TRPCError) {
-        return toast.error(error.message);
+      if (error instanceof Error) {
+        toast.error(error.message);
       }
-      toast.error("Something went wrong, please try again later.");
     }
   }
 
@@ -84,12 +88,16 @@ export default function SignInForm() {
             )}
           />
 
-          <SubmitButton value="Sign In" className="text-white" />
+          <SubmitButton
+            value="Sign In"
+            className="text-white"
+            error={!form.formState.isValid}
+          />
         </form>
       </Form>
 
-      <Button variant="link" className="text-black">
-        Don't have an account?
+      <Button asChild variant="link" className="text-black">
+        <Link href="/sign-up">Don&apos;t have an account?</Link>
       </Button>
     </div>
   );

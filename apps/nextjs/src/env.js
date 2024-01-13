@@ -30,7 +30,7 @@ export const env = createEnv({
     AWS_LOCATION_SUGGESTION_KEY: z.string(),
     STRIPE_PUBLISHABLE_KEY: z.string(),
     STRIPE_SECRET_KEY: z.string(),
-    SYMMETRIC_KEY: z.string()
+    SYMMETRIC_KEY: z.string(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -59,7 +59,7 @@ export const env = createEnv({
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_SESSION_PASSWORD: process.env.NEXT_PUBLIC_SESSION_PASSWORD,
-    SYMMETRIC_KEY: process.env.SYMMETRIC_KEY
+    SYMMETRIC_KEY: process.env.SYMMETRIC_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   skipValidation:

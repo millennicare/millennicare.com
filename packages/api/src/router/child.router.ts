@@ -3,7 +3,7 @@ import * as z from "zod";
 
 import { and, eq, schema } from "@millennicare/db";
 
-import { protectedProcedure, createTRPCRouter } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const childRouter = createTRPCRouter({
   create: protectedProcedure

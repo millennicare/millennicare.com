@@ -1,5 +1,6 @@
-import { appRouter, createTRPCContext } from "@millennicare/api";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+
+import { appRouter, createTRPCContext } from "@millennicare/api";
 
 import { getSession } from "~/app/actions";
 
