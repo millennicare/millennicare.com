@@ -1,11 +1,11 @@
 import { schema } from "@millennicare/db";
-import { CreateContactSchema } from "@millennicare/validators";
+import { createContactSchema } from "@millennicare/validators";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const contactUsRouter = createTRPCRouter({
   sendMessage: publicProcedure
-    .input(CreateContactSchema)
+    .input(createContactSchema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 

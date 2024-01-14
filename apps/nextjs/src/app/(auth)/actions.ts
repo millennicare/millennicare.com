@@ -8,7 +8,7 @@ import { createCareseekerSchema } from "@millennicare/validators";
 
 import { api } from "~/trpc/server";
 import { getSession } from "../actions";
-import { CareseekerSignUp } from "./sign-up/careseeker/_components/form-store";
+import { CareseekerSignUp } from "./sign-up/careseeker/form-store";
 
 export const login = async (values: { email: string; password: string }) => {
   try {
@@ -31,7 +31,6 @@ export const careseekerRegister = async (
   values: z.infer<typeof createCareseekerSchema>,
 ) => {
   try {
-    
     revalidatePath("/sign-up/careseeker");
   } catch (error) {}
 };

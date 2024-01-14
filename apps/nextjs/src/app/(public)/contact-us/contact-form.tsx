@@ -1,8 +1,5 @@
 "use client";
 
-import { z } from "zod";
-
-import { Button } from "@millennicare/ui/button";
 import {
   Form,
   FormControl,
@@ -15,7 +12,7 @@ import {
 import { Input } from "@millennicare/ui/input";
 import { Textarea } from "@millennicare/ui/textarea";
 import { toast } from "@millennicare/ui/toast";
-import { CreateContactSchema } from "@millennicare/validators";
+import { createContactSchema } from "@millennicare/validators";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
 
@@ -24,27 +21,28 @@ interface ContactUsFormProps {
     firstName: string;
     lastName: string;
     email: string;
-    phoneNumber?: string;
     message: string;
   }) => Promise<void>;
 }
 
+const initialState = {
+  email: "",
+  firstName: "",
+  lastName: "",
+  message: "",
+};
+
 export default function ContactUsForm({ create }: ContactUsFormProps) {
   const form = useForm({
-    schema: CreateContactSchema,
-    defaultValues: {
-      email: "",
-      firstName: "",
-      lastName: "",
-      phoneNumber: undefined,
-      message: "",
-    },
+    schema: createContactSchema,
+    defaultValues: initialState,
+    mode: "onSubmit",
   });
 
   async function handleSubmit(formData: FormData) {
-    const values = Object.fromEntries(formData.entries()) as z.infer<
-      typeof CreateContactSchema
-    >;
+    const values = Object.fromEntries(
+      formData.entries(),
+    ) as typeof initialState;
 
     try {
       await create(values);
@@ -57,7 +55,7 @@ export default function ContactUsForm({ create }: ContactUsFormProps) {
   return (
     <Form {...form}>
       <form
-        className="flex flex-col space-y-4 rounded bg-background p-10 shadow-md"
+        className="flex flex-col space-y-4 rounded border p-10"
         action={handleSubmit}
       >
         {/* First Name */}
@@ -105,21 +103,6 @@ export default function ContactUsForm({ create }: ContactUsFormProps) {
           )}
         />
 
-        {/* Phone Number */}
-        <FormField
-          control={form.control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone Number (optional)</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         {/* Message */}
         <FormField
           control={form.control}
@@ -135,7 +118,11 @@ export default function ContactUsForm({ create }: ContactUsFormProps) {
           )}
         />
 
-        <SubmitButton value="Submit" className="text-background" />
+        <SubmitButton
+          value="Submit"
+          className="text-background"
+          error={!form.formState.isValid}
+        />
       </form>
     </Form>
   );
