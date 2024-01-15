@@ -14,12 +14,12 @@ export default async function AuthLayout({
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center space-y-6">
+    <div className="flex h-screen w-screen flex-col items-center justify-center">
       <Image
         src="/millennicare_logo.png"
         alt="Millennicare Logo"
-        height={96}
-        width={96}
+        height={90}
+        width={90}
         priority={true}
       />
       {children}

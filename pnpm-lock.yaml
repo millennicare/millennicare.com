@@ -171,6 +171,9 @@ importers:
       '@trpc/server':
         specifier: next
         version: 11.0.0-next-alpha.170
+      '@vercel/speed-insights':
+        specifier: ^1.0.3
+        version: 1.0.3
       geist:
         specifier: ^1.2.0
         version: 1.2.0(next@14.0.4)
@@ -6787,6 +6790,11 @@ packages:
       '@urql/core': 2.3.6(graphql@15.8.0)
       graphql: 15.8.0
       wonka: 4.0.15
+    dev: false
+
+  /@vercel/speed-insights@1.0.3:
+    resolution: {integrity: sha512-bKIt0HDdF6hP2bJZyS+za3k6sKeAXNRLSIUbwVwvyvKdsHBWS6ILBvmD1wXHZZyTqjU1TP7dTE/F6lHM6rBdKA==}
+    requiresBuild: true
     dev: false
 
   /@xmldom/xmldom@0.7.10:

@@ -92,4 +92,19 @@ export const authRouter = createTRPCRouter({
   }),
   // update
   // delete
+  checkDuplicateEmail: publicProcedure
+    .input(z.string().email())
+    .query(async ({ ctx, input }) => {
+      const { db } = ctx;
+      const user = await db.query.users.findFirst({
+        where: eq(schema.users.email, input),
+      });
+
+      if (user) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "A user already exists with that email",
+        });
+      }
+    }),
 });

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { cache } from "react";
 import { Montserrat, Quicksand } from "next/font/google";
 import { headers } from "next/headers";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { cn } from "@millennicare/ui";
 import { Toaster } from "@millennicare/ui/toast";
@@ -73,6 +74,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
 
           <Toaster richColors />
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );

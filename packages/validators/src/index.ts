@@ -1,4 +1,4 @@
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { createInsertSchema } from "drizzle-zod";
 import validator from "validator";
 import { z } from "zod";
 
@@ -24,10 +24,12 @@ export const createUserSchema = createInsertSchema(schema.users, {
   phoneNumber: (schema) => schema.phoneNumber.refine(validator.isMobilePhone),
 }).omit({ id: true });
 
-export const createCareseekerSchema = createUserSchema.and(
+export const createCareseekerSchema = createUserSchema.merge(
   z.object({
     children: z.array(
-      createInsertSchema(schema.children).omit({ userId: true }),
+      createInsertSchema(schema.children, {
+        age: (schema) => schema.age.min(0).max(18).int().positive(),
+      }).pick({ name: true, age: true }),
     ),
     address: createAddressSchema,
   }),

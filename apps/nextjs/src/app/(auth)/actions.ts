@@ -8,7 +8,6 @@ import { createCareseekerSchema } from "@millennicare/validators";
 
 import { api } from "~/trpc/server";
 import { getSession } from "../actions";
-import { CareseekerSignUp } from "./sign-up/careseeker/form-store";
 
 export const login = async (values: { email: string; password: string }) => {
   try {
@@ -20,6 +19,7 @@ export const login = async (values: { email: string; password: string }) => {
     await session.save();
     revalidatePath("/sign-in");
   } catch (error) {
+    console.log(error);
     if (error instanceof TRPCError) {
       throw new Error(error.message);
     }
@@ -36,3 +36,14 @@ export const careseekerRegister = async (
 };
 
 export const caregiverRegister = async (formData: FormData) => {};
+
+export const checkDuplicateEmail = async (email: string) => {
+  try {
+    await api.auth.checkDuplicateEmail(email);
+  } catch (error) {
+    if (error instanceof TRPCError) {
+      throw new Error(error.message);
+    }
+    throw new Error("Something went wrong, please try again later.");
+  }
+};

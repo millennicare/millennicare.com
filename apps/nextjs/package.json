@@ -26,6 +26,7 @@
     "@trpc/client": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
+    "@vercel/speed-insights": "^1.0.3",
     "geist": "^1.2.0",
     "iron-session": "^8.0.1",
     "next": "^14.0.4",
