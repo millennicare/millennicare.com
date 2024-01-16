@@ -11,6 +11,7 @@ const config = {
     "@millennicare/db",
     "@millennicare/ui",
     "@millennicare/validators",
+    "@millennicare/lib",
   ],
 
   /** We already do linting and typechecking as separate tasks in CI */

@@ -8,6 +8,10 @@ const createAddressSchema = createInsertSchema(schema.addresses).omit({
   userId: true,
 });
 
+const createChildrenSchema = z.array(
+  createInsertSchema(schema.children).pick({ name: true, age: true }),
+);
+
 export const createUserSchema = createInsertSchema(schema.users, {
   email: (schema) => schema.email.email(),
   password: (schema) =>
@@ -22,15 +26,11 @@ export const createUserSchema = createInsertSchema(schema.users, {
       .min(8, { message: "Password must be between 8 and 32 characters." })
       .max(32, { message: "Password must be between 8 and 32 characters." }),
   phoneNumber: (schema) => schema.phoneNumber.refine(validator.isMobilePhone),
-}).omit({ id: true });
+}).omit({ id: true, createdAt: true, updatedAt: true });
 
 export const createCareseekerSchema = createUserSchema.merge(
   z.object({
-    children: z.array(
-      createInsertSchema(schema.children, {
-        age: (schema) => schema.age.min(0).max(18).int().positive(),
-      }).pick({ name: true, age: true }),
-    ),
+    children: createChildrenSchema,
     address: createAddressSchema,
   }),
 );

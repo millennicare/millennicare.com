@@ -39,7 +39,7 @@ export default function PersonalInfoForm() {
 
   const form = useForm({
     schema: formSchema,
-    defaultValues: { ...personalInfo },
+    defaultValues: { ...personalInfo, confirm: "" },
     mode: "onTouched",
   });
 
@@ -53,8 +53,7 @@ export default function PersonalInfoForm() {
 
     try {
       await checkDuplicateEmail(data.email);
-      const updated = { ...data, ...personalInfo };
-      setPersonalInfo({ ...updated });
+      setPersonalInfo({ ...data, ...personalInfo });
       increaseStep(1);
     } catch (error) {
       if (error instanceof Error) {

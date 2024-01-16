@@ -30,6 +30,7 @@ export const login = async (values: { email: string; password: string }) => {
 export const careseekerRegister = async (
   values: z.infer<typeof createCareseekerSchema>,
 ) => {
+  console.log(values);
   try {
     revalidatePath("/sign-up/careseeker");
   } catch (error) {}
