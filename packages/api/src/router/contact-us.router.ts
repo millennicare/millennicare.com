@@ -13,7 +13,6 @@ export const contactUsRouter = createTRPCRouter({
         firstName: input.firstName,
         lastName: input.lastName,
         email: input.email,
-        phoneNumber: input.phoneNumber,
         message: input.message,
       });
     }),

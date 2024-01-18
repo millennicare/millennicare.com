@@ -25,7 +25,7 @@ import { db } from "@millennicare/db";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: {
+export const createTRPCContext = (opts: {
   headers: Headers;
   sessionToken: string | null;
 }) => {

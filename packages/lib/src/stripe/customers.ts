@@ -19,11 +19,11 @@ export const createCustomer = async (values: {
   return customer;
 };
 
-export type UpdateCustomerInput = {
+export interface UpdateCustomerInput {
   customerId: string;
   email?: string;
   name?: string;
-};
+}
 export const updateCustomer = async (values: UpdateCustomerInput) => {
   const customer = await stripe.customers.update(values.customerId, {
     ...values,

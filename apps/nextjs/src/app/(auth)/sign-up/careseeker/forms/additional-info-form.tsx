@@ -30,7 +30,6 @@ const formSchema = createUserSchema
       address: createAddressSchema.pick({ zipCode: true }),
     }),
   );
-type formType = z.infer<typeof formSchema>;
 
 export default function AdditionalInfoForm() {
   const form = useForm({

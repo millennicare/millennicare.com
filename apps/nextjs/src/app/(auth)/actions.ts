@@ -1,10 +1,10 @@
 "use server";
 
+import type { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
 
-import { createCareseekerSchema } from "@millennicare/validators";
+import type { createCareseekerSchema } from "@millennicare/validators";
 
 import { api } from "~/trpc/server";
 import { getSession } from "../actions";
@@ -33,10 +33,24 @@ export const careseekerRegister = async (
   console.log(values);
   try {
     revalidatePath("/sign-up/careseeker");
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof TRPCError) {
+      throw new Error(error.message);
+    }
+    throw new Error("Something went wrong, please try again later.");
+  }
 };
 
-export const caregiverRegister = async (formData: FormData) => {};
+export const caregiverRegister = async (formData: FormData) => {
+  try {
+    console.log(formData);
+  } catch (error) {
+    if (error instanceof TRPCError) {
+      throw new Error(error.message);
+    }
+    throw new Error("Something went wrong, please try again later.");
+  }
+};
 
 export const checkDuplicateEmail = async (email: string) => {
   try {
