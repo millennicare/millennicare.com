@@ -1,12 +1,10 @@
-import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs";
+import SignInForm from "./sign-in-form";
 
-import LoginForm from "./form";
-
-export default function LoginPage() {
-  const { userId } = auth();
-  if (userId) {
-    redirect("/dashboard");
-  }
-  return <LoginForm />;
+export default function SignInPage() {
+  return (
+    <div className="flex w-full flex-col items-center justify-center space-y-4">
+      <h1 className="font-sans text-2xl">Welcome back</h1>
+      <SignInForm />
+    </div>
+  );
 }

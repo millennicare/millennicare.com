@@ -3,9 +3,9 @@ import * as z from "zod";
 
 import { and, eq, schema } from "@millennicare/db";
 
-import { protectedProcedure, router } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
-export const childRouter = router({
+export const childRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({

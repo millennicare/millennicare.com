@@ -10,7 +10,7 @@ interface PackageJson {
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator("init", {
-    description: "Generate a new package for the MillenniCare Monorepo",
+    description: "Generate a new package for the millennicare Monorepo",
     prompts: [
       {
         type: "input",
@@ -43,11 +43,6 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: "add",
         path: "packages/{{ name }}/tsconfig.json",
         templateFile: "templates/tsconfig.json.hbs",
-      },
-      {
-        type: "add",
-        path: "packages/{{ name }}/index.ts",
-        template: "export * from './src';",
       },
       {
         type: "add",

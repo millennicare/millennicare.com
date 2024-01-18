@@ -5,9 +5,9 @@ import { careseekerRouter } from "./router/careseeker.router";
 import { childRouter } from "./router/child.router";
 import { contactUsRouter } from "./router/contact-us.router";
 import { serviceRouter } from "./router/service.router";
-import { router } from "./trpc";
+import { createTRPCRouter } from "./trpc";
 
-export const appRouter = router({
+export const appRouter = createTRPCRouter({
   auth: authRouter,
   caregiver: caregiverRouter,
   careseeker: careseekerRouter,

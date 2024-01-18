@@ -1,0 +1,37 @@
+{
+  "name": "@millennicare/validators",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@millennicare/db": "workspace:^0.1.0",
+    "drizzle-zod": "^0.5.1",
+    "validator": "^13.11.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@millennicare/eslint-config": "workspace:^0.2.0",
+    "@millennicare/prettier-config": "workspace:^0.1.0",
+    "@millennicare/tsconfig": "workspace:^0.1.0",
+    "@types/validator": "^13.11.8",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@millennicare/eslint-config/base"
+    ]
+  },
+  "prettier": "@millennicare/prettier-config"
+}

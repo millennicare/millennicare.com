@@ -1,42 +1,81 @@
-import "~/styles/globals.css";
-
+import type { Metadata, Viewport } from "next";
 import { cache } from "react";
+import { Montserrat, Quicksand } from "next/font/google";
 import { headers } from "next/headers";
-import { ClerkProvider } from "@clerk/nextjs";
-import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
-import { Toaster } from "~/components/ui/toaster";
+import { cn } from "@millennicare/ui";
+import { Toaster } from "@millennicare/ui/toast";
+
+import { env } from "~/env";
 import { TRPCReactProvider } from "~/trpc/react";
-import { montserrat, quicksand } from "./fonts";
 
-export const metadata = {
+import "~/app/globals.css";
+
+import { ThemeProvider } from "@millennicare/ui/theme";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(
+    env.VERCEL_ENV === "production"
+      ? "https://millennicare.com"
+      : "http://localhost:3000",
+  ),
   title: "MillenniCare",
-  description: "Providing childcare to under-represented communities",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  description:
+    "Providing childcare and other services to marginalized communities.",
+  openGraph: {
+    title: "MillenniCare",
+    description:
+      "Providing childcare and other services to marginalized communities.",
+    url: "https://millennicare.com",
+    siteName: "MillenniCare",
+  },
 };
 
-// Lazy load headers
-const getHeaders = cache(() => Promise.resolve(headers()));
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-montserrat",
+});
+
+export const quicksand = Quicksand({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-quicksand",
+});
+
+const getHeaders = cache(async () => headers());
+
+export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <ClerkProvider>
-      <html
-        lang="en"
-        className={`${montserrat.variable} ${quicksand.variable}`}
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans text-foreground antialiased",
+          montserrat.variable,
+          quicksand.variable,
+        )}
       >
-        <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+        >
           <TRPCReactProvider headersPromise={getHeaders()}>
-            {children}
-            <Analytics />
-            <Toaster />
+            {props.children}
           </TRPCReactProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+
+          <Toaster richColors />
+        </ThemeProvider>
+        <SpeedInsights />
+      </body>
+    </html>
   );
 }

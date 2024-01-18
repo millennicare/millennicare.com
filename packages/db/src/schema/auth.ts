@@ -16,10 +16,13 @@ import { reviews } from "./review";
 import { services } from "./service";
 
 export const users = mySqlTable("user", {
-  id: varchar("id", { length: 128 }).primaryKey(),
+  id: varchar("id", { length: 128 })
+    .primaryKey()
+    .$defaultFn(() => createId()),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp("updatedAt").onUpdateNow(),
   email: varchar("email", { length: 255 }).notNull().unique(),
+  password: varchar("password", { length: 100 }).notNull(),
   firstName: varchar("firstName", { length: 255 }).notNull(),
   lastName: varchar("lastName", { length: 255 }).notNull(),
   phoneNumber: varchar("phoneNumber", { length: 255 }).notNull(),

@@ -2,42 +2,33 @@
   "name": "@millennicare/db",
   "version": "0.1.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
-  "license": "MIT",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
+  "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint .",
     "push": "drizzle-kit push:mysql",
-    "generate": "drizzle-kit generate:mysql",
     "studio": "drizzle-kit studio",
-    "typecheck": "tsc --noEmit",
-    "seed": "node --loader esbuild-register/loader -r esbuild-register src/seed.ts"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
-    "@planetscale/database": "^1.11.0",
-    "drizzle-orm": "^0.29.1",
-    "drizzle-zod": "^0.5.1",
-    "mysql2": "^3.6.5",
-    "zod": "^3.22.4"
+    "@planetscale/database": "^1.13.0",
+    "drizzle-orm": "^0.29.3"
   },
   "devDependencies": {
-    "@faker-js/faker": "8.3.1",
-    "@millennicare/eslint-config": "workspace:^",
-    "@millennicare/prettier-config": "workspace:^",
-    "@millennicare/tsconfig": "workspace:^",
+    "mysql2": "^3.7.0",
+    "@millennicare/eslint-config": "workspace:^0.2.0",
+    "@millennicare/prettier-config": "workspace:^0.1.0",
+    "@millennicare/tsconfig": "workspace:^0.1.0",
     "dotenv-cli": "^7.3.0",
-    "drizzle-kit": "^0.20.6",
-    "esbuild-register": "3.5.0",
-    "eslint": "^8.55.0",
+    "drizzle-kit": "^0.20.10",
+    "eslint": "^8.56.0",
     "prettier": "^3.1.1",
-    "ts-node": "10.9.2",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {

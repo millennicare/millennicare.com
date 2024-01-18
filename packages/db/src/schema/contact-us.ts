@@ -14,6 +14,5 @@ export const contactUs = mySqlTable("contact-us", {
   firstName: varchar("firstName", { length: 255 }).notNull(),
   lastName: varchar("lastName", { length: 255 }).notNull(),
   email: varchar("email", { length: 255 }).notNull(),
-  phoneNumber: varchar("phoneNumber", { length: 255 }),
   message: text("message").notNull(),
 });
