@@ -17,8 +17,7 @@ export const addresses = mySqlTable(
     zipCode: char("zip_code", { length: 5 }).notNull(),
     longitude: float("longitude").notNull(),
     latitude: float("latitude").notNull(),
-    address: varchar("address", { length: 255 }),
-    unit: varchar("unit", { length: 255 }),
+
     userId: varchar("user_id", { length: 128 }).notNull(),
   },
   (address) => ({

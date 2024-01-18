@@ -4,6 +4,7 @@ import * as jose from "jose";
 import { z } from "zod";
 
 import { eq, schema } from "@millennicare/db";
+import { createCustomer, getLocationDetails } from "@millennicare/lib";
 import { createCareseekerSchema } from "@millennicare/validators";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
@@ -57,7 +58,16 @@ export const authRouter = createTRPCRouter({
     .input(createCareseekerSchema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
+      let userId = "";
 
+      // create all third party accounts
+      const stripeResponse = await createCustomer({
+        firstName: input.firstName,
+        lastName: input.lastName,
+        email: input.email,
+      });
+
+      const { coordinates } = await getLocationDetails(input.address.zipCode);
       // hash password
       const hashed = await bcrypt.hash(input.password, 10);
       await db.transaction(async (tx) => {
@@ -73,9 +83,42 @@ export const authRouter = createTRPCRouter({
           userType: "careseeker",
           profilePicture: input.profilePicture,
         });
+
+        // fetch user
+        const user = await tx.query.users.findFirst({
+          where: eq(schema.users.email, input.email),
+        });
+        if (!user) {
+          throw new TRPCError({ code: "NOT_FOUND" });
+        }
+        userId = user.id;
+
+        // create careseeker
+        await tx.insert(schema.careseekers).values({
+          userId,
+          stripeId: stripeResponse.id,
+        });
         // create children
+        await tx.insert(schema.children).values(
+          input.children.map((child) => {
+            return {
+              userId,
+              age: child.age,
+              name: child.name,
+            };
+          }),
+        );
         // create address
+        await tx.insert(schema.addresses).values({
+          userId,
+          longitude: coordinates.longitude,
+          latitude: coordinates.latitude,
+          zipCode: input.address.zipCode,
+        });
       });
+
+      const sessionToken = await createToken(userId);
+      return { sessionToken };
     }),
   // caregiverRegister
   getMe: protectedProcedure.query(async ({ ctx }) => {

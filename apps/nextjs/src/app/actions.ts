@@ -20,3 +20,7 @@ export const logout = async () => {
   const session = await getSession();
   session.destroy();
 };
+
+export const uploadFile = async (formData: FormData) => {
+  "use server";
+};
