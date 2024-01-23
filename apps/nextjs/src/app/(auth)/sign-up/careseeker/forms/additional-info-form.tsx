@@ -25,7 +25,11 @@ import {
 } from "@millennicare/ui/popover";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
-import { getSuggestion } from "~/app/(auth)/actions";
+import {
+  careseekerRegister,
+  getSuggestion,
+  uploadFileToS3,
+} from "~/app/(auth)/actions";
 import useFormStore from "../useFormStore";
 
 const zipCodeReg = new RegExp(/^\b\d{5}(-\d{4})?\b$/);
@@ -74,9 +78,36 @@ export default function AdditionalInfoForm() {
   }, [watchZipCode]);
 
   async function onSubmit(formValues: FormData) {
-    console.log(childrenInfo);
+    console.log(childrenInfo.children);
     console.log(personalInfo);
-    console.log(formValues);
+    const values = Object.fromEntries(
+      formValues.entries(),
+    ) as unknown as z.infer<typeof schema>;
+    // set data just in case user goes back to edit previous steps
+    setAdditionalInfo({ ...additionalInfo, ...values });
+    console.log(values);
+
+    try {
+      let profileLink: string | undefined = undefined;
+      if (
+        values.profilePicture instanceof File &&
+        values.profilePicture.name !== ""
+      ) {
+        const res = await uploadFileToS3(values.profilePicture);
+        profileLink = res;
+      }
+
+      await careseekerRegister({
+        ...personalInfo,
+        ...additionalInfo,
+        profilePicture: profileLink,
+        userType: "careseeker",
+        ...childrenInfo,
+      });
+    } catch (error) {
+      // check for aws error
+      // check for trpc error
+    }
   }
 
   return (

@@ -33,6 +33,13 @@ export const careseekerRegister = async (
 ) => {
   console.log(values);
   try {
+    const response = await api.auth.careseekerRegister(values);
+
+    const session = await getSession();
+    session.sessionToken = response.sessionToken;
+    session.isLoggedIn = true;
+    await session.save();
+
     revalidatePath("/sign-up/careseeker");
   } catch (error) {
     if (error instanceof TRPCError) {
@@ -68,13 +75,8 @@ export const getSuggestion = async (zipCode: string) => {
   return await getLocationSuggestion(zipCode);
 };
 
-export const uploadFileToS3 = async (formData: FormData) => {
+export const uploadFileToS3 = async (file: Blob) => {
   try {
-    const file = formData.get("file") as Blob | null;
-    if (!file) {
-      throw new Error("File is required.");
-    }
-
     const mimeType = file.type;
     const fileExtension = mimeType.split("/")[1];
 

@@ -36,7 +36,9 @@ export const createUserSchema = createInsertSchema(schema.users, {
 export const createCareseekerSchema = createUserSchema.merge(
   z.object({
     children: createChildrenSchema,
-    address: createAddressSchema,
+    address: createAddressSchema.pick({
+      zipCode: true,
+    }),
   }),
 );
 

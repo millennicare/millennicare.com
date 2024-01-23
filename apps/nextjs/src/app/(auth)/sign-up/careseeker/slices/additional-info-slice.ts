@@ -1,6 +1,8 @@
 import { StateCreator } from "zustand";
 
 type AdditionalInfo = {
+  firstName: string;
+  lastName: string;
   profilePicture: string | null | undefined;
   phoneNumber: string;
   birthdate: Date;
@@ -16,6 +18,8 @@ type AdditionalInfoSlice = {
 };
 
 const initialState = {
+  firstName: "",
+  lastName: "",
   profilePicture: undefined,
   birthdate: new Date(),
   biography: undefined,
