@@ -44,7 +44,7 @@ export default function PersonalInfoForm() {
   });
 
   async function onSubmit(formValues: FormData) {
-    let values = Object.fromEntries(formValues.entries()) as {
+    const values = Object.fromEntries(formValues.entries()) as {
       email: string;
       password: string;
       confirm: string;
@@ -53,7 +53,7 @@ export default function PersonalInfoForm() {
 
     try {
       await checkDuplicateEmail(data.email);
-      setPersonalInfo({ ...data, ...personalInfo });
+      setPersonalInfo({ ...personalInfo, ...data });
       increaseStep(1);
     } catch (error) {
       if (error instanceof Error) {

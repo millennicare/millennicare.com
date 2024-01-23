@@ -1,10 +1,6 @@
 import { Stripe } from "stripe";
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("Missing stripe secret key");
-}
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export const createAccount = async (email: string) => {
   const account = await stripe.accounts.create({

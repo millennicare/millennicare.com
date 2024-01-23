@@ -13,4 +13,5 @@ const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
     </div>
   );
 };
+
 export default PublicLayout;

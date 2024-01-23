@@ -11,9 +11,11 @@ export const createAddressSchema = createInsertSchema(schema.addresses, {
     }),
 });
 
-const createChildrenSchema = z.array(
-  createInsertSchema(schema.children).pick({ name: true, age: true }),
-);
+export const createChildrenSchema = z.object({
+  children: z.array(
+    createInsertSchema(schema.children).pick({ name: true, age: true }),
+  ),
+});
 
 export const createUserSchema = createInsertSchema(schema.users, {
   email: (schema) => schema.email.email(),

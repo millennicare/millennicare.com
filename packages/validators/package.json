@@ -14,18 +14,18 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@millennicare/db": "workspace:^0.1.0",
+    "@millennicare/db": "workspace:^",
     "drizzle-zod": "^0.5.1",
     "validator": "^13.11.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@millennicare/eslint-config": "workspace:^0.2.0",
-    "@millennicare/prettier-config": "workspace:^0.1.0",
-    "@millennicare/tsconfig": "workspace:^0.1.0",
+    "@millennicare/eslint-config": "workspace:^",
+    "@millennicare/prettier-config": "workspace:^",
+    "@millennicare/tsconfig": "workspace:^",
     "@types/validator": "^13.11.8",
     "eslint": "^8.56.0",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.4",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {

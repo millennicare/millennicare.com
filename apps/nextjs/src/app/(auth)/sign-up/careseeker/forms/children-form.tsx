@@ -18,18 +18,20 @@ import { Input } from "@millennicare/ui/input";
 import { SubmitButton } from "~/app/_components/submit-btn";
 import useFormStore from "../useFormStore";
 
-const formSchema = z.object({
+const schema = z.object({
   children: z.array(
-    z.object({ name: z.string(), age: z.coerce.number().min(0).max(18).int() }),
+    z.object({ name: z.string(), age: z.coerce.number().min(0).max(18) }),
   ),
 });
 
 export default function ChildrenForm() {
   const { childrenInfo, setChildrenInfo, increaseStep, decreaseStep } =
     useFormStore((state) => state);
+  console.log(childrenInfo.children);
 
   const form = useForm({
-    schema: formSchema,
+    schema,
+    // checks to see if 'children' field are already in and sets the default values
     defaultValues: {
       children:
         childrenInfo.children.length !== 0
@@ -38,14 +40,16 @@ export default function ChildrenForm() {
     },
     mode: "onSubmit",
   });
-
   const { fields, append, remove } = useFieldArray({
     name: "children",
     control: form.control,
+    rules: { minLength: 1 },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setChildrenInfo({ children: values.children });
+  function onSubmit(values: z.infer<typeof schema>) {
+    setChildrenInfo({
+      children: { ...childrenInfo.children, ...values.children },
+    });
     increaseStep(2);
   }
 
@@ -55,49 +59,55 @@ export default function ChildrenForm() {
         className="space-y-4 px-2 py-4"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        {fields.map((item, index) => (
-          <span key={item.id} className="flex space-x-2">
-            <FormField
-              control={form.control}
-              name={`children.${index}.name`}
-              render={({ field }) => (
-                <FormItem className="w-2/3">
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Name" type="text" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <ul>
+          {fields.map((item, index) => (
+            <li key={item.id} className="flex space-x-2">
+              <FormField
+                control={form.control}
+                name={`children.${index}.name`}
+                render={({ field }) => (
+                  <FormItem className="w-1/2">
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name={`children.${index}.age`}
-              render={({ field }) => (
-                <FormItem className="w-1/3">
-                  <FormLabel>Age</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Age" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button
-              variant="destructive"
-              type="button"
-              onClick={() => remove(index)}
-              className="self-end"
-            >
-              Delete
-            </Button>
-          </span>
-        ))}
+              <FormField
+                control={form.control}
+                name={`children.${index}.age`}
+                render={({ field }) => (
+                  <FormItem className="w-1/3">
+                    <FormLabel>Age</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="number" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                variant="destructive"
+                type="button"
+                onClick={() => remove(index)}
+                className="self-end"
+              >
+                Delete
+              </Button>
+            </li>
+          ))}
+        </ul>
 
         <div>
-          <Button variant="ghost" onClick={() => append({ name: "", age: 0 })}>
+          <Button
+            className="p-0 text-black"
+            variant="link"
+            type="button"
+            onClick={() => append({ name: "", age: 1 })}
+          >
             Add child
           </Button>
         </div>
@@ -105,8 +115,8 @@ export default function ChildrenForm() {
         <div className="flex justify-end space-x-4">
           <Button
             variant="outline"
+            type="button"
             onClick={() => decreaseStep(2)}
-            className="disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
           >
             Back
           </Button>

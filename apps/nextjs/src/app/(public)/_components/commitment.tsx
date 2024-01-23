@@ -2,10 +2,7 @@ import Image from "next/image";
 
 const Commitment = () => {
   return (
-    <div
-      id="commitment"
-      className="bg-palecream flex h-full flex-col justify-center py-12 lg:h-[65vh] lg:px-36"
-    >
+    <div id="commitment" className="flex h-full flex-col justify-center">
       <h1 className="justify-center text-center text-4xl text-primary md:m-8">
         Our Commitment
       </h1>

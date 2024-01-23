@@ -1,5 +1,5 @@
 {
-  "name": "create-t3-turbo",
+  "name": "millennicare",
   "private": true,
   "engines": {
     "node": ">=20.10"
@@ -21,9 +21,9 @@
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
-    "@millennicare/prettier-config": "workspace:^0.1.0",
+    "@millennicare/prettier-config": "workspace:^",
     "@turbo/gen": "^1.11.3",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.4",
     "turbo": "^1.11.3",
     "typescript": "^5.3.3"
   },

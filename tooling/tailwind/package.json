@@ -14,17 +14,17 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32",
-    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@millennicare/eslint-config": "workspace:^0.2.0",
-    "@millennicare/prettier-config": "workspace:^0.1.0",
-    "@millennicare/tsconfig": "workspace:^0.1.0",
+    "@millennicare/eslint-config": "workspace:^",
+    "@millennicare/prettier-config": "workspace:^",
+    "@millennicare/tsconfig": "workspace:^",
     "eslint": "^8.56.0",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.4",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {
