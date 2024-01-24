@@ -27,7 +27,6 @@ const schema = z.object({
 export default function ChildrenForm() {
   const { childrenInfo, setChildrenInfo, increaseStep, decreaseStep } =
     useFormStore((state) => state);
-  console.log(childrenInfo.children);
 
   const form = useForm({
     schema,

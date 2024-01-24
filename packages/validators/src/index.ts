@@ -18,7 +18,7 @@ export const createChildrenSchema = z.object({
 });
 
 export const createUserSchema = createInsertSchema(schema.users, {
-  email: (schema) => schema.email.email(),
+  email: (schema) => schema.email.email({ message: "Invalid email address." }),
   password: (schema) =>
     schema.password
       .regex(
@@ -30,12 +30,28 @@ export const createUserSchema = createInsertSchema(schema.users, {
       )
       .min(8, { message: "Password must be between 8 and 32 characters." })
       .max(32, { message: "Password must be between 8 and 32 characters." }),
-  phoneNumber: (schema) => schema.phoneNumber.refine(validator.isMobilePhone),
+  phoneNumber: (schema) =>
+    schema.phoneNumber.refine(validator.isMobilePhone, {
+      message: "Invalid phone number.",
+    }),
+  birthdate: (schema) =>
+    schema.birthdate.refine(
+      (birthdate) => {
+        const ageDiffMs = Date.now() - birthdate.getTime();
+        const ageDate = new Date(ageDiffMs);
+        return Math.abs(ageDate.getUTCFullYear() - 1970) >= 18;
+      },
+      {
+        message: "You must be at least 18 years old to register.",
+      },
+    ),
 }).omit({ id: true, createdAt: true, updatedAt: true });
 
 export const createCareseekerSchema = createUserSchema.merge(
   z.object({
-    children: createChildrenSchema,
+    children: z.array(
+      createInsertSchema(schema.children).pick({ name: true, age: true }),
+    ),
     address: createAddressSchema.pick({
       zipCode: true,
     }),

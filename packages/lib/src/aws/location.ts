@@ -10,7 +10,6 @@ import {
 import { withAPIKey } from "@aws/amazon-location-utilities-auth-helper";
 
 export const getLocationSuggestion = async (zipCode: string) => {
-  console.log("zipCode", zipCode);
   const authHelper = await withAPIKey(process.env.AWS_LOCATION_SUGGESTION_KEY!);
   const client = new LocationClient({
     region: process.env.AWS_REGION!,
