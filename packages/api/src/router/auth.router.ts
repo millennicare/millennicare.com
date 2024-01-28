@@ -99,7 +99,6 @@ export const authRouter = createTRPCRouter({
 
         // create address
         await tx.insert(schema.addresses).values({
-          // ts-expect-error
           longitude: coordinates.longitude,
           latitude: coordinates.latitude,
           zipCode: input.address.zipCode,

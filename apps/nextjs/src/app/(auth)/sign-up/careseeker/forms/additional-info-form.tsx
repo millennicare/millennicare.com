@@ -1,10 +1,11 @@
 "use client";
 
+import type { z } from "zod";
 import React, { useEffect, useState } from "react";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
-import { z } from "zod";
 
+import type { createCareseekerSchema } from "@millennicare/validators";
 import { cn } from "@millennicare/ui";
 import { Button } from "@millennicare/ui/button";
 import { Calendar } from "@millennicare/ui/calendar";
@@ -24,7 +25,6 @@ import {
   PopoverTrigger,
 } from "@millennicare/ui/popover";
 import { toast } from "@millennicare/ui/toast";
-import { createCareseekerSchema } from "@millennicare/validators";
 
 import type { AdditionalInfo } from "../slices/additional-info-slice";
 import { SubmitButton } from "~/app/_components/submit-btn";

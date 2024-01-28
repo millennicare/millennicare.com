@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 
 import { getSession } from "../actions";
 
+export const runtime = "edge";
+
 export default async function AuthLayout({
   children,
 }: {

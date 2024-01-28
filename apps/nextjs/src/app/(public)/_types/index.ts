@@ -1,5 +1,5 @@
-import { z } from "zod";
+import type { z } from "zod";
 
-import { createContactSchema } from "@millennicare/validators";
+import type { createContactSchema } from "@millennicare/validators";
 
 export type CreateContactType = z.infer<typeof createContactSchema>;

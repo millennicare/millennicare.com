@@ -1,8 +1,9 @@
 "use client";
 
+import type { DropdownProps } from "react-day-picker";
 import * as React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DayPicker, DropdownProps } from "react-day-picker";
+import { DayPicker } from "react-day-picker";
 
 import { cn } from ".";
 import { buttonVariants } from "./button";
@@ -61,7 +62,7 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Dropdown: ({ value, onChange, children, ...props }: DropdownProps) => {
+        Dropdown: ({ value, onChange, children }: DropdownProps) => {
           const options = React.Children.toArray(
             children,
           ) as React.ReactElement<React.HTMLProps<HTMLOptionElement>>[];
@@ -86,7 +87,7 @@ function Calendar({
                 <ScrollArea className="h-80">
                   {options.map((option, id: number) => (
                     <SelectItem
-                      key={`${option.props.value}-${id}`}
+                      key={id}
                       value={option.props.value?.toString() ?? ""}
                     >
                       {option.props.children}
@@ -97,8 +98,8 @@ function Calendar({
             </Select>
           );
         },
-        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
-        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+        IconLeft: () => <ChevronLeft className="h-4 w-4" />,
+        IconRight: () => <ChevronRight className="h-4 w-4" />,
       }}
       {...props}
     />
