@@ -13,7 +13,7 @@ export const defaultSession: SessionData = {
 };
 
 export const sessionOptions: SessionOptions = {
-  password: env.NEXT_PUBLIC_SESSION_PASSWORD,
+  password: env.SESSION_PASSWORD,
   cookieName: "millennicare-session-cookie",
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",

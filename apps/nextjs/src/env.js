@@ -31,6 +31,8 @@ export const env = createEnv({
     STRIPE_PUBLISHABLE_KEY: z.string(),
     STRIPE_SECRET_KEY: z.string(),
     SYMMETRIC_KEY: z.string(),
+    RESEND_API_KEY: z.string(),
+    SESSION_PASSWORD: z.string().min(32),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -38,7 +40,6 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
-    NEXT_PUBLIC_SESSION_PASSWORD: z.string().min(32),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -58,8 +59,9 @@ export const env = createEnv({
     AWS_LOCATION_SUGGESTION_KEY: process.env.AWS_LOCATION_SUGGESTION_KEY,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
-    NEXT_PUBLIC_SESSION_PASSWORD: process.env.NEXT_PUBLIC_SESSION_PASSWORD,
+    SESSION_PASSWORD: process.env.SESSION_PASSWORD,
     SYMMETRIC_KEY: process.env.SYMMETRIC_KEY,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   skipValidation:
