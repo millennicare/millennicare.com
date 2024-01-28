@@ -23,45 +23,40 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@millennicare/ui/popover";
+import { toast } from "@millennicare/ui/toast";
 import { createCareseekerSchema } from "@millennicare/validators";
 
+import type { AdditionalInfo } from "../slices/additional-info-slice";
 import { SubmitButton } from "~/app/_components/submit-btn";
 import {
   careseekerRegister,
   getSuggestion,
   uploadFileToS3,
 } from "~/app/(auth)/actions";
+import { additionalInfoSchema } from "../slices/additional-info-slice";
 import useFormStore from "../useFormStore";
 
 const zipCodeReg = new RegExp(/^\b\d{5}(-\d{4})?\b$/);
-
-const formSchema = createCareseekerSchema.pick({
-  firstName: true,
-  lastName: true,
-  profilePicture: true,
-  phoneNumber: true,
-  birthdate: true,
-  address: true,
-  userType: true,
-});
 
 export default function AdditionalInfoForm() {
   const [city, setCity] = useState("");
   const [file, setFile] = useState<File | null>(null);
 
-  const {
-    childrenInfo,
-    personalInfo,
-    additionalInfo,
-    setAdditionalInfo,
-    decreaseStep,
-  } = useFormStore((state) => state);
+  const { childrenInfo, personalInfo, additionalInfo, decreaseStep } =
+    useFormStore((state) => state);
 
   const form = useForm({
-    schema: formSchema,
-    defaultValues: { ...additionalInfo },
+    schema: additionalInfoSchema,
+    defaultValues: { ...additionalInfo, userType: "careseeker" },
+    mode: "onBlur",
   });
   const watchZipCode = form.watch("address.zipCode");
+
+  useEffect(() => {
+    if (form.formState.errors) {
+      console.log(form.formState.errors);
+    }
+  }, [form.formState.errors]);
 
   useEffect(() => {
     if (zipCodeReg.test(watchZipCode)) {
@@ -75,31 +70,34 @@ export default function AdditionalInfoForm() {
     }
   }, [watchZipCode]);
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    // set data just in case user goes back to edit previous steps
-    setAdditionalInfo({ ...additionalInfo, ...values });
-
+  async function onSubmit(values: AdditionalInfo) {
+    console.log(childrenInfo);
+    console.log(values);
     try {
       let profileLink: string | undefined = undefined;
       if (file) {
-        const res = await uploadFileToS3(file);
+        const data = new FormData();
+        data.append("file", file);
+        const res = await uploadFileToS3(data);
+        console.log(res);
         profileLink = res;
       }
 
       const careseekerValues: z.infer<typeof createCareseekerSchema> = {
         ...personalInfo,
-        children: { ...childrenInfo.children },
+        children: Array.isArray(childrenInfo.children)
+          ? childrenInfo.children
+          : Object.values(childrenInfo.children),
         ...values,
         profilePicture: profileLink,
         userType: "careseeker",
       };
 
-      console.log(careseekerValues);
       await careseekerRegister(careseekerValues);
     } catch (error) {
-      console.log(error);
-      // check for aws error
-      // check for trpc error
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
     }
   }
 
@@ -167,15 +165,6 @@ export default function AdditionalInfoForm() {
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
-                    {/* <Calendar
-                      initialFocus
-                      mode="single"
-                      captionLayout="dropdown-buttons"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      fromYear={new Date().getFullYear() - 100}
-                      toYear={new Date().getFullYear() - 18}
-                    /> */}
                     <Calendar
                       mode="single"
                       selected={field.value}
@@ -254,7 +243,7 @@ export default function AdditionalInfoForm() {
             Back
           </Button>
           <SubmitButton
-            value="Submit"
+            value="Finish"
             className="text-background"
             error={!form.formState.isValid}
           />

@@ -11,10 +11,13 @@ export const createAddressSchema = createInsertSchema(schema.addresses, {
     }),
 });
 
-export const createChildrenSchema = z.object({
-  children: z.array(
-    createInsertSchema(schema.children).pick({ name: true, age: true }),
-  ),
+export const createChildSchema = createInsertSchema(schema.children, {
+  name: (schema) => schema.name.min(1, { message: "Name is required." }),
+  age: (schema) =>
+    schema.age
+      .min(0, { message: "Age must be between 0 and 18." })
+      .max(18, { message: "Age must be between 0 and 18." })
+      .int(),
 });
 
 export const createUserSchema = createInsertSchema(schema.users, {
@@ -45,18 +48,14 @@ export const createUserSchema = createInsertSchema(schema.users, {
         message: "You must be at least 18 years old to register.",
       },
     ),
-}).omit({ id: true, createdAt: true, updatedAt: true });
+}).omit({ id: true, createdAt: true, updatedAt: true, stripeId: true });
 
-export const createCareseekerSchema = createUserSchema.merge(
-  z.object({
-    children: z.array(
-      createInsertSchema(schema.children).pick({ name: true, age: true }),
-    ),
-    address: createAddressSchema.pick({
-      zipCode: true,
-    }),
-  }),
-);
+export const createCareseekerSchema = createUserSchema.extend({
+  children: z
+    .array(createChildSchema.pick({ name: true, age: true }))
+    .min(1, { message: "At least one child is required to sign up." }),
+  address: createAddressSchema.pick({ zipCode: true }),
+});
 
 export const createContactSchema = createInsertSchema(schema.contactUs, {
   email: (schema) => schema.email.email(),

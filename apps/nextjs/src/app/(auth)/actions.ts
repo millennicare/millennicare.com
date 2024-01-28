@@ -31,9 +31,9 @@ export const login = async (values: { email: string; password: string }) => {
 export const careseekerRegister = async (
   values: z.infer<typeof createCareseekerSchema>,
 ) => {
-  console.log(values);
   try {
     const response = await api.auth.careseekerRegister(values);
+    console.log(response);
 
     const session = await getSession();
     session.sessionToken = response.sessionToken;
@@ -42,6 +42,7 @@ export const careseekerRegister = async (
 
     revalidatePath("/sign-up/careseeker");
   } catch (error) {
+    console.error(error);
     if (error instanceof TRPCError) {
       throw new Error(error.message);
     }
@@ -72,11 +73,16 @@ export const checkDuplicateEmail = async (email: string) => {
 };
 
 export const getSuggestion = async (zipCode: string) => {
-  return await getLocationSuggestion(zipCode);
+  return getLocationSuggestion(zipCode);
 };
 
-export const uploadFileToS3 = async (file: Blob) => {
+export const uploadFileToS3 = async (formData: FormData) => {
   try {
+    const file = formData.get("file") as Blob;
+    if (!file) {
+      throw new Error("No file found.");
+    }
+
     const mimeType = file.type;
     const fileExtension = mimeType.split("/")[1];
 

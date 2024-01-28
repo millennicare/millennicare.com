@@ -62,63 +62,66 @@ export const authRouter = createTRPCRouter({
       let userId = "";
 
       // create all third party accounts
-      // const stripeResponse = await createCustomer({
-      //   firstName: input.firstName,
-      //   lastName: input.lastName,
-      //   email: input.email,
-      // });
+      const stripeResponse = await createCustomer({
+        firstName: input.firstName,
+        lastName: input.lastName,
+        email: input.email,
+      });
 
-      // const { coordinates } = await getLocationDetails(input.address.zipCode);
-      // // hash password
-      // const hashed = await bcrypt.hash(input.password, 10);
-      // await db.transaction(async (tx) => {
-      //   // create user
-      //   await tx.insert(schema.users).values({
-      //     email: input.email,
-      //     password: hashed,
-      //     firstName: input.firstName,
-      //     lastName: input.lastName,
-      //     phoneNumber: input.phoneNumber,
-      //     biography: input.biography,
-      //     birthdate: input.birthdate,
-      //     userType: "careseeker",
-      //     profilePicture: input.profilePicture,
-      //   });
+      const { coordinates } = await getLocationDetails(input.address.zipCode);
 
-      //   // fetch user
-      //   const user = await tx.query.users.findFirst({
-      //     where: eq(schema.users.email, input.email),
-      //   });
-      //   if (!user) {
-      //     throw new TRPCError({ code: "NOT_FOUND" });
-      //   }
-      //   userId = user.id;
+      const hashed = await bcrypt.hash(input.password, 10);
 
-      //   // create careseeker
-      //   await tx.insert(schema.careseekers).values({
-      //     userId,
-      //     stripeId: stripeResponse.id,
-      //   });
-      //   // create children
-      //   await tx.insert(schema.children).values(
-      //     input.children.map((child) => {
-      //       return {
-      //         userId,
-      //         age: child.age,
-      //         name: child.name,
-      //       };
-      //     }),
-      //   );
-      //   // create address
-      //   await tx.insert(schema.addresses).values({
-      //     longitude: coordinates.longitude,
-      //     latitude: coordinates.latitude,
-      //     zipCode: input.address.zipCode,
-      //   });
-      // });
+      await db.transaction(async (tx) => {
+        // create user
+        await tx.insert(schema.users).values({
+          email: input.email,
+          password: hashed,
+          firstName: input.firstName,
+          lastName: input.lastName,
+          phoneNumber: input.phoneNumber,
+          biography: input.biography,
+          birthdate: input.birthdate,
+          userType: "careseeker",
+          profilePicture: input.profilePicture,
+          stripeId: stripeResponse.id,
+        });
 
-      // const sessionToken = await createToken(userId);
-      return { sessionToken: "" };
+        // fetch user
+        const user = await tx.query.users.findFirst({
+          where: eq(schema.users.email, input.email),
+        });
+
+        if (!user) {
+          throw new TRPCError({ code: "NOT_FOUND" });
+        }
+        userId = user.id;
+
+        // create address
+        await tx.insert(schema.addresses).values({
+          // ts-expect-error
+          longitude: coordinates.longitude,
+          latitude: coordinates.latitude,
+          zipCode: input.address.zipCode,
+          userId,
+        });
+
+        // create careseeker
+        await tx.insert(schema.careseekers).values({
+          userId,
+        });
+        // create children
+        await tx.insert(schema.children).values(
+          input.children.map((child) => ({
+            userId,
+            age: child.age,
+            name: child.name,
+          })),
+        );
+      });
+
+      const sessionToken = await createToken(userId);
+      return { sessionToken };
     }),
   // caregiverRegister
   getMe: protectedProcedure.query(async ({ ctx }) => {

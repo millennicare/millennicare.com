@@ -15,21 +15,17 @@ import {
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
 
+import type { ChildrenInfo } from "../slices/children-slice";
 import { SubmitButton } from "~/app/_components/submit-btn";
+import { childrenSchema } from "../slices/children-slice";
 import useFormStore from "../useFormStore";
-
-const schema = z.object({
-  children: z.array(
-    z.object({ name: z.string(), age: z.coerce.number().min(0).max(18) }),
-  ),
-});
 
 export default function ChildrenForm() {
   const { childrenInfo, setChildrenInfo, increaseStep, decreaseStep } =
     useFormStore((state) => state);
 
   const form = useForm({
-    schema,
+    schema: childrenSchema,
     // checks to see if 'children' field are already in and sets the default values
     defaultValues: {
       children:
@@ -37,7 +33,7 @@ export default function ChildrenForm() {
           ? childrenInfo.children
           : [{ name: "", age: 1 }],
     },
-    mode: "onSubmit",
+    mode: "onBlur",
   });
   const { fields, append, remove } = useFieldArray({
     name: "children",
@@ -45,7 +41,7 @@ export default function ChildrenForm() {
     rules: { minLength: 1 },
   });
 
-  function onSubmit(values: z.infer<typeof schema>) {
+  function onSubmit(values: ChildrenInfo) {
     setChildrenInfo({
       children: { ...childrenInfo.children, ...values.children },
     });
