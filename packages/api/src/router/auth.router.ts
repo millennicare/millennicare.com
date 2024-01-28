@@ -99,20 +99,21 @@ export const authRouter = createTRPCRouter({
 
         // create address
         await tx.insert(schema.addresses).values({
-          longitude: coordinates.longitude,
-          latitude: coordinates.latitude,
+          userId: userId,
           zipCode: input.address.zipCode,
-          userId,
+          longitude: coordinates.longitude!,
+          latitude: coordinates.latitude!,
         });
 
         // create careseeker
         await tx.insert(schema.careseekers).values({
-          userId,
+          userId: userId,
         });
+
         // create children
         await tx.insert(schema.children).values(
           input.children.map((child) => ({
-            userId,
+            userId: userId,
             age: child.age,
             name: child.name,
           })),

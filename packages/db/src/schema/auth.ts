@@ -43,8 +43,8 @@ export const users = mySqlTable(
   }),
 );
 
-export const usersRelations = relations(users, ({ many }) => ({
-  address: many(addresses),
+export const usersRelations = relations(users, ({ one }) => ({
+  address: one(addresses),
 }));
 
 export const careseekers = mySqlTable(
