@@ -1,44 +1,39 @@
-import { stripe } from ".";
+import { Stripe } from "stripe";
 
-// customers are careseeker objects
-export const createCustomer = async (
-  firstName: string,
-  lastName: string,
-  email: string,
-) => {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+
+export const createCustomer = async (values: {
+  firstName: string;
+  lastName: string;
+  email: string;
+}) => {
   const customer = await stripe.customers.create({
-    name: `${firstName} ${lastName}`,
-    email: email,
+    name: `${values.firstName} ${values.lastName}`,
+    email: values.email,
   });
 
   return customer;
 };
 
-export type UpdateCustomerInput = {
+export interface UpdateCustomerInput {
+  customerId: string;
   email?: string;
   name?: string;
-};
-// update customer
-export const updateCustomer = async (
-  customer_id: string,
-  input: UpdateCustomerInput,
-) => {
-  const values = {
-    email: input.email,
-    name: input.name,
-  };
+}
+export const updateCustomer = async (values: UpdateCustomerInput) => {
+  const customer = await stripe.customers.update(values.customerId, {
+    ...values,
+  });
 
-  const customer = await stripe.customers.update(customer_id, values);
   return customer;
 };
 
-// get customer
 export const getCustomer = async (customerId: string) => {
   const customer = await stripe.customers.retrieve(customerId);
+
   return customer;
 };
 
-// delete customer
 export const deleteCustomer = async (customerId: string) => {
   const response = await stripe.customers.del(customerId);
   return response;

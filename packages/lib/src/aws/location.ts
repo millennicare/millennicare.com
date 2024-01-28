@@ -1,11 +1,11 @@
+import type {
+  SearchPlaceIndexForSuggestionsCommandInput,
+  SearchPlaceIndexForTextCommandInput,
+} from "@aws-sdk/client-location";
 import {
   LocationClient,
   SearchPlaceIndexForSuggestionsCommand,
   SearchPlaceIndexForTextCommand,
-} from "@aws-sdk/client-location";
-import type {
-  SearchPlaceIndexForSuggestionsCommandInput,
-  SearchPlaceIndexForTextCommandInput,
 } from "@aws-sdk/client-location";
 import { withAPIKey } from "@aws/amazon-location-utilities-auth-helper";
 
@@ -25,7 +25,7 @@ export const getLocationSuggestion = async (zipCode: string) => {
   const response = await client.send(command);
 
   if (!response.Results) {
-    throw new Error("Bad request");
+    throw new Error("Invalid zip code.");
   }
   const suggestion = response.Results[0];
   const elems = suggestion!.Text!.split(",");

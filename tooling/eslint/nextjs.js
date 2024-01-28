@@ -1,10 +1,8 @@
 /** @type {import('eslint').Linter.Config} */
 const config = {
-  extends: ["plugin:@next/next/recommended"],
+  extends: ["plugin:@next/next/core-web-vitals"],
   rules: {
     "@next/next/no-html-link-for-pages": "off",
-    "jsx-a11y/heading-has-content": "off",
-    "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/require-await": "off",
   },
 };

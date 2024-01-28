@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "exports": {
-    ".": "./index.ts"
+    ".": "./src/index.ts"
   },
   "typesVersions": {
     "*": {
@@ -19,24 +19,26 @@
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@aws-sdk/client-location": "^3.495.0",
+    "@aws-sdk/client-s3": "^3.495.0",
+    "@aws-sdk/s3-request-presigner": "^3.495.0",
+    "@aws/amazon-location-utilities-auth-helper": "^1.0.3",
+    "stripe": "^14.13.0"
+  },
   "devDependencies": {
     "@millennicare/eslint-config": "workspace:^",
     "@millennicare/prettier-config": "workspace:^",
     "@millennicare/tsconfig": "workspace:^",
-    "eslint": "^8.55.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {
+    "root": true,
     "extends": [
       "@millennicare/eslint-config/base"
     ]
   },
-  "prettier": "@millennicare/prettier-config",
-  "dependencies": {
-    "@aws-sdk/client-location": "^3.478.0",
-    "@aws-sdk/client-s3": "^3.478.0",
-    "@aws-sdk/s3-request-presigner": "^3.478.0",
-    "@aws/amazon-location-utilities-auth-helper": "^1.0.3",
-    "stripe": "^14.10.0"
-  }
+  "prettier": "@millennicare/prettier-config"
 }

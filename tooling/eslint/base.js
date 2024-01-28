@@ -12,9 +12,7 @@ const config = {
     node: true,
   },
   parser: "@typescript-eslint/parser",
-  parserOptions: {
-    project: true,
-  },
+  parserOptions: { project: true },
   plugins: ["@typescript-eslint", "import"],
   rules: {
     "turbo/no-undeclared-env-vars": "off",
@@ -34,9 +32,9 @@ const config = {
     "@typescript-eslint/consistent-type-definitions": "off",
   },
   ignorePatterns: [
-    "**/.eslintrc.cjs",
     "**/*.config.js",
     "**/*.config.cjs",
+    "**/.eslintrc.cjs",
     ".next",
     "dist",
     "pnpm-lock.yaml",

@@ -1,8 +1,8 @@
 import type { ExpoConfig } from "@expo/config";
 
 const defineConfig = (): ExpoConfig => ({
-  name: "MillenniCare",
-  slug: "millennicare",
+  name: "expo",
+  slug: "expo",
   scheme: "expo",
   version: "0.1.0",
   orientation: "portrait",
