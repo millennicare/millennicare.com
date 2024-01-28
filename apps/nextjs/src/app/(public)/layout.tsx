@@ -2,6 +2,7 @@ import { getSession } from "../actions";
 import Footer from "./_components/footer";
 import Navbar from "./_components/navbar";
 
+export const runtime = "edge";
 const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getSession();
 
@@ -13,4 +14,5 @@ const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
     </div>
   );
 };
+
 export default PublicLayout;

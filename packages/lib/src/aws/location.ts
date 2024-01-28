@@ -25,7 +25,7 @@ export const getLocationSuggestion = async (zipCode: string) => {
   const response = await client.send(command);
 
   if (!response.Results) {
-    throw new Error("Bad request");
+    throw new Error("Invalid zip code.");
   }
   const suggestion = response.Results[0];
   const elems = suggestion!.Text!.split(",");

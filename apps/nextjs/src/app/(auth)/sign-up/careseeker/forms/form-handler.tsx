@@ -1,6 +1,7 @@
 "use client";
 
 import useFormStore from "../useFormStore";
+import AdditionalInfoForm from "./additional-info-form";
 import ChildrenForm from "./children-form";
 import PersonalInfoForm from "./personal-info";
 
@@ -14,6 +15,8 @@ export default function FormHandler() {
         return <PersonalInfoForm />;
       case 2:
         return <ChildrenForm />;
+      case 3:
+        return <AdditionalInfoForm />;
       default:
         return <div>None</div>;
     }

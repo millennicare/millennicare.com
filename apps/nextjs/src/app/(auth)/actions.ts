@@ -3,8 +3,10 @@
 import type { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { TRPCError } from "@trpc/server";
+import { v4 as uuid } from "uuid";
 
 import type { createCareseekerSchema } from "@millennicare/validators";
+import { getLocationSuggestion, uploadFile } from "@millennicare/lib";
 
 import { api } from "~/trpc/server";
 import { getSession } from "../actions";
@@ -19,7 +21,6 @@ export const login = async (values: { email: string; password: string }) => {
     await session.save();
     revalidatePath("/sign-in");
   } catch (error) {
-    console.log(error);
     if (error instanceof TRPCError) {
       throw new Error(error.message);
     }
@@ -30,10 +31,18 @@ export const login = async (values: { email: string; password: string }) => {
 export const careseekerRegister = async (
   values: z.infer<typeof createCareseekerSchema>,
 ) => {
-  console.log(values);
   try {
+    const response = await api.auth.careseekerRegister(values);
+    console.log(response);
+
+    const session = await getSession();
+    session.sessionToken = response.sessionToken;
+    session.isLoggedIn = true;
+    await session.save();
+
     revalidatePath("/sign-up/careseeker");
   } catch (error) {
+    console.error(error);
     if (error instanceof TRPCError) {
       throw new Error(error.message);
     }
@@ -59,6 +68,34 @@ export const checkDuplicateEmail = async (email: string) => {
     if (error instanceof TRPCError) {
       throw new Error(error.message);
     }
+    throw new Error("Something went wrong, please try again later.");
+  }
+};
+
+export const getSuggestion = async (zipCode: string) => {
+  return getLocationSuggestion(zipCode);
+};
+
+export const uploadFileToS3 = async (formData: FormData) => {
+  try {
+    const file = formData.get("file") as Blob;
+    if (!file) {
+      throw new Error("No file found.");
+    }
+
+    const mimeType = file.type;
+    const fileExtension = mimeType.split("/")[1];
+
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const fileKey = await uploadFile(
+      buffer,
+      `${uuid()}.${fileExtension}`,
+      mimeType,
+    );
+
+    return fileKey;
+  } catch (error) {
+    console.log(error);
     throw new Error("Something went wrong, please try again later.");
   }
 };

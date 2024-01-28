@@ -1,18 +1,18 @@
-import { StateCreator } from "zustand";
+import type { z } from "zod";
+import type { StateCreator } from "zustand";
 
-type ChildrenInfo = {
-  children: {
-    name: string;
-    age: number;
-  }[];
-};
+import { createCareseekerSchema } from "@millennicare/validators";
+
+export const childrenSchema = createCareseekerSchema.pick({ children: true });
+
+type ChildrenInfo = z.infer<typeof childrenSchema>;
 
 type ChildrenInfoSlice = {
   childrenInfo: ChildrenInfo;
   setChildrenInfo: (data: ChildrenInfo) => void;
 };
 
-const initialState = {
+const initialState: ChildrenInfo = {
   children: [],
 };
 

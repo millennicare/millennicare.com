@@ -55,7 +55,7 @@ export default function ContactUsForm({ create }: ContactUsFormProps) {
   return (
     <Form {...form}>
       <form
-        className="flex flex-col space-y-4 rounded border p-10"
+        className="flex flex-col space-y-4 rounded-lg border px-2 py-4"
         action={handleSubmit}
       >
         {/* First Name */}

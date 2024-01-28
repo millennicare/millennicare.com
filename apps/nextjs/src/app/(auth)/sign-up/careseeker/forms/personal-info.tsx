@@ -15,6 +15,7 @@ import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
 import { createUserSchema } from "@millennicare/validators";
 
+import type { PersonalInfo } from "../slices/personal-info-slice";
 import { SubmitButton } from "~/app/_components/submit-btn";
 import { checkDuplicateEmail } from "~/app/(auth)/actions";
 import useFormStore from "../useFormStore";
@@ -43,29 +44,25 @@ export default function PersonalInfoForm() {
     mode: "onTouched",
   });
 
-  async function onSubmit(formValues: FormData) {
-    let values = Object.fromEntries(formValues.entries()) as {
-      email: string;
-      password: string;
-      confirm: string;
-    };
-    const { confirm: _, ...data } = values;
-
+  async function onSubmit(values: PersonalInfo) {
     try {
-      await checkDuplicateEmail(data.email);
-      setPersonalInfo({ ...data, ...personalInfo });
+      await checkDuplicateEmail(values.email);
+      setPersonalInfo({ ...personalInfo, ...values });
       increaseStep(1);
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
       }
-      toast.error("An error occurred. Please try again later.");
+      toast.error("Something went wrong, please try again later.");
     }
   }
 
   return (
     <Form {...form}>
-      <form className="space-y-2 px-4 py-2" action={onSubmit}>
+      <form
+        className="space-y-2 px-4 py-2"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormField
           control={form.control}
           name="email"
