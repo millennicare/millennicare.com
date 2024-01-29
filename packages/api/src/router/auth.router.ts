@@ -5,7 +5,10 @@ import { z } from "zod";
 
 import { eq, schema } from "@millennicare/db";
 import { createCustomer, getLocationDetails } from "@millennicare/lib";
-import { createCareseekerSchema } from "@millennicare/validators";
+import {
+  createCareseekerSchema,
+  updateUserSchema,
+} from "@millennicare/validators";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
@@ -136,7 +139,18 @@ export const authRouter = createTRPCRouter({
 
     return user;
   }),
-  // update
+  update: protectedProcedure
+    .input(updateUserSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { db, userId } = ctx;
+
+      // update stripe info
+
+      await db
+        .update(schema.users)
+        .set({ ...input })
+        .where(eq(schema.users.id, userId));
+    }),
   // delete
   checkDuplicateEmail: publicProcedure
     .input(z.string().email())

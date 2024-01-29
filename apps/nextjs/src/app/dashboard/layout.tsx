@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { getSession } from "../actions";
 import { SideNav } from "./_components/side-nav";
 
+export const runtime = "edge";
+
 export default async function DashboardLayout({
   children,
 }: {
