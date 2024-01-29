@@ -2,6 +2,7 @@
 
 import { useFormStatus } from "react-dom";
 
+import { cn } from "@millennicare/ui";
 import { Button } from "@millennicare/ui/button";
 
 type SubmitButtonProps = {
@@ -21,7 +22,7 @@ export const SubmitButton = ({
       type="submit"
       value={pending ? "Loading..." : value}
       disabled={pending || error}
-      className={className}
+      className={cn(className, "text-background")}
     >
       {pending ? "Loading..." : value}
     </Button>

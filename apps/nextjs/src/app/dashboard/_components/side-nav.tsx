@@ -21,7 +21,7 @@ type SideNavProps = {
 };
 
 const links = [
-  { name: "Home", href: "/dashboard", icon: HomeIcon },
+  { name: "Home", href: "/dashboard/home", icon: HomeIcon },
   { name: "Appointments", href: "/dashboard/appointments", icon: CalendarIcon },
   { name: "Search", href: "/dashboard/search", icon: MagnifyingGlassIcon },
   { name: "Profile", href: "/dashboard/profile", icon: PersonIcon },
@@ -55,7 +55,7 @@ export function SideNav({ logout }: SideNavProps) {
               className={cn(
                 "bg-background text-black shadow-none hover:bg-gray-300",
                 {
-                  "bg-gray-200": pathname === link.href,
+                  "bg-gray-200": pathname.startsWith(link.href),
                 },
               )}
               size="lg"

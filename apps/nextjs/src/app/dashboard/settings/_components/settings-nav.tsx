@@ -8,7 +8,7 @@ import { ScrollArea } from "@millennicare/ui/scroll-area";
 import { Separator } from "@millennicare/ui/separator";
 
 const links = [
-  { name: "Profile", href: "/dashboard/settings" },
+  { name: "Personal", href: "/dashboard/settings" },
   { name: "Account", href: "/dashboard/settings/account" },
   { name: "Payment", href: "/dashboard/settings/payment" },
   { name: "Password and Security", href: "/dashboard/settings/security" },

@@ -4,7 +4,11 @@ import * as jose from "jose";
 import { z } from "zod";
 
 import { eq, schema } from "@millennicare/db";
-import { createCustomer, getLocationDetails } from "@millennicare/lib";
+import {
+  createCustomer,
+  getLocationDetails,
+  updateCustomer,
+} from "@millennicare/lib";
 import {
   createCareseekerSchema,
   updateUserSchema,
@@ -60,7 +64,6 @@ export const authRouter = createTRPCRouter({
   careseekerRegister: publicProcedure
     .input(createCareseekerSchema)
     .mutation(async ({ ctx, input }) => {
-      console.log(input);
       const { db } = ctx;
       let userId = "";
 
@@ -145,7 +148,17 @@ export const authRouter = createTRPCRouter({
       const { db, userId } = ctx;
 
       // update stripe info
+      const user = await db.query.users.findFirst({
+        where: eq(schema.users.id, userId),
+      });
+      if (!user) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
 
+      await updateCustomer({
+        customerId: user.stripeId,
+        ...input,
+      });
       await db
         .update(schema.users)
         .set({ ...input })
