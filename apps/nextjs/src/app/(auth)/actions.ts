@@ -99,3 +99,8 @@ export const uploadFileToS3 = async (formData: FormData) => {
     throw new Error("Something went wrong, please try again later.");
   }
 };
+
+export const sendResetPasswordEmail = async (email: string) => {
+  const response = await api.auth.forgotPassword({ email });
+  return response;
+};

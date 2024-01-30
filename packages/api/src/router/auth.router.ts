@@ -7,6 +7,7 @@ import { eq, schema } from "@millennicare/db";
 import {
   createCustomer,
   getLocationDetails,
+  sendResetPasswordEmail,
   updateCustomer,
 } from "@millennicare/lib";
 import {
@@ -16,11 +17,11 @@ import {
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
-const createToken = async (userId: string) => {
+const createToken = async (userId: string, expTime?: string) => {
   const secret = new TextEncoder().encode(process.env.SYMMETRIC_KEY);
   const token = await new jose.SignJWT({ sub: userId })
     .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime("1 year")
+    .setExpirationTime(expTime ?? "1 year")
     .sign(secret);
 
   return token;
@@ -179,5 +180,38 @@ export const authRouter = createTRPCRouter({
           message: "A user already exists with that email",
         });
       }
+    }),
+  forgotPassword: publicProcedure
+    .input(
+      z.object({
+        email: z.string().email({ message: "Invalid email address" }),
+      }),
+    )
+    .output(z.object({ message: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      // find user in db
+      console.log(input);
+      const { email } = input;
+      const { db } = ctx;
+
+      const user = await db.query.users.findFirst({
+        where: eq(schema.users.email, email),
+      });
+
+      if (!user) {
+        return {
+          message:
+            "If an account with that email exists, we've sent you a link to reset your password",
+        };
+      }
+
+      // if user exists, create a token and send email
+      const token = await createToken(user.id, "1 hour");
+
+      await sendResetPasswordEmail({ to: email, token });
+      return {
+        message:
+          "If an account with that email exists, we've sent you a link to reset your password.",
+      };
     }),
 });
