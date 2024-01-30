@@ -13,9 +13,11 @@ import {
   useForm,
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
+import { toast } from "@millennicare/ui/toast";
 import { createUserSchema } from "@millennicare/validators";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
+import { resetPassword } from "../../actions";
 
 const schema = createUserSchema
   .pick({
@@ -37,10 +39,15 @@ export default function ResetPasswordForm() {
     },
   });
 
-  console.log(params);
-
   async function onSubmit(values: z.infer<typeof schema>) {
-    console.log(values);
+    try {
+      const response = await resetPassword(values.password, params.token);
+      toast.success(response.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+    }
   }
 
   return (

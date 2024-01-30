@@ -12,6 +12,7 @@ import {
 } from "@millennicare/lib";
 import {
   createCareseekerSchema,
+  createUserSchema,
   updateUserSchema,
 } from "@millennicare/validators";
 
@@ -213,5 +214,40 @@ export const authRouter = createTRPCRouter({
         message:
           "If an account with that email exists, we've sent you a link to reset your password.",
       };
+    }),
+  resetPassword: publicProcedure
+    .input(
+      createUserSchema.pick({ password: true }).extend({ token: z.string() }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { db } = ctx;
+
+      // decrypt token
+      const secret = new TextEncoder().encode(process.env.SYMMETRIC_KEY);
+      const { payload } = await jose.jwtVerify(input.token, secret);
+
+      if (payload.exp && payload.exp > Date.now()) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Token has expired, please try again.",
+        });
+      }
+
+      const userId = payload.sub;
+      if (!userId) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+        });
+      }
+
+      // update password
+      const hashed = await bcrypt.hash(input.password, 10);
+
+      await db
+        .update(schema.users)
+        .set({ password: hashed })
+        .where(eq(schema.users.id, userId));
+
+      return { message: "Password successfully reset." };
     }),
 });
