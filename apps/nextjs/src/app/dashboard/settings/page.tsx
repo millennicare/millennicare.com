@@ -3,6 +3,8 @@ import { Separator } from "@millennicare/ui/separator";
 import { api } from "~/trpc/server";
 import EditCareseekerForm from "./_components/edit-careseeker-form";
 
+export const runtime = "edge";
+
 export default async function SettingsPage() {
   const user = await api.auth.getMe();
   const careseeker = await api.careseeker.getCareseeker();
