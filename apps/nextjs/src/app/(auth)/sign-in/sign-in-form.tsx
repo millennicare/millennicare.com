@@ -82,7 +82,7 @@ export default function SignInForm() {
                 <FormLabel className="flex justify-between">
                   Password
                   <Link href="/forgot-password" className="hover:underline">
-                    Forgot password?
+                    Forgot?
                   </Link>
                 </FormLabel>
                 <FormControl>

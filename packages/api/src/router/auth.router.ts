@@ -188,10 +188,8 @@ export const authRouter = createTRPCRouter({
         email: z.string().email({ message: "Invalid email address" }),
       }),
     )
-    .output(z.object({ message: z.string() }))
     .mutation(async ({ ctx, input }) => {
       // find user in db
-      console.log(input);
       const { email } = input;
       const { db } = ctx;
 
@@ -200,20 +198,14 @@ export const authRouter = createTRPCRouter({
       });
 
       if (!user) {
-        return {
-          message:
-            "If an account with that email exists, we've sent you a link to reset your password",
-        };
+        return;
       }
 
       // if user exists, create a token and send email
       const token = await createToken(user.id, "1 hour");
 
       await sendResetPasswordEmail({ to: email, token });
-      return {
-        message:
-          "If an account with that email exists, we've sent you a link to reset your password.",
-      };
+      return;
     }),
   resetPassword: publicProcedure
     .input(
