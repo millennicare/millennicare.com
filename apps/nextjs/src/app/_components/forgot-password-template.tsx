@@ -1,4 +1,5 @@
 import * as React from "react";
+import Image from "next/image";
 
 import { Button } from "@millennicare/ui/button";
 
@@ -12,7 +13,7 @@ export const ForgotPasswordTemplate: React.FC<
   return (
     <div className="h-full w-full">
       <span className="flex items-center justify-center space-y-5 text-center">
-        <img
+        <Image
           src="/millennicare_logo_with_text.svg"
           height={50}
           width={50}
@@ -21,8 +22,8 @@ export const ForgotPasswordTemplate: React.FC<
         <h1 className="">Trouble signing in?</h1>
         <p>
           Resetting your password is easy. Just click the button below and
-          follow the instructions. We'll have you back into your account in no
-          time.
+          follow the instructions. We&apos;ll have you back into your account in
+          no time.
         </p>
 
         <Button size="lg">

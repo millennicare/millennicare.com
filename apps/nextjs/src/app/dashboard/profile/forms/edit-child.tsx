@@ -1,6 +1,6 @@
 "use client";
 
-import * as z from "zod";
+import type { z } from "zod";
 
 import {
   Form,

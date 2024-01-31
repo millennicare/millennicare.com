@@ -60,9 +60,9 @@ export default function ForgotPasswordForm() {
             instructions to reset your password.
             <br />
             <br />
-            If you don't receive an email soon, check that the email address you
-            entered is correct, check your spam folder or reach out to support
-            if the issue persists.
+            If you don&apos;t receive an email soon, check that the email
+            address you entered is correct, check your spam folder or reach out
+            to support if the issue persists.
           </p>
 
           <Button asChild>

@@ -1,7 +1,8 @@
 "use client";
 
-import { z } from "zod";
+import type { z } from "zod";
 
+import type { selectUserSchema } from "@millennicare/validators";
 import {
   Form,
   FormControl,
@@ -13,18 +14,13 @@ import {
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
-import {
-  createCareseekerSchema,
-  selectCareseekerSchema,
-  selectUserSchema,
-} from "@millennicare/validators";
+import { createCareseekerSchema } from "@millennicare/validators";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
 import { updateCareseeker } from "../actions";
 
 type EditCareseekerFormProps = {
   user: z.infer<typeof selectUserSchema>;
-  careseeker: z.infer<typeof selectCareseekerSchema>;
 };
 
 const schema = createCareseekerSchema.pick({
@@ -33,10 +29,7 @@ const schema = createCareseekerSchema.pick({
   lastName: true,
 });
 
-export default function EditCareseekerForm({
-  user,
-  careseeker,
-}: EditCareseekerFormProps) {
+export default function EditCareseekerForm({ user }: EditCareseekerFormProps) {
   const form = useForm({
     schema,
     defaultValues: {

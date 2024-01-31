@@ -1,9 +1,6 @@
 import type { StateCreator } from "zustand";
 import { z } from "zod";
 
-import { createCareseekerSchema } from "@millennicare/validators";
-
-// export const childrenSchema = createCareseekerSchema.pick({ children: true });
 export const childrenSchema = z.object({
   children: z
     .array(

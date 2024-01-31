@@ -5,7 +5,6 @@ import EditCareseekerForm from "./_components/edit-careseeker-form";
 
 export default async function SettingsPage() {
   const user = await api.auth.getMe();
-  const careseeker = await api.careseeker.getCareseeker();
 
   return (
     <div className="w-full space-y-6 px-2 py-3 lg:w-3/4">
@@ -16,7 +15,7 @@ export default async function SettingsPage() {
         </p>
       </div>
       <Separator />
-      <EditCareseekerForm user={user} careseeker={careseeker} />
+      <EditCareseekerForm user={user} />
     </div>
   );
 }
