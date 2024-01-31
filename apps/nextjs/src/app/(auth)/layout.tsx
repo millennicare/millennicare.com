@@ -10,7 +10,7 @@ export default async function AuthLayout({
 }) {
   const session = await getSession();
   if (session.isLoggedIn) {
-    redirect("/dashboard");
+    redirect("/dashboard/home");
   }
 
   return (

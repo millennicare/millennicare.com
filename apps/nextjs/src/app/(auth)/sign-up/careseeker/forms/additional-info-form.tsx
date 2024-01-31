@@ -71,8 +71,6 @@ export default function AdditionalInfoForm() {
   }, [watchZipCode]);
 
   async function onSubmit(values: AdditionalInfo) {
-    console.log(childrenInfo);
-    console.log(values);
     try {
       let profileLink: string | undefined = undefined;
       if (file) {

@@ -79,7 +79,12 @@ export default function SignInForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="flex justify-between">
+                  Password
+                  <Link href="/forgot-password" className="hover:underline">
+                    Forgot?
+                  </Link>
+                </FormLabel>
                 <FormControl>
                   <Input {...field} type="password" />
                 </FormControl>

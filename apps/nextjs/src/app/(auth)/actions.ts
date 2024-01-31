@@ -99,3 +99,20 @@ export const uploadFileToS3 = async (formData: FormData) => {
     throw new Error("Something went wrong, please try again later.");
   }
 };
+
+export const sendResetPasswordEmail = async (email: string) => {
+  const response = await api.auth.forgotPassword({ email });
+  return response;
+};
+
+export const resetPassword = async (password: string, token: string) => {
+  try {
+    const response = await api.auth.resetPassword({ password, token });
+    return response;
+  } catch (error) {
+    if (error instanceof TRPCError) {
+      throw new Error(error.message);
+    }
+    throw new Error("Someting went wrong, please try again later.");
+  }
+};
