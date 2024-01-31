@@ -33,7 +33,7 @@ export const authRouter = createTRPCRouter({
     .input(
       z.object({
         email: z.string().email(),
-        password: z.string().min(8).max(32),
+        password: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -79,7 +79,6 @@ export const authRouter = createTRPCRouter({
       const { coordinates } = await getLocationDetails(input.address.zipCode);
 
       const hashed = await bcrypt.hash(input.password, 10);
-
       await db.transaction(async (tx) => {
         // create user
         await tx.insert(schema.users).values({

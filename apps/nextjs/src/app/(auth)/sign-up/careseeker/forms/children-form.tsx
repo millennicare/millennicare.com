@@ -76,7 +76,7 @@ export default function ChildrenForm() {
                   <FormItem className="w-1/3">
                     <FormLabel>Age</FormLabel>
                     <FormControl>
-                      <Input {...field}  />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -13,7 +13,7 @@ export const ForgotPasswordTemplate: React.FC<
     <div className="h-full w-full">
       <span className="flex items-center justify-center space-y-5 text-center">
         <img
-          src="/millennicare_logo_with_text.sbg"
+          src="/millennicare_logo_with_text.svg"
           height={50}
           width={50}
           alt="MillenniCare logo"
