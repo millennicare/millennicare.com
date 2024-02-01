@@ -1,43 +1,113 @@
-# This Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
-# Make sure you update both files!
+# FROM node:18-alpine AS base
+# # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+# RUN apk add --no-cache libc6-compat
 
-FROM node:alpine AS builder
+# FROM base AS with-turbo
+# RUN npm install -g turbo
+
+# FROM with-turbo AS pruned-repo
+# WORKDIR /app
+
+# COPY . .
+# RUN turbo prune --scope=@millenicare/nextjs --docker
+
+# FROM with-turbo AS builder
+# WORKDIR /app
+
+# # First install dependencies (as they change less often)
+# COPY .gitignore .gitignore
+# COPY --from=pruned-repo /app/out/json/ .
+# COPY --from=pruned-repo /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+# RUN pnpm install --frozen-lockfile
+
+# # Build the project and its dependencies
+# COPY --from=pruned-repo /app/out/full/ .
+# COPY turbo.json turbo.json
+
+# # Use existing build cache
+# ARG TURBO_TEAM
+# ARG TURBO_TOKEN
+
+# ENV TURBO_TEAM=$TURBO_TEAM
+# ENV TURBO_TOKEN=$TURBO_TOKEN
+
+# ## This would be useful for browser environment variables that are actually baked at build time and you aren't passing them in otherwise.
+# # COPY .env.production .env.production  
+# RUN CI=true SKIP_ENV_VALIDATION=true turbo run build --filter=@millenicare/nextjs... 
+
+# FROM base AS runner
+# # Don't run production as root
+# RUN <<EOF 
+#   addgroup --system --gid 1001 nodejs
+#   adduser --system --uid 1001 nextjs
+# EOF
+
+# USER nextjs
+
+# WORKDIR /app
+
+# EXPOSE 3000
+# ENV PORT 3000
+
+# ENV NODE_ENV production
+# ENV HOSTNAME localhost
+
+# COPY --from=builder --chown=nextjs:nodejs /app/apps/nextjs/next.config.js .
+# COPY --from=builder --chown=nextjs:nodejs /app/apps/nextjs/package.json .
+
+# # Automatically leverage output traces to reduce image size
+# # https://nextjs.org/docs/advanced-features/output-file-tracing
+# COPY --from=builder --chown=nextjs:nodejs /app/apps/nextjs/.next/standalone ./
+# COPY --from=builder --chown=nextjs:nodejs /app/apps/nextjs/.next/static ./apps/nextjs/.next/static
+# COPY --from=builder --chown=nextjs:nodejs /app/apps/nextjs/public ./apps/nextjs/public
+
+# CMD node apps/nextjs/server.js
+
+FROM node:18-alpine AS base
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
-RUN apk update
-# Set working directory
+
+FROM base AS builder
 WORKDIR /app
-RUN yarn global add turbo pnpm
+
+RUN npm install -g turbo
 COPY . .
 RUN turbo prune --scope=@millennicare/nextjs --docker
 
-# Add lockfile and package.json's of isolated subworkspace
-FROM node:alpine AS installer
-RUN apk add --no-cache libc6-compat
-RUN apk update
+FROM base as installer
 WORKDIR /app
 
-# First install the dependencies (as they change less often)
-RUN yarn global add pnpm
-COPY .gitignore .gitignore
-COPY --from=builder /app/out/json/ .
-COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-RUN pnpm install
+RUN npm install -g pnpm
+RUN npm install -g turbo
 
-# Use cache
 ARG TURBO_TEAM
 ARG TURBO_TOKEN
 
 ENV TURBO_TEAM=$TURBO_TEAM
 ENV TURBO_TOKEN=$TURBO_TOKEN
 
-# Build the project
+# First install dependencies (as they change less often)
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+RUN pnpm install --frozen-lockfile
+
+# Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-RUN pnpm turbo run build --filter=@millennicare/nextjs...
 
-FROM node:alpine AS runner
+## This would be useful for browser environment variables that are actually baked at build time and you aren't passing them in otherwise.
+COPY .env .env  
+RUN CI=true SKIP_ENV_VALIDATION=true turbo run build --filter=@millennicare/nextjs...
+
+FROM base AS runner
 WORKDIR /app
+
+EXPOSE 3000
+ENV PORT 3000
+
+ENV NODE_ENV production
+ENV HOSTNAME localhost
 
 # Don't run production as root
 RUN addgroup --system --gid 1001 nodejs
@@ -51,5 +121,6 @@ COPY --from=installer /app/apps/nextjs/package.json .
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=installer --chown=nextjs:nodejs /app/apps/nextjs/.next/standalone ./
 COPY --from=installer --chown=nextjs:nodejs /app/apps/nextjs/.next/static ./apps/nextjs/.next/static
+COPY --from=installer --chown=nextjs:nodejs /app/apps/nextjs/public ./apps/nextjs/public
 
 CMD node apps/nextjs/server.js

@@ -26,23 +26,23 @@ services:
     restart: always
     env_file:
       - .env
-    environment:
-      - DB_HOST=${DB_HOST}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_BUCKET=${AWS_BUCKET}
-      - AWS_REGION=${AWS_REGION}
-      - AWS_LOCATION_API_KEY=${AWS_LOCATION_API_KEY}
-      - AWS_LOCATION_SUGGESTION_KEY=${AWS_LOCATION_SUGGESTION_KEY}
-      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
-      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
-      - SESSION_PASSWORD=${SESSION_PASSWORD}
-      - SYMMETRIC_KEY=${SYMMETRIC_KEY}
-      - RESEND_API_KEY=${RESEND_API_KEY}
-      - TURBO_TOKEN=${TURBO_TOKEN}
-      - TURBO_TEAM=${TURBO_TEAM}
     ports:
       - 3000:3000
+    network_mode: "host"
+    # networks:
+    #   - app_network
+
+  # api:
+  #   container_name: api
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/api/Dockerfile
+  #   restart: always
+  #   ports:
+  #     - 3001:3001
+  #   networks:
+  #     - app_network
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+# networks:
+#   app_network:
