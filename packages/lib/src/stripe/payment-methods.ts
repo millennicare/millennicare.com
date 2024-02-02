@@ -3,21 +3,18 @@ import { Stripe } from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 // eventually, these will accomodate other payment methods
-export type CreatePaymentMethodInput = {
+type CreatePaymentMethodInput = {
   type: "card";
   card: { number: string; exp_month: number; exp_year: number; cvc: string };
   customer_id: string;
 };
 
-export const createPaymentMethod = async (values: CreatePaymentMethodInput) => {
-  const paymentMethod = await stripe.paymentMethods.create({
+export const createPaymentMethod = async (values: CreatePaymentMethodInput) =>
+  await stripe.paymentMethods.create({
     ...values,
   });
 
-  return paymentMethod.id;
-};
-
-export type UpdatePaymentMethodInput = {
+type UpdatePaymentMethodInput = {
   payment_method_id: string;
   billing_details?: {
     address: {
@@ -29,16 +26,14 @@ export type UpdatePaymentMethodInput = {
       state: string;
     };
   };
+  card?: {
+    exp_month: number;
+    exp_year: number;
+  };
 };
 
-export const updatePaymentMethod = async (values: UpdatePaymentMethodInput) => {
-  const paymentMethod = await stripe.paymentMethods.update(
-    values.payment_method_id,
-    { ...values },
-  );
-
-  return paymentMethod;
-};
+export const updatePaymentMethod = async (values: UpdatePaymentMethodInput) =>
+  await stripe.paymentMethods.update(values.payment_method_id, { ...values });
 
 export type GetPaymentMethodbyCustomerIdInput = {
   customer_id: string;
@@ -47,14 +42,11 @@ export type GetPaymentMethodbyCustomerIdInput = {
 
 export const getPaymentMethodByCustomerId = async (
   values: GetPaymentMethodbyCustomerIdInput,
-) => {
-  const paymentMethod = await stripe.customers.retrievePaymentMethod(
+) =>
+  await stripe.customers.retrievePaymentMethod(
     values.customer_id,
     values.payment_method_id,
   );
-
-  return paymentMethod;
-};
 
 export type GetAllPaymentMethodsInput = {
   customer_id: string;
@@ -63,19 +55,10 @@ export type GetAllPaymentMethodsInput = {
   ending_before?: string;
 };
 
-export const getAllPaymentMethods = async (
-  values: GetAllPaymentMethodsInput,
-) => {
-  const paymentMethods = await stripe.customers.listPaymentMethods(
-    values.customer_id,
-    {
-      ...values,
-    },
-  );
+export const getAllPaymentMethods = async (values: GetAllPaymentMethodsInput) =>
+  await stripe.customers.listPaymentMethods(values.customer_id, {
+    ...values,
+  });
 
-  return paymentMethods;
-};
-
-export const deletePaymentMethod = async (payment_method_id: string) => {
+export const deletePaymentMethod = async (payment_method_id: string) =>
   await stripe.paymentMethods.detach(payment_method_id);
-};
