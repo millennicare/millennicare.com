@@ -195,9 +195,6 @@ importers:
       resend:
         specifier: ^3.1.0
         version: 3.1.0
-      sharo:
-        specifier: ^0.0.7
-        version: 0.0.7
       sharp:
         specifier: ^0.33.2
         version: 0.33.2
@@ -15558,10 +15555,6 @@ packages:
 
   /shallowequal@1.1.0:
     resolution: {integrity: sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==}
-    dev: false
-
-  /sharo@0.0.7:
-    resolution: {integrity: sha512-e1t0Bkr21k1fN7xGoqy1EsCdWshAH85Zrsa54ucDQG4jYH9OdXLU1yY5yHYOF5EZhJlPIvilKqeWup+c99f72w==}
     dev: false
 
   /sharp@0.33.2:
