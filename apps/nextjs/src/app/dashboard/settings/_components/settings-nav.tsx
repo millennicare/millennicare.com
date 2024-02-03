@@ -10,7 +10,7 @@ import { Separator } from "@millennicare/ui/separator";
 const links = [
   { name: "Personal", href: "/dashboard/settings" },
   { name: "Account", href: "/dashboard/settings/account" },
-  { name: "Payment", href: "/dashboard/settings/payment" },
+  { name: "Payment", href: "/dashboard/settings/payments" },
   { name: "Password and Security", href: "/dashboard/settings/security" },
 ];
 
