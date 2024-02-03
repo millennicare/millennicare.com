@@ -5,6 +5,7 @@ import { eq, schema } from "@millennicare/db";
 import {
   createPaymentMethod,
   deletePaymentMethod,
+  getAllPaymentMethods,
   getPaymentMethodByCustomerId,
   updatePaymentMethod,
 } from "@millennicare/lib";
@@ -28,7 +29,6 @@ export const careseekerRouter = createTRPCRouter({
 
     return careseeker;
   }),
-
   createPayment: protectedProcedure
     .input(
       z.object({
@@ -85,7 +85,7 @@ export const careseekerRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       await updatePaymentMethod(input);
     }),
-  getPaymentMethods: protectedProcedure
+  getPaymentMethod: protectedProcedure
     .input(
       z.object({
         payment_method_id: z.string(),
@@ -108,6 +108,22 @@ export const careseekerRouter = createTRPCRouter({
 
       return paymentMethod;
     }),
+  getPaymentMethodsByCustomerId: protectedProcedure.query(async ({ ctx }) => {
+    const { db, userId } = ctx;
+
+    const user = await db.query.users.findFirst({
+      where: eq(schema.users.id, userId),
+    });
+    if (!user) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+
+    const paymentMethods = await getAllPaymentMethods({
+      customer_id: user.stripeId,
+    });
+
+    return paymentMethods;
+  }),
   deletePaymentMethod: protectedProcedure
     .input(
       z.object({

@@ -3,9 +3,25 @@ import { Stripe } from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 // eventually, these will accomodate other payment methods
-type CreatePaymentMethodInput = {
+export type CreatePaymentMethodInput = {
   type: "card";
-  card: { number: string; exp_month: number; exp_year: number; cvc: string };
+  card: {
+    number: string;
+    exp_month: number;
+    exp_year: number;
+    cvc: string;
+  };
+  billing_details: {
+    address: {
+      city: string;
+      country: string;
+      line1: string;
+      line2: string;
+      postal_code: string;
+      state: string;
+    };
+    name: string;
+  };
   customer_id: string;
 };
 
@@ -14,7 +30,7 @@ export const createPaymentMethod = async (values: CreatePaymentMethodInput) =>
     ...values,
   });
 
-type UpdatePaymentMethodInput = {
+export type UpdatePaymentMethodInput = {
   payment_method_id: string;
   billing_details?: {
     address: {
@@ -55,10 +71,21 @@ export type GetAllPaymentMethodsInput = {
   ending_before?: string;
 };
 
-export const getAllPaymentMethods = async (values: GetAllPaymentMethodsInput) =>
-  await stripe.customers.listPaymentMethods(values.customer_id, {
-    ...values,
-  });
+export const getAllPaymentMethods = async (
+  values: GetAllPaymentMethodsInput,
+) => {
+  const response = await stripe.customers.listPaymentMethods(
+    values.customer_id,
+  );
+
+  return response.data.map((payment) => ({
+    id: payment.id,
+    brand: payment.card?.brand,
+    last4: payment.card?.last4,
+    exp_month: payment.card?.exp_month,
+    exp_year: payment.card?.exp_year,
+  }));
+};
 
 export const deletePaymentMethod = async (payment_method_id: string) =>
   await stripe.paymentMethods.detach(payment_method_id);

@@ -28,6 +28,7 @@ const schema = z.object({
     .max(18, { message: "Age must be between 0 and 18." })
     .int(),
 });
+
 export default function AddChildForm({ setOpenAddForm }: Props) {
   const form = useForm({
     schema: schema,
