@@ -1,8 +1,18 @@
 "use client";
 
+import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { TRPCClientError } from "@trpc/client";
 import { z } from "zod";
 
+import { cn } from "@millennicare/ui";
+import { Button } from "@millennicare/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@millennicare/ui/command";
 import {
   Form,
   FormControl,
@@ -13,6 +23,11 @@ import {
   useForm,
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@millennicare/ui/popover";
 import {
   Select,
   SelectContent,
@@ -43,6 +58,9 @@ const schema = paymentMethodInput.merge(
   }),
 );
 
+// create an array of objects that include the two letter country code and the country name as value and label
+const countries = [{ value: "US", label: "United States" }];
+
 export default function AddPaymentMethodForm({ setOpenAddForm, user }: Props) {
   const form = useForm({
     schema: schema,
@@ -68,7 +86,6 @@ export default function AddPaymentMethodForm({ setOpenAddForm, user }: Props) {
   });
 
   async function onSubmit(values: z.infer<typeof schema>) {
-    console.log(values);
     // transform values to CreatePaymentInput
     const data = {
       billing_details: {
@@ -85,16 +102,17 @@ export default function AddPaymentMethodForm({ setOpenAddForm, user }: Props) {
       },
     };
 
-    try {
-      await createPayment(data);
-    } catch (error) {
-      console.error(error);
-      if (error instanceof TRPCClientError) {
-        toast.error(error.message);
-        return;
-      }
-      toast.error("Something went wrong, please try again later.");
-    }
+    console.log(data);
+    // try {
+    //   await createPayment(data);
+    // } catch (error) {
+    //   console.error(error);
+    //   if (error instanceof TRPCClientError) {
+    //     toast.error(error.message);
+    //     return;
+    //   }
+    //   toast.error("Something went wrong, please try again later.");
+    // }
   }
 
   return (
@@ -104,7 +122,7 @@ export default function AddPaymentMethodForm({ setOpenAddForm, user }: Props) {
         Add a new payment method to your account.
       </p>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <FormField
             control={form.control}
             name="billing_details.name"
@@ -118,7 +136,6 @@ export default function AddPaymentMethodForm({ setOpenAddForm, user }: Props) {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="card.number"
@@ -132,8 +149,7 @@ export default function AddPaymentMethodForm({ setOpenAddForm, user }: Props) {
               </FormItem>
             )}
           />
-
-          <span className="flex flex-col space-y-4 sm:flex-row sm:space-x-2 sm:space-y-0">
+          <span className="flex flex-col space-y-3 sm:flex-row sm:space-x-2 sm:space-y-0">
             <FormField
               control={form.control}
               name="card.exp_month"
@@ -214,11 +230,140 @@ export default function AddPaymentMethodForm({ setOpenAddForm, user }: Props) {
               )}
             />
           </span>
-
           <Separator />
+          <h1>Billing Address</h1>
+          <FormField
+            control={form.control}
+            name="billing_details.address.country"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Country</FormLabel>
+                <Popover>
+                  <FormControl>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        size="sm"
+                        className={cn(
+                          "justify-between",
+                          !field.value && "text-muted-foreground",
+                        )}
+                      >
+                        {field.value
+                          ? countries.find(
+                              (country) => country.value === field.value,
+                            )?.label
+                          : "Select country"}
+                        <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                  </FormControl>
+                  <PopoverContent className="p-0">
+                    <Command>
+                      <CommandInput
+                        placeholder="Search country..."
+                        className="h-9"
+                      />
+                      <CommandEmpty>No country found.</CommandEmpty>
+                      <CommandGroup>
+                        {countries.map((country) => (
+                          <CommandItem
+                            value={country.label}
+                            key={country.value}
+                            onSelect={() => {
+                              form.setValue(
+                                "billing_details.address.country",
+                                country.value,
+                              );
+                            }}
+                          >
+                            {country.label}
+                            <CheckIcon
+                              className={cn(
+                                "ml-auto h-4 w-4",
+                                country.value === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0",
+                              )}
+                            />
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="billing_details.address.line1"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Address line 1</FormLabel>
+                <FormControl>
+                  <Input type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="billing_details.address.line2"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Address line 2 (optional)</FormLabel>
+                <FormControl>
+                  <Input type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="billing_details.address.city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>City</FormLabel>
+                <FormControl>
+                  <Input type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <span className="flex flex-col space-y-3 md:flex-row md:space-x-2 md:space-y-0">
+            <FormField
+              control={form.control}
+              name="billing_details.address.postal_code"
+              render={({ field }) => (
+                <FormItem className="w-full md:w-1/2">
+                  <FormLabel>Postal Code</FormLabel>
+                  <FormControl>
+                    <Input type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <h1>Address</h1>
-
+            <FormField
+              control={form.control}
+              name="billing_details.address.state"
+              render={({ field }) => (
+                <FormItem className="w-full md:w-1/2">
+                  <FormLabel>State</FormLabel>
+                  <FormControl>
+                    <Input type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </span>
           <SubmitButton
             value="Save"
             className="w-full"

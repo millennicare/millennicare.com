@@ -53,12 +53,6 @@ export default function AdditionalInfoForm() {
   const watchZipCode = form.watch("address.zipCode");
 
   useEffect(() => {
-    if (form.formState.errors) {
-      console.log(form.formState.errors);
-    }
-  }, [form.formState.errors]);
-
-  useEffect(() => {
     if (zipCodeReg.test(watchZipCode)) {
       getSuggestion(watchZipCode)
         .then((res) => {
