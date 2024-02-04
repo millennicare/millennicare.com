@@ -20,41 +20,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@millennicare/ui/select";
+import { Separator } from "@millennicare/ui/separator";
+import { toast } from "@millennicare/ui/toast";
+import { paymentMethodInput, selectUserSchema } from "@millennicare/validators";
 
-import type { CreatePaymentInput } from "../actions";
 import { SubmitButton } from "~/app/_components/submit-btn";
 import { createPayment } from "../actions";
 
 interface Props {
   setOpenAddForm: React.Dispatch<React.SetStateAction<boolean>>;
+  user: z.infer<typeof selectUserSchema>;
 }
 
-const schema = z.object({
-  type: z.literal("card"),
-  card: z.object({
-    number: z.string(),
-    exp_month: z.string(),
-    exp_year: z.string(),
-    cvc: z.string(),
-  }),
-  billing_details: z.object({
-    address: z.object({
-      city: z.string(),
-      country: z.string(),
-      line1: z.string(),
-      line2: z.string().optional(),
-      postal_code: z.string(),
-      state: z.string(),
+const schema = paymentMethodInput.merge(
+  z.object({
+    card: z.object({
+      exp_month: z.string(),
+      exp_year: z.string(),
+      number: z.string().length(16),
+      cvc: z.string().length(3),
     }),
-    name: z.string(),
   }),
-});
+);
 
-export default function AddPaymentMethodForm({ setOpenAddForm }: Props) {
+export default function AddPaymentMethodForm({ setOpenAddForm, user }: Props) {
   const form = useForm({
-    schema,
+    schema: schema,
     defaultValues: {
-      type: "card",
       card: {
         number: "",
         exp_month: "",
@@ -70,7 +62,7 @@ export default function AddPaymentMethodForm({ setOpenAddForm }: Props) {
           postal_code: "",
           state: "",
         },
-        name: "",
+        name: `${user.firstName} ${user.lastName}`,
       },
     },
   });
@@ -78,13 +70,31 @@ export default function AddPaymentMethodForm({ setOpenAddForm }: Props) {
   async function onSubmit(values: z.infer<typeof schema>) {
     console.log(values);
     // transform values to CreatePaymentInput
-    // try {
-    //   await createPayment(values);
-    // } catch (error) {
-    //   console.error(error);
-    //   if (error instanceof TRPCClientError) {
-    //   }
-    // }
+    const data = {
+      billing_details: {
+        ...values.billing_details,
+        address: {
+          ...values.billing_details.address,
+          line2: values.billing_details.address.line2 ?? "",
+        },
+      },
+      card: {
+        ...values.card,
+        exp_month: parseInt(values.card.exp_month),
+        exp_year: parseInt(values.card.exp_year),
+      },
+    };
+
+    try {
+      await createPayment(data);
+    } catch (error) {
+      console.error(error);
+      if (error instanceof TRPCClientError) {
+        toast.error(error.message);
+        return;
+      }
+      toast.error("Something went wrong, please try again later.");
+    }
   }
 
   return (
@@ -123,12 +133,12 @@ export default function AddPaymentMethodForm({ setOpenAddForm }: Props) {
             )}
           />
 
-          <span className="flex w-full flex-col space-x-2 md:flex-row">
+          <span className="flex flex-col space-y-4 sm:flex-row sm:space-x-2 sm:space-y-0">
             <FormField
               control={form.control}
               name="card.exp_month"
               render={({ field }) => (
-                <FormItem className="w-1/3">
+                <FormItem className="w-full sm:w-1/3">
                   <FormLabel>Month</FormLabel>
                   <Select
                     onValueChange={field.onChange}
@@ -163,7 +173,7 @@ export default function AddPaymentMethodForm({ setOpenAddForm }: Props) {
               control={form.control}
               name="card.exp_year"
               render={({ field }) => (
-                <FormItem className="w-1/3">
+                <FormItem className="w-full sm:w-1/3">
                   <FormLabel>Year</FormLabel>
                   <Select
                     onValueChange={field.onChange}
@@ -195,7 +205,7 @@ export default function AddPaymentMethodForm({ setOpenAddForm }: Props) {
               control={form.control}
               name="card.cvc"
               render={({ field }) => (
-                <FormItem className="w-1/3">
+                <FormItem className="w-full sm:w-1/3">
                   <FormLabel>CVC</FormLabel>
                   <FormControl>
                     <Input type="text" {...field} />
@@ -205,7 +215,15 @@ export default function AddPaymentMethodForm({ setOpenAddForm }: Props) {
             />
           </span>
 
-          <SubmitButton value="Save" error={!form.formState.errors} />
+          <Separator />
+
+          <h1>Address</h1>
+
+          <SubmitButton
+            value="Save"
+            className="w-full"
+            error={!form.formState.errors}
+          />
         </form>
       </Form>
     </>

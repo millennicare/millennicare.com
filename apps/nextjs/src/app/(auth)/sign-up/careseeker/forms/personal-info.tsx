@@ -52,6 +52,7 @@ export default function PersonalInfoForm() {
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
+        return;
       }
       toast.error("Something went wrong, please try again later.");
     }

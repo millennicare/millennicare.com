@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { z } from "zod";
 
 import { Button } from "@millennicare/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@millennicare/ui/dialog";
+import { selectUserSchema } from "@millennicare/validators";
 
 import { deletePayment } from "../actions";
 import AddPaymentMethodForm from "../forms/add-payment";
@@ -11,14 +13,15 @@ import AddPaymentMethodForm from "../forms/add-payment";
 type ListPaymentsProps = {
   payments: {
     id: string;
-    brand: string;
-    last4: string;
-    exp_month: number;
-    exp_year: number;
+    brand?: string;
+    last4?: string;
+    exp_month?: number;
+    exp_year?: number;
   }[];
+  user: z.infer<typeof selectUserSchema>;
 };
 
-export default function ListPayments({ payments }: ListPaymentsProps) {
+export default function ListPayments({ payments, user }: ListPaymentsProps) {
   const [openAddForm, setOpenAddForm] = useState(false);
 
   async function handleDelete(payment_method_id: string) {
@@ -42,12 +45,19 @@ export default function ListPayments({ payments }: ListPaymentsProps) {
             </h1>
 
             <DialogContent>
-              <AddPaymentMethodForm setOpenAddForm={setOpenAddForm} />
+              <AddPaymentMethodForm
+                user={user}
+                setOpenAddForm={setOpenAddForm}
+              />
             </DialogContent>
           </Dialog>
         </div>
       ) : (
-        <div>{/* map through payment methods with last4 */}</div>
+        <div>
+          {payments.map((payment) => (
+            <pre>{JSON.stringify(payment, null, 2)}</pre>
+          ))}
+        </div>
       )}
     </div>
   );

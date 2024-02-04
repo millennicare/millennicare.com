@@ -3,12 +3,14 @@ import { z } from "zod";
 
 import { eq, schema } from "@millennicare/db";
 import {
+  attachPaymentMethod,
   createPaymentMethod,
   deletePaymentMethod,
   getAllPaymentMethods,
   getPaymentMethodByCustomerId,
   updatePaymentMethod,
 } from "@millennicare/lib";
+import { paymentMethodInput } from "@millennicare/validators";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
@@ -30,17 +32,7 @@ export const careseekerRouter = createTRPCRouter({
     return careseeker;
   }),
   createPayment: protectedProcedure
-    .input(
-      z.object({
-        type: z.enum(["card"]),
-        card: z.object({
-          number: z.string(),
-          exp_month: z.number().min(1).max(12).int(),
-          exp_year: z.number(),
-          cvc: z.string().length(3),
-        }),
-      }),
-    )
+    .input(paymentMethodInput)
     .mutation(async ({ ctx, input }) => {
       const { db, userId } = ctx;
 
@@ -51,11 +43,12 @@ export const careseekerRouter = createTRPCRouter({
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
-      await createPaymentMethod({
-        type: input.type,
+      const id = await createPaymentMethod({
         card: input.card,
-        customer_id: user.stripeId,
+        billing_details: input.billing_details,
       });
+
+      await attachPaymentMethod(user.stripeId, id);
     }),
 
   updatePayment: protectedProcedure

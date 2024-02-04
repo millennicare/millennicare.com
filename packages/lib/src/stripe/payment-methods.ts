@@ -1,34 +1,20 @@
 import { Stripe } from "stripe";
+import { z } from "zod";
+
+import { paymentMethodInput } from "@millennicare/validators";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-// eventually, these will accomodate other payment methods
-export type CreatePaymentMethodInput = {
-  type: "card";
-  card: {
-    number: string;
-    exp_month: number;
-    exp_year: number;
-    cvc: string;
-  };
-  billing_details: {
-    address: {
-      city: string;
-      country: string;
-      line1: string;
-      line2: string;
-      postal_code: string;
-      state: string;
-    };
-    name: string;
-  };
-  customer_id: string;
-};
-
-export const createPaymentMethod = async (values: CreatePaymentMethodInput) =>
-  await stripe.paymentMethods.create({
+export const createPaymentMethod = async (
+  values: z.infer<typeof paymentMethodInput>,
+) => {
+  const paymentMethod = await stripe.paymentMethods.create({
     ...values,
+    type: "card",
   });
+
+  return paymentMethod.id;
+};
 
 export type UpdatePaymentMethodInput = {
   payment_method_id: string;
@@ -89,3 +75,12 @@ export const getAllPaymentMethods = async (
 
 export const deletePaymentMethod = async (payment_method_id: string) =>
   await stripe.paymentMethods.detach(payment_method_id);
+
+export const attachPaymentMethod = async (
+  customer_id: string,
+  payment_method_id: string,
+) => {
+  await stripe.paymentMethods.attach(payment_method_id, {
+    customer: customer_id,
+  });
+};
