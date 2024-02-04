@@ -488,9 +488,6 @@ importers:
       '@millennicare/db':
         specifier: workspace:^
         version: link:../db
-      '@millennicare/lib':
-        specifier: workspace:^
-        version: link:../lib
       drizzle-zod:
         specifier: ^0.5.1
         version: 0.5.1(drizzle-orm@0.29.3)(zod@3.22.4)

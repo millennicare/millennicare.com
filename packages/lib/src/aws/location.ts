@@ -63,3 +63,23 @@ export const getLocationDetails = async (zipCode: string) => {
   const longitude = result.Place.Geometry.Point[1];
   return { coordinates: { latitude, longitude } };
 };
+
+export const getAddressSuggestion = async (query: string) => {
+  const authHelper = await withAPIKey(process.env.AWS_LOCATION_SUGGESTION_KEY!);
+  const client = new LocationClient({
+    region: process.env.AWS_REGION!,
+    ...authHelper.getLocationClientConfig(),
+  });
+
+  const params: SearchPlaceIndexForSuggestionsCommandInput = {
+    IndexName: "SuggestionIndex",
+    Text: query,
+    FilterCountries: ["USA"],
+    MaxResults: 10,
+  };
+
+  const command = new SearchPlaceIndexForSuggestionsCommand(params);
+  const response = await client.send(command);
+
+  return response.Results;
+};
