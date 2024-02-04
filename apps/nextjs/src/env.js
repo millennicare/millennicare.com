@@ -33,6 +33,8 @@ export const env = createEnv({
     SYMMETRIC_KEY: z.string(),
     RESEND_API_KEY: z.string(),
     SESSION_PASSWORD: z.string().min(32),
+    TURBO_TOKEN: z.string(),
+    TURBO_TEAM: z.string(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -62,6 +64,8 @@ export const env = createEnv({
     SESSION_PASSWORD: process.env.SESSION_PASSWORD,
     SYMMETRIC_KEY: process.env.SYMMETRIC_KEY,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    TURBO_TEAM: process.env.TURBO_TEAM,
+    TURBO_TOKEN: process.env.TURBO_TOKEN,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   skipValidation:
