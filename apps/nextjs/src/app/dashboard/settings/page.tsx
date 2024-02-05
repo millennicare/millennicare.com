@@ -9,10 +9,9 @@ export default async function SettingsPage() {
   return (
     <div className="w-full space-y-6 px-2 py-3 lg:w-3/4">
       <div>
-        <h3 className="text-lg font-medium">Profile</h3>
-        <p className="text-sm text-muted-foreground">
+        <h3 className="font-medium text-muted-foreground">
           This is how others will see you on the site.
-        </p>
+        </h3>
       </div>
       <Separator />
       <EditCareseekerForm user={user} />

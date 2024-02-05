@@ -241,4 +241,40 @@ export const authRouter = createTRPCRouter({
 
       return { message: "Password successfully reset." };
     }),
+
+  updatePassword: protectedProcedure
+    .input(
+      z.object({
+        currentPassword: z.string(),
+        newPassword: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      // check if current password is correct
+      const { db, userId } = ctx;
+
+      const user = await db.query.users.findFirst({
+        where: eq(schema.users.id, userId),
+      });
+      if (!user) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      const passwordsMatch = await bcrypt.compare(
+        input.currentPassword,
+        user.password,
+      );
+      if (!passwordsMatch) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Incorrect password",
+        });
+      }
+
+      const hashed = await bcrypt.hash(input.newPassword, 10);
+      await db
+        .update(schema.users)
+        .set({ password: hashed })
+        .where(eq(schema.users.id, userId));
+    }),
 });

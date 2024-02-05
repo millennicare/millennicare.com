@@ -102,17 +102,18 @@ export default function AddPaymentMethodForm({ setOpenAddForm, user }: Props) {
       },
     };
 
-    console.log(data);
-    // try {
-    //   await createPayment(data);
-    // } catch (error) {
-    //   console.error(error);
-    //   if (error instanceof TRPCClientError) {
-    //     toast.error(error.message);
-    //     return;
-    //   }
-    //   toast.error("Something went wrong, please try again later.");
-    // }
+    try {
+      await createPayment(data);
+      toast.success("Payment method added successfully.");
+      setOpenAddForm(false);
+    } catch (error) {
+      console.error(error);
+      if (error instanceof TRPCClientError) {
+        toast.error(error.message);
+        return;
+      }
+      toast.error("Something went wrong, please try again later.");
+    }
   }
 
   return (
