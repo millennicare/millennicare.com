@@ -32,7 +32,7 @@ export function SideNav({ logout }: SideNavProps) {
   const pathname = usePathname();
 
   return (
-    <section className="h-full space-y-8 rounded-lg border bg-background px-2 py-6 duration-300 md:w-max md:px-4">
+    <section className="h-full space-y-8 rounded-lg border bg-background px-2 py-6 duration-300 sm:w-max md:px-4">
       <div className="flex w-full items-center justify-center">
         <Image
           src="/millennicare_logo.png"
@@ -41,7 +41,7 @@ export function SideNav({ logout }: SideNavProps) {
           height={40}
           priority
         />
-        <h3 className="ml-3 hidden text-xl md:block">
+        <h3 className="ml-3 hidden text-xl sm:block">
           MILLENNI<span className="font-bold">CARE</span>
         </h3>
       </div>

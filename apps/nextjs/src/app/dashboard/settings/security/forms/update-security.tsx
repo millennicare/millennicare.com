@@ -1,7 +1,5 @@
 "use client";
 
-import { TRPCClientError } from "@trpc/client";
-import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import {
@@ -110,7 +108,13 @@ export default function UpdateSecurityForm() {
           )}
         />
 
-        <SubmitButton value="Update" error={!form.formState.errors} />
+        <div className="flex justify-end">
+          <SubmitButton
+            value="Update"
+            className="text-background"
+            error={!form.formState.errors}
+          />
+        </div>
       </form>
     </Form>
   );

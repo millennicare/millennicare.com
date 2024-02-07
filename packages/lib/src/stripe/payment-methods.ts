@@ -1,7 +1,7 @@
+import type { z } from "zod";
 import { Stripe } from "stripe";
-import { z } from "zod";
 
-import { paymentMethodInput } from "@millennicare/validators";
+import type { paymentMethodInput } from "@millennicare/validators";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -21,7 +21,7 @@ export type UpdatePaymentMethodInput = {
   billing_details?: {
     address: {
       city: string;
-      country: string; // 2 letter country code
+      country: string;
       line1: string;
       line2: string;
       postal_code: string;

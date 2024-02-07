@@ -10,7 +10,6 @@ import { Separator } from "@millennicare/ui/separator";
 const links = [
   { name: "Personal", href: "/dashboard/settings" },
   { name: "Account", href: "/dashboard/settings/account" },
-  { name: "Payment", href: "/dashboard/settings/payments" },
   { name: "Password and Security", href: "/dashboard/settings/security" },
 ];
 
@@ -22,7 +21,7 @@ export function SettingsNav({
 
   return (
     <div className="relative rounded-lg bg-background py-3">
-      <ScrollArea className="mb-3 max-w-[600px] lg:max-w-none">
+      <ScrollArea className="mb-3">
         <div
           className={cn("flex items-center space-x-4", className)}
           {...props}
