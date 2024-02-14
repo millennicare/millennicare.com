@@ -1,5 +1,5 @@
 {
-  "name": "@millennicare/validators",
+  "name": "@millennicare/auth",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -13,17 +13,10 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "@millennicare/db": "workspace:^",
-    "drizzle-zod": "^0.5.1",
-    "validator": "^13.11.0",
-    "zod": "^3.22.4"
-  },
   "devDependencies": {
     "@millennicare/eslint-config": "workspace:^",
     "@millennicare/prettier-config": "workspace:^",
     "@millennicare/tsconfig": "workspace:^",
-    "@types/validator": "^13.11.9",
     "eslint": "^8.56.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
@@ -33,5 +26,10 @@
       "@millennicare/eslint-config/base"
     ]
   },
-  "prettier": "@millennicare/prettier-config"
+  "prettier": "@millennicare/prettier-config",
+  "dependencies": {
+    "arctic": "^1.1.4",
+    "lucia": "^3.0.1",
+    "oslo": "^1.1.1"
+  }
 }

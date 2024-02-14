@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
-    "@planetscale/database": "^1.14.0",
+    "@planetscale/database": "^1.16.0",
     "drizzle-orm": "^0.29.3"
   },
   "devDependencies": {
@@ -25,10 +25,10 @@
     "@millennicare/prettier-config": "workspace:^",
     "@millennicare/tsconfig": "workspace:^",
     "dotenv-cli": "^7.3.0",
-    "drizzle-kit": "^0.20.13",
+    "drizzle-kit": "^0.20.14",
     "eslint": "^8.56.0",
-    "mysql2": "^3.7.1",
-    "prettier": "^3.2.4",
+    "mysql2": "^3.9.1",
+    "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {
