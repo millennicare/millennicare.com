@@ -1,22 +1,33 @@
 import { create } from "zustand";
 
 import type { AdditionalInfoSlice } from "./slices/additional-info-slice";
-import type { ChildrenInfoSlice } from "./slices/children-slice";
-import type { PersonalInfoSlice } from "./slices/personal-info-slice";
+import type { Address, AddressSlice } from "./slices/address-slice";
+import type { ChildrenSlice } from "./slices/children-slice";
+import type { EmailSlice } from "./slices/email-slice";
+import type { PasswordSlice } from "./slices/password-slice";
 import type { StepSlice } from "./slices/step-slice";
 import {
   createAdditionalInfoSlice,
+  createAddressInfoSlice,
   createChildrenInfoSlice,
-  createPersonalInfoSlice,
+  createEmailInfoSlice,
+  createPasswordInfoSlice,
   createStepSlice,
 } from "./slices";
 
 const useFormStore = create<
-  PersonalInfoSlice & StepSlice & AdditionalInfoSlice & ChildrenInfoSlice
+  StepSlice &
+    AdditionalInfoSlice &
+    EmailSlice &
+    PasswordSlice &
+    AddressSlice &
+    ChildrenSlice
 >()((...a) => ({
-  ...createPersonalInfoSlice(...a),
   ...createStepSlice(...a),
   ...createAdditionalInfoSlice(...a),
+  ...createEmailInfoSlice(...a),
+  ...createPasswordInfoSlice(...a),
+  ...createAddressInfoSlice(...a),
   ...createChildrenInfoSlice(...a),
 }));
 

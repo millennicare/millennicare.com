@@ -1,7 +1,5 @@
 import { api } from "~/trpc/server";
 
-export const runtime = "edge";
-
 export default async function AppointmentsPage() {
   const appointments = await api.appointment.getAppointmentsByUserId();
 

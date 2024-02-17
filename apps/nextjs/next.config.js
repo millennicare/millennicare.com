@@ -7,6 +7,7 @@ const config = {
   output: "standalone",
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
+    "@millennicare/auth",
     "@millennicare/api",
     "@millennicare/db",
     "@millennicare/ui",
@@ -27,9 +28,6 @@ const config = {
             : "millennicare-app-files.s3.us-east-1.amazonaws.com",
       },
     ],
-  },
-  experimental: {
-    serverComponentsExternalPackages: ["bcryptjs"],
   },
 };
 

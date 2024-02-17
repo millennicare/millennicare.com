@@ -14,10 +14,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@millennicare/auth": "workspace:^",
     "@millennicare/db": "workspace:^",
     "@millennicare/lib": "workspace:^",
     "@millennicare/validators": "workspace:^",
     "@trpc/server": "11.0.0-next-beta.283",
+    "argon2": "^0.31.2",
     "bcryptjs": "^2.4.3",
     "jose": "^5.2.2",
     "superjson": "2.2.1",

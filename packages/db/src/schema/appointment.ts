@@ -1,51 +1,56 @@
 import { createId } from "@paralleldrive/cuid2";
-import { relations, sql } from "drizzle-orm";
-import { index, mysqlEnum, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { relations } from "drizzle-orm";
+import { index, pgEnum, text, timestamp } from "drizzle-orm/pg-core";
 
-import { mySqlTable } from "./_table";
-import { caregivers, careseekers } from "./auth";
-import { services } from "./service";
+import { pgTable } from "./_table";
+import { caregiverTable } from "./caregiver";
+import { careseekerTable } from "./careseeker";
+import { serviceTable } from "./service";
 
-export const appointments = mySqlTable(
-  "appointment",
+export const statusEnum = pgEnum("status", [
+  "cancelled",
+  "pending",
+  "confirmed",
+  "finished",
+]);
+
+export const appointmentTable = pgTable(
+  "appointments",
   {
-    id: varchar("id", { length: 128 })
+    id: text("id")
       .$defaultFn(() => createId())
       .primaryKey()
       .notNull(),
-    createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
-    updatedAt: timestamp("updatedAt").onUpdateNow(),
 
     startTime: timestamp("startTime").notNull(),
     endTime: timestamp("endTime").notNull(),
-    status: mysqlEnum("status", [
-      "cancelled",
-      "pending",
-      "confirmed",
-      "finished",
-    ]).notNull(),
-    serviceId: varchar("service_id", { length: 128 }).notNull(),
-    careseekerId: varchar("careseeker_id", { length: 128 }).notNull(),
-    caregiverId: varchar("caregiver_id", { length: 128 }).notNull(),
+    status: statusEnum("status").notNull(),
+    serviceId: text("service_id").notNull(),
+    careseekerId: text("careseeker_id").notNull(),
+    caregiverId: text("caregiver_id").notNull(),
   },
   (appointment) => ({
-    serviceIdIdx: index("serviceId_idx").on(appointment.serviceId),
-    careseekerIdIdx: index("careseekerId_idx").on(appointment.careseekerId),
-    caregiverIdIdx: index("caregiverId_idx").on(appointment.caregiverId),
+    serviceIdIdx: index("appointment_serviceId_idx").on(appointment.serviceId),
+    careseekerIdIdx: index("appointment_careseekerId_idx").on(
+      appointment.careseekerId,
+    ),
+    caregiverIdIdx: index("appointment_caregiverId_idx").on(
+      appointment.caregiverId,
+    ),
   }),
 );
 
-export const appointmentsRelations = relations(appointments, ({ one }) => ({
-  service: one(services, {
-    fields: [appointments.id],
-    references: [services.id],
+export const appointmentsRelations = relations(appointmentTable, ({ one }) => ({
+  service: one(serviceTable, {
+    fields: [appointmentTable.id],
+    references: [serviceTable.id],
   }),
-  careseeker: one(careseekers, {
-    fields: [appointments.id],
-    references: [careseekers.userId],
+  careseeker: one(careseekerTable, {
+    fields: [appointmentTable.id],
+    references: [careseekerTable.userId],
   }),
-  caregiver: one(caregivers, {
-    fields: [appointments.id],
-    references: [caregivers.userId],
+  caregiver: one(caregiverTable, {
+    fields: [appointmentTable.id],
+    references: [caregiverTable.userId],
   }),
 }));

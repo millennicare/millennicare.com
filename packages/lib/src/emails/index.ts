@@ -9,14 +9,15 @@ type ResetPasswordEmailProps = {
   token: string;
 };
 
-export const sendResetPasswordEmail = async (
-  values: ResetPasswordEmailProps,
-) => {
+export const sendPasswordResetEmail = async ({
+  to,
+  token,
+}: ResetPasswordEmailProps) => {
   const { error } = await resend.emails.send({
-    to: values.to,
+    to,
     from: "MillenniCare <no-reply@millennicare.com>",
     subject: "Reset your MillenniCare password",
-    react: ResetPasswordEmail({ token: values.token }),
+    react: ResetPasswordEmail({ token }),
   });
 
   if (error) {

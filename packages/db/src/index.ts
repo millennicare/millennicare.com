@@ -1,34 +1,38 @@
-import { connect } from "@planetscale/database";
-import { drizzle } from "drizzle-orm/planetscale-serverless";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
 
-import * as address from "./schema/address";
-import * as appointment from "./schema/appointment";
-import * as auth from "./schema/auth";
-import * as child from "./schema/child";
+import * as accounts from "./schema/account";
+import * as addresses from "./schema/address";
+import * as appointments from "./schema/appointment";
+import * as caregivers from "./schema/caregiver";
+import * as careseekers from "./schema/careseeker";
+import * as children from "./schema/child";
 import * as contactUs from "./schema/contact-us";
-import * as review from "./schema/review";
-import * as service from "./schema/service";
-import * as waitlist from "./schema/waitlist";
+import * as services from "./schema/service";
+import * as sessions from "./schema/session";
+import * as users from "./schema/user";
+import * as userInfo from "./schema/user-info";
 
 export const schema = {
-  ...address,
-  ...appointment,
-  ...auth,
-  ...child,
+  ...accounts,
+  ...addresses,
+  ...appointments,
+  ...caregivers,
+  ...careseekers,
+  ...children,
   ...contactUs,
-  ...review,
-  ...service,
-  ...waitlist,
+  ...services,
+  ...sessions,
+  ...users,
+  ...userInfo,
 };
 
-export { mySqlTable as tableCreator } from "./schema/_table";
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+export { pgTable as tableCreator } from "./schema/_table";
 
 export * from "drizzle-orm";
 
-const connection = connect({
-  host: process.env.DB_HOST!,
-  username: process.env.DB_USERNAME!,
-  password: process.env.DB_PASSWORD!,
-});
-
-export const db = drizzle(connection, { schema });
+export const db = drizzle(pool, { schema });

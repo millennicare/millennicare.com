@@ -1,16 +1,11 @@
 import type { z } from "zod";
 import type { StateCreator } from "zustand";
 
-import { createCareseekerSchema } from "@millennicare/validators";
+import { createUserInfoSchema } from "@millennicare/validators";
 
-export const additionalInfoSchema = createCareseekerSchema.pick({
-  firstName: true,
-  lastName: true,
-  profilePicture: true,
+export const additionalInfoSchema = createUserInfoSchema.pick({
+  name: true,
   phoneNumber: true,
-  birthdate: true,
-  address: true,
-  userType: true,
 });
 
 type AdditionalInfo = z.infer<typeof additionalInfoSchema>;
@@ -20,22 +15,14 @@ type AdditionalInfoSlice = {
   setAdditionalInfo: (data: AdditionalInfo) => void;
 };
 
-const initialState: AdditionalInfo = {
-  firstName: "",
-  lastName: "",
-  profilePicture: undefined,
-  birthdate: new Date(),
+const intialState: AdditionalInfo = {
+  name: "",
   phoneNumber: "",
-  address: {
-    zipCode: "",
-  },
-  userType: "careseeker",
 };
 
 const createAdditionalInfoSlice: StateCreator<AdditionalInfoSlice> = (set) => ({
-  additionalInfo: initialState,
-  setAdditionalInfo: (data) =>
-    set((state) => ({ additionalInfo: { ...state.additionalInfo, ...data } })),
+  additionalInfo: intialState,
+  setAdditionalInfo: (data) => set({ additionalInfo: data }),
 });
 
 export default createAdditionalInfoSlice;

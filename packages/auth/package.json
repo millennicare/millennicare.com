@@ -28,6 +28,8 @@
   },
   "prettier": "@millennicare/prettier-config",
   "dependencies": {
+    "@lucia-auth/adapter-drizzle": "^1.0.1",
+    "@millennicare/db": "workspace:^",
     "arctic": "^1.1.4",
     "lucia": "^3.0.1",
     "oslo": "^1.1.1"

@@ -2,51 +2,34 @@ import { TRPCError } from "@trpc/server";
 import * as z from "zod";
 
 import { and, eq, or, schema } from "@millennicare/db";
+import {
+  createAppointmentSchema,
+  selectAppointmentSchema,
+} from "@millennicare/validators";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const appointmentRouter = createTRPCRouter({
   createAppointment: publicProcedure
-    .input(
-      z.object({
-        startTime: z.date(),
-        endTime: z.date(),
-        status: z.enum(["cancelled", "pending", "confirmed", "finished"]),
-        serviceId: z.string().cuid2(),
-        careseekerId: z.string().cuid2(),
-        caregiverId: z.string().cuid2(),
-      }),
-    )
+    .input(createAppointmentSchema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
-      await db.insert(schema.appointments).values(input);
+      await db.insert(schema.appointmentTable).values(input);
     }),
   updateAppointment: protectedProcedure
-    .input(
-      z.object({
-        id: z.string().cuid2(),
-        startTime: z.date().optional(),
-        endTime: z.date().optional(),
-        status: z
-          .enum(["cancelled", "pending", "confirmed", "finished"])
-          .optional(),
-        serviceId: z.string().cuid2().optional(),
-        careseekerId: z.string().cuid2(),
-        caregiverId: z.string().cuid2(),
-      }),
-    )
+    .input(selectAppointmentSchema.partial().required({ id: true }))
     .mutation(async ({ ctx, input }) => {
       const { db, userId } = ctx;
       await db
-        .update(schema.appointments)
+        .update(schema.appointmentTable)
         .set(input)
         .where(
           and(
             or(
-              eq(schema.appointments.caregiverId, userId),
-              eq(schema.appointments.careseekerId, userId),
+              eq(schema.appointmentTable.caregiverId, userId),
+              eq(schema.appointmentTable.careseekerId, userId),
             ),
-            eq(schema.appointments.id, input.id),
+            eq(schema.appointmentTable.id, input.id),
           ),
         );
     }),
@@ -54,13 +37,13 @@ export const appointmentRouter = createTRPCRouter({
     .input(z.object({ id: z.string().cuid2() }))
     .query(async ({ ctx, input }) => {
       const { db, userId } = ctx;
-      const appointment = await db.query.appointments.findFirst({
+      const appointment = await db.query.appointmentTable.findFirst({
         where: and(
           or(
-            eq(schema.appointments.caregiverId, userId),
-            eq(schema.appointments.careseekerId, userId),
+            eq(schema.appointmentTable.caregiverId, userId),
+            eq(schema.appointmentTable.careseekerId, userId),
           ),
-          eq(schema.appointments.id, input.id),
+          eq(schema.appointmentTable.id, input.id),
         ),
       });
       if (!appointment) {
@@ -74,10 +57,10 @@ export const appointmentRouter = createTRPCRouter({
   // a logged in user, either careseeker or caregiver, is getting their own appts
   getAppointmentsByUserId: protectedProcedure.query(async ({ ctx }) => {
     const { db, userId } = ctx;
-    const appointments = await db.query.appointments.findMany({
+    const appointments = await db.query.appointmentTable.findMany({
       where: or(
-        eq(schema.appointments.caregiverId, userId),
-        eq(schema.appointments.careseekerId, userId),
+        eq(schema.appointmentTable.caregiverId, userId),
+        eq(schema.appointmentTable.careseekerId, userId),
       ),
     });
 
@@ -95,14 +78,14 @@ export const appointmentRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { db, userId } = ctx;
       await db
-        .delete(schema.appointments)
+        .delete(schema.appointmentTable)
         .where(
           and(
             or(
-              eq(schema.appointments.caregiverId, userId),
-              eq(schema.appointments.careseekerId, userId),
+              eq(schema.appointmentTable.caregiverId, userId),
+              eq(schema.appointmentTable.careseekerId, userId),
             ),
-            eq(schema.appointments.id, input.id),
+            eq(schema.appointmentTable.id, input.id),
           ),
         );
     }),
@@ -110,16 +93,16 @@ export const appointmentRouter = createTRPCRouter({
     const { db, userId } = ctx;
     const appointments = await db
       .select()
-      .from(schema.appointments)
+      .from(schema.appointmentTable)
       .where(
         and(
           or(
-            eq(schema.appointments.careseekerId, userId),
-            eq(schema.appointments.caregiverId, userId),
+            eq(schema.appointmentTable.careseekerId, userId),
+            eq(schema.appointmentTable.caregiverId, userId),
           ),
           or(
-            eq(schema.appointments.status, "pending"),
-            eq(schema.appointments.status, "confirmed"),
+            eq(schema.appointmentTable.status, "pending"),
+            eq(schema.appointmentTable.status, "confirmed"),
           ),
         ),
       );
@@ -150,14 +133,14 @@ export const appointmentRouter = createTRPCRouter({
     // and if the careseeker/giver id matches the userId from ctx
     const appointments = await db
       .select()
-      .from(schema.appointments)
+      .from(schema.appointmentTable)
       .where(
         and(
           or(
-            eq(schema.appointments.careseekerId, userId),
-            eq(schema.appointments.caregiverId, userId),
+            eq(schema.appointmentTable.careseekerId, userId),
+            eq(schema.appointmentTable.caregiverId, userId),
           ),
-          eq(schema.appointments.status, "finished"),
+          eq(schema.appointmentTable.status, "finished"),
         ),
       );
     if (!appointments || appointments.length === 0) {

@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { getSession } from "../actions";
+import { validateRequest } from "../lib/auth";
 import { SideNav } from "./_components/side-nav";
 
 export default async function DashboardLayout({
@@ -9,9 +9,9 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSession();
+  const { session } = await validateRequest();
 
-  if (!session.isLoggedIn) {
+  if (!session) {
     redirect("/sign-in");
   }
 

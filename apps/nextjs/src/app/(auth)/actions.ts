@@ -1,118 +1,36 @@
 "use server";
 
-import type { z } from "zod";
-import { revalidatePath } from "next/cache";
 import { TRPCError } from "@trpc/server";
-import { v4 as uuid } from "uuid";
 
-import type { createCareseekerSchema } from "@millennicare/validators";
-import { getLocationSuggestion, uploadFile } from "@millennicare/lib";
+import { signInSchema } from "@millennicare/validators";
 
 import { api } from "~/trpc/server";
-import { getSession } from "../actions";
+import { createSession } from "../lib/auth";
 
-export const login = async (values: { email: string; password: string }) => {
+export const signIn = async (
+  prev: unknown,
+  formData: FormData,
+): Promise<{ message: string; error?: boolean }> => {
+  console.log(prev);
   try {
-    const session = await getSession();
-    const response = await api.auth.login(values);
+    const values = Object.fromEntries(formData.entries());
+    const validated = signInSchema.safeParse(values);
 
-    session.sessionToken = response.sessionToken;
-    session.isLoggedIn = true;
-    await session.save();
-    revalidatePath("/sign-in");
+    if (!validated.success) {
+      return { message: "Invalid fields", error: true };
+    }
+
+    const response = await api.auth.login(validated.data);
+    await createSession(response.id);
+
+    return { message: "Going to dashboard!", error: false };
   } catch (error) {
     if (error instanceof TRPCError) {
-      throw new Error(error.message);
+      return { message: error.message, error: true };
     }
-    throw new Error("Something went wrong, please try again later.");
-  }
-};
-
-export const careseekerRegister = async (
-  values: z.infer<typeof createCareseekerSchema>,
-) => {
-  try {
-    const response = await api.auth.careseekerRegister(values);
-    console.log(response);
-
-    const session = await getSession();
-    session.sessionToken = response.sessionToken;
-    session.isLoggedIn = true;
-    await session.save();
-
-    revalidatePath("/sign-up/careseeker");
-  } catch (error) {
-    console.error(error);
-    if (error instanceof TRPCError) {
-      throw new Error(error.message);
-    }
-    throw new Error("Something went wrong, please try again later.");
-  }
-};
-
-export const caregiverRegister = async (formData: FormData) => {
-  try {
-    console.log(formData);
-  } catch (error) {
-    if (error instanceof TRPCError) {
-      throw new Error(error.message);
-    }
-    throw new Error("Something went wrong, please try again later.");
-  }
-};
-
-export const checkDuplicateEmail = async (email: string) => {
-  try {
-    await api.auth.checkDuplicateEmail(email);
-  } catch (error) {
-    if (error instanceof TRPCError) {
-      throw new Error(error.message);
-    }
-    throw new Error("Something went wrong, please try again later.");
-  }
-};
-
-export const getSuggestion = async (zipCode: string) => {
-  return getLocationSuggestion(zipCode);
-};
-
-export const uploadFileToS3 = async (formData: FormData) => {
-  try {
-    const file = formData.get("file") as Blob;
-    if (!file) {
-      throw new Error("No file found.");
-    }
-
-    const mimeType = file.type;
-    const fileExtension = mimeType.split("/")[1];
-
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const fileKey = await uploadFile(
-      buffer,
-      `${uuid()}.${fileExtension}`,
-      mimeType,
-    );
-
-    return fileKey;
-  } catch (error) {
-    console.log(error);
-    throw new Error("Something went wrong, please try again later.");
-  }
-};
-
-export const sendResetPasswordEmail = async (email: string) => {
-  const response = await api.auth.forgotPassword({ email });
-  return response;
-};
-
-export const resetPassword = async (password: string, token: string) => {
-  try {
-    const response = await api.auth.resetPassword({ password, token });
-    return response;
-  } catch (error) {
-    if (error instanceof TRPCError) {
-      throw new Error(error.message);
-    }
-    throw new Error("Someting went wrong, please try again later.");
+    return {
+      message: "An error occurred, please try again later.",
+      error: true,
+    };
   }
 };

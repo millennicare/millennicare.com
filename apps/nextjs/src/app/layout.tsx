@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { cache } from "react";
 import { Montserrat, Quicksand } from "next/font/google";
-import { headers } from "next/headers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { cn } from "@millennicare/ui";
@@ -16,7 +14,7 @@ import { ThemeProvider } from "@millennicare/ui/theme";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    env.VERCEL_ENV === "production"
+    env.NODE_ENV === "production"
       ? "https://millennicare.com"
       : "http://localhost:3000",
   ),
@@ -51,8 +49,6 @@ export const quicksand = Quicksand({
   variable: "--font-quicksand",
 });
 
-const getHeaders = cache(async () => headers());
-
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -68,9 +64,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           defaultTheme="light"
           enableSystem={false}
         >
-          <TRPCReactProvider headersPromise={getHeaders()}>
-            {props.children}
-          </TRPCReactProvider>
+          <TRPCReactProvider>{props.children}</TRPCReactProvider>
 
           <Toaster richColors />
         </ThemeProvider>

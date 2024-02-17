@@ -1,14 +1,13 @@
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
 
-import { schema } from "@millennicare/db";
-
-export const createChildSchema = createInsertSchema(schema.children, {
-  name: (schema) => schema.name.min(1, { message: "Name is required." }),
-  age: (schema) =>
-    schema.age
-      .min(0, { message: "Age must be between 0 and 18." })
-      .max(18, { message: "Age must be between 0 and 18." })
-      .int(),
+export const createChildSchema = z.object({
+  age: z.number().int().gte(0).lte(18),
+  name: z.string(),
+  userId: z.string().cuid2(),
 });
 
-export const selectChildSchema = createSelectSchema(schema.children);
+export const selectChildSchema = createChildSchema.extend({
+  id: z.string().cuid2(),
+});
+
+export type Child = z.infer<typeof selectChildSchema>;

@@ -15,12 +15,14 @@ export const getLocationSuggestion = async (zipCode: string) => {
     region: process.env.AWS_REGION!,
     ...authHelper.getLocationClientConfig(),
   });
+
   const params: SearchPlaceIndexForSuggestionsCommandInput = {
     IndexName: "SuggestionIndex",
     Text: zipCode,
     FilterCategories: ["PostalCodeType"],
     FilterCountries: ["USA"],
   };
+
   const command = new SearchPlaceIndexForSuggestionsCommand(params);
   const response = await client.send(command);
 
@@ -36,10 +38,12 @@ export const getLocationSuggestion = async (zipCode: string) => {
 
 export const getLocationDetails = async (zipCode: string) => {
   const authHelper = await withAPIKey(process.env.AWS_LOCATION_API_KEY!);
+
   const client = new LocationClient({
     region: process.env.AWS_REGION!,
     ...authHelper.getLocationClientConfig(),
   });
+
   const params: SearchPlaceIndexForTextCommandInput = {
     IndexName: "UsEastPlaceIndex",
     Text: zipCode,
@@ -62,4 +66,29 @@ export const getLocationDetails = async (zipCode: string) => {
   const latitude = result.Place.Geometry.Point[0];
   const longitude = result.Place.Geometry.Point[1];
   return { coordinates: { latitude, longitude } };
+};
+
+export const getAddressSuggestions = async (address: string) => {
+  const authHelper = await withAPIKey(process.env.AWS_LOCATION_SUGGESTION_KEY!);
+  const client = new LocationClient({
+    region: process.env.AWS_REGION!,
+    ...authHelper.getLocationClientConfig(),
+  });
+
+  const params: SearchPlaceIndexForSuggestionsCommandInput = {
+    IndexName: "SuggestionIndex",
+    Text: address,
+    FilterCategories: ["AddressType"],
+    FilterCountries: ["USA"],
+    MaxResults: 5,
+  };
+
+  const command = new SearchPlaceIndexForSuggestionsCommand(params);
+  const response = await client.send(command);
+
+  if (!response.Results) {
+    throw new Error("Invalid address.");
+  }
+
+  return response.Results;
 };
