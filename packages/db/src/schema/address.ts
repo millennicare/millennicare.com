@@ -19,6 +19,7 @@ export const addressTable = pgTable(
     zipCode: varchar("zip_code", { length: 5 }).notNull(),
     longitude: doublePrecision("longitude").notNull(),
     latitude: doublePrecision("latitude").notNull(),
+    placeId: text("place_id").notNull(),
     userId: varchar("user_id", { length: 128 })
       .notNull()
       .references(() => userTable.id, {

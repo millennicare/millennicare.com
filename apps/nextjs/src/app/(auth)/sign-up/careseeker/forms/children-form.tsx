@@ -17,8 +17,6 @@ import { SubmitButton } from "~/app/_components/submit-btn";
 import { Children, childrenSchema } from "../slices/children-slice";
 import useFormStore from "../useFormStore";
 
-type FormValues = { children: { age: number; name: string }[] };
-
 export default function ChildrenForm() {
   const { step, increaseStep, decreaseStep, children, setChildren } =
     useFormStore((state) => state);
@@ -26,7 +24,10 @@ export default function ChildrenForm() {
   const form = useForm({
     schema: childrenSchema,
     defaultValues: {
-      ...children,
+      children:
+        children.children.length === 0
+          ? [{ name: "", age: 1 }]
+          : children.children,
     },
   });
 

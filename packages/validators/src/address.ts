@@ -8,6 +8,7 @@ export const createAddressSchema = z.object({
   zipCode: z.string().length(5),
   longitude: z.number(),
   latitude: z.number(),
+  placeId: z.string(),
   userId: z.string().cuid2(),
 });
 

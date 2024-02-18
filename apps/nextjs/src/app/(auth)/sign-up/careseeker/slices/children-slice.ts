@@ -4,7 +4,9 @@ import { z } from "zod";
 import { createChildSchema } from "@millennicare/validators";
 
 export const childrenSchema = z.object({
-  children: z.array(createChildSchema.pick({ name: true, age: true })),
+  children: z
+    .array(createChildSchema.pick({ name: true, age: true }))
+    .min(1, { message: "At least one child is required." }),
 });
 
 type Children = z.infer<typeof childrenSchema>;

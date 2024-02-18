@@ -22,6 +22,7 @@ const initialState: Address = {
   city: "",
   state: "",
   zipCode: "",
+  placeId: "",
 };
 
 export const createAddressInfoSlice: StateCreator<AddressSlice> = (set) => ({
