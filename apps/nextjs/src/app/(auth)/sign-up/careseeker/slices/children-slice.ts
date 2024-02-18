@@ -3,7 +3,9 @@ import { z } from "zod";
 
 import { createChildSchema } from "@millennicare/validators";
 
-export const childrenSchema = z.array(createChildSchema.omit({ userId: true }));
+export const childrenSchema = z.object({
+  children: z.array(createChildSchema.pick({ name: true, age: true })),
+});
 
 type Children = z.infer<typeof childrenSchema>;
 
@@ -12,7 +14,7 @@ type ChildrenSlice = {
   setChildren: (data: Children) => void;
 };
 
-const initialState: Children = [];
+const initialState: Children = { children: [] };
 
 export const createChildrenInfoSlice: StateCreator<ChildrenSlice> = (set) => ({
   children: initialState,

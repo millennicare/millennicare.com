@@ -5,6 +5,7 @@ import { Progress } from "@millennicare/ui/progress";
 import useFormStore from "../useFormStore";
 import AdditionalInfoForm from "./additional-info-form";
 import AddressForm from "./address-form";
+import ChildrenForm from "./children-form";
 import EmailForm from "./email-form";
 import PasswordForm from "./password-form";
 
@@ -12,8 +13,8 @@ const formSteps = [
   "What's your email address?",
   "Tell us more about yourself",
   "Password setup",
-  "Where are you located?",
   "Who needs care?",
+  "Where are you located?",
 ];
 
 export default function FormHandler() {
@@ -28,9 +29,10 @@ export default function FormHandler() {
       case 3:
         return <PasswordForm />;
       case 4:
-        return <AddressForm />;
+        return <ChildrenForm />;
       case 5:
-        return <>Children</>;
+        return <AddressForm />;
+
       default:
         return <div>None</div>;
     }
