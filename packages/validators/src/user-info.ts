@@ -17,8 +17,8 @@ export const createUserInfoSchema = z.object({
       message: "You must be at least 18 years old to register.",
     },
   ),
-  biography: z.string().optional(),
-  profilePicture: z.string().optional(),
+  biography: z.string().nullish(),
+  profilePicture: z.string().nullish(),
 });
 
 export const selectUserInfoSchema = createUserInfoSchema;

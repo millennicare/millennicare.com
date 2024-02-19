@@ -24,7 +24,7 @@ export default function ContactUsForm() {
     mode: "onSubmit",
   });
 
-  async function handleSubmit(values: ContactUs) {
+  async function onSubmit(values: Omit<ContactUs, "id">) {
     try {
       await create(values);
       toast.success("Message sent!");
@@ -37,7 +37,7 @@ export default function ContactUsForm() {
     <Form {...form}>
       <form
         className="flex flex-col space-y-4 rounded-lg border px-2 py-4"
-        action={handleSubmit}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         {/* First Name */}
         <FormField

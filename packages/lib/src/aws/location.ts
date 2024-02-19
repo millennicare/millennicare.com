@@ -1,13 +1,46 @@
 import type {
+  GetPlaceCommandInput,
   SearchPlaceIndexForSuggestionsCommandInput,
   SearchPlaceIndexForTextCommandInput,
 } from "@aws-sdk/client-location";
 import {
+  GetPlaceCommand,
   LocationClient,
   SearchPlaceIndexForSuggestionsCommand,
   SearchPlaceIndexForTextCommand,
 } from "@aws-sdk/client-location";
 import { withAPIKey } from "@aws/amazon-location-utilities-auth-helper";
+
+export const getLocationDetailsFromPlaceId = async (placeId: string) => {
+  const authHelper = await withAPIKey(process.env.AWS_LOCATION_API_KEY!);
+
+  const client = new LocationClient({
+    region: process.env.AWS_REGION!,
+    ...authHelper.getLocationClientConfig(),
+  });
+
+  const input: GetPlaceCommandInput = {
+    IndexName: "UsEastPlaceIndex",
+    PlaceId: placeId,
+  };
+
+  const command = new GetPlaceCommand(input);
+  const response = await client.send(command);
+  const details = response.Place;
+  if (!details?.Geometry?.Point) {
+    throw new Error("No long/lat coordinates.");
+  }
+
+  return {
+    longitude: details.Geometry.Point[0]!,
+    latitude: details.Geometry.Point[1]!,
+    line1: details.Label ?? "",
+    line2: details.AddressNumber ?? "",
+    city: details.Municipality ?? "",
+    state: details.Region ?? "",
+    zipCode: details.PostalCode ?? "",
+  };
+};
 
 export const getLocationSuggestion = async (zipCode: string) => {
   const authHelper = await withAPIKey(process.env.AWS_LOCATION_SUGGESTION_KEY!);

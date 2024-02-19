@@ -10,4 +10,9 @@ export const selectChildSchema = createChildSchema.extend({
   id: z.string().cuid2(),
 });
 
+export const updateChildSchema = selectChildSchema
+  .partial()
+  .required({ id: true });
+
 export type Child = z.infer<typeof selectChildSchema>;
+export type UpdateChild = z.infer<typeof updateChildSchema>;

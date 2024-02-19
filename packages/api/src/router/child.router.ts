@@ -8,7 +8,7 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const childRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(createChildSchema)
+    .input(createChildSchema.omit({ userId: true }))
     .mutation(async ({ ctx, input }) => {
       const { db, userId } = ctx;
 

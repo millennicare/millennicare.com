@@ -18,9 +18,9 @@ export const checkDuplicateEmail = async (email: string) => {
     await api.auth.checkDuplicateEmail({ email });
   } catch (error) {
     if (error instanceof TRPCError) {
-      return error.message;
+      throw new Error(error.message);
     }
-    return "An error occurred, please try again later.";
+    throw new Error("An error occurred, please try again later.");
   }
 };
 
@@ -29,7 +29,6 @@ export const getSuggestion = async (address: string) => {
     return [];
   }
   const response = await getAddressSuggestions(address);
-  console.log(response);
   return response;
 };
 
@@ -41,15 +40,15 @@ type CareseekerRegister = AdditionalInfo &
 
 export const careseekerRegister = async (values: CareseekerRegister) => {
   try {
-    console.log(values);
     const response = await api.auth.careseekerRegister(values);
     await createSession(response.id);
 
     revalidatePath("/sign-up/careseeker");
   } catch (error) {
+    console.error(error);
     if (error instanceof TRPCError) {
-      return error.message;
+      throw new Error(error.message);
     }
-    return "An error occurred, please try again later.";
+    throw new Error("An error occurred, please try again later.");
   }
 };

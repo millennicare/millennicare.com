@@ -1,11 +1,20 @@
 import type { StateCreator } from "zustand";
 import { z } from "zod";
 
-import { createUserSchema } from "@millennicare/validators";
+export const passwordSchema = z
+  .object({
+    password: z
+      .string()
 
-export const passwordSchema = createUserSchema
-  .pick({ password: true })
-  .extend({
+      .regex(
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\w~@#$%^&*+=`|{}:;!.?\"()\[\]-]{8,32}$/, // eslint-disable-line
+        {
+          message:
+            "Password must be minimum 8 characters and at least one uppercase letter, one lowercase letter, and one number.",
+        },
+      )
+      .min(8, { message: "Password must be between 8 and 32 characters." })
+      .max(32, { message: "Password must be between 8 and 32 characters." }),
     confirm: z.string(),
   })
   .refine((data) => data.password === data.confirm, {

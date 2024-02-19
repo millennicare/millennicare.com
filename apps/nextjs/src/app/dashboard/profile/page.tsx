@@ -18,7 +18,11 @@ export default async function ProfilePage() {
 
   return (
     <div className="flex h-full w-full flex-col space-y-4">
-      <InfoCard user={user} proflePictureUrl={proflePictureUrl} />
+      <InfoCard
+        user={user}
+        proflePictureUrl={proflePictureUrl}
+        userInfo={userInfo}
+      />
       <HouseholdCard data={children} />
     </div>
   );

@@ -6,7 +6,7 @@ import type { ContactUs } from "@millennicare/validators";
 
 import { api } from "~/trpc/server";
 
-export const create = async (values: ContactUs) => {
+export const create = async (values: Omit<ContactUs, "id">) => {
   try {
     await api.contactUs.sendMessage(values);
   } catch (error) {

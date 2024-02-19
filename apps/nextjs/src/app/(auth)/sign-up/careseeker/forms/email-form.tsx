@@ -34,7 +34,6 @@ export default function EmailForm() {
       setEmail(values);
       increaseStep(step);
     } catch (error) {
-      console.log(error);
       if (error instanceof Error) {
         toast.error(error.message);
       }

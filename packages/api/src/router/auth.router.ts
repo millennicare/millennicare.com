@@ -4,7 +4,11 @@ import * as jose from "jose";
 import { z } from "zod";
 
 import { and, eq, schema } from "@millennicare/db";
-import { createCustomer, sendPasswordResetEmail } from "@millennicare/lib";
+import {
+  createCustomer,
+  getLocationDetailsFromPlaceId,
+  sendPasswordResetEmail,
+} from "@millennicare/lib";
 import {
   createAddressSchema,
   createChildSchema,
@@ -226,6 +230,8 @@ export const authRouter = createTRPCRouter({
         name: input.name,
         email: input.email,
       });
+      // get location details based on PlaceID passed from registration
+      const details = await getLocationDetailsFromPlaceId(input.placeId);
       const res = await db.transaction(async (tx) => {
         const user = await tx
           .insert(schema.userTable)
@@ -238,20 +244,37 @@ export const authRouter = createTRPCRouter({
         if (!user[0]) {
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
         }
+        const userId = user[0].insertedId;
 
         await tx.insert(schema.userInfoTable).values({
-          userId: user[0].insertedId,
+          userId,
           name: input.name,
           phoneNumber: input.phoneNumber,
           birthdate: input.birthdate,
           stripeId: customer.id,
         });
-
         await tx.insert(schema.careseekerTable).values({
-          userId: user[0]?.insertedId,
+          userId,
         });
-
-        return user[0]?.insertedId;
+        await tx.insert(schema.childTable).values(
+          input.children.map((child) => ({
+            userId,
+            age: child.age,
+            name: child.name,
+          })),
+        );
+        await tx.insert(schema.addressTable).values({
+          line1: details.line1,
+          line2: details.line2,
+          city: details.city,
+          state: details.state,
+          zipCode: details.zipCode,
+          longitude: details.longitude,
+          latitude: details.latitude,
+          placeId: input.placeId,
+          userId,
+        });
+        return userId;
       });
 
       return { id: res };

@@ -223,7 +223,7 @@ export default function AddressForm() {
             control={form.control}
             name="state"
             render={({ field }) => (
-              <FormItem className="w-1/2">
+              <FormItem className="w-full md:w-1/2">
                 <FormLabel>State</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
@@ -287,7 +287,7 @@ export default function AddressForm() {
             control={form.control}
             name="zipCode"
             render={({ field }) => (
-              <FormItem className="w-1/2">
+              <FormItem className="w-full md:w-1/2">
                 <FormLabel>Zip code</FormLabel>
                 <FormControl>
                   <Input {...field} type="text" />

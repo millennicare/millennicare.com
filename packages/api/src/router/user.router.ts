@@ -27,8 +27,9 @@ export const userRouter = createTRPCRouter({
     const { db, userId } = ctx;
 
     const userInfo = await db.query.userInfoTable.findFirst({
-      where: eq(schema.userTable.id, userId),
+      where: eq(schema.userInfoTable.userId, userId),
     });
+
     if (!userInfo) {
       throw new TRPCError({ code: "NOT_FOUND" });
     }
