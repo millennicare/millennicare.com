@@ -1,4 +1,4 @@
-name: push-schema-to-dev
+name: push-schema-to-prod
 
 on:
   push:
