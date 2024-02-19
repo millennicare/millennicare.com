@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   CalendarIcon,
-  ExitIcon,
   GearIcon,
   HomeIcon,
   MagnifyingGlassIcon,
@@ -16,9 +15,7 @@ import { cn } from "@millennicare/ui";
 import { Button } from "@millennicare/ui/button";
 import { Separator } from "@millennicare/ui/separator";
 
-type SideNavProps = {
-  logout: () => Promise<void>;
-};
+import LogoutButton from "./logout-btn";
 
 const links = [
   { name: "Home", href: "/dashboard/home", icon: HomeIcon },
@@ -28,11 +25,11 @@ const links = [
   { name: "Settings", href: "/dashboard/settings", icon: GearIcon },
 ];
 
-export function SideNav({ logout }: SideNavProps) {
+export function SideNav() {
   const pathname = usePathname();
 
   return (
-    <section className="h-full space-y-8 rounded-lg border bg-background px-2 py-6 duration-300 md:w-max md:px-4">
+    <section className="h-full space-y-8 rounded-lg border bg-background px-2 py-6 duration-300 sm:w-max md:px-4">
       <div className="flex w-full items-center justify-center">
         <Image
           src="/millennicare_logo.png"
@@ -41,7 +38,7 @@ export function SideNav({ logout }: SideNavProps) {
           height={40}
           priority
         />
-        <h3 className="ml-3 hidden text-xl md:block">
+        <h3 className="ml-3 hidden text-xl sm:block">
           MILLENNI<span className="font-bold">CARE</span>
         </h3>
       </div>
@@ -72,15 +69,7 @@ export function SideNav({ logout }: SideNavProps) {
           );
         })}
         <Separator />
-        <Button
-          className="flex w-full cursor-pointer flex-row items-center justify-center bg-background py-4 text-black shadow-none hover:bg-gray-300 md:justify-start md:pl-6"
-          onClick={async () => {
-            await logout();
-          }}
-        >
-          <ExitIcon className="w-6" />
-          <p className="ml-3 hidden md:block">Logout</p>
-        </Button>
+        <LogoutButton />
       </nav>
     </section>
   );

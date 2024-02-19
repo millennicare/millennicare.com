@@ -2,7 +2,7 @@ version: "3"
 
 services:
   web:
-    container_name: nextjs
+    container_name: millennicare-web
     build:
       context: .
       dockerfile: ./apps/nextjs/Dockerfile
@@ -12,3 +12,18 @@ services:
     ports:
       - 3000:3000
     network_mode: "host"
+  dev-db:
+    container_name: millennicare-dev-database
+    image: postgres:16.1
+    restart: always
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: millennicare
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres_data:

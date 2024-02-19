@@ -5,17 +5,17 @@ import EditCareseekerForm from "./_components/edit-careseeker-form";
 
 export default async function SettingsPage() {
   const user = await api.auth.getMe();
+  const userInfo = await api.user.getUserInfo();
 
   return (
     <div className="w-full space-y-6 px-2 py-3 lg:w-3/4">
       <div>
-        <h3 className="text-lg font-medium">Profile</h3>
-        <p className="text-sm text-muted-foreground">
+        <h3 className="font-medium text-muted-foreground">
           This is how others will see you on the site.
-        </p>
+        </h3>
       </div>
       <Separator />
-      <EditCareseekerForm user={user} />
+      <EditCareseekerForm user={user} userInfo={userInfo} />
     </div>
   );
 }

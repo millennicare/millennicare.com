@@ -3,12 +3,11 @@ import { Stripe } from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export const createCustomer = async (values: {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
 }) => {
   const customer = await stripe.customers.create({
-    name: `${values.firstName} ${values.lastName}`,
+    name: values.name,
     email: values.email,
   });
 

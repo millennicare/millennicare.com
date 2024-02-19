@@ -1,5 +1,3 @@
-"use client";
-
 import type { z } from "zod";
 
 import {
@@ -43,7 +41,7 @@ export default function EditChildForm({ child, setOpenEditForm }: Props) {
 
   async function onSubmit(values: z.infer<typeof schema>) {
     try {
-      const data = { ...values, childId: child.id };
+      const data = { ...values, id: child.id };
       await editChild(data);
       setOpenEditForm(false);
     } catch (error) {

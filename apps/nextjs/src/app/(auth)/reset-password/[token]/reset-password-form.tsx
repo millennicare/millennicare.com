@@ -17,33 +17,42 @@ import {
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
-import { createUserSchema } from "@millennicare/validators";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
-import { resetPassword } from "../../actions";
+import { resetPassword } from "./actions";
 
-const schema = createUserSchema
-  .pick({
-    password: true,
+const passwordSchema = z
+  .object({
+    password: z
+      .string()
+      .regex(
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\w~@#$%^&*+=`|{}:;!.?\"()\[\]-]{8,32}$/, // eslint-disable-line
+        {
+          message:
+            "Password must be minimum 8 characters and at least one uppercase letter, one lowercase letter, and one number.",
+        },
+      )
+      .min(8, { message: "Password must be between 8 and 32 characters." })
+      .max(32, { message: "Password must be between 8 and 32 characters." }),
+    confirm: z.string(),
   })
-  .extend({ confirm: z.string() })
   .refine((data) => data.password === data.confirm, {
-    message: "Passwords do not match.",
     path: ["confirm"],
+    message: "Passwords do not match",
   });
 
 export default function ResetPasswordForm() {
   const [passwordReset, setPasswordReset] = useState(false);
   const params = useParams<{ token: string }>();
   const form = useForm({
-    schema,
-    defaultValues: {
-      password: "",
-      confirm: "",
-    },
+    schema: passwordSchema,
   });
 
-  async function onSubmit(values: z.infer<typeof schema>) {
+  if (!params.token) {
+    throw new Error("Reset password token is required");
+  }
+
+  async function onSubmit(values: z.infer<typeof passwordSchema>) {
     try {
       await resetPassword(values.password, params.token);
       setPasswordReset(true);
@@ -113,8 +122,4 @@ export default function ResetPasswordForm() {
       )}
     </div>
   );
-
-  if (!params.token) {
-    throw new Error("Reset password token is required");
-  }
 }

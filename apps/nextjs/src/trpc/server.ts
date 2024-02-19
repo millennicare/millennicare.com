@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 
 import { createCaller, createTRPCContext } from "@millennicare/api";
 
-import { getSession } from "~/app/actions";
+import { validateRequest } from "~/app/lib/auth";
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
@@ -12,10 +12,10 @@ import { getSession } from "~/app/actions";
 const createContext = cache(async () => {
   const heads = new Headers(headers());
   heads.set("x-trpc-source", "rsc");
-  const session = await getSession();
+  const { session } = await validateRequest();
 
   return createTRPCContext({
-    sessionToken: session.sessionToken,
+    userId: session?.userId ?? null,
     headers: heads,
   });
 });

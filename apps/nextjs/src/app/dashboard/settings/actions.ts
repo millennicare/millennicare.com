@@ -3,13 +3,12 @@
 import { revalidatePath } from "next/cache";
 import { TRPCError } from "@trpc/server";
 
-import type { UpdateUserType } from "@millennicare/validators";
+import type { UpdateUser } from "@millennicare/validators";
 
-import { api } from "~/trpc/server";
-
-export async function updateCareseeker(values: UpdateUserType) {
+export async function updateCareseeker(values: UpdateUser) {
   try {
-    await api.auth.update(values);
+    console.log(values);
+    // await api.auth.update(values);
     revalidatePath("/dashboard/settings");
   } catch (error) {
     if (error instanceof TRPCError) {

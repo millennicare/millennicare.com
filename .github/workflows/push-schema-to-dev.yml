@@ -27,7 +27,7 @@ jobs:
           version: ${{ matrix.pnpm-version }}
 
       - name: Create .env file
-        run: echo DATABASE_URL=${{ secrets.PSCALE_DEV_DATABASE_URL }} > .env
+        run: echo DATABASE_URL=${{ secrets.DEV_DATABASE_URL }} > .env
 
       - name: Install dependencies
         run: pnpm i

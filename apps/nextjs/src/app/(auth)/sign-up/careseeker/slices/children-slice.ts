@@ -1,37 +1,27 @@
 import type { StateCreator } from "zustand";
 import { z } from "zod";
 
+import { createChildSchema } from "@millennicare/validators";
+
 export const childrenSchema = z.object({
   children: z
-    .array(
-      z.object({
-        name: z.string().min(1, { message: "Name is required" }),
-        age: z.coerce
-          .number()
-          .min(0, { message: "Age must be between 0 and 18" })
-          .max(18, { message: "Age must be between 0 and 18." })
-          .int(),
-      }),
-    )
-    .min(1, { message: "At least one child is required to sign up." }),
+    .array(createChildSchema.pick({ name: true, age: true }))
+    .min(1, { message: "At least one child is required." }),
 });
 
-type ChildrenInfo = z.infer<typeof childrenSchema>;
+type Children = z.infer<typeof childrenSchema>;
 
-type ChildrenInfoSlice = {
-  childrenInfo: ChildrenInfo;
-  setChildrenInfo: (data: ChildrenInfo) => void;
+type ChildrenSlice = {
+  children: Children;
+  setChildren: (data: Children) => void;
 };
 
-const initialState: ChildrenInfo = {
-  children: [],
-};
+const initialState: Children = { children: [] };
 
-const createChildrenInfoSlice: StateCreator<ChildrenInfoSlice> = (set) => ({
-  childrenInfo: initialState,
-  setChildrenInfo: (data) =>
-    set((state) => ({ childrenInfo: { ...state.childrenInfo, ...data } })),
+export const createChildrenInfoSlice: StateCreator<ChildrenSlice> = (set) => ({
+  children: initialState,
+  setChildren: (data) => set({ children: data }),
 });
 
 export default createChildrenInfoSlice;
-export type { ChildrenInfo, ChildrenInfoSlice };
+export type { Children, ChildrenSlice };

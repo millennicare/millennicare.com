@@ -19,7 +19,7 @@ import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
-import { sendResetPasswordEmail } from "../actions";
+import { sendPasswordResetEmail } from "./actions";
 
 const formSchema = z.object({
   email: z
@@ -40,7 +40,7 @@ export default function ForgotPasswordForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await sendResetPasswordEmail(values.email);
+      await sendPasswordResetEmail(values.email);
       setEmailSent(true);
     } catch (error) {
       if (error instanceof TRPCError) {

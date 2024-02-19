@@ -1,15 +1,12 @@
 import { createId } from "@paralleldrive/cuid2";
-import { sql } from "drizzle-orm";
-import { text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { text, varchar } from "drizzle-orm/pg-core";
 
-import { mySqlTable } from "./_table";
+import { pgTable } from "./_table";
 
-export const contactUs = mySqlTable("contact-us", {
-  id: varchar("id", { length: 128 })
+export const contactTable = pgTable("contact-us", {
+  id: text("id")
     .$defaultFn(() => createId())
-    .primaryKey()
-    .unique(),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+    .primaryKey(),
 
   firstName: varchar("firstName", { length: 255 }).notNull(),
   lastName: varchar("lastName", { length: 255 }).notNull(),

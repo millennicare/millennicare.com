@@ -2,7 +2,7 @@
 
 import type { z } from "zod";
 
-import type { selectUserSchema } from "@millennicare/validators";
+import type { User, UserInfo } from "@millennicare/validators";
 import {
   Form,
   FormControl,
@@ -14,27 +14,30 @@ import {
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
-import { createCareseekerSchema } from "@millennicare/validators";
+import {
+  createUserInfoSchema,
+  createUserSchema,
+} from "@millennicare/validators";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
-import { updateCareseeker } from "../actions";
 
 type EditCareseekerFormProps = {
-  user: z.infer<typeof selectUserSchema>;
+  user: User;
+  userInfo: UserInfo;
 };
 
-const schema = createCareseekerSchema.pick({
-  email: true,
-  firstName: true,
-  lastName: true,
-});
+const schema = createUserSchema
+  .pick({ email: true })
+  .and(createUserInfoSchema.pick({ name: true }));
 
-export default function EditCareseekerForm({ user }: EditCareseekerFormProps) {
+export default function EditCareseekerForm({
+  user,
+  userInfo,
+}: EditCareseekerFormProps) {
   const form = useForm({
     schema,
     defaultValues: {
-      firstName: user.firstName,
-      lastName: user.lastName,
+      name: userInfo.name,
       email: user.email,
     },
     mode: "onTouched",
@@ -42,7 +45,8 @@ export default function EditCareseekerForm({ user }: EditCareseekerFormProps) {
 
   async function onSubmit(values: z.infer<typeof schema>) {
     try {
-      await updateCareseeker(values);
+      console.log(values);
+      // await updateCareseeker(values);
       toast.success("Changes saved!");
     } catch (error) {
       if (error instanceof Error) {
@@ -59,10 +63,10 @@ export default function EditCareseekerForm({ user }: EditCareseekerFormProps) {
       >
         <FormField
           control={form.control}
-          name="firstName"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First Name</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -71,19 +75,6 @@ export default function EditCareseekerForm({ user }: EditCareseekerFormProps) {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Last Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="email"
