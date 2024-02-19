@@ -2,6 +2,7 @@ import validator from "validator";
 import { z } from "zod";
 
 export const createUserInfoSchema = z.object({
+  userId: z.string().cuid2(),
   name: z.string(),
   phoneNumber: z.string().refine(validator.isMobilePhone, {
     message: "Invalid phone number",
@@ -20,13 +21,10 @@ export const createUserInfoSchema = z.object({
   profilePicture: z.string().optional(),
 });
 
-export const selectUserInfoSchema = createUserInfoSchema.extend({
-  id: z.string().cuid2(),
-});
-
+export const selectUserInfoSchema = createUserInfoSchema;
 export const updateUserInfoSchema = selectUserInfoSchema
   .partial()
-  .required({ id: true });
+  .required({ userId: true });
 
 export type UserInfo = z.infer<typeof selectUserInfoSchema>;
 export type UpdateUserInfo = z.infer<typeof updateUserInfoSchema>;

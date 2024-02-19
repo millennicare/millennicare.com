@@ -6,6 +6,7 @@ import { createUserInfoSchema } from "@millennicare/validators";
 export const additionalInfoSchema = createUserInfoSchema.pick({
   name: true,
   phoneNumber: true,
+  birthdate: true,
 });
 
 type AdditionalInfo = z.infer<typeof additionalInfoSchema>;
@@ -18,6 +19,7 @@ type AdditionalInfoSlice = {
 const intialState: AdditionalInfo = {
   name: "",
   phoneNumber: "",
+  birthdate: new Date(),
 };
 
 const createAdditionalInfoSlice: StateCreator<AdditionalInfoSlice> = (set) => ({

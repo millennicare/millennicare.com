@@ -13,8 +13,9 @@ import {
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
 
+import type { Children } from "../slices/children-slice";
 import { SubmitButton } from "~/app/_components/submit-btn";
-import { Children, childrenSchema } from "../slices/children-slice";
+import { childrenSchema } from "../slices/children-slice";
 import useFormStore from "../useFormStore";
 
 export default function ChildrenForm() {
@@ -103,18 +104,19 @@ export default function ChildrenForm() {
           </Button>
         </div>
 
-        <div className="flex justify-end space-x-4">
+        <div className="flex w-full flex-col space-x-0 space-y-3 sm:flex-row sm:space-x-2 sm:space-y-0">
           <Button
-            variant="outline"
-            type="button"
             onClick={() => decreaseStep(step)}
+            type="button"
+            variant="outline"
+            className="w-full"
           >
             Back
           </Button>
           <SubmitButton
+            className="w-full"
             value="Next"
-            className="text-background"
-            error={!form.formState.isValid}
+            error={!form.formState.errors}
           />
         </div>
       </form>

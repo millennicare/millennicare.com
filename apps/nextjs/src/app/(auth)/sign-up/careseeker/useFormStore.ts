@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 import type { AdditionalInfoSlice } from "./slices/additional-info-slice";
-import type { Address, AddressSlice } from "./slices/address-slice";
+import type { AddressSlice } from "./slices/address-slice";
 import type { ChildrenSlice } from "./slices/children-slice";
 import type { EmailSlice } from "./slices/email-slice";
 import type { PasswordSlice } from "./slices/password-slice";

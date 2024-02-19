@@ -1,8 +1,5 @@
 "use client";
 
-import Link from "next/link";
-
-import { Button } from "@millennicare/ui/button";
 import {
   Form,
   FormControl,
@@ -16,7 +13,6 @@ import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
 
 import type { Email } from "../slices/email-slice";
-import { Icons } from "~/app/_components/icons";
 import { SubmitButton } from "~/app/_components/submit-btn";
 import { checkDuplicateEmail } from "../../actions";
 import { emailSchema } from "../slices/email-slice";
@@ -38,6 +34,7 @@ export default function EmailForm() {
       setEmail(values);
       increaseStep(step);
     } catch (error) {
+      console.log(error);
       if (error instanceof Error) {
         toast.error(error.message);
       }
@@ -66,7 +63,7 @@ export default function EmailForm() {
 
         <SubmitButton value="Next" error={!form.formState.errors} />
 
-        <div className="relative">
+        {/* <div className="relative">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
@@ -81,7 +78,7 @@ export default function EmailForm() {
             <Icons.google className="mr-3 h-4 w-4" />
             Google
           </Link>
-        </Button>
+        </Button> */}
       </form>
     </Form>
   );

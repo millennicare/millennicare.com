@@ -14,7 +14,8 @@ export const createUserSchema = z.object({
       },
     )
     .min(8, { message: "Password must be between 8 and 32 characters." })
-    .max(32, { message: "Password must be between 8 and 32 characters." }),
+    .max(32, { message: "Password must be between 8 and 32 characters." })
+    .nullish(),
   type: typeEnum,
 });
 

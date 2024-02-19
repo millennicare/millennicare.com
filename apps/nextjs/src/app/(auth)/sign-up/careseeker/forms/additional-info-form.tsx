@@ -1,6 +1,11 @@
 "use client";
 
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+
+import { cn } from "@millennicare/ui";
 import { Button } from "@millennicare/ui/button";
+import { Calendar } from "@millennicare/ui/calendar";
 import {
   Form,
   FormControl,
@@ -11,6 +16,11 @@ import {
   useForm,
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@millennicare/ui/popover";
 
 import type { AdditionalInfo } from "../slices/additional-info-slice";
 import { SubmitButton } from "~/app/_components/submit-btn";
@@ -66,6 +76,49 @@ export default function AdditionalInfoForm() {
               <FormControl>
                 <Input {...field} type="tel" />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="birthdate"
+          render={({ field }) => (
+            <FormItem className="">
+              <FormLabel>Birthdate</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-full pl-3 text-left font-normal md:w-full",
+                        !field.value && "text-muted-foreground",
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    initialFocus
+                    mode="single"
+                    captionLayout="dropdown-buttons"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    fromYear={new Date().getFullYear() - 100}
+                    toYear={new Date().getFullYear()}
+                  />
+                </PopoverContent>
+              </Popover>
+
               <FormMessage />
             </FormItem>
           )}

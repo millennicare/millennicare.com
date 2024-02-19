@@ -5,7 +5,7 @@ import { TRPCError } from "@trpc/server";
 import { signInSchema } from "@millennicare/validators";
 
 import { api } from "~/trpc/server";
-import { createSession } from "../lib/auth";
+import { createSession } from "../../lib/auth";
 
 export const signIn = async (
   prev: unknown,

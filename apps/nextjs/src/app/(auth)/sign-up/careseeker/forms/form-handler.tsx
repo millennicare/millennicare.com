@@ -40,7 +40,7 @@ export default function FormHandler() {
   return (
     <div className="flex w-full max-w-lg flex-col items-center justify-center space-y-4 md:w-1/2">
       <h1 className="text-center font-bold">{formSteps[step - 1]}</h1>
-      <Progress value={(step / 5) * 100} className="w-2/3" />
+      <Progress value={(step / 6) * 100} className="w-2/3" />
       <span className="w-full rounded-lg border px-2 py-4">
         {displayStep(step)}
       </span>

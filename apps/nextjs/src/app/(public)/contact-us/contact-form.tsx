@@ -1,5 +1,6 @@
 "use client";
 
+import type { ContactUs } from "@millennicare/validators";
 import {
   Form,
   FormControl,
@@ -12,38 +13,18 @@ import {
 import { Input } from "@millennicare/ui/input";
 import { Textarea } from "@millennicare/ui/textarea";
 import { toast } from "@millennicare/ui/toast";
-import { createContactSchema } from "@millennicare/validators";
+import { createContactUsSchema } from "@millennicare/validators";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
+import { create } from "./actions";
 
-interface ContactUsFormProps {
-  create: (values: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    message: string;
-  }) => Promise<void>;
-}
-
-const initialState = {
-  email: "",
-  firstName: "",
-  lastName: "",
-  message: "",
-};
-
-export default function ContactUsForm({ create }: ContactUsFormProps) {
+export default function ContactUsForm() {
   const form = useForm({
-    schema: createContactSchema,
-    defaultValues: initialState,
+    schema: createContactUsSchema,
     mode: "onSubmit",
   });
 
-  async function handleSubmit(formData: FormData) {
-    const values = Object.fromEntries(
-      formData.entries(),
-    ) as typeof initialState;
-
+  async function handleSubmit(values: ContactUs) {
     try {
       await create(values);
       toast.success("Message sent!");

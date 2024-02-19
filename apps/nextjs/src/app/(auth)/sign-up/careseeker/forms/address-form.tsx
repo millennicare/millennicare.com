@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useQuery } from "@tanstack/react-query";
 import { debounce } from "lodash";
@@ -30,71 +30,27 @@ import {
   PopoverTrigger,
 } from "@millennicare/ui/popover";
 import { ScrollArea } from "@millennicare/ui/scroll-area";
+import { toast } from "@millennicare/ui/toast";
 
 import type { Address } from "../slices/address-slice";
 import { SubmitButton } from "~/app/_components/submit-btn";
+import { states } from "~/app/(auth)/constants";
 import useDebounce from "~/app/hooks/useDebounce";
-import { getSuggestion } from "../../actions";
+import { careseekerRegister, getSuggestion } from "../../actions";
 import { addressSchema } from "../slices/address-slice";
 import useFormStore from "../useFormStore";
 
-const states = [
-  { label: "Alabama", value: "AL" },
-  { label: "Alaska", value: "AK" },
-  { label: "Arizona", value: "AZ" },
-  { label: "Arkansas", value: "AR" },
-  { label: "California", value: "CA" },
-  { label: "Colorado", value: "CO" },
-  { label: "Connecticut", value: "CT" },
-  { label: "Delaware", value: "DE" },
-  { label: "Florida", value: "FL" },
-  { label: "Georgia", value: "GA" },
-  { label: "Hawaii", value: "HI" },
-  { label: "Idaho", value: "ID" },
-  { label: "Illinois", value: "IL" },
-  { label: "Indiana", value: "IN" },
-  { label: "Iowa", value: "IA" },
-  { label: "Kansas", value: "KS" },
-  { label: "Kentucky", value: "KY" },
-  { label: "Louisiana", value: "LA" },
-  { label: "Maine", value: "ME" },
-  { label: "Maryland", value: "MD" },
-  { label: "Massachusetts", value: "MA" },
-  { label: "Michigan", value: "MI" },
-  { label: "Minnesota", value: "MN" },
-  { label: "Mississippi", value: "MS" },
-  { label: "Missouri", value: "MO" },
-  { label: "Montana", value: "MT" },
-  { label: "Nebraska", value: "NE" },
-  { label: "Nevada", value: "NV" },
-  { label: "New Hampshire", value: "NH" },
-  { label: "New Jersey", value: "NJ" },
-  { label: "New Mexico", value: "NM" },
-  { label: "New York", value: "NY" },
-  { label: "North Carolina", value: "NC" },
-  { label: "North Dakota", value: "ND" },
-  { label: "Ohio", value: "OH" },
-  { label: "Oklahoma", value: "OK" },
-  { label: "Oregon", value: "OR" },
-  { label: "Pennsylvania", value: "PA" },
-  { label: "Rhode Island", value: "RI" },
-  { label: "South Carolina", value: "SC" },
-  { label: "South Dakota", value: "SD" },
-  { label: "Tennessee", value: "TN" },
-  { label: "Texas", value: "TX" },
-  { label: "Utah", value: "UT" },
-  { label: "Vermont", value: "VT" },
-  { label: "Virginia", value: "VA" },
-  { label: "Washington", value: "WA" },
-  { label: "West Virginia", value: "WV" },
-  { label: "Wisconsin", value: "WI" },
-  { label: "Wyoming", value: "WY" },
-];
-
 export default function AddressForm() {
-  const [open, setOpen] = useState(false);
-  const { step, decreaseStep, increaseStep, address, setAddress } =
-    useFormStore((state) => state);
+  const {
+    step,
+    decreaseStep,
+    address,
+    setAddress,
+    additionalInfo,
+    children,
+    password,
+    email,
+  } = useFormStore((state) => state);
   const form = useForm({
     schema: addressSchema,
     defaultValues: { ...address },
@@ -103,7 +59,7 @@ export default function AddressForm() {
   const line1 = form.watch("line1");
   const debouncedLine1 = useDebounce(line1, 1200);
 
-  const { data, refetch } = useQuery({
+  const { data, refetch, isFetching } = useQuery({
     queryKey: ["address_results", debouncedLine1],
     queryFn: async () => {
       return await getSuggestion(debouncedLine1);
@@ -112,12 +68,13 @@ export default function AddressForm() {
     enabled: debouncedLine1.length > 1,
   });
 
-  const debouncedRefetch = useCallback(
-    debounce(() => refetch(), 1000), // 1000ms delay
-    [], // dependencies array is empty because refetch and debounce do not change
+  const debouncedRefetch = useMemo(
+    () => debounce(() => refetch(), 1000), // 1000ms delay
+    [refetch], // dependencies array is empty because refetch and debounce do not change
   );
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     debouncedRefetch();
     // Cleanup function to cancel the debounce on unmount
     return () => debouncedRefetch.cancel();
@@ -129,14 +86,31 @@ export default function AddressForm() {
     // assign these elements to the values in the form and populate the form
     form.setValue("line1", elements[0]!);
     form.setValue("city", elements[1]!);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
     form.setValue("state", elements[2]?.toUpperCase()!);
     form.setValue("zipCode", elements[3]!);
     form.setValue("placeId", placeId);
   }
 
-  function onSubmit(values: Address) {
+  async function onSubmit(values: Address) {
     setAddress(values);
-    increaseStep(step);
+
+    try {
+      const data = {
+        ...additionalInfo,
+        ...children,
+        ...password,
+        ...email,
+        ...values,
+      };
+      await careseekerRegister(data);
+      toast.success("Sign up complete!");
+    } catch (error) {
+      if (error instanceof Error) {
+        return toast.error(error.message);
+      }
+      toast.error("An error occurred, please try again later.");
+    }
   }
 
   return (
@@ -191,17 +165,21 @@ export default function AddressForm() {
                     <ScrollArea className="h-32">
                       <CommandEmpty>No address found.</CommandEmpty>
                       <CommandGroup>
-                        {data?.map((address) => (
-                          <CommandItem
-                            value={address.Text}
-                            key={address.PlaceId}
-                            onSelect={() => {
-                              formatAddress(address.Text!, address.PlaceId!);
-                            }}
-                          >
-                            {address.Text}
-                          </CommandItem>
-                        ))}
+                        {isFetching ? (
+                          <>Loading...</>
+                        ) : (
+                          data?.map((address) => (
+                            <CommandItem
+                              value={address.Text}
+                              key={address.PlaceId}
+                              onSelect={() => {
+                                formatAddress(address.Text!, address.PlaceId!);
+                              }}
+                            >
+                              {address.Text}
+                            </CommandItem>
+                          ))
+                        )}
                       </CommandGroup>
                     </ScrollArea>
                   </Command>
@@ -330,7 +308,7 @@ export default function AddressForm() {
           </Button>
           <SubmitButton
             className="w-full"
-            value="Next"
+            value="Finish"
             error={!form.formState.errors}
           />
         </div>

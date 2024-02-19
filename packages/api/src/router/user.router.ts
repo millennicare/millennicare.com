@@ -1,3 +1,5 @@
+import { TRPCError } from "@trpc/server";
+
 import { eq, schema } from "@millennicare/db";
 import { updateUserSchema } from "@millennicare/validators";
 
@@ -20,5 +22,17 @@ export const userRouter = createTRPCRouter({
     const { db, userId } = ctx;
 
     await db.delete(schema.userTable).where(eq(schema.userTable.id, userId));
+  }),
+  getUserInfo: protectedProcedure.query(async ({ ctx }) => {
+    const { db, userId } = ctx;
+
+    const userInfo = await db.query.userInfoTable.findFirst({
+      where: eq(schema.userTable.id, userId),
+    });
+    if (!userInfo) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+
+    return userInfo;
   }),
 });

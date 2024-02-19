@@ -16,7 +16,7 @@ export const userInfoTable = pgTable(
     name: varchar("name", { length: 255 }).notNull(),
     phoneNumber: varchar("phone_number", { length: 255 }).notNull(),
     biography: varchar("biography", { length: 255 }),
-    profilepicture: text("profile_picture"),
+    profilePicture: text("profile_picture"),
     birthdate: date("birthdate", { mode: "date" }).notNull(),
     stripeId: text("stripe_id").notNull(),
   },

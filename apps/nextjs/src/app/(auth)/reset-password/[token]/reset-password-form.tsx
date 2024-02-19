@@ -20,7 +20,7 @@ import { toast } from "@millennicare/ui/toast";
 import { createUserSchema } from "@millennicare/validators";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
-import { resetPassword } from "../../actions";
+import { resetPassword } from "./actions";
 
 const schema = createUserSchema
   .pick({
@@ -42,6 +42,10 @@ export default function ResetPasswordForm() {
       confirm: "",
     },
   });
+
+  if (!params.token) {
+    throw new Error("Reset password token is required");
+  }
 
   async function onSubmit(values: z.infer<typeof schema>) {
     try {
@@ -113,8 +117,4 @@ export default function ResetPasswordForm() {
       )}
     </div>
   );
-
-  if (!params.token) {
-    throw new Error("Reset password token is required");
-  }
 }

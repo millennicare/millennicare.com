@@ -10,7 +10,7 @@ export async function updatePassword(values: {
   newPassword: string;
 }): Promise<{ message: string; success: boolean }> {
   try {
-    await api.auth.resetPassword(values);
+    await api.auth.updatePassword(values);
     return { message: "Password updated successfully.", success: true };
   } catch (error) {
     if (error instanceof TRPCError) {

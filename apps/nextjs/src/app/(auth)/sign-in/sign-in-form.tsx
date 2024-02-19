@@ -5,7 +5,7 @@ import { useFormState } from "react-dom";
 import { z } from "zod";
 
 import { cn } from "@millennicare/ui";
-import { Button, buttonVariants } from "@millennicare/ui/button";
+import { buttonVariants } from "@millennicare/ui/button";
 import {
   Form,
   FormControl,
@@ -18,9 +18,8 @@ import {
 import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
 
-import { Icons } from "~/app/_components/icons";
 import { SubmitButton } from "~/app/_components/submit-btn";
-import { signIn } from "../actions";
+import { signIn } from "./actions";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -91,13 +90,13 @@ export default function SignInForm() {
             className="w-full"
             error={!form.formState.isValid}
           />
-          <div className="relative">
+          {/* <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                Or continue with
+                Or sign in with
               </span>
             </div>
           </div>
@@ -107,6 +106,7 @@ export default function SignInForm() {
               Google
             </Link>
           </Button>
+          */}
         </form>
       </Form>
 

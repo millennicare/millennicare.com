@@ -5,8 +5,6 @@ import { TRPCError } from "@trpc/server";
 
 import type { UpdateUser } from "@millennicare/validators";
 
-// import { api } from "~/trpc/server";
-
 export async function updateCareseeker(values: UpdateUser) {
   try {
     console.log(values);

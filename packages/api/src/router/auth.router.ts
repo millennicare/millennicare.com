@@ -6,6 +6,8 @@ import { z } from "zod";
 import { and, eq, schema } from "@millennicare/db";
 import { createCustomer, sendPasswordResetEmail } from "@millennicare/lib";
 import {
+  createAddressSchema,
+  createChildSchema,
   createUserInfoSchema,
   createUserSchema,
   signInSchema,
@@ -38,7 +40,7 @@ export const authRouter = createTRPCRouter({
         });
       }
     }),
-  resetPassword: protectedProcedure
+  updatePassword: protectedProcedure
     .input(
       z.object({
         currentPassword: z.string(),
@@ -77,7 +79,7 @@ export const authRouter = createTRPCRouter({
         })
         .where(eq(schema.userTable.id, userId));
     }),
-  updatePassword: publicProcedure
+  resetPassword: publicProcedure
     .input(
       z.object({
         password: z.string(),
@@ -174,10 +176,35 @@ export const authRouter = createTRPCRouter({
   // careseeker register with password
   // need to find an better way to handle oauth login as well
   careseekerRegister: publicProcedure
-    .input(createUserSchema.and(createUserInfoSchema))
+    .input(
+      createUserSchema
+        .omit({ type: true })
+        .required({ password: true })
+        .and(
+          createUserInfoSchema.pick({
+            phoneNumber: true,
+            name: true,
+            birthdate: true,
+          }),
+        )
+        .and(
+          createAddressSchema.omit({
+            userId: true,
+            longitude: true,
+            latitude: true,
+          }),
+        )
+        .and(
+          z.object({
+            children: z.array(createChildSchema.omit({ userId: true })),
+          }),
+        ),
+    )
     .mutation(async ({ ctx, input }) => {
+      if (!input.password) {
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      }
       const { db } = ctx;
-
       // check if there is an existing user with a careseeker account already
       // since careseeker accounts can also create a caregiver account technically
       const existingUser = await db.query.userTable.findFirst({
@@ -216,8 +243,6 @@ export const authRouter = createTRPCRouter({
           userId: user[0].insertedId,
           name: input.name,
           phoneNumber: input.phoneNumber,
-          biography: input.biography,
-          profilepicture: input.profilePicture,
           birthdate: input.birthdate,
           stripeId: customer.id,
         });

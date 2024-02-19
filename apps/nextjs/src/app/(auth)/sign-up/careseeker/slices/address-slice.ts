@@ -1,5 +1,5 @@
+import type { z } from "zod";
 import type { StateCreator } from "zustand";
-import { z } from "zod";
 
 import { createAddressSchema } from "@millennicare/validators";
 
