@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const createChildSchema = z.object({
-  age: z.number().int().gte(0).lte(18),
+  age: z.coerce.number().int().gte(0).lte(18),
   name: z.string().min(1, { message: "Name is required." }),
   userId: z.string().cuid2(),
 });
