@@ -1,31 +1,34 @@
 import { createId } from "@paralleldrive/cuid2";
-import { relations, sql } from "drizzle-orm";
-import { index, int, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { relations } from "drizzle-orm";
+import { index, integer, text, varchar } from "drizzle-orm/pg-core";
 
-import { mySqlTable } from "./_table";
-import { careseekers } from "./auth";
+import { pgTable } from "./_table";
+import { careseekerTable } from "./careseeker";
 
-export const children = mySqlTable(
-  "child",
+export const childTable = pgTable(
+  "children",
   {
-    id: varchar("id", { length: 128 })
+    id: text("id")
       .$defaultFn(() => createId())
       .primaryKey(),
-    createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
-    updatedAt: timestamp("updated_at").onUpdateNow(),
 
-    age: int("age").notNull(),
+    age: integer("age").notNull(),
     name: varchar("name", { length: 255 }).notNull(),
-    userId: varchar("user_id", { length: 128 }).notNull(),
+    userId: varchar("user_id", { length: 128 })
+      .notNull()
+      .references(() => careseekerTable.userId, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
   },
   (child) => ({
-    userIdIdx: index("userId_idx").on(child.userId),
+    userIdIdx: index("child_userId_idx").on(child.userId),
   }),
 );
 
-export const childRelations = relations(children, ({ one }) => ({
-  careseeker: one(careseekers, {
-    fields: [children.id],
-    references: [careseekers.userId],
+export const childRelations = relations(childTable, ({ one }) => ({
+  user: one(careseekerTable, {
+    fields: [childTable.userId],
+    references: [careseekerTable.userId],
   }),
 }));

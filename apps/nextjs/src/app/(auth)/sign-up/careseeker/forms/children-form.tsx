@@ -13,44 +13,43 @@ import {
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
 
-import type { ChildrenInfo } from "../slices/children-slice";
+import type { Children } from "../slices/children-slice";
 import { SubmitButton } from "~/app/_components/submit-btn";
 import { childrenSchema } from "../slices/children-slice";
 import useFormStore from "../useFormStore";
 
 export default function ChildrenForm() {
-  const { childrenInfo, setChildrenInfo, increaseStep, decreaseStep } =
+  const { step, increaseStep, decreaseStep, children, setChildren } =
     useFormStore((state) => state);
 
   const form = useForm({
     schema: childrenSchema,
-    // checks to see if 'children' field are already in and sets the default values
     defaultValues: {
       children:
-        childrenInfo.children.length !== 0
-          ? childrenInfo.children
-          : [{ name: "", age: 1 }],
+        children.children.length === 0
+          ? [{ name: "", age: 1 }]
+          : children.children,
     },
-    mode: "onBlur",
-  });
-  const { fields, append, remove } = useFieldArray({
-    name: "children",
-    control: form.control,
-    rules: { minLength: 1 },
   });
 
-  function onSubmit(values: ChildrenInfo) {
-    setChildrenInfo({
-      children: { ...childrenInfo.children, ...values.children },
-    });
-    increaseStep(2);
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "children",
+    rules: {
+      minLength: 1,
+    },
+  });
+
+  function onSubmit(values: Children) {
+    setChildren(values);
+    increaseStep(step);
   }
 
   return (
     <Form {...form}>
       <form
-        className="space-y-4 px-2 py-4"
         onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col space-y-4 px-3"
       >
         <ul>
           {fields.map((item, index) => (
@@ -76,7 +75,7 @@ export default function ChildrenForm() {
                   <FormItem className="w-1/3">
                     <FormLabel>Age</FormLabel>
                     <FormControl>
-                      <Input {...field} type="number" />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -105,18 +104,19 @@ export default function ChildrenForm() {
           </Button>
         </div>
 
-        <div className="flex justify-end space-x-4">
+        <div className="flex w-full flex-col space-x-0 space-y-3 sm:flex-row sm:space-x-2 sm:space-y-0">
           <Button
-            variant="outline"
+            onClick={() => decreaseStep(step)}
             type="button"
-            onClick={() => decreaseStep(2)}
+            variant="outline"
+            className="w-full"
           >
             Back
           </Button>
           <SubmitButton
+            className="w-full"
             value="Next"
-            className="text-background"
-            error={!form.formState.isValid}
+            error={!form.formState.errors}
           />
         </div>
       </form>

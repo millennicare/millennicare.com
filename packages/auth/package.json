@@ -1,0 +1,37 @@
+{
+  "name": "@millennicare/auth",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@millennicare/eslint-config": "workspace:^",
+    "@millennicare/prettier-config": "workspace:^",
+    "@millennicare/tsconfig": "workspace:^",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@millennicare/eslint-config/base"
+    ]
+  },
+  "prettier": "@millennicare/prettier-config",
+  "dependencies": {
+    "@lucia-auth/adapter-drizzle": "^1.0.1",
+    "@millennicare/db": "workspace:^",
+    "arctic": "^1.1.4",
+    "lucia": "^3.0.1",
+    "oslo": "^1.1.1"
+  }
+}

@@ -6,22 +6,12 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "production", "test"])
       .default("development"),
-    VERCEL_ENV: z.enum(["development", "preview", "production"]).optional(),
-    VERCEL_URL: z
-      .string()
-      .optional()
-      .transform((v) => (v ? `https://${v}` : undefined)),
-    PORT: z.coerce.number().default(3000),
   },
   /**
    * Specify your server-side environment variables schema here.
    * This way you can ensure the app isn't built with invalid env vars.
    */
   server: {
-    DB_USERNAME: z.string(),
-    DB_NAME: z.string(),
-    DB_PASSWORD: z.string(),
-    DB_HOST: z.string(),
     AWS_REGION: z.string(),
     AWS_SECRET_ACCESS_KEY: z.string(),
     AWS_ACCESS_KEY_ID: z.string(),
@@ -31,6 +21,11 @@ export const env = createEnv({
     STRIPE_PUBLISHABLE_KEY: z.string(),
     STRIPE_SECRET_KEY: z.string(),
     SYMMETRIC_KEY: z.string(),
+    RESEND_API_KEY: z.string(),
+    DATABASE_URL: z.string(),
+    GOOGLE_CLIENT_ID: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string(),
+    GOOGLE_REDIRECT_URI: z.string(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -38,18 +33,11 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
-    NEXT_PUBLIC_SESSION_PASSWORD: z.string().min(32),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
    */
   runtimeEnv: {
-    VERCEL_URL: process.env.VERCEL_URL,
-    PORT: process.env.PORT,
-    DB_NAME: process.env.DB_NAME,
-    DB_HOST: process.env.DB_HOST,
-    DB_PASSWORD: process.env.DB_PASSWORD,
-    DB_USERNAME: process.env.DB_USERNAME,
     AWS_REGION: process.env.AWS_REGION,
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
@@ -58,8 +46,12 @@ export const env = createEnv({
     AWS_LOCATION_SUGGESTION_KEY: process.env.AWS_LOCATION_SUGGESTION_KEY,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
-    NEXT_PUBLIC_SESSION_PASSWORD: process.env.NEXT_PUBLIC_SESSION_PASSWORD,
     SYMMETRIC_KEY: process.env.SYMMETRIC_KEY,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    DATABASE_URL: process.env.DATABASE_URL,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   skipValidation:

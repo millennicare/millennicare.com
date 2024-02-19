@@ -2,34 +2,30 @@ import { TRPCError } from "@trpc/server";
 import * as z from "zod";
 
 import { and, eq, schema } from "@millennicare/db";
+import { createChildSchema, selectChildSchema } from "@millennicare/validators";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const childRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(
-      z.object({
-        name: z.string(),
-        age: z.number().int().min(0),
-      }),
-    )
+    .input(createChildSchema.omit({ userId: true }))
     .mutation(async ({ ctx, input }) => {
-      const { db } = ctx;
+      const { db, userId } = ctx;
 
-      await db.insert(schema.children).values({
+      await db.insert(schema.childTable).values({
         name: input.name,
         age: input.age,
-        userId: ctx.userId,
+        userId: userId,
       });
     }),
   getById: protectedProcedure
     .input(z.object({ childId: z.string().cuid2() }))
     .query(async ({ ctx, input }) => {
-      const { db } = ctx;
-      const child = await db.query.children.findFirst({
+      const { db, userId } = ctx;
+      const child = await db.query.childTable.findFirst({
         where: and(
-          eq(schema.children.id, input.childId),
-          eq(schema.children.userId, ctx.userId),
+          eq(schema.childTable.id, input.childId),
+          eq(schema.childTable.userId, userId),
         ),
       });
 
@@ -42,34 +38,27 @@ export const childRouter = createTRPCRouter({
   getByCareseekerId: protectedProcedure.query(async ({ ctx }) => {
     const { db, userId } = ctx;
 
-    const children = await db
-      .select()
-      .from(schema.children)
-      .where(eq(schema.children.userId, userId));
+    const children = await db.query.childTable.findMany({
+      where: eq(schema.childTable.userId, userId),
+    });
 
     return children;
   }),
   update: protectedProcedure
-    .input(
-      z.object({
-        childId: z.string().cuid2(),
-        name: z.string(),
-        age: z.coerce.number().int().gte(0).lte(18),
-      }),
-    )
+    .input(selectChildSchema.partial().required({ id: true }))
     .mutation(async ({ ctx, input }) => {
       const { db, userId } = ctx;
 
       await db
-        .update(schema.children)
+        .update(schema.childTable)
         .set({
           name: input.name,
           age: input.age,
         })
         .where(
           and(
-            eq(schema.children.id, input.childId),
-            eq(schema.children.userId, userId),
+            eq(schema.childTable.id, input.id),
+            eq(schema.childTable.userId, userId),
           ),
         );
     }),
@@ -83,11 +72,11 @@ export const childRouter = createTRPCRouter({
       const { db, userId } = ctx;
 
       await db
-        .delete(schema.children)
+        .delete(schema.childTable)
         .where(
           and(
-            eq(schema.children.id, input.childId),
-            eq(schema.children.userId, userId),
+            eq(schema.childTable.id, input.childId),
+            eq(schema.childTable.userId, userId),
           ),
         );
     }),

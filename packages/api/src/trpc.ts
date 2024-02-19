@@ -6,8 +6,8 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
+
 import { initTRPC, TRPCError } from "@trpc/server";
-import * as jose from "jose";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
@@ -27,11 +27,11 @@ import { db } from "@millennicare/db";
  */
 export const createTRPCContext = (opts: {
   headers: Headers;
-  sessionToken: string | null;
+  userId: string | null;
 }) => {
   return {
-    sessionToken: opts.sessionToken,
     db,
+    userId: opts.userId,
   };
 };
 
@@ -88,34 +88,17 @@ export const publicProcedure = t.procedure;
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
-  if (!ctx.sessionToken) {
+export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
+  if (!ctx.userId) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
-      message: "You must be logged in to do this",
-    });
-  }
-
-  const secret = new TextEncoder().encode(process.env.SYMMETRIC_KEY);
-  const { payload } = await jose.jwtVerify(ctx.sessionToken, secret);
-
-  if (payload.exp && payload.exp > Date.now()) {
-    throw new TRPCError({
-      code: "FORBIDDEN",
-      message: "Session has expired, please log in again.",
-    });
-  }
-  const userId = payload.sub;
-  if (!userId) {
-    throw new TRPCError({
-      code: "NOT_FOUND",
+      message: "You must be logged in to do that",
     });
   }
 
   return next({
     ctx: {
-      // infers the `userId` as non-nullable
-      userId,
+      userId: ctx.userId,
     },
   });
 });

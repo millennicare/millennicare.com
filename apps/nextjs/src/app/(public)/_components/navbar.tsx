@@ -41,7 +41,7 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           </span>
         ))}
         <Button variant="secondary" size="lg" className="text-lg text-white">
-          <Link href={isLoggedIn ? "/dashboard" : "/sign-in"}>
+          <Link href={isLoggedIn ? "/dashboard/home" : "/sign-in"}>
             {isLoggedIn ? "Dashboard" : "Sign In"}
           </Link>
         </Button>

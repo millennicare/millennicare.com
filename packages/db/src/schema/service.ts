@@ -1,35 +1,49 @@
 import { createId } from "@paralleldrive/cuid2";
-import { relations, sql } from "drizzle-orm";
-import { double, mysqlEnum, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { relations } from "drizzle-orm";
+import {
+  doublePrecision,
+  index,
+  pgEnum,
+  text,
+  varchar,
+} from "drizzle-orm/pg-core";
 
-import { mySqlTable } from "./_table";
-import { appointments } from "./appointment";
-import { caregivers } from "./auth";
+import { pgTable } from "./_table";
+import { caregiverTable } from "./caregiver";
 
-export const services = mySqlTable("service", {
-  id: varchar("id", { length: 128 })
-    .$defaultFn(() => createId())
-    .primaryKey()
-    .unique(),
-  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
-  updatedAt: timestamp("updated_at").onUpdateNow(),
+export const categoryEnum = pgEnum("category", [
+  "child_care",
+  "senior_care",
+  "housekeeping",
+  "petcare",
+]);
 
-  title: varchar("title", { length: 255 }).notNull(),
-  description: varchar("description", { length: 255 }).notNull(),
-  price: double("price", { precision: 10, scale: 2 }).notNull(),
-  category: mysqlEnum("category", [
-    "child_care",
-    "senior_care",
-    "housekeeping",
-    "petcare",
-  ]),
-  caregiverId: varchar("caregiver_id", { length: 128 }).notNull(),
-});
+export const serviceTable = pgTable(
+  "services",
+  {
+    id: text("id")
+      .$defaultFn(() => createId())
+      .primaryKey(),
 
-export const servicesRelations = relations(services, ({ many, one }) => ({
-  appointments: many(appointments),
-  caregiver: one(caregivers, {
-    fields: [services.id],
-    references: [caregivers.id],
+    title: varchar("title", { length: 255 }).notNull(),
+    description: varchar("description", { length: 255 }).notNull(),
+    price: doublePrecision("price").notNull(),
+    category: categoryEnum("category").notNull(),
+    userId: varchar("caregiver_id", { length: 128 })
+      .notNull()
+      .references(() => caregiverTable.userId, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+  },
+  (service) => ({
+    userIdIdx: index("service_userId_idx").on(service.userId),
+  }),
+);
+
+export const serviceRelations = relations(serviceTable, ({ one }) => ({
+  caregiver: one(caregiverTable, {
+    fields: [serviceTable.userId],
+    references: [caregiverTable.userId],
   }),
 }));

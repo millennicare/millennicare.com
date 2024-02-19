@@ -1,16 +1,17 @@
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
-import { getSession } from "../actions";
+import { validateRequest } from "../lib/auth";
 
 export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSession();
-  if (session.isLoggedIn) {
-    redirect("/dashboard");
+  const { session } = await validateRequest();
+
+  if (session) {
+    redirect("/dashboard/home");
   }
 
   return (
