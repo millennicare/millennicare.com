@@ -6,6 +6,7 @@ import { childRouter } from "./router/child.router";
 import { contactUsRouter } from "./router/contact-us.router";
 import { serviceRouter } from "./router/service.router";
 import { userRouter } from "./router/user.router";
+import { waitlistRouter } from "./router/waitlist.router";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
@@ -17,6 +18,7 @@ export const appRouter = createTRPCRouter({
   service: serviceRouter,
   children: childRouter,
   user: userRouter,
+  waitlist: waitlistRouter,
 });
 
 // export type definition of API
