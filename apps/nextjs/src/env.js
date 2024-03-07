@@ -18,6 +18,8 @@ export const env = createEnv({
     AWS_BUCKET: z.string(),
     AWS_LOCATION_API_KEY: z.string(),
     AWS_LOCATION_SUGGESTION_KEY: z.string(),
+    AWS_MAIL_ACCESS_KEY: z.string(),
+    AWS_MAIL_SECRET_KEY: z.string(),
     STRIPE_PUBLISHABLE_KEY: z.string(),
     STRIPE_SECRET_KEY: z.string(),
     SYMMETRIC_KEY: z.string(),
@@ -52,6 +54,8 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
+    AWS_MAIL_ACCESS_KEY: process.env.AWS_MAIL_ACCESS_KEY,
+    AWS_MAIL_SECRET_KEY: process.env.AWS_MAIL_SECRET_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   skipValidation:
