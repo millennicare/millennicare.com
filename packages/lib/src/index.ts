@@ -1,3 +1,4 @@
 export * from "./stripe";
-export * from "./aws";
+export * from "./location";
 export * from "./emails";
+export * from "./s3";

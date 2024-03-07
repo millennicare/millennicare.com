@@ -1,4 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
+import { relations } from "drizzle-orm";
 import { date, index, text, varchar } from "drizzle-orm/pg-core";
 
 import { pgTable } from "./_table";
@@ -29,3 +30,10 @@ export const userInfoTable = pgTable(
     userIdIdx: index("user_userId_idx").on(user.userId),
   }),
 );
+
+export const userInfoRelations = relations(userInfoTable, ({ one }) => ({
+  user: one(userTable, {
+    fields: [userInfoTable.userId],
+    references: [userTable.id],
+  }),
+}));

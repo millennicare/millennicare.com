@@ -409,12 +409,12 @@ importers:
       '@react-email/components':
         specifier: ^0.0.15
         version: 0.0.15(@types/react@18.2.64)(react-email@2.1.0)(react@18.2.0)
+      nodemailer:
+        specifier: ^6.9.11
+        version: 6.9.11
       react-email:
         specifier: ^2.1.0
         version: 2.1.0(@babel/core@7.24.0)(eslint@8.57.0)
-      resend:
-        specifier: ^3.2.0
-        version: 3.2.0
       stripe:
         specifier: ^14.19.0
         version: 14.19.0
@@ -431,6 +431,9 @@ importers:
       '@millennicare/tsconfig':
         specifier: workspace:^
         version: link:../../tooling/typescript
+      '@types/nodemailer':
+        specifier: ^6.4.14
+        version: 6.4.14
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -8560,6 +8563,12 @@ packages:
     dependencies:
       undici-types: 5.26.5
 
+  /@types/nodemailer@6.4.14:
+    resolution: {integrity: sha512-fUWthHO9k9DSdPCSPRqcu6TWhYyxTBg382vlNIttSe9M7XfsT06y0f24KHXtbnijPGGRIcVvdKHTNikOI6qiHA==}
+    dependencies:
+      '@types/node': 20.11.25
+    dev: true
+
   /@types/normalize-package-data@2.4.4:
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
     dev: false
@@ -14294,6 +14303,11 @@ packages:
   /node-stream-zip@1.15.0:
     resolution: {integrity: sha512-LN4fydt9TqhZhThkZIVQnF9cwjU3qmUH9h78Mx/K7d3VvfRqqwthLwJEUOEL0QPZ0XQmNN7be5Ggit5+4dq3Bw==}
     engines: {node: '>=0.12.0'}
+    dev: false
+
+  /nodemailer@6.9.11:
+    resolution: {integrity: sha512-UiAkgiERuG94kl/3bKfE8o10epvDnl0vokNEtZDPTq9BWzIl6EFT9336SbIT4oaTBD8NmmUTLsQyXHV82eXSWg==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /nopt@7.2.0:
