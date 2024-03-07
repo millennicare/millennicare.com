@@ -17,9 +17,9 @@
     "@millennicare/eslint-config": "workspace:^",
     "@millennicare/prettier-config": "workspace:^",
     "@millennicare/tsconfig": "workspace:^",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.2"
   },
   "eslintConfig": {
     "extends": [
@@ -28,10 +28,10 @@
   },
   "prettier": "@millennicare/prettier-config",
   "dependencies": {
-    "@lucia-auth/adapter-drizzle": "^1.0.1",
+    "@lucia-auth/adapter-drizzle": "^1.0.2",
     "@millennicare/db": "workspace:^",
-    "arctic": "^1.1.4",
+    "arctic": "^1.2.1",
     "lucia": "^3.0.1",
-    "oslo": "^1.1.1"
+    "oslo": "^1.1.3"
   }
 }

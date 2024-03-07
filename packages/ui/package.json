@@ -48,11 +48,11 @@
     "class-variance-authority": "^0.7.0",
     "cmdk": "^0.2.1",
     "date-fns": "^3.3.1",
-    "lucide-react": "^0.330.0",
+    "lucide-react": "^0.350.0",
     "next-themes": "^0.2.1",
     "react-day-picker": "^8.10.0",
-    "react-hook-form": "^7.50.1",
-    "sonner": "^1.4.0",
+    "react-hook-form": "^7.51.0",
+    "sonner": "^1.4.3",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -61,10 +61,10 @@
     "@millennicare/prettier-config": "workspace:^",
     "@millennicare/tailwind-config": "workspace:^",
     "@millennicare/tsconfig": "workspace:^",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.2",
     "zod": "^3.22.4"
   },
   "peerDependencies": {
