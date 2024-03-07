@@ -1,10 +1,10 @@
 import { Button, Heading, Html, Tailwind } from "@react-email/components";
 
-interface ResetPasswordEmailProps {
+type ResetPasswordProps = {
   token: string;
-}
+};
 
-export default function ResetPasswordEmail({ token }: ResetPasswordEmailProps) {
+export default function ResetPassword({ token }: ResetPasswordProps) {
   return (
     <Tailwind
       config={{
@@ -17,7 +17,7 @@ export default function ResetPasswordEmail({ token }: ResetPasswordEmailProps) {
         },
       }}
     >
-      <Html className="flex items-center justify-center bg-gray-400 text-center">
+      <Html className="flex items-center justify-center text-center">
         <Heading>Can't login?</Heading>
         <p>Click the link below and reset your password</p>
         <Button
