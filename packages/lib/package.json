@@ -7,9 +7,7 @@
   },
   "typesVersions": {
     "*": {
-      "*": [
-        "src/*"
-      ]
+      "*": ["src/*"]
     }
   },
   "license": "MIT",
@@ -28,7 +26,6 @@
     "@aws/amazon-location-utilities-auth-helper": "^1.0.4",
     "@millennicare/validators": "workspace:^",
     "@react-email/components": "^0.0.15",
-    "nodemailer": "^6.9.11",
     "react-email": "^2.1.0",
     "stripe": "^14.19.0",
     "zod": "^3.22.4"
@@ -44,9 +41,7 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": [
-      "@millennicare/eslint-config/base"
-    ]
+    "extends": ["@millennicare/eslint-config/base"]
   },
   "prettier": "@millennicare/prettier-config"
 }
