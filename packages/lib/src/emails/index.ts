@@ -39,10 +39,5 @@ export const sendPasswordResetEmail = async ({
     },
   };
 
-  try {
-    const data = await ses.sendEmail(params);
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
+  return ses.sendEmail(params);
 };
