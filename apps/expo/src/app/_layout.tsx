@@ -15,11 +15,11 @@ export default function RootLayout() {
           It also allows you to configure your screens 
         */}
       <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: "#f472b6",
-          },
-        }}
+      // screenOptions={{
+      //   headerStyle: {
+      //     backgroundColor: "#f472b6",
+      //   },
+      // }}
       />
       <StatusBar />
     </TRPCProvider>
