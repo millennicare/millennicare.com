@@ -12,6 +12,7 @@ import * as services from "./schema/service";
 import * as sessions from "./schema/session";
 import * as users from "./schema/user";
 import * as userInfo from "./schema/user-info";
+import * as waitlist from "./schema/waitlist";
 
 export const schema = {
   ...accounts,
@@ -25,6 +26,7 @@ export const schema = {
   ...sessions,
   ...users,
   ...userInfo,
+  ...waitlist,
 };
 
 const pool = new Pool({
