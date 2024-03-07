@@ -2,7 +2,8 @@ import type { SendEmailCommandInput } from "@aws-sdk/client-ses";
 import { SES } from "@aws-sdk/client-ses";
 import { render } from "@react-email/render";
 
-import ResetPasswordEmail from "./templates/reset-password";
+import ResetPassword from "./templates/reset-password";
+import WaitlistConfirmation from "./templates/waitlist-confirmation";
 
 const ses = new SES({
   region: process.env.AWS_REGION,
@@ -12,16 +13,14 @@ const ses = new SES({
   },
 });
 
-type SendPasswordResetEmailParams = {
-  token: string;
-  to: string;
-};
-
 export const sendPasswordResetEmail = async ({
   token,
   to,
-}: SendPasswordResetEmailParams) => {
-  const emailHtml = render(ResetPasswordEmail({ token }));
+}: {
+  token: string;
+  to: string;
+}) => {
+  const emailHtml = render(ResetPassword({ token }));
 
   const params: SendEmailCommandInput = {
     Source: "no-reply@millennicare.com",
@@ -35,6 +34,32 @@ export const sendPasswordResetEmail = async ({
       Subject: {
         Charset: "UTF-8",
         Data: "Reset your password",
+      },
+    },
+  };
+
+  return ses.sendEmail(params);
+};
+
+export const sendWaitlistConfirmationEmail = async ({
+  email,
+}: {
+  email: string;
+}) => {
+  const emailHtml = render(WaitlistConfirmation());
+
+  const params: SendEmailCommandInput = {
+    Source: "no-reply@millennicare.com",
+    Destination: {
+      ToAddresses: [email],
+    },
+    Message: {
+      Body: {
+        Html: { Charset: "UTF-8", Data: emailHtml },
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data: "Waitlist Confirmation",
       },
     },
   };
