@@ -1,7 +1,13 @@
 import Image from "next/image";
 
 import { Button } from "@millennicare/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@millennicare/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@millennicare/ui/dialog";
 
 import WaitlistForm from "./waitlist-form";
 
@@ -26,6 +32,9 @@ const Hero = () => {
               </Button>
             </DialogTrigger>
             <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Join the waitlist</DialogTitle>
+              </DialogHeader>
               <WaitlistForm />
             </DialogContent>
           </Dialog>

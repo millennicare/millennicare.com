@@ -12,7 +12,8 @@ export const waitlistRouter = createTRPCRouter({
 
       await db
         .insert(schema.waitlistTable)
-        .values({ email: input.email, contacted: false });
+        .values({ email: input.email, contacted: false })
+        .onConflictDoNothing({ target: schema.waitlistTable.email });
     }),
   update: publicProcedure
     .input(
