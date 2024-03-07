@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { eq, schema } from "@millennicare/db";
+import { sendWaitlistConfirmationEmail } from "@millennicare/lib";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
@@ -10,10 +11,15 @@ export const waitlistRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
-      await db
-        .insert(schema.waitlistTable)
-        .values({ email: input.email, contacted: false })
-        .onConflictDoNothing({ target: schema.waitlistTable.email });
+      try {
+        await db
+          .insert(schema.waitlistTable)
+          .values({ email: input.email, contacted: false });
+
+        await sendWaitlistConfirmationEmail({ email: input.email });
+      } catch (error) {
+        console.error(error);
+      }
     }),
   update: publicProcedure
     .input(
