@@ -1,14 +1,5 @@
 import Image from "next/image";
 
-import { Button } from "@millennicare/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@millennicare/ui/dialog";
-
 import WaitlistForm from "./waitlist-form";
 
 const Hero = () => {
@@ -25,19 +16,8 @@ const Hero = () => {
           <h3 className="pb-2 text-lg text-secondary/80 md:text-2xl">
             Low-monthly fee to access quality and affordable childcare services.
           </h3>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button size="lg" className="text-lg text-background">
-                Join the Waitlist
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Join the waitlist</DialogTitle>
-              </DialogHeader>
-              <WaitlistForm />
-            </DialogContent>
-          </Dialog>
+
+          <WaitlistForm />
         </div>
       </div>
       <Image
