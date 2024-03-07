@@ -7,7 +7,9 @@
   },
   "typesVersions": {
     "*": {
-      "*": ["src/*"]
+      "*": [
+        "src/*"
+      ]
     }
   },
   "license": "MIT",
@@ -41,7 +43,9 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": ["@millennicare/eslint-config/base"]
+    "extends": [
+      "@millennicare/eslint-config/base"
+    ]
   },
   "prettier": "@millennicare/prettier-config"
 }
