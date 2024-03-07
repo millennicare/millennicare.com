@@ -19,7 +19,7 @@
     "@millennicare/lib": "workspace:^",
     "@millennicare/validators": "workspace:^",
     "@trpc/server": "11.0.0-next-beta.283",
-    "argon2": "^0.31.2",
+    "argon2": "^0.40.1",
     "bcryptjs": "^2.4.3",
     "jose": "^5.2.2",
     "superjson": "2.2.1",
@@ -30,9 +30,9 @@
     "@millennicare/prettier-config": "workspace:^",
     "@millennicare/tsconfig": "workspace:^",
     "@types/bcryptjs": "^2.4.6",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.2"
   },
   "eslintConfig": {
     "root": true,
