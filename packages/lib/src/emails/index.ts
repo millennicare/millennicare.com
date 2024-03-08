@@ -1,26 +1,68 @@
-import { Resend } from "resend";
+import type { SendEmailCommandInput } from "@aws-sdk/client-ses";
+import { SES } from "@aws-sdk/client-ses";
+import { render } from "@react-email/render";
 
-import ResetPasswordEmail from "./templates/reset-password";
+import ResetPassword from "./templates/reset-password";
+import WaitlistConfirmation from "./templates/waitlist-confirmation";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-type ResetPasswordEmailProps = {
-  to: string;
-  token: string;
-};
+const ses = new SES({
+  region: process.env.AWS_REGION,
+  credentials: {
+    secretAccessKey: process.env.AWS_MAIL_SECRET_KEY!,
+    accessKeyId: process.env.AWS_MAIL_ACCESS_KEY!,
+  },
+});
 
 export const sendPasswordResetEmail = async ({
-  to,
   token,
-}: ResetPasswordEmailProps) => {
-  const { error } = await resend.emails.send({
-    to,
-    from: "MillenniCare <no-reply@millennicare.com>",
-    subject: "Reset your MillenniCare password",
-    react: ResetPasswordEmail({ token }),
-  });
+  to,
+}: {
+  token: string;
+  to: string;
+}) => {
+  const emailHtml = render(ResetPassword({ token }));
 
-  if (error) {
-    throw new Error(error.message);
-  }
+  const params: SendEmailCommandInput = {
+    Source: "no-reply@millennicare.com",
+    Destination: {
+      ToAddresses: [to],
+    },
+    Message: {
+      Body: {
+        Html: { Charset: "UTF-8", Data: emailHtml },
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data: "Reset your password",
+      },
+    },
+  };
+
+  return ses.sendEmail(params);
+};
+
+export const sendWaitlistConfirmationEmail = async ({
+  email,
+}: {
+  email: string;
+}) => {
+  const emailHtml = render(WaitlistConfirmation());
+
+  const params: SendEmailCommandInput = {
+    Source: "no-reply@millennicare.com",
+    Destination: {
+      ToAddresses: [email],
+    },
+    Message: {
+      Body: {
+        Html: { Charset: "UTF-8", Data: emailHtml },
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data: "Waitlist Confirmation",
+      },
+    },
+  };
+
+  return ses.sendEmail(params);
 };
