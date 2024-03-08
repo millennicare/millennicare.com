@@ -1,24 +1,24 @@
-import { Image, SafeAreaView, Text, View } from "react-native";
+import {  Text, View, ImageBackground } from "react-native";
 import { Stack } from "expo-router";
-import { Button } from "@/ui/Button";
-import { Switch } from "@/ui/Switch";
+import { Button } from "~/components/ui/Button";
+
 
 export default function Index() {
   return (
-    <SafeAreaView>
-      <View>
+    <View className="flex flex-1">
+      <ImageBackground source={require("../../assets/welcome_background.png")} resizeMode="cover" className="justify-between flex-col h-full py-20 ">
+      
         {/* Changes page title visible on the header */}
-        <View style={{ backgroundColor: "#8a4040" }}>
-          <Text>Hi</Text>
+  
+        <Stack.Screen options={{ headerShown: false }} />
+        <Text className="text-white self-start pl-10 text-[40px] font-light">MILLENNI<Text className="font-bold">CARE</Text></Text>
+        <View className="flex flex-col gap-y-4 justify-center px-9">
+          <Text className="text-white text-[30px] font-light">Modern Childcare for the New Millennium </Text>
+
+          <Button label="Get Started" size="lg" className="rounded" labelClasses="text-white"/>
+          <Button label="Login" size="lg" className="rounded " labelClasses="text-white"/>
         </View>
-        <Stack.Screen options={{ title: "Home Page" }} />
-        <Image
-          src={require("../../public/millennicare_logo.png")}
-          className="h-10 w-10"
-        />
-        <Button label="Login" />
-        <Button label="Sign Up" variant="default" />
-      </View>
-    </SafeAreaView>
+      </ImageBackground>
+  </View>
   );
 }
