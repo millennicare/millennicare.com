@@ -9,13 +9,13 @@ function Switch({
   const colorScheme = useColorScheme();
   const currentTheme = colorScheme === "dark" ? theme.dark : theme.light;
 
-  const trackColor = props.trackColor || {
+  const trackColor = props.trackColor ?? {
     false: currentTheme.background,
     true: currentTheme.foreground,
   };
-  const thumbColor = props.thumbColor || currentTheme.background;
+  const thumbColor = props.thumbColor ?? currentTheme.background;
   const ios_backgroundColor =
-    props.ios_backgroundColor || currentTheme.background;
+    props.ios_backgroundColor ?? currentTheme.background;
 
   return (
     <NativeSwitch
