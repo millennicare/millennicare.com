@@ -1,10 +1,10 @@
-import {  Text, View, ImageBackground } from "react-native";
+import type { ImageSourcePropType } from "react-native";
+import { ImageBackground, Text, View } from "react-native";
 import { Stack } from "expo-router";
+
 import { Button } from "~/components/ui/Button";
-import type {ImageSourcePropType} from "react-native";
 
 export default function Index() {
- 
   return (
     <View className="flex flex-1">
       {/* Put a bandaid solution on there for the time being. 
@@ -17,19 +17,38 @@ Using the ESLint disable comment for now.
 
 https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-var-requires.md */}
       {/* eslint-disable-next-line @typescript-eslint/no-var-requires */}
-      <ImageBackground source={require("../../assets/welcome_background.png") as ImageSourcePropType} resizeMode="cover" className="justify-between flex-col h-full py-20 ">
-      
+      <ImageBackground
+        source={
+          require("../../assets/welcome_background.png") as ImageSourcePropType
+        }
+        resizeMode="cover"
+        className="h-full flex-col justify-between py-20 "
+      >
         {/* Changes page title visible on the header */}
-  
-        <Stack.Screen options={{ headerShown: false }} />
-        <Text className="text-white self-start pl-10 text-[40px] font-light">MILLENNI<Text className="font-bold">CARE</Text></Text>
-        <View className="flex flex-col gap-y-4 justify-center px-9">
-          <Text className="text-white text-[30px] font-light">Modern Childcare for the New Millennium </Text>
 
-          <Button label="Get Started" size="lg" className="rounded" labelClasses="text-white"/>
-          <Button label="Login" size="lg" className="rounded " labelClasses="text-white"/>
+        <Stack.Screen options={{ headerShown: false }} />
+        <Text className="self-start pl-10 text-[40px] font-light text-white">
+          MILLENNI<Text className="font-bold">CARE</Text>
+        </Text>
+        <View className="flex flex-col justify-center gap-y-4 px-9">
+          <Text className="text-[30px] font-light text-white">
+            Modern Childcare for the New Millennium{" "}
+          </Text>
+
+          <Button
+            label="Get Started"
+            size="lg"
+            className="rounded"
+            labelClasses="text-white"
+          />
+          <Button
+            label="Login"
+            size="lg"
+            className="rounded "
+            labelClasses="text-white"
+          />
         </View>
       </ImageBackground>
-  </View>
+    </View>
   );
 }

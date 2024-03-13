@@ -1,11 +1,10 @@
+import type { AppRouter } from "@millennicare/api";
 import { useState } from "react";
 import Constants from "expo-constants";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, loggerLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import superjson from "superjson";
-
-import type { AppRouter } from "@millennicare/api";
 
 /**
  * A set of typesafe hooks for consuming your API.

@@ -1,9 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useFormState } from "react-dom";
-import { z } from "zod";
-
 import { Button } from "@millennicare/ui/button";
 import {
   Dialog,
@@ -23,6 +20,8 @@ import {
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
+import { useFormState } from "react-dom";
+import { z } from "zod";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
 import { submitWaitlist } from "../actions";

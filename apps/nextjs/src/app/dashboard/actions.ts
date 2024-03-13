@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-
 import { lucia } from "@millennicare/auth";
 
 import { validateRequest } from "../lib/auth";

@@ -1,7 +1,5 @@
 "use client";
 
-import { z } from "zod";
-
 import {
   Form,
   FormControl,
@@ -13,6 +11,7 @@ import {
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
+import { z } from "zod";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
 import { updatePassword } from "../actions";

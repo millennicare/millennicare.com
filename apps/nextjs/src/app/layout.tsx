@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Montserrat, Quicksand } from "next/font/google";
-
 import { cn } from "@millennicare/ui";
 import { Toaster } from "@millennicare/ui/toast";
 

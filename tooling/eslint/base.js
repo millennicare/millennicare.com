@@ -5,7 +5,6 @@ const config = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
-    "prettier",
   ],
   env: {
     es2022: true,
@@ -15,6 +14,7 @@ const config = {
   parserOptions: { project: true },
   plugins: ["@typescript-eslint", "import"],
   rules: {
+    "@typescript-eslint/consistent-type-definitions": "off",
     "turbo/no-undeclared-env-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
@@ -29,7 +29,6 @@ const config = {
       { checksVoidReturn: { attributes: false } },
     ],
     "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
-    "@typescript-eslint/consistent-type-definitions": "off",
   },
   ignorePatterns: [
     "**/*.config.js",
