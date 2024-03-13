@@ -1,11 +1,10 @@
-import { TRPCError } from "@trpc/server";
-import * as z from "zod";
-
 import { and, eq, or, schema } from "@millennicare/db";
 import {
   createAppointmentSchema,
   selectAppointmentSchema,
 } from "@millennicare/validators";
+import { TRPCError } from "@trpc/server";
+import * as z from "zod";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 

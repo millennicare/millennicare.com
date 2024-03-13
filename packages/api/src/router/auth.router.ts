@@ -1,8 +1,3 @@
-import { TRPCError } from "@trpc/server";
-import * as argon from "argon2";
-import * as jose from "jose";
-import { z } from "zod";
-
 import { and, eq, schema } from "@millennicare/db";
 import {
   createCustomer,
@@ -16,6 +11,10 @@ import {
   createUserSchema,
   signInSchema,
 } from "@millennicare/validators";
+import { TRPCError } from "@trpc/server";
+import * as argon from "argon2";
+import * as jose from "jose";
+import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 

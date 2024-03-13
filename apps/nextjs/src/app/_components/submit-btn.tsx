@@ -1,9 +1,8 @@
 "use client";
 
-import { useFormStatus } from "react-dom";
-
 import { cn } from "@millennicare/ui";
 import { Button } from "@millennicare/ui/button";
+import { useFormStatus } from "react-dom";
 
 type SubmitButtonProps = {
   value: string;

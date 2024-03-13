@@ -20,6 +20,7 @@
     "@millennicare/validators": "workspace:^",
     "@trpc/server": "11.0.0-next-beta.283",
     "argon2": "^0.40.1",
+    "bcryptjs": "^2.4.3",
     "jose": "^5.2.3",
     "superjson": "2.2.1",
     "zod": "^3.22.4"

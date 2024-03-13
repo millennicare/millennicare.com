@@ -1,5 +1,6 @@
-import { Button, Heading, Html, Tailwind } from "@react-email/components";
 import * as React from "react";
+import { Button, Heading, Html, Tailwind } from "@react-email/components";
+
 type ResetPasswordProps = {
   token: string;
 };

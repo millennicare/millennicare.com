@@ -1,9 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { TRPCError } from "@trpc/server";
-
 import { getAddressSuggestions } from "@millennicare/lib";
+import { TRPCError } from "@trpc/server";
 
 import type { AdditionalInfo } from "./careseeker/slices/additional-info-slice";
 import type { Address } from "./careseeker/slices/address-slice";

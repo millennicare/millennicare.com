@@ -1,8 +1,7 @@
 "use client";
 
-import type { z } from "zod";
-
 import type { User, UserInfo } from "@millennicare/validators";
+import type { z } from "zod";
 import {
   Form,
   FormControl,

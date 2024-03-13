@@ -1,7 +1,6 @@
+import type { Session, User } from "@millennicare/auth";
 import { cache } from "react";
 import { cookies } from "next/headers";
-
-import type { Session, User } from "@millennicare/auth";
 import { lucia } from "@millennicare/auth";
 
 export const createSession = async (userId: string) => {

@@ -1,8 +1,7 @@
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
+import { db, schema } from "@millennicare/db";
 import { Google } from "arctic";
 import { Lucia } from "lucia";
-
-import { db, schema } from "@millennicare/db";
 
 export * from "lucia";
 export * from "arctic";
