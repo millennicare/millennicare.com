@@ -1,6 +1,5 @@
 import type { z } from "zod";
 import type { StateCreator } from "zustand";
-
 import { createUserInfoSchema } from "@millennicare/validators";
 
 export const additionalInfoSchema = createUserInfoSchema.pick({

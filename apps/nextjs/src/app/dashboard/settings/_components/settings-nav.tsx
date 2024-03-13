@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 import { cn } from "@millennicare/ui";
 import { ScrollArea } from "@millennicare/ui/scroll-area";
 import { Separator } from "@millennicare/ui/separator";

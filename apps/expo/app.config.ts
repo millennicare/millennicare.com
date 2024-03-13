@@ -1,17 +1,18 @@
-import type { ExpoConfig } from "@expo/config";
+import type { ConfigContext, ExpoConfig } from "expo/config";
 
-const defineConfig = (): ExpoConfig => ({
+export default ({ config }: ConfigContext): ExpoConfig => ({
+  ...config,
   name: "expo",
   slug: "expo",
   scheme: "expo",
   version: "0.1.0",
   orientation: "portrait",
-  icon: "./assets/icon.png",
-  userInterfaceStyle: "light",
+  icon: "./assets/millennicare_logo.png",
+  userInterfaceStyle: "automatic",
   splash: {
-    image: "./assets/icon.png",
+    image: "./assets/millennicare_splash_logo.png",
     resizeMode: "contain",
-    backgroundColor: "#1F104A",
+    backgroundColor: "#FDF9F2",
   },
   updates: {
     fallbackToCacheTimeout: 0,
@@ -37,7 +38,5 @@ const defineConfig = (): ExpoConfig => ({
     tsconfigPaths: true,
     typedRoutes: true,
   },
-  plugins: ["expo-router", "./expo-plugins/with-modify-gradle.js"],
+  plugins: ["expo-router"],
 });
-
-export default defineConfig;

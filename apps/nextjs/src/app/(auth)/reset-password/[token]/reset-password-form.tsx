@@ -3,8 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { z } from "zod";
-
 import { Button } from "@millennicare/ui/button";
 import {
   Form,
@@ -17,6 +15,7 @@ import {
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
+import { z } from "zod";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
 import { resetPassword } from "./actions";

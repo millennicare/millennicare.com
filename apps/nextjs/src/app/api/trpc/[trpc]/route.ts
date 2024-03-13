@@ -1,6 +1,5 @@
-import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-
 import { appRouter, createTRPCContext } from "@millennicare/api";
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { validateRequest } from "~/app/lib/auth";
 

@@ -1,7 +1,6 @@
-import { TRPCError } from "@trpc/server";
-
 import { eq, schema } from "@millennicare/db";
 import { updateUserSchema } from "@millennicare/validators";
+import { TRPCError } from "@trpc/server";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
