@@ -33,7 +33,7 @@ importers:
         specifier: 1.6.3
         version: 1.6.3(@babel/runtime@7.24.0)(react-native@0.73.5)(react@18.2.0)
       '@tanstack/react-query':
-        specifier: ^5.25.0
+        specifier: ^5.28.0
         version: 5.28.0(react@18.2.0)
       '@trpc/client':
         specifier: 11.0.0-next-beta.283
@@ -133,7 +133,7 @@ importers:
         specifier: ^7.20.5
         version: 7.20.5
       '@types/react':
-        specifier: ^18.2.64
+        specifier: ^18.2.65
         version: 18.2.65
       eslint:
         specifier: ^8.57.0
@@ -178,10 +178,10 @@ importers:
         specifier: ^0.9.2
         version: 0.9.2(typescript@5.4.2)(zod@3.22.4)
       '@tanstack/react-query':
-        specifier: ^5.25.0
+        specifier: ^5.28.0
         version: 5.28.0(react@18.2.0)
       '@tanstack/react-query-devtools':
-        specifier: ^5.25.0
+        specifier: ^5.28.0
         version: 5.28.0(@tanstack/react-query@5.28.0)(react@18.2.0)
       '@tanstack/react-query-next-experimental':
         specifier: 5.25.0
@@ -196,7 +196,7 @@ importers:
         specifier: 11.0.0-next-beta.283
         version: 11.0.0-next-beta.283
       date-fns:
-        specifier: ^3.3.1
+        specifier: ^3.4.0
         version: 3.4.0
       lodash:
         specifier: ^4.17.21
@@ -236,22 +236,22 @@ importers:
         specifier: workspace:^
         version: link:../../tooling/typescript
       '@types/lodash':
-        specifier: ^4.14.202
+        specifier: ^4.17.0
         version: 4.17.0
       '@types/node':
-        specifier: ^20.11.25
+        specifier: ^20.11.27
         version: 20.11.27
       '@types/react':
-        specifier: ^18.2.64
+        specifier: ^18.2.65
         version: 18.2.65
       '@types/react-dom':
-        specifier: ^18.2.21
+        specifier: ^18.2.22
         version: 18.2.22
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
       dotenv-cli:
-        specifier: ^7.4.0
+        specifier: ^7.4.1
         version: 7.4.1
       eslint:
         specifier: ^8.57.0
@@ -324,7 +324,7 @@ importers:
   packages/auth:
     dependencies:
       '@lucia-auth/adapter-drizzle':
-        specifier: ^1.0.2
+        specifier: ^1.0.3
         version: 1.0.3(lucia@3.1.1)
       '@millennicare/db':
         specifier: workspace:^
@@ -333,7 +333,7 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1
       lucia:
-        specifier: ^3.0.1
+        specifier: ^3.1.1
         version: 3.1.1
       oslo:
         specifier: ^1.1.3
@@ -383,7 +383,7 @@ importers:
         specifier: ^8.11.2
         version: 8.11.2
       dotenv-cli:
-        specifier: ^7.4.0
+        specifier: ^7.4.1
         version: 7.4.1
       drizzle-kit:
         specifier: ^0.20.14
@@ -401,20 +401,20 @@ importers:
   packages/lib:
     dependencies:
       '@aws-sdk/client-location':
-        specifier: ^3.525.0
+        specifier: ^3.529.1
         version: 3.529.1
       '@aws-sdk/client-s3':
-        specifier: ^3.525.0
+        specifier: ^3.529.1
         version: 3.529.1
       '@aws-sdk/client-ses':
-        specifier: ^3.525.0
+        specifier: ^3.529.1
         version: 3.529.1
       '@aws-sdk/s3-request-presigner':
-        specifier: ^3.525.0
+        specifier: ^3.529.1
         version: 3.529.1
       '@aws/amazon-location-utilities-auth-helper':
         specifier: ^1.0.4
-        version: 1.0.4(react-native@0.73.5)
+        version: 1.0.4(react-native@0.73.6)
       '@millennicare/validators':
         specifier: workspace:^
         version: link:../validators
@@ -425,7 +425,7 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0(@babel/core@7.24.0)(eslint@8.57.0)
       stripe:
-        specifier: ^14.19.0
+        specifier: ^14.20.0
         version: 14.20.0
       zod:
         specifier: ^3.22.4
@@ -498,7 +498,7 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(react-dom@18.2.0)(react@18.2.0)
       date-fns:
-        specifier: ^3.3.1
+        specifier: ^3.4.0
         version: 3.4.0
       lucide-react:
         specifier: ^0.350.0
@@ -557,7 +557,7 @@ importers:
         version: link:../db
       drizzle-zod:
         specifier: ^0.5.1
-        version: 0.5.1(drizzle-orm@0.29.5)(zod@3.22.4)
+        version: 0.5.1(drizzle-orm@0.30.1)(zod@3.22.4)
       validator:
         specifier: ^13.11.0
         version: 13.11.0
@@ -593,10 +593,10 @@ importers:
         specifier: ^14.1.3
         version: 14.1.3
       '@typescript-eslint/eslint-plugin':
-        specifier: ^7.1.1
+        specifier: ^7.2.0
         version: 7.2.0(@typescript-eslint/parser@7.2.0)(eslint@8.57.0)(typescript@5.4.2)
       '@typescript-eslint/parser':
-        specifier: ^7.1.1
+        specifier: ^7.2.0
         version: 7.2.0(eslint@8.57.0)(typescript@5.4.2)
       eslint-config-prettier:
         specifier: ^9.1.0
@@ -641,17 +641,17 @@ importers:
   tooling/prettier:
     dependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: ^4.1.1
+        specifier: ^4.2.0
         version: 4.2.0(prettier@3.2.5)
       prettier:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-tailwindcss:
-        specifier: ^0.5.11
+        specifier: ^0.5.12
         version: 0.5.12(@ianvs/prettier-plugin-sort-imports@4.2.0)(prettier@3.2.5)
     devDependencies:
       '@millennicare/tsconfig':
-        specifier: workspace:^0.1.0
+        specifier: workspace:^
         version: link:../typescript
       typescript:
         specifier: ^5.4.2
@@ -670,13 +670,13 @@ importers:
         version: 1.0.7(tailwindcss@3.4.1)
     devDependencies:
       '@millennicare/eslint-config':
-        specifier: workspace:^0.2.0
+        specifier: workspace:^
         version: link:../eslint
       '@millennicare/prettier-config':
-        specifier: workspace:^0.1.0
+        specifier: workspace:^
         version: link:../prettier
       '@millennicare/tsconfig':
-        specifier: workspace:^0.1.0
+        specifier: workspace:^
         version: link:../typescript
       eslint:
         specifier: ^8.57.0
@@ -707,16 +707,16 @@ packages:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  /@aws-amplify/core@5.8.11(react-native@0.73.5):
+  /@aws-amplify/core@5.8.11(react-native@0.73.6):
     resolution: {integrity: sha512-ihPg78IYJ8DdVMrvyjjmK30jGhJlj7hzUXjJElWNMkrW1okhtOlYhJYjoT7VpL1l4njlLkqxwyh6mu5U3qUu4A==}
     dependencies:
       '@aws-crypto/sha256-js': 1.2.2
-      '@aws-sdk/client-cloudwatch-logs': 3.6.1(react-native@0.73.5)
+      '@aws-sdk/client-cloudwatch-logs': 3.6.1(react-native@0.73.6)
       '@aws-sdk/types': 3.6.1
       '@aws-sdk/util-hex-encoding': 3.6.1
       '@types/node-fetch': 2.6.4
       isomorphic-unfetch: 3.1.0
-      react-native-url-polyfill: 1.3.0(react-native@0.73.5)
+      react-native-url-polyfill: 1.3.0(react-native@0.73.6)
       tslib: 1.14.1
       universal-cookie: 4.0.4
       zen-observable-ts: 0.8.19
@@ -842,7 +842,7 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@aws-sdk/client-cloudwatch-logs@3.6.1(react-native@0.73.5):
+  /@aws-sdk/client-cloudwatch-logs@3.6.1(react-native@0.73.6):
     resolution: {integrity: sha512-QOxIDnlVTpnwJ26Gap6RGz61cDLH6TKrIp30VqwdMeT1pCGy8mn9rWln6XA+ymkofHy/08RfpGp+VN4axwd4Lw==}
     engines: {node: '>=10.0.0'}
     dependencies:
@@ -856,7 +856,7 @@ packages:
       '@aws-sdk/middleware-content-length': 3.6.1
       '@aws-sdk/middleware-host-header': 3.6.1
       '@aws-sdk/middleware-logger': 3.6.1
-      '@aws-sdk/middleware-retry': 3.6.1(react-native@0.73.5)
+      '@aws-sdk/middleware-retry': 3.6.1(react-native@0.73.6)
       '@aws-sdk/middleware-serde': 3.6.1
       '@aws-sdk/middleware-signing': 3.6.1
       '@aws-sdk/middleware-stack': 3.6.1
@@ -1589,14 +1589,14 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/middleware-retry@3.6.1(react-native@0.73.5):
+  /@aws-sdk/middleware-retry@3.6.1(react-native@0.73.6):
     resolution: {integrity: sha512-WHeo4d2jsXxBP+cec2SeLb0btYXwYXuE56WLmNt0RvJYmiBzytUeGJeRa9HuwV574kgigAuHGCeHlPO36G4Y0Q==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       '@aws-sdk/protocol-http': 3.6.1
       '@aws-sdk/service-error-classification': 3.6.1
       '@aws-sdk/types': 3.6.1
-      react-native-get-random-values: 1.11.0(react-native@0.73.5)
+      react-native-get-random-values: 1.11.0(react-native@0.73.6)
       tslib: 1.14.1
       uuid: 3.4.0
     transitivePeerDependencies:
@@ -2007,11 +2007,11 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@aws/amazon-location-utilities-auth-helper@1.0.4(react-native@0.73.5):
+  /@aws/amazon-location-utilities-auth-helper@1.0.4(react-native@0.73.6):
     resolution: {integrity: sha512-O/eTmuF4xI3O76xjz5MAivkfuQFgeWNbCpBzzfyMbZfbhQuVfaXnBAX+fHcwvO735xxf8OLeKuflOJOuDJtZPA==}
     engines: {node: '>= 16.0.0'}
     dependencies:
-      '@aws-amplify/core': 5.8.11(react-native@0.73.5)
+      '@aws-amplify/core': 5.8.11(react-native@0.73.6)
       '@aws-sdk/client-location': 3.529.1
       '@aws-sdk/credential-providers': 3.529.1
       '@aws-sdk/types': 3.523.0
@@ -7504,6 +7504,17 @@ packages:
       react-native: 0.73.5(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
     dev: false
 
+  /@react-native/virtualized-lists@0.73.4(react-native@0.73.6):
+    resolution: {integrity: sha512-HpmLg1FrEiDtrtAbXiwCgXFYyloK/dOIPIuWW3fsqukwJEWAiTzm1nXGJ7xPU5XTHiWZ4sKup5Ebaj8z7iyWog==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      react-native: '*'
+    dependencies:
+      invariant: 2.2.4
+      nullthrows: 1.1.1
+      react-native: 0.73.6(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
+    dev: false
+
   /@react-navigation/bottom-tabs@6.5.19(@react-navigation/native@6.1.16)(react-native-safe-area-context@4.9.0)(react-native-screens@3.29.0)(react-native@0.73.5)(react@18.2.0):
     resolution: {integrity: sha512-Kz0dbPeeTJ6pbn69/NsllWnaLfe0egdmTDTnatniYTvwJYvaE06r73c+bKxeZ2jYps5xqmQDY+odvxmifCJO+g==}
     peerDependencies:
@@ -10902,13 +10913,88 @@ packages:
       pg: 8.11.3
     dev: false
 
-  /drizzle-zod@0.5.1(drizzle-orm@0.29.5)(zod@3.22.4):
+  /drizzle-orm@0.30.1:
+    resolution: {integrity: sha512-5P6CXl4XyWtDDiYOX/jYOJp1HTUmBlXRAwaq+muUOgaSykMEy5sJesCxceMT0oCGvxeWkKfSXo5owLnfKwCIdw==}
+    peerDependencies:
+      '@aws-sdk/client-rds-data': '>=3'
+      '@cloudflare/workers-types': '>=3'
+      '@libsql/client': '*'
+      '@neondatabase/serverless': '>=0.1'
+      '@op-engineering/op-sqlite': '>=2'
+      '@opentelemetry/api': ^1.4.1
+      '@planetscale/database': '>=1'
+      '@types/better-sqlite3': '*'
+      '@types/pg': '*'
+      '@types/react': '>=18'
+      '@types/sql.js': '*'
+      '@vercel/postgres': '*'
+      better-sqlite3: '>=7'
+      bun-types: '*'
+      expo-sqlite: '>=13.2.0'
+      knex: '*'
+      kysely: '*'
+      mysql2: '>=2'
+      pg: '>=8'
+      postgres: '>=3'
+      react: '>=18'
+      sql.js: '>=1'
+      sqlite3: '>=5'
+    peerDependenciesMeta:
+      '@aws-sdk/client-rds-data':
+        optional: true
+      '@cloudflare/workers-types':
+        optional: true
+      '@libsql/client':
+        optional: true
+      '@neondatabase/serverless':
+        optional: true
+      '@op-engineering/op-sqlite':
+        optional: true
+      '@opentelemetry/api':
+        optional: true
+      '@planetscale/database':
+        optional: true
+      '@types/better-sqlite3':
+        optional: true
+      '@types/pg':
+        optional: true
+      '@types/react':
+        optional: true
+      '@types/sql.js':
+        optional: true
+      '@vercel/postgres':
+        optional: true
+      better-sqlite3:
+        optional: true
+      bun-types:
+        optional: true
+      expo-sqlite:
+        optional: true
+      knex:
+        optional: true
+      kysely:
+        optional: true
+      mysql2:
+        optional: true
+      pg:
+        optional: true
+      postgres:
+        optional: true
+      react:
+        optional: true
+      sql.js:
+        optional: true
+      sqlite3:
+        optional: true
+    dev: false
+
+  /drizzle-zod@0.5.1(drizzle-orm@0.30.1)(zod@3.22.4):
     resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
     peerDependencies:
       drizzle-orm: '>=0.23.13'
       zod: '*'
     dependencies:
-      drizzle-orm: 0.29.5(@types/pg@8.11.2)(pg@8.11.3)
+      drizzle-orm: 0.30.1
       zod: 3.22.4
     dev: false
 
@@ -16001,13 +16087,13 @@ packages:
       react-native: 0.73.5(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
     dev: false
 
-  /react-native-get-random-values@1.11.0(react-native@0.73.5):
+  /react-native-get-random-values@1.11.0(react-native@0.73.6):
     resolution: {integrity: sha512-4BTbDbRmS7iPdhYLRcz3PGFIpFJBwNZg9g42iwa2P6FOv9vZj/xJc678RZXnLNZzd0qd7Q3CCF6Yd+CU2eoXKQ==}
     peerDependencies:
       react-native: '>=0.56'
     dependencies:
       fast-base64-decode: 1.0.0
-      react-native: 0.73.5(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
+      react-native: 0.73.6(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
     dev: false
 
   /react-native-reanimated@3.7.2(@babel/core@7.24.0)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.23.3)(@babel/plugin-transform-shorthand-properties@7.23.3)(@babel/plugin-transform-template-literals@7.23.3)(react-native@0.73.5)(react@18.2.0):
@@ -16058,12 +16144,12 @@ packages:
       warn-once: 0.1.1
     dev: false
 
-  /react-native-url-polyfill@1.3.0(react-native@0.73.5):
+  /react-native-url-polyfill@1.3.0(react-native@0.73.6):
     resolution: {integrity: sha512-w9JfSkvpqqlix9UjDvJjm1EjSt652zVQ6iwCIj1cVVkwXf4jQhQgTNXY6EVTwuAmUjg6BC6k9RHCBynoLFo3IQ==}
     peerDependencies:
       react-native: '*'
     dependencies:
-      react-native: 0.73.5(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
+      react-native: 0.73.6(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0)
       whatwg-url-without-unicode: 8.0.0-3
     dev: false
 
@@ -16085,6 +16171,61 @@ packages:
       '@react-native/js-polyfills': 0.73.1
       '@react-native/normalize-colors': 0.73.2
       '@react-native/virtualized-lists': 0.73.4(react-native@0.73.5)
+      abort-controller: 3.0.0
+      anser: 1.4.10
+      ansi-regex: 5.0.1
+      base64-js: 1.5.1
+      chalk: 4.1.2
+      deprecated-react-native-prop-types: 5.0.0
+      event-target-shim: 5.0.1
+      flow-enums-runtime: 0.0.6
+      invariant: 2.2.4
+      jest-environment-node: 29.7.0
+      jsc-android: 250231.0.0
+      memoize-one: 5.2.1
+      metro-runtime: 0.80.6
+      metro-source-map: 0.80.6
+      mkdirp: 0.5.6
+      nullthrows: 1.1.1
+      pretty-format: 26.6.2
+      promise: 8.3.0
+      react: 18.2.0
+      react-devtools-core: 4.28.5
+      react-refresh: 0.14.0
+      react-shallow-renderer: 16.15.0(react@18.2.0)
+      regenerator-runtime: 0.13.11
+      scheduler: 0.24.0-canary-efb381bbf-20230505
+      stacktrace-parser: 0.1.10
+      whatwg-fetch: 3.6.20
+      ws: 6.2.2
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@babel/preset-env'
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
+    dev: false
+
+  /react-native@0.73.6(@babel/core@7.24.0)(@babel/preset-env@7.24.0)(react@18.2.0):
+    resolution: {integrity: sha512-oqmZe8D2/VolIzSPZw+oUd6j/bEmeRHwsLn1xLA5wllEYsZ5zNuMsDus235ONOnCRwexqof/J3aztyQswSmiaA==}
+    engines: {node: '>=18'}
+    hasBin: true
+    peerDependencies:
+      react: 18.2.0
+    dependencies:
+      '@jest/create-cache-key-function': 29.7.0
+      '@react-native-community/cli': 12.3.6
+      '@react-native-community/cli-platform-android': 12.3.6
+      '@react-native-community/cli-platform-ios': 12.3.6
+      '@react-native/assets-registry': 0.73.1
+      '@react-native/codegen': 0.73.3(@babel/preset-env@7.24.0)
+      '@react-native/community-cli-plugin': 0.73.17(@babel/core@7.24.0)(@babel/preset-env@7.24.0)
+      '@react-native/gradle-plugin': 0.73.4
+      '@react-native/js-polyfills': 0.73.1
+      '@react-native/normalize-colors': 0.73.2
+      '@react-native/virtualized-lists': 0.73.4(react-native@0.73.6)
       abort-controller: 3.0.0
       anser: 1.4.10
       ansi-regex: 5.0.1
