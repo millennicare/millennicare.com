@@ -16,7 +16,7 @@ Trying to import the image also does not seem to work as the image isn't found.
 Using the ESLint disable comment for now. 
 
 https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-var-requires.md */}
-      {/* eslint-disable-next-line @typescript-eslint/no-var-requires */}
+
       <ImageBackground
         source={
           require("../../assets/welcome_background.png") as ImageSourcePropType
