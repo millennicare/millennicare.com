@@ -22,7 +22,7 @@ https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint
           require("../../assets/welcome_background.png") as ImageSourcePropType
         }
         resizeMode="cover"
-        className="h-full flex-col justify-between py-20 "
+        className="h-full flex-col justify-between pt-20 "
       >
         {/* Changes page title visible on the header */}
 
@@ -30,8 +30,8 @@ https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint
         <Text className="self-start pl-10 text-[40px] font-light text-white">
           MILLENNI<Text className="font-bold">CARE</Text>
         </Text>
-        <View className="flex flex-col justify-center gap-y-4 px-9">
-          <Text className="text-[30px] font-light text-white">
+        <View className="flex flex-col justify-center gap-y-4 px-9 py-9">
+          <Text className="pb-3 text-[30px] font-light text-white">
             Modern Childcare for the New Millennium{" "}
           </Text>
 
