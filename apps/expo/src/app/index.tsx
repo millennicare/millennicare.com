@@ -31,7 +31,7 @@ https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint
           MILLENNI<Text className="font-bold">CARE</Text>
         </Text>
         <View className="flex flex-col justify-center gap-y-4 px-9 py-9">
-          <Text className="text-[30px] font-light text-white pb-3">
+          <Text className="pb-3 text-[30px] font-light text-white">
             Modern Childcare for the New Millennium{" "}
           </Text>
 
