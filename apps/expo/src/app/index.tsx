@@ -1,22 +1,12 @@
 import type { ImageSourcePropType } from "react-native";
 import { ImageBackground, Text, View } from "react-native";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 
 import { Button } from "~/components/ui/Button";
 
 export default function Index() {
   return (
     <View className="flex flex-1">
-      {/* Put a bandaid solution on there for the time being.
-
-When first lint error "require has 'any' type" is fixed by giving it a type (ImageSourcePropType) it give another lint error "require statement not part of import statement".
-
-Trying to import the image also does not seem to work as the image isn't found.
-
-Using the ESLint disable comment for now.
-
-https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-var-requires.md */}
-
       <ImageBackground
         source={
           require("../../assets/welcome_background.png") as ImageSourcePropType
@@ -40,12 +30,15 @@ https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint
             size="lg"
             className="rounded"
             labelClasses="text-white"
+            onPress={() => router.push("/sign-up/")}
           />
+
           <Button
             label="Login"
             size="lg"
             className="rounded "
             labelClasses="text-white"
+            onPress={() => router.push("/login/")}
           />
         </View>
       </ImageBackground>
