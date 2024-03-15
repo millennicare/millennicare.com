@@ -15,10 +15,8 @@ WORKDIR /app
 RUN npm install -g pnpm
 RUN npm install -g turbo
 
-ARG TURBO_TEAM
 ARG TURBO_TOKEN
 
-ENV TURBO_TEAM=$TURBO_TEAM
 ENV TURBO_TOKEN=$TURBO_TOKEN
 
 # First install dependencies (as they change less often)
@@ -30,11 +28,13 @@ RUN pnpm install --frozen-lockfile
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
+COPY .turbo/config.json ./.turbo/
 
 ## This would be useful for browser environment variables that are actually baked at build time and you aren't passing them in otherwise.
-COPY .env .env  
-RUN CI=true SKIP_ENV_VALIDATION=true turbo run build --filter=@millennicare/nextjs...
-
+COPY .env .env
+# RUN CI=true SKIP_ENV_VALIDATION=true turbo run build --filter=@millennicare/nextjs...
+RUN --mount=type=bind,source=.git,target=.git \
+    pnpm turbo build
 FROM base AS runner
 WORKDIR /app
 
