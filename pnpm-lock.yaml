@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      argon2:
+        specifier: ^0.40.1
+        version: 0.40.1
     devDependencies:
       '@millennicare/prettier-config':
         specifier: workspace:^

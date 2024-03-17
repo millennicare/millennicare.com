@@ -8,14 +8,11 @@ export default function Index() {
   return (
     <View className="flex flex-1">
       <ImageBackground
-        source={
-          require("../../assets/welcome_background.png") as ImageSourcePropType
-        }
+        source={require("&/welcome_background.png") as ImageSourcePropType}
         resizeMode="cover"
         className="h-full flex-col justify-between pt-20 "
       >
         {/* Changes page title visible on the header */}
-
         <Stack.Screen options={{ headerShown: false }} />
         <Text className="self-start pl-10 text-[40px] font-light text-white">
           MILLENNI<Text className="font-bold">CARE</Text>

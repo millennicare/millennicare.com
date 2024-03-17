@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "&/*": ["./assets/*"],
       "~/*": ["./src/*"]
     },
     "jsx": "react-native",
