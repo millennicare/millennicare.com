@@ -21,22 +21,21 @@
     "dev": "email dev --dir src/emails/templates --port 8080"
   },
   "dependencies": {
-    "@aws-sdk/client-location": "^3.525.0",
-    "@aws-sdk/client-s3": "^3.525.0",
-    "@aws-sdk/client-ses": "^3.525.0",
-    "@aws-sdk/s3-request-presigner": "^3.525.0",
+    "@aws-sdk/client-location": "^3.529.1",
+    "@aws-sdk/client-s3": "^3.529.1",
+    "@aws-sdk/client-ses": "^3.529.1",
+    "@aws-sdk/s3-request-presigner": "^3.529.1",
     "@aws/amazon-location-utilities-auth-helper": "^1.0.4",
     "@millennicare/validators": "workspace:^",
     "@react-email/components": "^0.0.15",
     "react-email": "^2.1.0",
-    "stripe": "^14.19.0",
+    "stripe": "^14.20.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@millennicare/eslint-config": "workspace:^",
     "@millennicare/prettier-config": "workspace:^",
     "@millennicare/tsconfig": "workspace:^",
-    "@types/nodemailer": "^6.4.14",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.2"
