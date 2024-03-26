@@ -5,8 +5,8 @@ runs:
   using: composite
   steps:
     - name: Check out code
-        uses: actions/checkout@v4
-        
+      uses: actions/checkout@v4
+
     - name: Cache turbo build setup
       uses: actions/cache@v4
       with:
