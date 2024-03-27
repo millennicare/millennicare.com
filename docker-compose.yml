@@ -1,17 +1,26 @@
 version: "3"
 
 services:
-  web:
+  prod-web:
     container_name: millennicare-web
+    image: millennicare-prod
     build:
       context: .
       dockerfile: ./apps/nextjs/Dockerfile
     restart: always
     env_file:
       - .env
-    ports:
-      - 3000:3000
-    network_mode: "host"
+  dev-web:
+    container_name: millennicare-dev-web
+    image: millennicare-dev
+    build:
+      context: .
+      dockerfile: ./apps/nextjs/Dockerfile
+      args:
+        - NODE_ENV=development
+    restart: always
+    env_file:
+      - .env
   dev-db:
     container_name: millennicare-dev-database
     image: postgres:16.1
