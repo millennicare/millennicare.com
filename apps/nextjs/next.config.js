@@ -8,9 +8,6 @@ jiti("./src/env");
 
 /** @type {import("next").NextConfig} */
 const config = {
-  experimental: {
-    serverComponentsExternalPackages: ["oslo"],
-  },
   reactStrictMode: true,
   webpack: (config) => {
     config.externals.push("@node-rs/argon2", "@node-rs/bcrypt");
@@ -41,6 +38,9 @@ const config = {
       },
     ],
   },
+  experimental: {
+    serverComponentsExternalPackages: ["argon2"]
+  }
 };
 
 export default config;

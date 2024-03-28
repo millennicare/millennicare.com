@@ -22,16 +22,13 @@
     "typescript": "^5.4.3"
   },
   "eslintConfig": {
-    "extends": [
-      "@millennicare/eslint-config/base"
-    ]
+    "extends": ["@millennicare/eslint-config/base"]
   },
   "prettier": "@millennicare/prettier-config",
   "dependencies": {
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@millennicare/db": "workspace:^",
     "arctic": "^1.3.0",
-    "lucia": "^3.1.1",
-    "oslo": "^1.1.3"
+    "lucia": "^3.1.1"
   }
 }

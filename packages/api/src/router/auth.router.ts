@@ -12,8 +12,8 @@ import {
   signInSchema,
 } from "@millennicare/validators";
 import { TRPCError } from "@trpc/server";
+import * as argon from "argon2";
 import * as jose from "jose";
-import { Argon2id } from "oslo/password";
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
@@ -61,7 +61,7 @@ export const authRouter = createTRPCRouter({
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
-      const passwordsMatch = await new Argon2id().verify(
+      const passwordsMatch = await argon.verify(
         user.password,
         input.currentPassword,
       );
@@ -72,7 +72,7 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const hashed = await new Argon2id().hash(input.newPassword);
+      const hashed = await argon.hash(input.newPassword);
       await db
         .update(schema.userTable)
         .set({
@@ -108,7 +108,7 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const hashed = await new Argon2id().hash(input.password);
+      const hashed = await argon.hash(input.password);
       await db
         .update(schema.userTable)
         .set({ password: hashed })
@@ -148,7 +148,7 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const passwordsMatch = await new Argon2id().verify(
+      const passwordsMatch = await argon.verify(
         existingUser.password,
         input.password,
       );
@@ -226,7 +226,7 @@ export const authRouter = createTRPCRouter({
         name: input.name,
         email: input.email,
       });
-      const hashed = await new Argon2id().hash(input.password);
+      const hashed = await argon.hash(input.password);
       // get location details based on PlaceID passed from registration
       const details = await getLocationDetailsFromPlaceId(input.placeId);
       const res = await db.transaction(async (tx) => {
