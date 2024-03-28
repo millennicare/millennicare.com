@@ -18,19 +18,19 @@
   },
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
-    "drizzle-orm": "^0.29.5",
+    "drizzle-orm": "^0.30.5",
     "pg": "^8.11.3"
   },
   "devDependencies": {
     "@millennicare/eslint-config": "workspace:^",
     "@millennicare/prettier-config": "workspace:^",
     "@millennicare/tsconfig": "workspace:^",
-    "@types/pg": "^8.11.2",
+    "@types/pg": "^8.11.4",
     "dotenv-cli": "^7.4.1",
     "drizzle-kit": "^0.20.14",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.3"
   },
   "eslintConfig": {
     "root": true,

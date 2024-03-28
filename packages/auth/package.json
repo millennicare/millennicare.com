@@ -19,7 +19,7 @@
     "@millennicare/tsconfig": "workspace:^",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.3"
   },
   "eslintConfig": {
     "extends": [
@@ -28,9 +28,9 @@
   },
   "prettier": "@millennicare/prettier-config",
   "dependencies": {
-    "@lucia-auth/adapter-drizzle": "^1.0.3",
+    "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@millennicare/db": "workspace:^",
-    "arctic": "^1.2.1",
+    "arctic": "^1.3.0",
     "lucia": "^3.1.1",
     "oslo": "^1.1.3"
   }
