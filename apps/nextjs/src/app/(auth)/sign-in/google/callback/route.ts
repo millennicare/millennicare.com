@@ -75,7 +75,7 @@ export async function GET(request: Request): Promise<Response> {
         })
         .onConflictDoNothing();
 
-      await createSession(existingUser.id);
+      await createSession(existingUser.id, existingUser.email);
       return new Response(null, {
         status: 302,
         headers: { Location: "/dashboard" },

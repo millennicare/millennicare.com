@@ -20,7 +20,7 @@ export const signIn = async (
     }
 
     const response = await api.auth.login(validated.data);
-    await createSession(response.id);
+    await createSession(response.id, validated.data.email);
 
     return { message: "Going to dashboard!", error: false };
   } catch (error) {
