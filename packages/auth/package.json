@@ -22,7 +22,9 @@
     "typescript": "^5.4.3"
   },
   "eslintConfig": {
-    "extends": ["@millennicare/eslint-config/base"]
+    "extends": [
+      "@millennicare/eslint-config/base"
+    ]
   },
   "prettier": "@millennicare/prettier-config",
   "dependencies": {
