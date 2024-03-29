@@ -23,7 +23,7 @@ export const careseekerRegister = async (values: CareseekerRegister) => {
     const response = await api.auth.careseekerRegister({
       ...values,
     });
-    await createSession(response.id);
+    await createSession(response.id, values.email);
 
     revalidatePath("/sign-up/careseeker");
   } catch (error) {

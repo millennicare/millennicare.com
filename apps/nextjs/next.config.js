@@ -37,6 +37,9 @@ const config = {
       },
     ],
   },
+  experimental: {
+    serverComponentsExternalPackages: ["argon2"],
+  },
 };
 
 export default config;
