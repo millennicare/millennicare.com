@@ -9,6 +9,15 @@ export const createSession = async (userId: string, email: string) => {
   await saveItem("session-id", session.id);
 };
 
+export const logout = async () => {
+  const sessionId = await SecureStore.getItemAsync("session-id");
+  if (!sessionId) {
+    return { error: "Unauthorized" };
+  }
+  await lucia.invalidateSession(sessionId);
+  await SecureStore.deleteItemAsync("session-id");
+};
+
 export const validateRequest = async () => {
   const sessionId = await SecureStore.getItemAsync("session-id");
 
@@ -34,14 +43,6 @@ export const validateRequest = async () => {
   }
 
   return result;
-};
-
-export const logout = async () => {
-  const { session } = await validateRequest();
-  if (!session) {
-    return { error: "Unauthorized" };
-  }
-  await lucia.invalidateSession(session.id);
 };
 
 const saveItem = async (key: string, value: string) => {
