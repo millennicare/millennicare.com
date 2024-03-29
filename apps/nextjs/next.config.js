@@ -8,11 +8,10 @@ jiti("./src/env");
 
 /** @type {import("next").NextConfig} */
 const config = {
-  reactStrictMode: true,
-  webpack: (config) => {
-    config.externals.push("@node-rs/argon2", "@node-rs/bcrypt");
-    return config;
+  experimental: {
+    serverComponentsExternalPackages: ["argon2"],
   },
+  reactStrictMode: true,
   // output: "standalone",
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
