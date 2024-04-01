@@ -25,11 +25,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
     GOOGLE_REDIRECT_URI: z.string(),
-    POSTGRES_USER: z.string(),
-    POSTGRES_PASSWORD: z.string(),
-    POSTGRES_HOST: z.string(),
-    POSTGRES_DB: z.string(),
-    POSTGRES_PORT: z.coerce.number(),
+    DATABASE_URL: z.string(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -55,11 +51,7 @@ export const env = createEnv({
     GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
     AWS_MAIL_ACCESS_KEY: process.env.AWS_MAIL_ACCESS_KEY,
     AWS_MAIL_SECRET_KEY: process.env.AWS_MAIL_SECRET_KEY,
-    POSTGRES_DB: process.env.POSTGRES_DB,
-    POSTGRES_HOST: process.env.POSTGRES_HOST,
-    POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
-    POSTGRES_PORT: process.env.POSTGRES_PORT,
-    POSTGRES_USER: process.env.POSTGRES_USER,
+    DATABASE_URL: process.env.DATABASE_URL,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   skipValidation:
