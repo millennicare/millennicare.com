@@ -61,7 +61,6 @@ export const authRouter = createTRPCRouter({
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
-      // verify old password matches
       const passwordsMatch = await argon.verify(
         user.password,
         input.currentPassword,
@@ -74,7 +73,6 @@ export const authRouter = createTRPCRouter({
       }
 
       const hashed = await argon.hash(input.newPassword);
-
       await db
         .update(schema.userTable)
         .set({
@@ -111,7 +109,6 @@ export const authRouter = createTRPCRouter({
       }
 
       const hashed = await argon.hash(input.password);
-
       await db
         .update(schema.userTable)
         .set({ password: hashed })
@@ -155,6 +152,7 @@ export const authRouter = createTRPCRouter({
         existingUser.password,
         input.password,
       );
+
       if (!passwordsMatch) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
@@ -224,11 +222,11 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const hashedPassword = await argon.hash(input.password);
       const customer = await createCustomer({
         name: input.name,
         email: input.email,
       });
+      const hashed = await argon.hash(input.password);
       // get location details based on PlaceID passed from registration
       const details = await getLocationDetailsFromPlaceId(input.placeId);
       const res = await db.transaction(async (tx) => {
@@ -236,7 +234,7 @@ export const authRouter = createTRPCRouter({
           .insert(schema.userTable)
           .values({
             email: input.email,
-            password: hashedPassword,
+            password: hashed,
             type: "careseeker",
           })
           .returning({ insertedId: schema.userTable.id });

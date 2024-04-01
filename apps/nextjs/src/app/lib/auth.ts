@@ -3,8 +3,8 @@ import { cache } from "react";
 import { cookies } from "next/headers";
 import { lucia } from "@millennicare/auth";
 
-export const createSession = async (userId: string) => {
-  const session = await lucia.createSession(userId, {});
+export const createSession = async (userId: string, email: string) => {
+  const session = await lucia.createSession(userId, { email });
   const sessionCookie = lucia.createSessionCookie(session.id);
   cookies().set(
     sessionCookie.name,
@@ -28,7 +28,7 @@ export const validateRequest = cache(
     const result = await lucia.validateSession(sessionId);
     // next.js throws when you attempt to set cookie when rendering page
     try {
-      if (result.session && result.session.fresh) {
+      if (result.session?.fresh) {
         const sessionCookie = lucia.createSessionCookie(result.session.id);
         cookies().set(
           sessionCookie.name,
@@ -45,7 +45,6 @@ export const validateRequest = cache(
         );
       }
     } catch (error) {
-      console.error(error);
       throw new Error("Error setting session cookie");
     }
     return result;

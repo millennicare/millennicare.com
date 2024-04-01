@@ -8,6 +8,9 @@ jiti("./src/env");
 
 /** @type {import("next").NextConfig} */
 const config = {
+  experimental: {
+    serverComponentsExternalPackages: ["argon2"],
+  },
   reactStrictMode: true,
   // output: "standalone",
   /** Enables hot reloading for local packages without a build step */
@@ -33,6 +36,9 @@ const config = {
             : "millennicare-app-files.s3.us-east-1.amazonaws.com",
       },
     ],
+  },
+  experimental: {
+    serverComponentsExternalPackages: ["argon2"],
   },
 };
 
