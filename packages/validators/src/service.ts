@@ -4,7 +4,7 @@ export const categoryEnum = z.enum([
   "child_care",
   "senior_care",
   "housekeeping",
-  "petcare",
+  "pet_care",
 ]);
 
 export const createServiceSchema = z.object({
