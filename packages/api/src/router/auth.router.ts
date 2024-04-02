@@ -1,4 +1,4 @@
-import { and, eq, schema } from "@millennicare/db";
+import { and, db, eq, schema } from "@millennicare/db";
 import {
   createCustomer,
   getLocationDetailsFromPlaceId,
@@ -27,7 +27,56 @@ const createToken = async (userId: string, expTime?: string) => {
   return token;
 };
 
+const findDuplicateUser = async (
+  email: string,
+  type?: "admin" | "caregiver" | "careseeker",
+) => {
+  return await db.query.userTable.findFirst({
+    where: type
+      ? and(eq(schema.userTable.email, email), eq(schema.userTable.type, type))
+      : eq(schema.userTable.email, email),
+  });
+};
+
 export const authRouter = createTRPCRouter({
+  /**
+   * Register a new user. Will update this in v2 to include a verification email
+   * and a more robust user registration process.
+   */
+  register: publicProcedure
+    .input(createUserSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { db } = ctx;
+
+      const existingUser = await findDuplicateUser(input.email, input.type);
+      // if a user exists with the same type, throw duplicate error
+      if (existingUser && existingUser.type === input.type) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "User already exists.",
+        });
+      }
+
+      /**
+       * so typescript isn't angy
+       */
+      if (!input.password) {
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      }
+
+      const hashed = await argon.hash(input.password);
+
+      const returnUser = await db
+        .insert(schema.userTable)
+        .values({ ...input, password: hashed })
+        .returning({ insertedId: schema.userTable.id });
+
+      if (!returnUser[0]) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+
+      return { id: returnUser[0].insertedId };
+    }),
   checkDuplicateEmail: publicProcedure
     .input(z.object({ email: z.string() }))
     .query(async ({ ctx, input }) => {

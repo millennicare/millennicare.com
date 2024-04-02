@@ -39,5 +39,6 @@
       "cache": false
     }
   },
-  "globalEnv": ["DATABASE_URL"]
+  "globalEnv": ["DATABASE_URL"],
+  "experimentalUI": true
 }
