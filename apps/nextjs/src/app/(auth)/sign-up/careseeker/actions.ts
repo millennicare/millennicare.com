@@ -19,7 +19,6 @@ type CareseekerRegister = AdditionalInfo &
 
 export const careseekerRegister = async (values: CareseekerRegister) => {
   try {
-    // hash password
     const response = await api.auth.careseekerRegister({
       ...values,
     });
