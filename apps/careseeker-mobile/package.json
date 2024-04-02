@@ -68,7 +68,9 @@
       "@millennicare/eslint-config/base",
       "@millennicare/eslint-config/react"
     ],
-    "ignorePatterns": ["expo-plugins/**"]
+    "ignorePatterns": [
+      "expo-plugins/**"
+    ]
   },
   "prettier": "@millennicare/prettier-config"
 }
