@@ -5,7 +5,7 @@ services:
     container_name: millennicare-web
     build:
       context: .
-      dockerfile: ./apps/nextjs/Dockerfile
+      dockerfile: ./apps/web/Dockerfile
     restart: always
     env_file:
       - .env
