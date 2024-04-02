@@ -3,11 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "license": "MIT",
-  "files": [
-    "./base.js",
-    "./nextjs.js",
-    "./react.js"
-  ],
+  "files": ["./base.js", "./nextjs.js", "./react.js"],
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
@@ -35,9 +31,7 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": [
-      "./base.js"
-    ]
+    "extends": ["./base.js"]
   },
   "prettier": "@millennicare/prettier-config"
 }

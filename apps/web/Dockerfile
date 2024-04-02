@@ -7,7 +7,7 @@ WORKDIR /app
 
 RUN npm install -g turbo
 COPY . .
-RUN turbo prune --scope=@millennicare/nextjs --docker
+RUN turbo prune --scope=@millennicare/web --docker
 
 FROM base AS installer
 WORKDIR /app
