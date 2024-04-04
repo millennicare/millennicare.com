@@ -1,5 +1,5 @@
 import type { ImageSourcePropType } from "react-native";
-import { ImageBackground, Text, View } from "react-native";
+import { ImageBackground, Platform, Text, View } from "react-native";
 import { Link, Stack } from "expo-router";
 
 import { Button } from "~/components/button";
@@ -28,7 +28,7 @@ export default function Index() {
             Modern Childcare for the New Millennium
           </Text>
 
-          <Link asChild href="/">
+          <Link asChild href="/auth/register/">
             <Button
               label="Get Started"
               size="lg"
@@ -36,7 +36,7 @@ export default function Index() {
               labelClasses="text-white"
             />
           </Link>
-          <Link asChild href="/">
+          <Link asChild href="/auth/login/">
             <Button label="Sign In" size="lg" className="rounded bg-white" />
           </Link>
         </View>
