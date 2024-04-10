@@ -40,7 +40,7 @@ type CareseekerRegister = AdditionalInfo &
 export const careseekerRegister = async (values: CareseekerRegister) => {
   try {
     const response = await api.auth.careseekerRegister(values);
-    await createSession(response.id, values.email);
+    await createSession(response.cookie);
 
     revalidatePath("/sign-up/careseeker");
   } catch (error) {

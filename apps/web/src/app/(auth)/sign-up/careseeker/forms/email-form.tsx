@@ -61,23 +61,6 @@ export default function EmailForm() {
         />
 
         <SubmitButton value="Next" error={!form.formState.errors} />
-
-        {/* <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
-              Or sign up with
-            </span>
-          </div>
-        </div>
-        <Button className="w-full" type="button" asChild>
-          <Link href="/sign-in/google">
-            <Icons.google className="mr-3 h-4 w-4" />
-            Google
-          </Link>
-        </Button> */}
       </form>
     </Form>
   );

@@ -13,7 +13,7 @@ export const caregiverRegister = async (
 ) => {
   try {
     const response = await api.auth.register(values);
-    await createSession(response.id, values.email);
+    await createSession(response.cookie);
 
     revalidatePath("/sign-up/caregiver");
   } catch (error) {

@@ -1,4 +1,4 @@
-import { and, db, eq, schema } from "@millennicare/db";
+import { and, eq, schema } from "@millennicare/db";
 import {
   createCustomer,
   getLocationDetailsFromPlaceId,
@@ -17,26 +17,7 @@ import * as jose from "jose";
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-
-const createToken = async (userId: string, expTime?: string) => {
-  const secret = new TextEncoder().encode(process.env.SYMMETRIC_KEY);
-  const token = await new jose.SignJWT({ sub: userId })
-    .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime(expTime ?? "1h")
-    .sign(secret);
-  return token;
-};
-
-const findDuplicateUser = async (
-  email: string,
-  type?: "admin" | "caregiver" | "careseeker",
-) => {
-  return await db.query.userTable.findFirst({
-    where: type
-      ? and(eq(schema.userTable.email, email), eq(schema.userTable.type, type))
-      : eq(schema.userTable.email, email),
-  });
-};
+import { createSession, createToken, findDuplicateUser } from "./auth/helpers";
 
 export const authRouter = createTRPCRouter({
   /**
@@ -75,7 +56,12 @@ export const authRouter = createTRPCRouter({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
 
-      return { id: returnUser[0].insertedId };
+      const sessionCookie = await createSession(
+        returnUser[0].insertedId,
+        input.email,
+      );
+
+      return { cookie: sessionCookie };
     }),
   checkDuplicateEmail: publicProcedure
     .input(z.object({ email: z.string() }))
@@ -209,7 +195,12 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      return { id: existingUser.id };
+      const sessionCookie = await createSession(
+        existingUser.id,
+        existingUser.email,
+      );
+
+      return { cookie: sessionCookie };
     }),
   getMe: protectedProcedure.query(async ({ ctx }) => {
     const { db, userId } = ctx;
@@ -323,6 +314,7 @@ export const authRouter = createTRPCRouter({
         return userId;
       });
 
-      return { id: res };
+      const sessionCookie = await createSession(res, input.email);
+      return { cookie: sessionCookie };
     }),
 });

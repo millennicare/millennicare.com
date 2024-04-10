@@ -3,8 +3,8 @@
 import { signInSchema } from "@millennicare/validators";
 import { TRPCError } from "@trpc/server";
 
+import { createSession } from "~/app/lib/auth";
 import { api } from "~/trpc/server";
-import { createSession } from "../../lib/auth";
 
 export const signIn = async (
   prev: unknown,
@@ -20,7 +20,7 @@ export const signIn = async (
     }
 
     const response = await api.auth.login(validated.data);
-    await createSession(response.id, validated.data.email);
+    await createSession(response.cookie);
 
     return { message: "Going to dashboard!", error: false };
   } catch (error) {
