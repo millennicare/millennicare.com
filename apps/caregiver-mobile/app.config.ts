@@ -50,5 +50,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           "Allow MillenniCare to access your Face ID biometric data.",
       },
     ],
+    [
+      "expo-font",
+      {
+        fonts: [
+          "node_modules/@expo-google-fonts/montserrat/Montserrat_400Regular.ttf",
+          "node_modules/@expo-google-fonts/quicksand/Quicksand_400Regular.ttf",
+        ],
+      },
+    ],
   ],
 });

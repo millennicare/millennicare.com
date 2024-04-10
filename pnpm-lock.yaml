@@ -19,28 +19,25 @@ importers:
         version: 3.2.5
       turbo:
         specifier: ^1.13.0
-        version: 1.13.0
+        version: 1.13.2
       typescript:
         specifier: ^5.4.3
         version: 5.4.3
 
   apps/caregiver-mobile:
     dependencies:
+      '@expo-google-fonts/montserrat':
+        specifier: ^0.2.3
+        version: 0.2.3
+      '@expo-google-fonts/quicksand':
+        specifier: ^0.2.3
+        version: 0.2.3
       '@expo/metro-config':
         specifier: ^0.17.6
         version: 0.17.6(@react-native/babel-preset@0.73.21)
-      '@millennicare/api':
-        specifier: workspace:^
-        version: link:../../packages/api
-      '@millennicare/auth':
-        specifier: workspace:^
-        version: link:../../packages/auth
-      '@millennicare/lib':
-        specifier: workspace:^
-        version: link:../../packages/lib
-      '@millennicare/validators':
-        specifier: workspace:^
-        version: link:../../packages/validators
+      '@hookform/resolvers':
+        specifier: ^3.3.4
+        version: 3.3.4(react-hook-form@7.51.2)
       '@shopify/flash-list':
         specifier: 1.6.3
         version: 1.6.3(@babel/runtime@7.24.1)(react-native@0.73.6)(react@18.2.0)
@@ -65,6 +62,9 @@ importers:
       expo-constants:
         specifier: ~15.4.5
         version: 15.4.5(expo@50.0.14)
+      expo-font:
+        specifier: ^11.10.3
+        version: 11.10.3(expo@50.0.14)
       expo-image:
         specifier: ^1.10.6
         version: 1.10.6(expo@50.0.14)
@@ -92,6 +92,9 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
+      react-hook-form:
+        specifier: ^7.51.2
+        version: 7.51.2(react@18.2.0)
       react-native:
         specifier: 0.73.6
         version: 0.73.6(@babel/core@7.24.3)(@babel/preset-env@7.24.3)(react@18.2.0)
@@ -116,6 +119,9 @@ importers:
       tailwind-merge:
         specifier: ^2.2.2
         version: 2.2.2
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
     devDependencies:
       '@babel/core':
         specifier: ^7.24.3
@@ -129,9 +135,15 @@ importers:
       '@expo/config-plugins':
         specifier: ^7.8.4
         version: 7.8.4
+      '@millennicare/api':
+        specifier: workspace:^
+        version: link:../../packages/api
       '@millennicare/eslint-config':
         specifier: workspace:^
         version: link:../../tooling/eslint
+      '@millennicare/lib':
+        specifier: workspace:^
+        version: link:../../packages/lib
       '@millennicare/prettier-config':
         specifier: workspace:^
         version: link:../../tooling/prettier
@@ -141,6 +153,9 @@ importers:
       '@millennicare/tsconfig':
         specifier: workspace:^
         version: link:../../tooling/typescript
+      '@millennicare/validators':
+        specifier: workspace:^
+        version: link:../../packages/validators
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -4282,6 +4297,14 @@ packages:
   /@eslint/js@8.57.0:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  /@expo-google-fonts/montserrat@0.2.3:
+    resolution: {integrity: sha512-9imhwIs6j5uyTkTxoNplC5T8ERES1W98ZgF7kf7OaypnbcoLoIW0wKH6oudecZyiEqoSktC7epkRpj+UEUvzWg==}
+    dev: false
+
+  /@expo-google-fonts/quicksand@0.2.3:
+    resolution: {integrity: sha512-cQhYsOYPBbKzqry0TT87fJz8ZlCKLLeHiECsjI9zRx4pMB3XKnHSWNO7JBDvMA6w9ekcQ17aaBZ4vj9RC2Kgtw==}
+    dev: false
 
   /@expo/bunyan@4.0.0:
     resolution: {integrity: sha512-Ydf4LidRB/EBI+YrB+cVLqIseiRfjUI/AeHBgjGMtq3GroraDu81OV7zqophRgupngoL3iS3JUMDMnxO7g39qA==}
@@ -17449,64 +17472,64 @@ packages:
     engines: {node: '>=0.6.x'}
     dev: false
 
-  /turbo-darwin-64@1.13.0:
-    resolution: {integrity: sha512-ctHeJXtQgBcgxnCXwrJTGiq57HtwF7zWz5NTuSv//5yeU01BtQIt62ArKfjudOhRefWJbX3Z5srn88XTb9hfww==}
+  /turbo-darwin-64@1.13.2:
+    resolution: {integrity: sha512-CCSuD8CfmtncpohCuIgq7eAzUas0IwSbHfI8/Q3vKObTdXyN8vAo01gwqXjDGpzG9bTEVedD0GmLbD23dR0MLA==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.13.0:
-    resolution: {integrity: sha512-/Q9/pNFkF9w83tNxwMpgapwLYdQ12p8mpty2YQRoUiS9ClWkcqe136jR0mtuMqzlNlpREOFZaoyIthjt6Sdo0g==}
+  /turbo-darwin-arm64@1.13.2:
+    resolution: {integrity: sha512-0HySm06/D2N91rJJ89FbiI/AodmY8B3WDSFTVEpu2+8spUw7hOJ8okWOT0e5iGlyayUP9gr31eOeL3VFZkpfCw==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@1.13.0:
-    resolution: {integrity: sha512-hgbT7o020BGV4L7Sd8hhFTd5zVKPKxbsr0dPfel/9NkdTmptz2aGZ0Vb2MAa18SY3XaCQpDxmdYuOzvvRpo5ZA==}
+  /turbo-linux-64@1.13.2:
+    resolution: {integrity: sha512-7HnibgbqZrjn4lcfIouzlPu8ZHSBtURG4c7Bedu7WJUDeZo+RE1crlrQm8wuwO54S0siYqUqo7GNHxu4IXbioQ==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.13.0:
-    resolution: {integrity: sha512-WK01i2wDZARrV+HEs495A3hNeGMwQR5suYk7G+ceqqW7b+dOTlQdvUjnI3sg7wAnZPgjafFs/hoBaZdJjVa/nw==}
+  /turbo-linux-arm64@1.13.2:
+    resolution: {integrity: sha512-sUq4dbpk6SNKg/Hkwn256Vj2AEYSQdG96repio894h5/LEfauIK2QYiC/xxAeW3WBMc6BngmvNyURIg7ltrePg==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@1.13.0:
-    resolution: {integrity: sha512-hJgSZJZwlWHNwLEthaqJqJWGm4NqF5X/I7vE0sPE4i/jeDl8f0n1hcOkgJkJiNXVxhj+qy/9+4dzbPLKT9imaQ==}
+  /turbo-windows-64@1.13.2:
+    resolution: {integrity: sha512-DqzhcrciWq3dpzllJR2VVIyOhSlXYCo4mNEWl98DJ3FZ08PEzcI3ceudlH6F0t/nIcfSItK1bDP39cs7YoZHEA==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.13.0:
-    resolution: {integrity: sha512-L/ErxYoXeq8tmjU/AIGicC9VyBN1zdYw8JlM4yPmMI0pJdY8E4GaYK1IiIazqq7M72lmQhU/WW7fV9FqEktwrw==}
+  /turbo-windows-arm64@1.13.2:
+    resolution: {integrity: sha512-WnPMrwfCXxK69CdDfS1/j2DlzcKxSmycgDAqV0XCYpK/812KB0KlvsVAt5PjEbZGXkY88pCJ1BLZHAjF5FcbqA==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@1.13.0:
-    resolution: {integrity: sha512-r02GtNmkOPcQvUzVE6lg474QVLyU02r3yh3lUGqrFHf5h5ZEjgDGWILsAUqplVqjri1Y/oOkTssks4CObTAaiw==}
+  /turbo@1.13.2:
+    resolution: {integrity: sha512-rX/d9f4MgRT3yK6cERPAkfavIxbpBZowDQpgvkYwGMGDQ0Nvw1nc0NVjruE76GrzXQqoxR1UpnmEP54vBARFHQ==}
     hasBin: true
     optionalDependencies:
-      turbo-darwin-64: 1.13.0
-      turbo-darwin-arm64: 1.13.0
-      turbo-linux-64: 1.13.0
-      turbo-linux-arm64: 1.13.0
-      turbo-windows-64: 1.13.0
-      turbo-windows-arm64: 1.13.0
+      turbo-darwin-64: 1.13.2
+      turbo-darwin-arm64: 1.13.2
+      turbo-linux-64: 1.13.2
+      turbo-linux-arm64: 1.13.2
+      turbo-windows-64: 1.13.2
+      turbo-windows-arm64: 1.13.2
     dev: true
 
   /type-check@0.4.0:
