@@ -18,7 +18,7 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       turbo:
-        specifier: ^1.13.2
+        specifier: ^1.13.0
         version: 1.13.2
       typescript:
         specifier: ^5.4.3
@@ -38,18 +38,6 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.3.4
         version: 3.3.4(react-hook-form@7.51.2)
-      '@millennicare/api':
-        specifier: workspace:^
-        version: link:../../packages/api
-      '@millennicare/auth':
-        specifier: workspace:^
-        version: link:../../packages/auth
-      '@millennicare/lib':
-        specifier: workspace:^
-        version: link:../../packages/lib
-      '@millennicare/validators':
-        specifier: workspace:^
-        version: link:../../packages/validators
       '@shopify/flash-list':
         specifier: 1.6.3
         version: 1.6.3(@babel/runtime@7.24.1)(react-native@0.73.6)(react@18.2.0)
@@ -147,9 +135,15 @@ importers:
       '@expo/config-plugins':
         specifier: ^7.8.4
         version: 7.8.4
+      '@millennicare/api':
+        specifier: workspace:^
+        version: link:../../packages/api
       '@millennicare/eslint-config':
         specifier: workspace:^
         version: link:../../tooling/eslint
+      '@millennicare/lib':
+        specifier: workspace:^
+        version: link:../../packages/lib
       '@millennicare/prettier-config':
         specifier: workspace:^
         version: link:../../tooling/prettier
@@ -159,6 +153,9 @@ importers:
       '@millennicare/tsconfig':
         specifier: workspace:^
         version: link:../../tooling/typescript
+      '@millennicare/validators':
+        specifier: workspace:^
+        version: link:../../packages/validators
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
