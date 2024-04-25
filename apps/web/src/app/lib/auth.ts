@@ -1,13 +1,7 @@
-import type { Cookie, Session, User } from "@millennicare/auth";
+import type { Session, User } from "lucia";
 import { cache } from "react";
 import { cookies } from "next/headers";
 import { lucia } from "@millennicare/auth";
-
-export const createSession = async (cookie: Cookie) => {
-  // const session = await lucia.createSession(userId, { email });
-  // const sessionCookie = lucia.createSessionCookie(session.id);
-  cookies().set(cookie.name, cookie.value, cookie.attributes);
-};
 
 export const validateRequest = cache(
   async (): Promise<
@@ -40,8 +34,8 @@ export const validateRequest = cache(
           sessionCookie.attributes,
         );
       }
-    } catch (error) {
-      throw new Error("Error setting session cookie");
+    } catch {
+      /* empty */
     }
     return result;
   },

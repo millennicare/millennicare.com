@@ -9,9 +9,8 @@ export default async function AuthLayout({
   children: React.ReactNode;
 }) {
   const { session } = await validateRequest();
-
   if (session) {
-    redirect("/dashboard/home");
+    redirect("/dashboard");
   }
 
   return (

@@ -25,6 +25,5 @@ export async function findDuplicateUser(
 
 export async function createSession(userId: string, email: string) {
   const session = await lucia.createSession(userId, { email });
-  const sessionCookie = lucia.createSessionCookie(session.id);
-  return sessionCookie;
+  return session;
 }

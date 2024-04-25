@@ -1,6 +1,6 @@
 import type { ImageSourcePropType } from "react-native";
 import { ImageBackground, Text, View } from "react-native";
-import { Stack } from "expo-router";
+import { Link, Stack } from "expo-router";
 
 import { Button } from "~/components/button";
 
@@ -14,8 +14,6 @@ export default function Index() {
         resizeMode="cover"
         className="h-full flex-col justify-between pt-20"
       >
-        {/* Changes page title visible on the header */}
-
         <Stack.Screen options={{ headerShown: false }} />
         <View className="gap-y-2 pl-10">
           <Text className="self-start text-5xl font-light text-white">
@@ -35,7 +33,9 @@ export default function Index() {
             labelClasses="text-white"
           />
 
-          <Button label="Sign In" size="lg" className="rounded bg-white" />
+          <Link asChild href="/auth/sign-in/">
+            <Button label="Sign In" size="lg" className="rounded bg-white" />
+          </Link>
         </View>
       </ImageBackground>
     </View>

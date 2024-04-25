@@ -6,6 +6,7 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "main": "./src/index.ts",
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
@@ -34,9 +35,7 @@
   },
   "eslintConfig": {
     "root": true,
-    "extends": [
-      "@millennicare/eslint-config/base"
-    ]
+    "extends": ["@millennicare/eslint-config/base"]
   },
   "prettier": "@millennicare/prettier-config"
 }

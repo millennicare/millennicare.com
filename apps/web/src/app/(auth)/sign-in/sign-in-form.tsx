@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@millennicare/ui";
 import { buttonVariants } from "@millennicare/ui/button";
@@ -17,34 +18,32 @@ import { toast } from "@millennicare/ui/toast";
 import { useFormState } from "react-dom";
 import { z } from "zod";
 
+import type { ActionResult } from "~/app/@types/action-result";
 import { SubmitButton } from "~/app/_components/submit-btn";
-import { signIn } from "./actions";
+
+type SignInFormProps = {
+  signIn: (_: any, formData: FormData) => Promise<ActionResult>;
+};
 
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
 
-export default function SignInForm() {
+export default function SignInForm({ signIn }: SignInFormProps) {
   const [state, formAction] = useFormState(signIn, {
-    message: "",
-    error: undefined,
+    error: null,
   });
 
   const form = useForm({
     schema: formSchema,
   });
 
-  if (state.error !== undefined) {
+  useEffect(() => {
     if (state.error) {
-      toast.error(state.message);
-    } else {
-      toast.success(state.message);
+      toast.error(state.error);
     }
-    // clear error messages
-    state.error = undefined;
-    state.message = "";
-  }
+  }, [state.error]);
 
   return (
     <div className="flex w-full max-w-md flex-col space-y-4 md:w-1/2">

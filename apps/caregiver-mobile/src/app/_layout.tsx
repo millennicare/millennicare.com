@@ -5,15 +5,19 @@ import { TRPCProvider } from "~/lib/api";
 
 import "../styles.css";
 
+import { ToastProvider } from "~/components/toast";
+
 export default function RootLayout() {
   return (
     <TRPCProvider>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      />
-      <StatusBar />
+      <ToastProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        />
+        <StatusBar />
+      </ToastProvider>
     </TRPCProvider>
   );
 }

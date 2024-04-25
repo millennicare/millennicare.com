@@ -12,8 +12,8 @@ export const caregiverRegister = async (
   values: z.infer<typeof createUserSchema>,
 ) => {
   try {
-    const response = await api.auth.register(values);
-    await createSession(response.cookie);
+    const { session } = await api.auth.register(values);
+    await createSession(session);
 
     revalidatePath("/sign-up/caregiver");
   } catch (error) {

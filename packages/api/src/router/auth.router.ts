@@ -1,3 +1,4 @@
+import { lucia } from "@millennicare/auth";
 import { and, eq, schema } from "@millennicare/db";
 import {
   createCustomer,
@@ -20,6 +21,26 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { createSession, createToken, findDuplicateUser } from "./auth/helpers";
 
 export const authRouter = createTRPCRouter({
+  // validateSession: publicProcedure
+  //   .input(z.object({ sessionId: z.string() }))
+  //   .query(async ({ input }) => {
+  //     const { sessionId } = input;
+  //     const result = await lucia.validateSession(sessionId);
+
+  //     try {
+  //       if (result.session?.fresh) {
+  //         return result.session.id;
+  //       }
+  //       if (!result.session) {
+  //         return null;
+  //       }
+  //     } catch (error) {
+  //       throw new TRPCError({
+  //         code: "INTERNAL_SERVER_ERROR",
+  //         message: "Could not validate session",
+  //       });
+  //     }
+  //   }),
   /**
    * Register a new user. Will update this in v2 to include a verification email
    * and a more robust user registration process.
@@ -56,12 +77,12 @@ export const authRouter = createTRPCRouter({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
 
-      const sessionCookie = await createSession(
+      const session = await createSession(
         returnUser[0].insertedId,
         input.email,
       );
 
-      return { cookie: sessionCookie };
+      return { session };
     }),
   checkDuplicateEmail: publicProcedure
     .input(z.object({ email: z.string() }))
@@ -172,35 +193,27 @@ export const authRouter = createTRPCRouter({
     .input(signInSchema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
-      const existingUser = await db.query.userTable.findFirst({
+
+      const user = await db.query.userTable.findFirst({
         where: eq(schema.userTable.email, input.email),
       });
 
-      if (!existingUser?.password || !input.password) {
+      if (!user?.password) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "Incorrect email or password",
         });
       }
 
-      const passwordsMatch = await argon.verify(
-        existingUser.password,
-        input.password,
-      );
-
-      if (!passwordsMatch) {
+      const validPassword = await argon.verify(user.password, input.password);
+      if (!validPassword) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "Incorrect email or password",
         });
       }
 
-      const sessionCookie = await createSession(
-        existingUser.id,
-        existingUser.email,
-      );
-
-      return { cookie: sessionCookie };
+      return { id: user.id, email: user.email };
     }),
   getMe: protectedProcedure.query(async ({ ctx }) => {
     const { db, userId } = ctx;
@@ -314,7 +327,7 @@ export const authRouter = createTRPCRouter({
         return userId;
       });
 
-      const sessionCookie = await createSession(res, input.email);
-      return { cookie: sessionCookie };
+      const session = await createSession(res, input.email);
+      return { session };
     }),
 });
