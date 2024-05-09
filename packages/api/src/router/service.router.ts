@@ -124,7 +124,7 @@ export const serviceRouter = createTRPCRouter({
           "child_care",
           "senior_care",
           "housekeeping",
-          "petcare",
+          "pet_care",
         ]),
         // for now, the max radius is 10
         radius: z.number().int().nonnegative().lte(10).optional().default(5),

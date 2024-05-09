@@ -15,7 +15,7 @@ export const categoryEnum = pgEnum("category", [
   "child_care",
   "senior_care",
   "housekeeping",
-  "petcare",
+  "pet_care",
 ]);
 
 export const serviceTable = pgTable(

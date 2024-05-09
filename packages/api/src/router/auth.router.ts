@@ -1,4 +1,4 @@
-import { and, eq, schema } from "@millennicare/db";
+import { and, db, eq, schema } from "@millennicare/db";
 import {
   createCustomer,
   getLocationDetailsFromPlaceId,
@@ -27,7 +27,56 @@ const createToken = async (userId: string, expTime?: string) => {
   return token;
 };
 
+const findDuplicateUser = async (
+  email: string,
+  type?: "admin" | "caregiver" | "careseeker",
+) => {
+  return await db.query.userTable.findFirst({
+    where: type
+      ? and(eq(schema.userTable.email, email), eq(schema.userTable.type, type))
+      : eq(schema.userTable.email, email),
+  });
+};
+
 export const authRouter = createTRPCRouter({
+  /**
+   * Register a new user. Will update this in v2 to include a verification email
+   * and a more robust user registration process.
+   */
+  register: publicProcedure
+    .input(createUserSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { db } = ctx;
+
+      const existingUser = await findDuplicateUser(input.email, input.type);
+      // if a user exists with the same type, throw duplicate error
+      if (existingUser && existingUser.type === input.type) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "User already exists.",
+        });
+      }
+
+      /**
+       * so typescript isn't angy
+       */
+      if (!input.password) {
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      }
+
+      const hashed = await argon.hash(input.password);
+
+      const returnUser = await db
+        .insert(schema.userTable)
+        .values({ ...input, password: hashed })
+        .returning({ insertedId: schema.userTable.id });
+
+      if (!returnUser[0]) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+
+      return { id: returnUser[0].insertedId };
+    }),
   checkDuplicateEmail: publicProcedure
     .input(z.object({ email: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -61,7 +110,6 @@ export const authRouter = createTRPCRouter({
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
-      // verify old password matches
       const passwordsMatch = await argon.verify(
         user.password,
         input.currentPassword,
@@ -74,7 +122,6 @@ export const authRouter = createTRPCRouter({
       }
 
       const hashed = await argon.hash(input.newPassword);
-
       await db
         .update(schema.userTable)
         .set({
@@ -111,7 +158,6 @@ export const authRouter = createTRPCRouter({
       }
 
       const hashed = await argon.hash(input.password);
-
       await db
         .update(schema.userTable)
         .set({ password: hashed })
@@ -155,6 +201,7 @@ export const authRouter = createTRPCRouter({
         existingUser.password,
         input.password,
       );
+
       if (!passwordsMatch) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
@@ -224,11 +271,11 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const hashedPassword = await argon.hash(input.password);
       const customer = await createCustomer({
         name: input.name,
         email: input.email,
       });
+      const hashed = await argon.hash(input.password);
       // get location details based on PlaceID passed from registration
       const details = await getLocationDetailsFromPlaceId(input.placeId);
       const res = await db.transaction(async (tx) => {
@@ -236,7 +283,7 @@ export const authRouter = createTRPCRouter({
           .insert(schema.userTable)
           .values({
             email: input.email,
-            password: hashedPassword,
+            password: hashed,
             type: "careseeker",
           })
           .returning({ insertedId: schema.userTable.id });

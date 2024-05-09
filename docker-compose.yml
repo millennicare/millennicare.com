@@ -6,7 +6,7 @@ services:
     image: millennicare-prod
     build:
       context: .
-      dockerfile: ./apps/nextjs/Dockerfile
+      dockerfile: ./apps/web/Dockerfile
     restart: always
     env_file:
       - .env

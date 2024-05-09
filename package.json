@@ -18,14 +18,15 @@
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "check": "pnpm lint && pnpm format:fix && pnpm typecheck"
   },
   "devDependencies": {
     "@millennicare/prettier-config": "workspace:^",
-    "@turbo/gen": "^1.12.5",
+    "@turbo/gen": "^1.13.0",
     "prettier": "^3.2.5",
     "turbo": "^1.13.0",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.3"
   },
   "prettier": "@millennicare/prettier-config"
 }
