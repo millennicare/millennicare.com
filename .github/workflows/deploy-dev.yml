@@ -1,0 +1,21 @@
+name: Deploy to dev
+
+on:
+  push:
+    branches: [development, 85/enhancement/migrate-to-ecr]
+
+concurrency:
+  group: deploy-dev
+  cancel-in-progress: true
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
+jobs:
+  call-deploy-to-dev:
+    name: Deploy dev
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: dev
