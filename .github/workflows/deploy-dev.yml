@@ -18,4 +18,4 @@ jobs:
     name: Deploy dev
     uses: ./.github/workflows/deploy.yml
     with:
-      environment: dev
+      environment: development
