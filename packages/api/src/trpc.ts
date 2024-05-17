@@ -12,6 +12,8 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
+import { lucia } from "./auth";
+
 /**
  * 1. CONTEXT
  *
@@ -26,11 +28,11 @@ import { ZodError } from "zod";
  */
 export const createTRPCContext = (opts: {
   headers: Headers;
-  userId: string | null;
+  sessionId: string | null;
 }) => {
   return {
     db,
-    userId: opts.userId,
+    sessionId: opts.sessionId,
   };
 };
 
@@ -87,17 +89,25 @@ export const publicProcedure = t.procedure;
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-  if (!ctx.userId) {
+export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
+  if (!ctx.sessionId) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
       message: "You must be logged in to do that",
     });
   }
 
+  const result = await lucia.validateSession(ctx.sessionId);
+  if (!result.session || !result.user) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "Invalid session",
+    });
+  }
+
   return next({
     ctx: {
-      userId: ctx.userId,
+      user: result.user,
     },
   });
 });

@@ -18,9 +18,13 @@
     "@millennicare/db": "workspace:^",
     "@millennicare/lib": "workspace:^",
     "@millennicare/validators": "workspace:^",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@trpc/server": "11.0.0-next-beta.283",
+    "arctic": "^1.8.1",
     "argon2": "^0.40.1",
     "jose": "^5.2.3",
+    "lucia": "^3.1.1",
+    "oslo": "^1.2.0",
     "superjson": "2.2.1",
     "zod": "^3.22.4"
   },
