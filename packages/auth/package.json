@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./env": "./env.ts"
   },
   "license": "MIT",
   "scripts": {
@@ -18,8 +19,16 @@
     "@millennicare/prettier-config": "workspace:*",
     "@millennicare/tsconfig": "workspace:*",
     "eslint": "^9.4.0",
-    "prettier": "^3.3.1",
+    "prettier": "^3.3.2",
     "typescript": "^5.4.5"
   },
-  "prettier": "@millennicare/prettier-config"
+  "prettier": "@millennicare/prettier-config",
+  "dependencies": {
+    "@lucia-auth/adapter-drizzle": "^1.0.7",
+    "@millennicare/db": "workspace:^",
+    "@t3-oss/env-nextjs": "^0.10.1",
+    "lucia": "^3.2.0",
+    "oslo": "^1.2.0",
+    "zod": "^3.23.8"
+  }
 }

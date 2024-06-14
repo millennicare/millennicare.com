@@ -5,20 +5,13 @@
   "exports": {
     ".": "./src/index.ts"
   },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
-  },
   "license": "MIT",
   "scripts": {
+    "dev": "email dev --dir src/emails/templates --port 8080",
     "clean": "rm -rf .turbo node_modules",
-    "lint": "eslint .",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "typecheck": "tsc --noEmit",
-    "dev": "email dev --dir src/emails/templates --port 8080"
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "@aws-sdk/client-location": "^3.596.0",
@@ -39,6 +32,9 @@
     "eslint": "^9.4.0",
     "prettier": "^3.3.2",
     "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "react": "18.3.1"
   },
   "prettier": "@millennicare/prettier-config"
 }

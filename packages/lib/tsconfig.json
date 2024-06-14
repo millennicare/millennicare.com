@@ -1,8 +1,9 @@
 {
   "extends": "@millennicare/tsconfig/base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "jsx": "react-jsx"
   },
-  "include": ["*.ts", "src", "src/aws", "src/emails", "src/stripe"],
+  "include": ["*.ts", "*.tsx", "src"],
   "exclude": ["node_modules"]
 }

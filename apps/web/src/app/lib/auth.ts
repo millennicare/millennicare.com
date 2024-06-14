@@ -1,14 +1,23 @@
-import type { Session, User } from "lucia";
 import { cache } from "react";
 import { cookies } from "next/headers";
 
-import { api } from "~/trpc/server";
+import type { Session, User } from "@millennicare/auth";
+import { lucia } from "@millennicare/auth";
+
+export const createSessionCookie = async (session: Session) => {
+  const sessionCookie = lucia.createSessionCookie(session.id);
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes,
+  );
+};
 
 export const validateRequest = cache(
   async (): Promise<
     { user: User; session: Session } | { user: null; session: null }
   > => {
-    const sessionId = cookies().get("millennicare-session")?.value ?? null;
+    const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
     if (!sessionId) {
       return {
         user: null,
@@ -16,7 +25,8 @@ export const validateRequest = cache(
       };
     }
 
-    const user = await api.auth.getSession();
+    const result = await lucia.validateSession(sessionId);
+    console.log(result);
     // next.js throws when you attempt to set cookie when rendering page
     try {
       if (result.session?.fresh) {
@@ -35,8 +45,9 @@ export const validateRequest = cache(
           sessionCookie.attributes,
         );
       }
-    } catch {
-      /* empty */
+    } catch (error) {
+      console.error(error);
+      throw new Error("Error setting session cookie");
     }
     return result;
   },

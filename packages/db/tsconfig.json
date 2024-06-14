@@ -1,6 +1,7 @@
 {
   "extends": "@millennicare/tsconfig/base.json",
   "compilerOptions": {
+    "outDir": "dist",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "include": ["src", "drizzle.config.ts"],

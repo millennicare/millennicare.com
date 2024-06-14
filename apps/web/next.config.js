@@ -9,13 +9,17 @@ jiti("./src/env");
 /** @type {import("next").NextConfig} */
 const config = {
   experimental: {
-    serverComponentsExternalPackages: ["argon2"],
+    serverComponentsExternalPackages: [
+      "@node-rs/argon2",
+      "@aws/amazon-location-utilities-auth-helper",
+    ],
   },
   reactStrictMode: true,
   // output: "standalone",
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
     "@millennicare/api",
+    "@millennicare/auth",
     "@millennicare/db",
     "@millennicare/lib",
     "@millennicare/ui",

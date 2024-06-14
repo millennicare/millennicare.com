@@ -7,15 +7,28 @@
  * The pieces you will need to use are documented accordingly near the end
  */
 
-import type { Lucia } from "lucia";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { db } from "@millennicare/db";
+import type { Session, User } from "@millennicare/auth";
+import { validateToken } from "@millennicare/auth";
+import { db } from "@millennicare/db/client";
 
-import { lucia } from "./auth";
-
+/**
+ * Isomorphic Session getter for API requests
+ * - Expo requests will have a session token in the Authorization header
+ * - Next.js requests will have a session token in cookies
+ */
+const isomorphicGetSession = async (
+  headers: Headers,
+): Promise<
+  { user: User; session: Session } | { user: null; session: null }
+> => {
+  const authToken = headers.get("Authorization") ?? null;
+  if (authToken) return validateToken(authToken);
+  return { user: null, session: null };
+};
 /**
  * 1. CONTEXT
  *
@@ -28,15 +41,20 @@ import { lucia } from "./auth";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = (opts: {
+export const createTRPCContext = async (opts: {
   headers: Headers;
   sessionId?: string;
-  auth: Lucia;
 }) => {
+  const authToken = opts.headers.get("Authorization") ?? null;
+  const session = await isomorphicGetSession(opts.headers);
+
+  const source = opts.headers.get("x-trpc-source") ?? "unknown";
+  console.log(">>> tRPC Request from", source, "by", session?.user);
+
   return {
+    session,
     db,
-    sessionId: opts.sessionId,
-    auth: opts.auth,
+    token: authToken,
   };
 };
 
@@ -94,24 +112,13 @@ export const publicProcedure = t.procedure;
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
-  if (!ctx.sessionId) {
-    throw new TRPCError({
-      code: "UNAUTHORIZED",
-      message: "You must be logged in to do that",
-    });
-  }
-
-  const result = await lucia.validateSession(ctx.sessionId);
-  if (!result.session || !result.user) {
-    throw new TRPCError({
-      code: "UNAUTHORIZED",
-      message: "Invalid session",
-    });
+  if (!ctx.session.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
   return next({
     ctx: {
-      user: result.user,
+      session: { ...ctx.session, ...ctx.session.user },
     },
   });
 });

@@ -1,7 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import * as z from "zod";
 
-import { and, eq, schema } from "@millennicare/db";
+import { and, eq } from "@millennicare/db";
+import { Child } from "@millennicare/db/schema";
 import { createChildSchema, selectChildSchema } from "@millennicare/validators";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
@@ -10,9 +11,10 @@ export const childRouter = createTRPCRouter({
   create: protectedProcedure
     .input(createChildSchema.omit({ userId: true }))
     .mutation(async ({ ctx, input }) => {
-      const { db, userId } = ctx;
+      const { db, session } = ctx;
+      const userId = session.user.id;
 
-      await db.insert(schema.childTable).values({
+      await db.insert(Child).values({
         name: input.name,
         age: input.age,
         userId: userId,
@@ -21,12 +23,11 @@ export const childRouter = createTRPCRouter({
   getById: protectedProcedure
     .input(z.object({ childId: z.string().cuid2() }))
     .query(async ({ ctx, input }) => {
-      const { db, userId } = ctx;
-      const child = await db.query.childTable.findFirst({
-        where: and(
-          eq(schema.childTable.id, input.childId),
-          eq(schema.childTable.userId, userId),
-        ),
+      const { db, session } = ctx;
+      const userId = session.user.id;
+
+      const child = await db.query.Child.findFirst({
+        where: and(eq(Child.id, input.childId), eq(Child.userId, userId)),
       });
 
       if (!child) {
@@ -36,10 +37,11 @@ export const childRouter = createTRPCRouter({
       return child;
     }),
   getByCareseekerId: protectedProcedure.query(async ({ ctx }) => {
-    const { db, userId } = ctx;
+    const { db, session } = ctx;
+    const userId = session.user.id;
 
-    const children = await db.query.childTable.findMany({
-      where: eq(schema.childTable.userId, userId),
+    const children = await db.query.Child.findMany({
+      where: eq(Child.userId, userId),
     });
 
     return children;
@@ -47,20 +49,16 @@ export const childRouter = createTRPCRouter({
   update: protectedProcedure
     .input(selectChildSchema.partial().required({ id: true }))
     .mutation(async ({ ctx, input }) => {
-      const { db, userId } = ctx;
+      const { db, session } = ctx;
+      const userId = session.user.id;
 
       await db
-        .update(schema.childTable)
+        .update(Child)
         .set({
           name: input.name,
           age: input.age,
         })
-        .where(
-          and(
-            eq(schema.childTable.id, input.id),
-            eq(schema.childTable.userId, userId),
-          ),
-        );
+        .where(and(eq(Child.id, input.id), eq(Child.userId, userId)));
     }),
   delete: protectedProcedure
     .input(
@@ -69,15 +67,11 @@ export const childRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { db, userId } = ctx;
+      const { db, session } = ctx;
+      const userId = session.user.id;
 
       await db
-        .delete(schema.childTable)
-        .where(
-          and(
-            eq(schema.childTable.id, input.childId),
-            eq(schema.childTable.userId, userId),
-          ),
-        );
+        .delete(Child)
+        .where(and(eq(Child.id, input.childId), eq(Child.userId, userId)));
     }),
 });

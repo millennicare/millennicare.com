@@ -171,4 +171,4 @@ function useToast() {
   return context;
 }
 
-export { ToastProvider, ToastVariant, Toast, toastVariants, useToast };
+export { ToastProvider, type ToastVariant, Toast, toastVariants, useToast };

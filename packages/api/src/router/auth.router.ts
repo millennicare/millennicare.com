@@ -1,10 +1,16 @@
+import { hash, verify } from "@node-rs/argon2";
 import { TRPCError } from "@trpc/server";
-import * as argon from "argon2";
 import * as jose from "jose";
 import { z } from "zod";
 
-import { lucia } from "@millennicare/auth";
-import { and, eq, schema } from "@millennicare/db";
+import { and, eq } from "@millennicare/db";
+import {
+  Address,
+  Careseeker,
+  Child,
+  User,
+  UserInfo,
+} from "@millennicare/db/schema";
 import {
   createCustomer,
   getLocationDetailsFromPlaceId,
@@ -19,29 +25,13 @@ import {
 } from "@millennicare/validators";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { createSession, createToken, findDuplicateUser } from "./auth/helpers";
+import {
+  createSession,
+  createToken,
+  findDuplicateUser,
+} from "../utils/helpers";
 
 export const authRouter = createTRPCRouter({
-  // validateSession: publicProcedure
-  //   .input(z.object({ sessionId: z.string() }))
-  //   .query(async ({ input }) => {
-  //     const { sessionId } = input;
-  //     const result = await lucia.validateSession(sessionId);
-
-  //     try {
-  //       if (result.session?.fresh) {
-  //         return result.session.id;
-  //       }
-  //       if (!result.session) {
-  //         return null;
-  //       }
-  //     } catch (error) {
-  //       throw new TRPCError({
-  //         code: "INTERNAL_SERVER_ERROR",
-  //         message: "Could not validate session",
-  //       });
-  //     }
-  //   }),
   /**
    * Register a new user. Will update this in v2 to include a verification email
    * and a more robust user registration process.
@@ -67,12 +57,17 @@ export const authRouter = createTRPCRouter({
         throw new TRPCError({ code: "BAD_REQUEST" });
       }
 
-      const hashed = await argon.hash(input.password);
+      const hashed = await hash(input.password, {
+        memoryCost: 19456,
+        timeCost: 2,
+        outputLen: 32,
+        parallelism: 1,
+      });
 
       const returnUser = await db
-        .insert(schema.userTable)
+        .insert(User)
         .values({ ...input, password: hashed })
-        .returning({ insertedId: schema.userTable.id });
+        .returning({ insertedId: User.id });
 
       if (!returnUser[0]) {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
@@ -90,8 +85,8 @@ export const authRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const { db } = ctx;
 
-      const existingUser = await db.query.userTable.findFirst({
-        where: eq(schema.userTable.email, input.email),
+      const existingUser = await db.query.User.findFirst({
+        where: eq(User.email, input.email),
       });
       if (existingUser) {
         throw new TRPCError({
@@ -108,20 +103,18 @@ export const authRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { db, userId } = ctx;
+      const { db, session } = ctx;
+      const userId = session.user.id;
 
-      const user = await db.query.userTable.findFirst({
-        where: eq(schema.userTable.id, userId),
+      const user = await db.query.User.findFirst({
+        where: eq(User.id, userId),
       });
 
       if (!user?.password) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
-      const passwordsMatch = await argon.verify(
-        user.password,
-        input.currentPassword,
-      );
+      const passwordsMatch = await verify(user.password, input.currentPassword);
       if (!passwordsMatch) {
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -129,13 +122,13 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const hashed = await argon.hash(input.newPassword);
+      const hashed = await hash(input.newPassword);
       await db
-        .update(schema.userTable)
+        .update(User)
         .set({
           password: hashed,
         })
-        .where(eq(schema.userTable.id, userId));
+        .where(eq(User.id, userId));
     }),
   resetPassword: publicProcedure
     .input(
@@ -165,11 +158,11 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const hashed = await argon.hash(input.password);
+      const hashed = await hash(input.password);
       await db
-        .update(schema.userTable)
+        .update(User)
         .set({ password: hashed })
-        .where(eq(schema.userTable.id, userId));
+        .where(eq(User.id, userId));
 
       return { message: "Password successfully reset." };
     }),
@@ -178,8 +171,8 @@ export const authRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
-      const user = await db.query.userTable.findFirst({
-        where: eq(schema.userTable.email, input.email),
+      const user = await db.query.User.findFirst({
+        where: eq(User.email, input.email),
       });
 
       if (!user) {
@@ -195,8 +188,8 @@ export const authRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
-      const user = await db.query.userTable.findFirst({
-        where: eq(schema.userTable.email, input.email),
+      const user = await db.query.User.findFirst({
+        where: eq(User.email, input.email),
       });
 
       if (!user?.password) {
@@ -206,7 +199,7 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const validPassword = await argon.verify(user.password, input.password);
+      const validPassword = await verify(user.password, input.password);
       if (!validPassword) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
@@ -217,10 +210,10 @@ export const authRouter = createTRPCRouter({
       return { id: user.id, email: user.email };
     }),
   getMe: protectedProcedure.query(async ({ ctx }) => {
-    const { db, userId } = ctx;
+    const { db, session } = ctx;
 
-    const user = await db.query.userTable.findFirst({
-      where: eq(schema.userTable.id, userId),
+    const user = await db.query.User.findFirst({
+      where: eq(User.id, session.user.id),
     });
     if (!user) {
       throw new TRPCError({ code: "NOT_FOUND" });
@@ -262,11 +255,8 @@ export const authRouter = createTRPCRouter({
       const { db } = ctx;
       // check if there is an existing user with a careseeker account already
       // since careseeker accounts can also create a caregiver account technically
-      const existingUser = await db.query.userTable.findFirst({
-        where: and(
-          eq(schema.userTable.email, input.email),
-          eq(schema.userTable.type, "careseeker"),
-        ),
+      const existingUser = await db.query.User.findFirst({
+        where: and(eq(User.email, input.email), eq(User.type, "careseeker")),
       });
 
       if (existingUser) {
@@ -280,41 +270,41 @@ export const authRouter = createTRPCRouter({
         name: input.name,
         email: input.email,
       });
-      const hashed = await argon.hash(input.password);
+      const hashed = await hash(input.password);
       // get location details based on PlaceID passed from registration
       const details = await getLocationDetailsFromPlaceId(input.placeId);
       const res = await db.transaction(async (tx) => {
         const user = await tx
-          .insert(schema.userTable)
+          .insert(User)
           .values({
             email: input.email,
             password: hashed,
             type: "careseeker",
           })
-          .returning({ insertedId: schema.userTable.id });
+          .returning({ insertedId: User.id });
         if (!user[0]) {
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
         }
         const userId = user[0].insertedId;
 
-        await tx.insert(schema.userInfoTable).values({
+        await tx.insert(UserInfo).values({
           userId,
           name: input.name,
           phoneNumber: input.phoneNumber,
           birthdate: input.birthdate,
           stripeId: customer.id,
         });
-        await tx.insert(schema.careseekerTable).values({
+        await tx.insert(Careseeker).values({
           userId,
         });
-        await tx.insert(schema.childTable).values(
+        await tx.insert(Child).values(
           input.children.map((child) => ({
             userId,
             age: child.age,
             name: child.name,
           })),
         );
-        await tx.insert(schema.addressTable).values({
+        await tx.insert(Address).values({
           line1: details.line1,
           line2: details.line2,
           city: details.city,

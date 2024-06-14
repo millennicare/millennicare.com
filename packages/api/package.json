@@ -19,17 +19,12 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@lucia-auth/adapter-drizzle": "^1.0.7",
+    "@millennicare/auth": "workspace:^",
     "@millennicare/db": "workspace:*",
     "@millennicare/lib": "workspace:*",
     "@millennicare/validators": "workspace:*",
-    "@paralleldrive/cuid2": "^2.2.2",
     "@trpc/server": "11.0.0-next-beta.283",
-    "arctic": "^1.9.1",
-    "argon2": "^0.40.3",
     "jose": "^5.4.0",
-    "lucia": "^3.2.0",
-    "oslo": "^1.2.0",
     "superjson": "2.2.1",
     "zod": "^3.23.8"
   },

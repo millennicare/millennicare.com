@@ -54,6 +54,7 @@
     "@babel/runtime": "^7.24.7",
     "@expo/config-plugins": "^8.0.5",
     "@millennicare/api": "workspace:*",
+    "@millennicare/auth": "workspace:*",
     "@millennicare/eslint-config": "workspace:*",
     "@millennicare/lib": "workspace:*",
     "@millennicare/prettier-config": "workspace:*",

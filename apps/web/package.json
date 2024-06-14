@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@millennicare/api": "workspace:*",
+    "@millennicare/auth": "workspace:^",
     "@millennicare/db": "workspace:*",
     "@millennicare/lib": "workspace:*",
     "@millennicare/ui": "workspace:*",

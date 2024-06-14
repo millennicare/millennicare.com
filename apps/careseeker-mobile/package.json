@@ -17,6 +17,7 @@
   "dependencies": {
     "@expo/metro-config": "^0.18.7",
     "@millennicare/api": "workspace:*",
+    "@millennicare/auth": "workspace:*",
     "@millennicare/lib": "workspace:*",
     "@millennicare/validators": "workspace:*",
     "@shopify/flash-list": "1.6.4",

@@ -15,8 +15,8 @@ const createContext = cache(async () => {
   const { session } = await validateRequest();
 
   return createTRPCContext({
-    userId: session?.userId ?? null,
-    headers: heads,
+    sessionId: session?.id,
+    headers: heads as Headers,
   });
 });
 
