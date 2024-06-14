@@ -1,8 +1,9 @@
 "use server";
 
-import type { UpdateChild } from "@millennicare/validators";
 import { revalidatePath } from "next/cache";
 import { TRPCError } from "@trpc/server";
+
+import type { UpdateChild } from "@millennicare/validators";
 
 import { api } from "~/trpc/server";
 

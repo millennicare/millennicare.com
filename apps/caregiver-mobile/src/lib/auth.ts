@@ -1,4 +1,5 @@
 import * as SecureStore from "expo-secure-store";
+
 import { lucia } from "@millennicare/auth";
 
 export async function createSession(sessionId: string) {

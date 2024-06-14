@@ -1,7 +1,8 @@
 "use server";
 
-import type { ContactUs } from "@millennicare/validators";
 import { TRPCError } from "@trpc/server";
+
+import type { ContactUs } from "@millennicare/validators";
 
 import { api } from "~/trpc/server";
 

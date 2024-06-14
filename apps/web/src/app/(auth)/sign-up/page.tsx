@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { Button } from "@millennicare/ui/button";
 
 export default function SignUpPage() {

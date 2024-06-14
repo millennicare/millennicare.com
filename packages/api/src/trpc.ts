@@ -8,10 +8,11 @@
  */
 
 import type { Lucia } from "lucia";
-import { db } from "@millennicare/db";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
+
+import { db } from "@millennicare/db";
 
 import { lucia } from "./auth";
 

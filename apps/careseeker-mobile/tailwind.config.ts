@@ -1,8 +1,9 @@
 import type { Config } from "tailwindcss";
-import baseConfig from "@millennicare/tailwind-config/native";
 // @ts-expect-error - no types
 import nativewind from "nativewind/preset";
 import animate from "tailwindcss-animate";
+
+import baseConfig from "@millennicare/tailwind-config/native";
 
 export default {
   content: ["./src/**/*.{ts,tsx}"],

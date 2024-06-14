@@ -1,5 +1,6 @@
-import type { CreateUser, SignInInput } from "@millennicare/validators";
 import { TRPCError } from "@trpc/server";
+
+import type { CreateUser, SignInInput } from "@millennicare/validators";
 
 import { lucia } from "../../auth";
 import { getUserByEmail } from "../../auth/user";

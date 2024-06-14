@@ -1,5 +1,6 @@
-import type { DatabaseType } from "@millennicare/db";
 import type { Lucia, User } from "lucia";
+
+import type { DatabaseType } from "@millennicare/db";
 
 export interface ApiContextProps {
   user?: User;

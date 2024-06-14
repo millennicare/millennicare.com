@@ -1,5 +1,8 @@
 "use client";
 
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+
 import { cn } from "@millennicare/ui";
 import { Button } from "@millennicare/ui/button";
 import { Calendar } from "@millennicare/ui/calendar";
@@ -18,8 +21,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@millennicare/ui/popover";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { format } from "date-fns";
 
 import type { AdditionalInfo } from "../slices/additional-info-slice";
 import { SubmitButton } from "~/app/_components/submit-btn";

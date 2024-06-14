@@ -1,8 +1,9 @@
 "use server";
 
-import type { UpdateUser } from "@millennicare/validators";
 import { revalidatePath } from "next/cache";
 import { TRPCError } from "@trpc/server";
+
+import type { UpdateUser } from "@millennicare/validators";
 
 export async function updateCareseeker(values: UpdateUser) {
   try {

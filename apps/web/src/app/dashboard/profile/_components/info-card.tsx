@@ -1,7 +1,8 @@
 "use client";
 
-import type { User, UserInfo } from "@millennicare/validators";
 import Image from "next/image";
+
+import type { User, UserInfo } from "@millennicare/validators";
 
 type InfoCardProps = {
   user: User;

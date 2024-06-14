@@ -1,6 +1,7 @@
+import * as jose from "jose";
+
 import { lucia } from "@millennicare/auth";
 import { and, db, eq, schema } from "@millennicare/db";
-import * as jose from "jose";
 
 export async function createToken(userId: string, expTime?: string) {
   const secret = new TextEncoder().encode(process.env.SYMMETRIC_KEY);

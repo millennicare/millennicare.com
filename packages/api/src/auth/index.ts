@@ -1,6 +1,7 @@
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { db, schema } from "@millennicare/db";
 import { Lucia } from "lucia";
+
+import { db, schema } from "@millennicare/db";
 
 const adapter = new DrizzlePostgreSQLAdapter(
   db,

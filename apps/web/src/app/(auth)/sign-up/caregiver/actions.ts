@@ -1,9 +1,10 @@
 "use server";
 
-import type { createUserSchema } from "@millennicare/validators";
 import type { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { TRPCError } from "@trpc/server";
+
+import type { createUserSchema } from "@millennicare/validators";
 
 import { createSession } from "~/app/lib/auth";
 import { api } from "~/trpc/server";

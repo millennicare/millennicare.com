@@ -1,5 +1,6 @@
 import type { z } from "zod";
 import type { StateCreator } from "zustand";
+
 import { createUserSchema } from "@millennicare/validators";
 
 export const emailSchema = createUserSchema.pick({

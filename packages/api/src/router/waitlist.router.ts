@@ -1,6 +1,7 @@
+import { z } from "zod";
+
 import { eq, schema } from "@millennicare/db";
 import { sendWaitlistConfirmationEmail } from "@millennicare/lib";
-import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
