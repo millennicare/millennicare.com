@@ -22,7 +22,7 @@ https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint
           require("../../assets/welcome_background.png") as ImageSourcePropType
         }
         resizeMode="cover"
-        className="h-full flex-col justify-between pt-20 "
+        className="h-full flex-col justify-between pt-20"
       >
         {/* Changes page title visible on the header */}
 
@@ -44,7 +44,7 @@ https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint
           <Button
             label="Login"
             size="lg"
-            className="rounded "
+            className="rounded"
             labelClasses="text-white"
           />
         </View>

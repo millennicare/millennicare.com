@@ -38,3 +38,5 @@ export { pgTable as tableCreator } from "./schema/_table";
 export * from "drizzle-orm";
 
 export const db = drizzle(pool, { schema });
+
+export type DatabaseType = typeof db;

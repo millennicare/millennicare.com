@@ -11,33 +11,24 @@
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@next/eslint-plugin-next": "^14.1.4",
-    "@typescript-eslint/eslint-plugin": "^7.4.0",
-    "@typescript-eslint/parser": "^7.4.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-config-turbo": "^1.13.0",
+    "@next/eslint-plugin-next": "^14.2.4",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
-    "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-react-hooks": "^4.6.0"
+    "eslint-plugin-react": "^7.34.2",
+    "eslint-plugin-react-hooks": "5.1.0-rc-fb9a90fa48-20240614",
+    "eslint-plugin-turbo": "^2.0.4",
+    "typescript-eslint": "8.0.0-alpha.30"
   },
   "devDependencies": {
-    "@millennicare/prettier-config": "workspace:^",
-    "@millennicare/tsconfig": "workspace:^",
-    "@types/eslint": "^8.56.6",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
-    "typescript": "^5.4.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "./base.js"
-    ]
+    "@millennicare/prettier-config": "workspace:*",
+    "@millennicare/tsconfig": "workspace:*",
+    "@types/eslint": "^8.56.10",
+    "eslint": "^9.4.0",
+    "prettier": "^3.3.2",
+    "typescript": "^5.4.5"
   },
   "prettier": "@millennicare/prettier-config"
 }

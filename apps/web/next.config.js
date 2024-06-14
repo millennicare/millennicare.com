@@ -16,7 +16,6 @@ const config = {
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
     "@millennicare/api",
-    "@millennicare/auth",
     "@millennicare/db",
     "@millennicare/lib",
     "@millennicare/ui",

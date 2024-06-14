@@ -7,6 +7,7 @@
  * The pieces you will need to use are documented accordingly near the end
  */
 
+import type { Lucia } from "lucia";
 import { db } from "@millennicare/db";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
@@ -28,11 +29,13 @@ import { lucia } from "./auth";
  */
 export const createTRPCContext = (opts: {
   headers: Headers;
-  sessionId: string | null;
+  sessionId?: string;
+  auth: Lucia;
 }) => {
   return {
     db,
     sessionId: opts.sessionId,
+    auth: opts.auth,
   };
 };
 

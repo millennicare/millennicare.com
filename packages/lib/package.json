@@ -21,30 +21,24 @@
     "dev": "email dev --dir src/emails/templates --port 8080"
   },
   "dependencies": {
-    "@aws-sdk/client-location": "^3.540.0",
-    "@aws-sdk/client-s3": "^3.540.0",
-    "@aws-sdk/client-ses": "^3.540.0",
-    "@aws-sdk/s3-request-presigner": "^3.540.0",
-    "@aws/amazon-location-utilities-auth-helper": "^1.0.5",
-    "@millennicare/validators": "workspace:^",
-    "@react-email/components": "^0.0.15",
-    "react-email": "^2.1.0",
-    "stripe": "^14.22.0",
-    "zod": "^3.22.4"
+    "@aws-sdk/client-location": "^3.596.0",
+    "@aws-sdk/client-s3": "^3.596.0",
+    "@aws-sdk/client-ses": "^3.596.0",
+    "@aws-sdk/s3-request-presigner": "^3.596.0",
+    "@aws/amazon-location-utilities-auth-helper": "^1.0.6",
+    "@millennicare/validators": "workspace:*",
+    "@react-email/components": "^0.0.19",
+    "react-email": "^2.1.4",
+    "stripe": "^15.11.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@millennicare/eslint-config": "workspace:^",
-    "@millennicare/prettier-config": "workspace:^",
-    "@millennicare/tsconfig": "workspace:^",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
-    "typescript": "^5.4.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@millennicare/eslint-config/base"
-    ]
+    "@millennicare/eslint-config": "workspace:*",
+    "@millennicare/prettier-config": "workspace:*",
+    "@millennicare/tsconfig": "workspace:*",
+    "eslint": "^9.4.0",
+    "prettier": "^3.3.2",
+    "typescript": "^5.4.5"
   },
   "prettier": "@millennicare/prettier-config"
 }

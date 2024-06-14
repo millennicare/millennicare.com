@@ -29,3 +29,4 @@ export const updateUserSchema = selectUserSchema
 
 export type UpdateUser = z.infer<typeof updateUserSchema>;
 export type User = z.infer<typeof selectUserSchema>;
+export type CreateUser = z.infer<typeof createUserSchema>;

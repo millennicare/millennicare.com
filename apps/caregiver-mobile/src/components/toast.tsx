@@ -51,10 +51,7 @@ function Toast({
 
   return (
     <Animated.View
-      className={`
-        ${toastVariants[variant]}
-        m-2 mb-1 transform rounded-lg p-4 shadow-md transition-all
-      `}
+      className={` ${toastVariants[variant]} m-2 mb-1 transform rounded-lg p-4 shadow-md transition-all`}
       style={{
         opacity,
         transform: [

@@ -4,43 +4,42 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    }
   },
   "license": "MIT",
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@millennicare/auth": "workspace:^",
-    "@millennicare/db": "workspace:^",
-    "@millennicare/lib": "workspace:^",
-    "@millennicare/validators": "workspace:^",
+    "@lucia-auth/adapter-drizzle": "^1.0.7",
+    "@millennicare/db": "workspace:*",
+    "@millennicare/lib": "workspace:*",
+    "@millennicare/validators": "workspace:*",
     "@paralleldrive/cuid2": "^2.2.2",
     "@trpc/server": "11.0.0-next-beta.283",
-    "arctic": "^1.8.1",
-    "argon2": "^0.40.1",
-    "jose": "^5.2.3",
-    "lucia": "^3.1.1",
+    "arctic": "^1.9.1",
+    "argon2": "^0.40.3",
+    "jose": "^5.4.0",
+    "lucia": "^3.2.0",
     "oslo": "^1.2.0",
     "superjson": "2.2.1",
-    "zod": "^3.22.4"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@millennicare/eslint-config": "workspace:^",
-    "@millennicare/prettier-config": "workspace:^",
-    "@millennicare/tsconfig": "workspace:^",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
-    "typescript": "^5.4.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@millennicare/eslint-config/base"
-    ]
+    "@millennicare/eslint-config": "workspace:*",
+    "@millennicare/prettier-config": "workspace:*",
+    "@millennicare/tsconfig": "workspace:*",
+    "eslint": "^9.4.0",
+    "prettier": "^3.3.2",
+    "typescript": "^5.4.5"
   },
   "prettier": "@millennicare/prettier-config"
 }

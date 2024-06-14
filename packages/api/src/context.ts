@@ -1,8 +1,9 @@
-import type { Lucia, Session, User } from "lucia";
+import type { DatabaseType } from "@millennicare/db";
+import type { Lucia, User } from "lucia";
 
 export interface ApiContextProps {
-  session?: Session;
   user?: User;
+  sessionId?: string;
+  db: DatabaseType;
   auth: Lucia;
-  req?: Request;  
 }
