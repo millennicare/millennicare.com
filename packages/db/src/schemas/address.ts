@@ -4,7 +4,6 @@ import {
   index,
   pgTable,
   text,
-  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 
@@ -13,8 +12,7 @@ import { User } from "./user";
 export const Address = pgTable(
   "addresses",
   {
-    id: uuid("id").notNull().primaryKey().defaultRandom(),
-
+    id: text("id").notNull().primaryKey(),
     line1: varchar("line1", { length: 128 }).notNull(),
     line2: varchar("line2", { length: 128 }),
     city: varchar("city", { length: 128 }).notNull(),
@@ -23,7 +21,7 @@ export const Address = pgTable(
     longitude: doublePrecision("longitude").notNull(),
     latitude: doublePrecision("latitude").notNull(),
     placeId: text("place_id").notNull(),
-    userId: uuid("user_id")
+    userId: text("user_id")
       .notNull()
       .references(() => User.id, {
         onDelete: "cascade",

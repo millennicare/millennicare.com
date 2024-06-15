@@ -34,7 +34,7 @@ function CardType({ type, description, variant }: CardTypeProps) {
     <div className="flex w-full min-w-fit flex-col space-y-3 rounded-xl border bg-background p-4 md:w-1/2">
       <p className="text-xl font-semibold">I am a {type}</p>
       <p>Create a profile and {description}</p>
-      <Link href={`/sign-up/${type}`}>
+      <Link href={`/auth/sign-up/${type}`}>
         <Button variant="secondary" className="w-full text-background">
           Find {variant}
         </Button>

@@ -27,20 +27,28 @@
     "push": "pnpm with-env drizzle-kit push",
     "studio": "pnpm with-env drizzle-kit studio",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
-    "with-env": "dotenv -e ../../.env --"
+    "with-env": "dotenv -e ../../.env --",
+    "create": "pnpm drizzle-kit generate",
+    "migrate": "pnpm tsx src/migrate"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^0.9.3",
-    "drizzle-orm": "^0.31.2"
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.31.2",
+    "pg": "^8.12.0",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@millennicare/eslint-config": "workspace:*",
     "@millennicare/prettier-config": "workspace:*",
     "@millennicare/tsconfig": "workspace:*",
+    "@types/pg": "^8.11.6",
+    "@types/uuid": "^9.0.8",
     "dotenv-cli": "^7.4.2",
     "drizzle-kit": "^0.22.7",
     "eslint": "^9.4.0",
     "prettier": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.15.4",
     "typescript": "^5.4.5"
   },
   "prettier": "@millennicare/prettier-config"

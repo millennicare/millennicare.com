@@ -1,16 +1,15 @@
 import { relations } from "drizzle-orm";
-import { index, integer, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
+import { index, integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
 
 import { Careseeker } from "./careseeker";
 
 export const Child = pgTable(
   "children",
   {
-    id: uuid("id").notNull().primaryKey().defaultRandom(),
-
+    id: text("id").notNull().primaryKey(),
     age: integer("age").notNull(),
     name: varchar("name", { length: 255 }).notNull(),
-    userId: uuid("user_id")
+    userId: text("user_id")
       .notNull()
       .references(() => Careseeker.userId, {
         onDelete: "cascade",

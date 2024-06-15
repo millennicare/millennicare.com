@@ -4,7 +4,7 @@ import {
   index,
   pgEnum,
   pgTable,
-  uuid,
+  text,
   varchar,
 } from "drizzle-orm/pg-core";
 
@@ -20,13 +20,13 @@ export const categoryEnum = pgEnum("category", [
 export const Service = pgTable(
   "services",
   {
-    id: uuid("id").notNull().primaryKey().defaultRandom(),
+    id: text("id").notNull().primaryKey(),
 
     title: varchar("title", { length: 255 }).notNull(),
     description: varchar("description", { length: 255 }).notNull(),
     price: doublePrecision("price").notNull(),
     category: categoryEnum("category").notNull(),
-    userId: uuid("caregiver_id")
+    userId: text("caregiver_id")
       .notNull()
       .references(() => Caregiver.userId, {
         onDelete: "cascade",

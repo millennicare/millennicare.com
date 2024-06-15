@@ -11,6 +11,8 @@
     "clean:workspaces": "turbo run clean",
     "db:push": "turbo -F @millennicare/db push",
     "db:studio": "turbo -F @millennicare/db studio",
+    "db:migrate": "turbo -F @millennicare/db migrate",
+    "db:create": "turbo -F @millennicare/db create",
     "dev": "turbo watch dev",
     "dev:next": "turbo watch dev -F @millennicare/web...",
     "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",

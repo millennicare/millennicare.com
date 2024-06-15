@@ -97,7 +97,7 @@ export default function SignInForm({ signIn }: SignInFormProps) {
           Don&apos;t have an account?{" "}
           <Link
             prefetch={false}
-            href="/sign-up"
+            href="/auth/sign-up"
             className={cn(buttonVariants({ variant: "link" }), "p-0")}
           >
             Sign up.

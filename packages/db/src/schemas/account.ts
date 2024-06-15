@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, primaryKey, text, uuid } from "drizzle-orm/pg-core";
+import { pgTable, primaryKey, text } from "drizzle-orm/pg-core";
 
 import { User } from "./user";
 
@@ -7,8 +7,8 @@ export const Account = pgTable(
   "accounts",
   {
     providerId: text("provider_id").notNull(),
-    providerUserId: uuid("provider_user_id").notNull(),
-    userId: uuid("user_id")
+    providerUserId: text("provider_user_id").notNull(),
+    userId: text("user_id")
       .notNull()
       .unique()
       .references(() => User.id, {
