@@ -1,5 +1,7 @@
+import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import { index, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import { Caregiver } from "./caregiver";
 import { Careseeker } from "./careseeker";
@@ -15,7 +17,10 @@ export const statusEnum = pgEnum("status", [
 export const Appointment = pgTable(
   "appointments",
   {
-    id: text("id").notNull().primaryKey(),
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
     startTime: timestamp("startTime").notNull(),
     endTime: timestamp("endTime").notNull(),
     status: statusEnum("status").notNull(),
@@ -48,3 +53,6 @@ export const AppointmentsRelations = relations(Appointment, ({ one }) => ({
     references: [Caregiver.userId],
   }),
 }));
+
+export const insertAppointmentschema = createInsertSchema(Appointment);
+export const selectAppointmentSchema = createSelectSchema(Appointment);

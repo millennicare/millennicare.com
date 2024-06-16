@@ -1,21 +1,19 @@
 import { z } from "zod";
 
 import { eq } from "@millennicare/db";
-import { Waitlist } from "@millennicare/db/schema";
+import { insertWaitlistSchema, Waitlist } from "@millennicare/db/schema";
 import { sendWaitlistConfirmationEmail } from "@millennicare/lib";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const waitlistRouter = createTRPCRouter({
   create: publicProcedure
-    .input(z.object({ email: z.string().email() }))
+    .input(insertWaitlistSchema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
       try {
-        await db
-          .insert(Waitlist)
-          .values({ email: input.email, contacted: false });
+        await db.insert(Waitlist).values({ email: input.email });
 
         await sendWaitlistConfirmationEmail({ email: input.email });
       } catch (error) {

@@ -2,12 +2,14 @@ import { TRPCError } from "@trpc/server";
 import * as z from "zod";
 
 import { and, eq } from "@millennicare/db";
-import { Address, Caregiver, Service, User } from "@millennicare/db/schema";
-import { getLocationDetails } from "@millennicare/lib";
 import {
-  createServiceSchema,
-  selectServiceSchema,
-} from "@millennicare/validators";
+  Address,
+  Caregiver,
+  insertServiceSchema,
+  Service,
+  User,
+} from "@millennicare/db/schema";
+import { getLocationDetails } from "@millennicare/lib";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
@@ -49,7 +51,7 @@ const degreesToRadians = (point: number) => point * (Math.PI / 180);
 
 export const serviceRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(createServiceSchema)
+    .input(insertServiceSchema)
     .mutation(async ({ ctx, input }) => {
       const { db, session } = ctx;
       const userId = session.user.id;
@@ -66,7 +68,7 @@ export const serviceRouter = createTRPCRouter({
       await db.insert(Service).values({ ...input });
     }),
   update: protectedProcedure
-    .input(selectServiceSchema.partial().required({ id: true }))
+    .input(insertServiceSchema.partial().required({ id: true }))
     .mutation(async ({ ctx, input }) => {
       const { db, session } = ctx;
       const userId = session.user.id;
@@ -87,7 +89,7 @@ export const serviceRouter = createTRPCRouter({
         where: eq(Service.id, input.caregiverId),
       });
 
-      if (!services) {
+      if (services.length === 0) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
       return services;

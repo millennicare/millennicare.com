@@ -19,6 +19,7 @@ https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint
 
       <ImageBackground
         source={
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
           require("../../assets/welcome_background.png") as ImageSourcePropType
         }
         resizeMode="cover"

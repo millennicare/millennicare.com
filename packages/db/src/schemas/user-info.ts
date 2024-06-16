@@ -1,12 +1,17 @@
+import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import { date, index, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import { User } from "./user";
 
 export const UserInfo = pgTable(
   "user_info",
   {
-    id: text("id").notNull().primaryKey(),
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
     userId: text("user_id")
       .references(() => User.id, {
         onDelete: "cascade",
@@ -33,3 +38,6 @@ export const userInfoRelations = relations(UserInfo, ({ one }) => ({
     references: [User.id],
   }),
 }));
+
+export const insertUserInfoSchema = createInsertSchema(UserInfo);
+export const selectUserInfoSchema = createSelectSchema(UserInfo);

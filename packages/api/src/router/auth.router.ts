@@ -3,26 +3,10 @@ import { TRPCError } from "@trpc/server";
 import * as jose from "jose";
 import { z } from "zod";
 
-import { and, eq } from "@millennicare/db";
-import {
-  Address,
-  Careseeker,
-  Child,
-  User,
-  UserInfo,
-} from "@millennicare/db/schema";
-import {
-  createCustomer,
-  getLocationDetailsFromPlaceId,
-  sendPasswordResetEmail,
-} from "@millennicare/lib";
-import {
-  createAddressSchema,
-  createChildSchema,
-  createUserInfoSchema,
-  createUserSchema,
-  signInSchema,
-} from "@millennicare/validators";
+import { eq } from "@millennicare/db";
+import { insertUserSchema, User } from "@millennicare/db/schema";
+import { sendPasswordResetEmail } from "@millennicare/lib";
+import { signInSchema } from "@millennicare/validators";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import {
@@ -37,7 +21,7 @@ export const authRouter = createTRPCRouter({
    * and a more robust user registration process.
    */
   register: publicProcedure
-    .input(createUserSchema)
+    .input(insertUserSchema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
@@ -192,7 +176,7 @@ export const authRouter = createTRPCRouter({
         where: eq(User.email, input.email),
       });
 
-      if (!user?.password) {
+      if (!user) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "Incorrect email or password",
@@ -206,8 +190,8 @@ export const authRouter = createTRPCRouter({
           message: "Incorrect email or password",
         });
       }
-
-      return { id: user.id, email: user.email };
+      const session = await createSession(user.id, user.email);
+      return { session };
     }),
   getMe: protectedProcedure.query(async ({ ctx }) => {
     const { db, session } = ctx;
@@ -221,104 +205,4 @@ export const authRouter = createTRPCRouter({
 
     return user;
   }),
-  // careseeker register with password
-  // need to find an better way to handle oauth login as well
-  careseekerRegister: publicProcedure
-    .input(
-      createUserSchema
-        .omit({ type: true })
-        .required({ password: true })
-        .and(
-          createUserInfoSchema.pick({
-            phoneNumber: true,
-            name: true,
-            birthdate: true,
-          }),
-        )
-        .and(
-          createAddressSchema.omit({
-            userId: true,
-            longitude: true,
-            latitude: true,
-          }),
-        )
-        .and(
-          z.object({
-            children: z.array(createChildSchema.omit({ userId: true })),
-          }),
-        ),
-    )
-    .mutation(async ({ ctx, input }) => {
-      if (!input.password) {
-        throw new TRPCError({ code: "BAD_REQUEST" });
-      }
-      const { db } = ctx;
-      // check if there is an existing user with a careseeker account already
-      // since careseeker accounts can also create a caregiver account technically
-      const existingUser = await db.query.User.findFirst({
-        where: and(eq(User.email, input.email), eq(User.type, "careseeker")),
-      });
-
-      if (existingUser) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "User already exists",
-        });
-      }
-
-      const customer = await createCustomer({
-        name: input.name,
-        email: input.email,
-      });
-      const hashed = await hash(input.password);
-      // get location details based on PlaceID passed from registration
-      const details = await getLocationDetailsFromPlaceId(input.placeId);
-      const res = await db.transaction(async (tx) => {
-        const user = await tx
-          .insert(User)
-          .values({
-            email: input.email,
-            password: hashed,
-            type: "careseeker",
-          })
-          .returning({ insertedId: User.id });
-        if (!user[0]) {
-          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
-        }
-        const userId = user[0].insertedId;
-
-        await tx.insert(UserInfo).values({
-          userId,
-          name: input.name,
-          phoneNumber: input.phoneNumber,
-          birthdate: input.birthdate,
-          stripeId: customer.id,
-        });
-        await tx.insert(Careseeker).values({
-          userId,
-        });
-        await tx.insert(Child).values(
-          input.children.map((child) => ({
-            userId,
-            age: child.age,
-            name: child.name,
-          })),
-        );
-        await tx.insert(Address).values({
-          line1: details.line1,
-          line2: details.line2,
-          city: details.city,
-          state: details.state,
-          zipCode: details.zipCode,
-          longitude: details.longitude,
-          latitude: details.latitude,
-          placeId: input.placeId,
-          userId,
-        });
-        return userId;
-      });
-
-      const session = await createSession(res, input.email);
-      return { session };
-    }),
 });

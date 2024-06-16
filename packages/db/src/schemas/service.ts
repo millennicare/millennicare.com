@@ -1,3 +1,4 @@
+import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import {
   doublePrecision,
@@ -7,6 +8,7 @@ import {
   text,
   varchar,
 } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import { Caregiver } from "./caregiver";
 
@@ -20,7 +22,10 @@ export const categoryEnum = pgEnum("category", [
 export const Service = pgTable(
   "services",
   {
-    id: text("id").notNull().primaryKey(),
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
 
     title: varchar("title", { length: 255 }).notNull(),
     description: varchar("description", { length: 255 }).notNull(),
@@ -44,3 +49,6 @@ export const ServiceRelations = relations(Service, ({ one }) => ({
     references: [Caregiver.userId],
   }),
 }));
+
+export const insertServiceSchema = createInsertSchema(Service);
+export const selectServiceSchema = createSelectSchema(Service);

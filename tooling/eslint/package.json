@@ -2,7 +2,7 @@
   "name": "@millennicare/eslint-config",
   "version": "0.2.0",
   "private": true,
-  "license": "MIT",
+  "type": "module",
   "exports": {
     "./base": "./base.js",
     "./nextjs": "./nextjs.js",

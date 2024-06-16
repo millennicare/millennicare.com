@@ -47,7 +47,7 @@ function Toast({
         useNativeDriver: true,
       }),
     ]).start(() => onHide(id));
-  }, [duration]);
+  }, [duration, id, onHide, opacity, progress]);
 
   return (
     <Animated.View
@@ -117,9 +117,9 @@ function ToastProvider({
   const toast: ToastContextProps["toast"] = (
     message: string,
     variant: ToastVariant = "default",
-    duration: number = 3000,
+    duration = 3000,
     position: "top" | "bottom" = "top",
-    showProgress: boolean = true,
+    showProgress = true,
   ) => {
     setMessages((prev) => [
       ...prev,

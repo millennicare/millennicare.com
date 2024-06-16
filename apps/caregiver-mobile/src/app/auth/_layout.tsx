@@ -9,6 +9,7 @@ export default function AuthLayout() {
       <View className="flex h-full w-full items-center justify-center p-6">
         <Image
           source={
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
             require("../../../assets/millennicare_logo.png") as ImageSourcePropType
           }
           style={{ width: 72, height: 72 }}

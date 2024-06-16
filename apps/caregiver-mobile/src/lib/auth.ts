@@ -22,6 +22,7 @@ export async function validateRequest() {
       await SecureStore.deleteItemAsync("session-id");
     }
   } catch (error) {
+    console.error(error);
     throw new Error("Error setting session");
   }
 }

@@ -1,23 +1,24 @@
 import { config } from "dotenv";
+import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
-import { Client } from "pg";
-
-import { db } from "./client";
+import { Pool } from "pg";
 
 config({ path: "../../.env" });
 
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-});
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL is not set");
+}
+const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
+const db = drizzle(pool);
 
-const main = async () => {
+async function main() {
   try {
-    await migrate(db, { migrationsFolder: "migrations" });
-    console.log("migration completed");
+    await migrate(db, { migrationsFolder: "./src/migrations/" });
+    console.log("migrations ran successfully");
+    await pool.end();
   } catch (error) {
-    console.error(`Error during migration: ${error}}`);
-    process.exit(1);
+    console.error(error);
   }
-};
+}
 
 main();

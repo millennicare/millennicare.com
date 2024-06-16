@@ -1,3 +1,4 @@
+import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import {
   doublePrecision,
@@ -6,13 +7,17 @@ import {
   text,
   varchar,
 } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import { User } from "./user";
 
 export const Address = pgTable(
   "addresses",
   {
-    id: text("id").notNull().primaryKey(),
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
     line1: varchar("line1", { length: 128 }).notNull(),
     line2: varchar("line2", { length: 128 }),
     city: varchar("city", { length: 128 }).notNull(),
@@ -39,3 +44,6 @@ export const AddressRelations = relations(Address, ({ one }) => ({
     references: [User.id],
   }),
 }));
+
+export const insertAddressSchema = createInsertSchema(Address);
+export const selectAddressSchema = createSelectSchema(Address);

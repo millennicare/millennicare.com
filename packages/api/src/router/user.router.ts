@@ -1,14 +1,13 @@
 import { TRPCError } from "@trpc/server";
 
 import { eq } from "@millennicare/db";
-import { User, UserInfo } from "@millennicare/db/schema";
-import { updateUserSchema } from "@millennicare/validators";
+import { insertUserInfoSchema, User, UserInfo } from "@millennicare/db/schema";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const userRouter = createTRPCRouter({
   update: protectedProcedure
-    .input(updateUserSchema)
+    .input(insertUserInfoSchema)
     .mutation(async ({ ctx, input }) => {
       const { db, session } = ctx;
       const userId = session.user.id;

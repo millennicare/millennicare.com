@@ -2,17 +2,17 @@ import { TRPCError } from "@trpc/server";
 import * as z from "zod";
 
 import { and, eq, or } from "@millennicare/db";
-import { Appointment } from "@millennicare/db/schema";
 import {
-  createAppointmentSchema,
+  Appointment,
+  insertAppointmentschema,
   selectAppointmentSchema,
-} from "@millennicare/validators";
+} from "@millennicare/db/schema";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const appointmentRouter = createTRPCRouter({
   createAppointment: publicProcedure
-    .input(createAppointmentSchema)
+    .input(insertAppointmentschema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
       await db.insert(Appointment).values(input);
@@ -71,7 +71,7 @@ export const appointmentRouter = createTRPCRouter({
       ),
     });
 
-    if (!appointments) {
+    if (appointments.length === 0) {
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "No appointments found.",
@@ -118,7 +118,7 @@ export const appointmentRouter = createTRPCRouter({
         ),
       );
 
-    if (!appointments || appointments.length === 0) {
+    if (appointments.length === 0) {
       return null;
     }
 
@@ -156,7 +156,7 @@ export const appointmentRouter = createTRPCRouter({
           eq(Appointment.status, "finished"),
         ),
       );
-    if (!appointments || appointments.length === 0) {
+    if (appointments.length === 0) {
       return null;
     }
 

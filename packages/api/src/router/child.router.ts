@@ -2,14 +2,13 @@ import { TRPCError } from "@trpc/server";
 import * as z from "zod";
 
 import { and, eq } from "@millennicare/db";
-import { Child } from "@millennicare/db/schema";
-import { createChildSchema, selectChildSchema } from "@millennicare/validators";
+import { Child, insertChildSchema } from "@millennicare/db/schema";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const childRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(createChildSchema.omit({ userId: true }))
+    .input(insertChildSchema.omit({ userId: true }))
     .mutation(async ({ ctx, input }) => {
       const { db, session } = ctx;
       const userId = session.user.id;
@@ -47,7 +46,7 @@ export const childRouter = createTRPCRouter({
     return children;
   }),
   update: protectedProcedure
-    .input(selectChildSchema.partial().required({ id: true }))
+    .input(insertChildSchema.partial().required({ id: true }))
     .mutation(async ({ ctx, input }) => {
       const { db, session } = ctx;
       const userId = session.user.id;

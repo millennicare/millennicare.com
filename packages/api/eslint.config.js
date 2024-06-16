@@ -1,12 +1,9 @@
-import baseConfig, {
-  restrictEnvAccess,
-} from "@millennicare/eslint-config/base";
+import baseConfig from "@millennicare/eslint-config/base";
 
 /** @type {import('typescript-eslint').Config} */
 export default [
   {
-    ignores: [],
+    ignores: ["dist/**"],
   },
   ...baseConfig,
-  ...restrictEnvAccess,
 ];

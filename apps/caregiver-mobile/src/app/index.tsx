@@ -9,6 +9,7 @@ export default function Index() {
     <View className="flex flex-1">
       <ImageBackground
         source={
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
           require("../../assets/welcome_background.png") as ImageSourcePropType
         }
         resizeMode="cover"
