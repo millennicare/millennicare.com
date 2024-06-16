@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import type { Session, User } from "@millennicare/auth";
 import { lucia } from "@millennicare/auth";
 
-export const createSessionCookie = async (session: Session) => {
+export const createSessionCookie = (session: Session) => {
   const sessionCookie = lucia.createSessionCookie(session.id);
   cookies().set(
     sessionCookie.name,

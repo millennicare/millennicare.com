@@ -1,3 +1,3 @@
-export type ActionResult = {
+export interface ActionResult {
   error: string | null;
-};
+}

@@ -22,9 +22,9 @@ import { toast } from "@millennicare/ui/toast";
 import type { ActionResult } from "~/app/@types/action-result";
 import { SubmitButton } from "~/app/_components/submit-btn";
 
-type SignInFormProps = {
+interface SignInFormProps {
   signIn: (_: any, formData: FormData) => Promise<ActionResult>;
-};
+}
 
 const formSchema = z.object({
   email: z.string().email(),

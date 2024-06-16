@@ -33,12 +33,8 @@
           "name": "accounts_user_id_users_id_fk",
           "tableFrom": "accounts",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -46,19 +42,14 @@
       "compositePrimaryKeys": {
         "accounts_provider_id_provider_user_id_pk": {
           "name": "accounts_provider_id_provider_user_id_pk",
-          "columns": [
-            "provider_id",
-            "provider_user_id"
-          ]
+          "columns": ["provider_id", "provider_user_id"]
         }
       },
       "uniqueConstraints": {
         "accounts_user_id_unique": {
           "name": "accounts_user_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_id"
-          ]
+          "columns": ["user_id"]
         }
       }
     },
@@ -149,12 +140,8 @@
           "name": "addresses_user_id_users_id_fk",
           "tableFrom": "addresses",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -301,12 +288,8 @@
           "name": "caregivers_user_id_users_id_fk",
           "tableFrom": "caregivers",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -316,9 +299,7 @@
         "caregivers_user_id_unique": {
           "name": "caregivers_user_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_id"
-          ]
+          "columns": ["user_id"]
         }
       }
     },
@@ -355,12 +336,8 @@
           "name": "careseekers_user_id_users_id_fk",
           "tableFrom": "careseekers",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -370,9 +347,7 @@
         "careseekers_user_id_unique": {
           "name": "careseekers_user_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_id"
-          ]
+          "columns": ["user_id"]
         }
       }
     },
@@ -427,12 +402,8 @@
           "name": "children_user_id_careseekers_user_id_fk",
           "tableFrom": "children",
           "tableTo": "careseekers",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "user_id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["user_id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -544,12 +515,8 @@
           "name": "services_caregiver_id_caregivers_user_id_fk",
           "tableFrom": "services",
           "tableTo": "caregivers",
-          "columnsFrom": [
-            "caregiver_id"
-          ],
-          "columnsTo": [
-            "user_id"
-          ],
+          "columnsFrom": ["caregiver_id"],
+          "columnsTo": ["user_id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -586,12 +553,8 @@
           "name": "sessions_user_id_users_id_fk",
           "tableFrom": "sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -689,12 +652,8 @@
           "name": "user_info_user_id_users_id_fk",
           "tableFrom": "user_info",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -704,9 +663,7 @@
         "user_info_user_id_unique": {
           "name": "user_info_user_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_id"
-          ]
+          "columns": ["user_id"]
         }
       }
     },
@@ -754,9 +711,7 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       }
     },
@@ -791,9 +746,7 @@
         "waitlists_email_unique": {
           "name": "waitlists_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       }
     }
@@ -802,31 +755,17 @@
     "public.status": {
       "name": "status",
       "schema": "public",
-      "values": [
-        "cancelled",
-        "pending",
-        "confirmed",
-        "finished"
-      ]
+      "values": ["cancelled", "pending", "confirmed", "finished"]
     },
     "public.category": {
       "name": "category",
       "schema": "public",
-      "values": [
-        "child_care",
-        "senior_care",
-        "housekeeping",
-        "pet_care"
-      ]
+      "values": ["child_care", "senior_care", "housekeeping", "pet_care"]
     },
     "public.type": {
       "name": "type",
       "schema": "public",
-      "values": [
-        "caregiver",
-        "careseeker",
-        "admin"
-      ]
+      "values": ["caregiver", "careseeker", "admin"]
     }
   },
   "schemas": {},

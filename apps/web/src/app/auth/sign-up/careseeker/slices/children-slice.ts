@@ -11,10 +11,10 @@ export const childrenSchema = z.object({
 
 type Children = z.infer<typeof childrenSchema>;
 
-type ChildrenSlice = {
+interface ChildrenSlice {
   children: Children;
   setChildren: (data: Children) => void;
-};
+}
 
 const initialState: Children = { children: [] };
 

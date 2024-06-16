@@ -1,8 +1,9 @@
 import type { ImageSourcePropType } from "react-native";
-import { ImageBackground, Text, View } from "react-native";
+import { ImageBackground, View } from "react-native";
 import { Link, Stack } from "expo-router";
 
-import { Button } from "~/components/button";
+import { Button } from "~/components/ui/button";
+import { Text } from "~/components/ui/text";
 
 export default function Index() {
   return (
@@ -18,7 +19,7 @@ export default function Index() {
         <Stack.Screen options={{ headerShown: false }} />
         <View className="gap-y-2 pl-10">
           <Text className="self-start text-5xl font-light text-white">
-            MILLENNI<Text className="text-5xl font-bold">CARE</Text>
+            MILLENNI<Text className="text-5xl font-bold text-white">CARE</Text>
           </Text>
           <Text className="text-xl font-semibold">For Caregivers</Text>
         </View>
@@ -27,15 +28,14 @@ export default function Index() {
             Modern Childcare for the New Millennium
           </Text>
 
-          <Button
-            label="Get Started"
-            size="lg"
-            className="rounded"
-            labelClasses="text-white"
-          />
+          <Button size="lg">
+            <Text className="text-white">Get Started</Text>
+          </Button>
 
           <Link asChild href="/auth/sign-in/">
-            <Button label="Sign In" size="lg" className="rounded bg-white" />
+            <Button size="lg" className="bg-white">
+              <Text>Sign In</Text>
+            </Button>
           </Link>
         </View>
       </ImageBackground>

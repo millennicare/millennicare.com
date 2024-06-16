@@ -9,10 +9,10 @@ export const emailSchema = createUserSchema.pick({
 
 type Email = z.infer<typeof emailSchema>;
 
-type EmailSlice = {
+interface EmailSlice {
   email: Email;
   setEmail: (data: Email) => void;
-};
+}
 
 const initialState: Email = {
   email: "",

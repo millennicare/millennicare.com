@@ -32,10 +32,10 @@ export const getSuggestion = async (address: string) => {
   return response;
 };
 
-type CareseekerRegister = AdditionalInfo &
-  Address &
-  Children &
-  Email &
+type CareseekerRegister = AdditionalInfo 
+   &
+  Children 
+   &
   Password;
 
 export const careseekerRegister = async (values: CareseekerRegister) => {

@@ -21,10 +21,10 @@ import {
 
 import { SubmitButton } from "~/app/_components/submit-btn";
 
-type EditCareseekerFormProps = {
+interface EditCareseekerFormProps {
   user: User;
   userInfo: UserInfo;
-};
+}
 
 const schema = createUserSchema
   .pick({ email: true })

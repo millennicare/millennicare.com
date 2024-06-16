@@ -23,11 +23,11 @@ export default function SignUpPage() {
   );
 }
 
-type CardTypeProps = {
+interface CardTypeProps {
   type: "careseeker" | "caregiver";
   description: string;
   variant: string;
-};
+}
 
 function CardType({ type, description, variant }: CardTypeProps) {
   return (

@@ -11,10 +11,10 @@ import type { Password } from "./slices/password-slice";
 import { createSessionCookie } from "~/app/lib/auth";
 import { api } from "~/trpc/server";
 
-type CareseekerRegister = AdditionalInfo &
-  Address &
-  Children &
-  Email &
+type CareseekerRegister = AdditionalInfo 
+   &
+  Children 
+   &
   Password;
 
 export const careseekerRegister = async (values: CareseekerRegister) => {

@@ -59,6 +59,19 @@
       "interactive": true
     }
   },
-  "globalEnv": ["DATABASE_URL", "SYMMETRIC_KEY"],
+  "globalEnv": [
+    "DATABASE_URL",
+    "SYMMETRIC_KEY",
+    "PORT",
+    "AWS_ACCESS_KEY_ID",
+    "AWS_SECRET_ACCESS_KEY",
+    "AWS_BUCKET",
+    "AWS_REGION",
+    "AWS_LOCATION_API_KEY",
+    "AWS_MAIL_ACCESS_KEY",
+    "AWS_MAIL_SECRET_KEY",
+    "STRIPE_PUBLISHABLE_KEY",
+    "STRIPE_SECRET_KEY"
+  ],
   "globalPassThroughEnv": ["NODE_ENV", "CI", "npm_lifecycle_event"]
 }

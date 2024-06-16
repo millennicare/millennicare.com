@@ -24,10 +24,10 @@ export const passwordSchema = z
 
 type Password = z.infer<typeof passwordSchema>;
 
-type PasswordSlice = {
+interface PasswordSlice {
   password: Password;
   setPassword: (data: Password) => void;
-};
+}
 
 const initialState: Password = {
   password: "",

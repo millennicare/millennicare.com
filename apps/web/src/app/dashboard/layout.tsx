@@ -3,9 +3,9 @@ import { redirect } from "next/navigation";
 import { validateRequest } from "../lib/auth";
 import { SideNav } from "./_components/side-nav";
 
-type DashboardLayoutProps = {
+interface DashboardLayoutProps {
   children: React.ReactNode;
-};
+}
 
 export default async function DashboardLayout({
   children,

@@ -16,7 +16,7 @@ export default function AuthLayout() {
         />
         <View className="mt-6 w-full">
           <Text className="text-center text-3xl font-semibold">
-            Millennicare
+            MillenniCare
           </Text>
           <Slot />
         </View>

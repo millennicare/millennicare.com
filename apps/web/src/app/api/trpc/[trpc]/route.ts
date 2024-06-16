@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { appRouter, createTRPCContext } from "@millennicare/api";

@@ -4,11 +4,11 @@ import Image from "next/image";
 
 import type { User, UserInfo } from "@millennicare/validators";
 
-type InfoCardProps = {
+interface InfoCardProps {
   user: User;
   userInfo: UserInfo;
   proflePictureUrl?: string;
-};
+}
 
 export function InfoCard({ user, userInfo, proflePictureUrl }: InfoCardProps) {
   return (

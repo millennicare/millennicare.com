@@ -1,10 +1,10 @@
 import type { StateCreator } from "zustand";
 
-type StepSlice = {
+interface StepSlice {
   step: number;
   increaseStep: (step: number) => void;
   decreaseStep: (step: number) => void;
-};
+}
 
 const createStepSlice: StateCreator<StepSlice> = (set) => ({
   step: 1,

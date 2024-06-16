@@ -5,11 +5,11 @@ import { useFormStatus } from "react-dom";
 import { cn } from "@millennicare/ui";
 import { Button } from "@millennicare/ui/button";
 
-type SubmitButtonProps = {
+interface SubmitButtonProps {
   value: string;
   className?: string;
   error?: boolean;
-};
+}
 
 export const SubmitButton = ({
   value,

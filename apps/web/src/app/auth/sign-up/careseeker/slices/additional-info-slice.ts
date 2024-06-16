@@ -11,10 +11,10 @@ export const additionalInfoSchema = createUserInfoSchema.pick({
 
 type AdditionalInfo = z.infer<typeof additionalInfoSchema>;
 
-type AdditionalInfoSlice = {
+interface AdditionalInfoSlice {
   additionalInfo: AdditionalInfo;
   setAdditionalInfo: (data: AdditionalInfo) => void;
-};
+}
 
 const intialState: AdditionalInfo = {
   name: "",

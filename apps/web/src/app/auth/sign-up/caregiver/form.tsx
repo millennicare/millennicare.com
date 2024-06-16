@@ -2,6 +2,7 @@
 
 import type { z } from "zod";
 
+import { insertUserSchema } from "@millennicare/db/schema";
 import {
   Form,
   FormControl,
@@ -13,20 +14,19 @@ import {
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
-import { createUserSchema } from "@millennicare/validators";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
 import { caregiverRegister } from "./actions";
 
 export default function RegisterForm() {
   const form = useForm({
-    schema: createUserSchema,
+    schema: insertUserSchema,
     defaultValues: {
       type: "caregiver",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof createUserSchema>) {
+  async function onSubmit(values: z.infer<typeof insertUserSchema>) {
     try {
       await caregiverRegister(values);
       toast.success("Caregiver account created successfully");

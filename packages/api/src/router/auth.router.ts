@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import * as jose from "jose";
 import { z } from "zod";
 
+import { invalidateSession } from "@millennicare/auth";
 import { eq } from "@millennicare/db";
 import { insertUserSchema, User } from "@millennicare/db/schema";
 import { sendPasswordResetEmail } from "@millennicare/lib";
@@ -16,6 +17,16 @@ import {
 } from "../utils/helpers";
 
 export const authRouter = createTRPCRouter({
+  getSession: publicProcedure.query(({ ctx }) => {
+    return ctx.session;
+  }),
+  signOut: protectedProcedure.mutation(async (opts) => {
+    if (!opts.ctx.token) {
+      return { success: false };
+    }
+    await invalidateSession(opts.ctx.token);
+    return { success: true };
+  }),
   /**
    * Register a new user. Will update this in v2 to include a verification email
    * and a more robust user registration process.

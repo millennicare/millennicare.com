@@ -11,10 +11,10 @@ export const addressSchema = createAddressSchema.omit({
 
 type Address = z.infer<typeof addressSchema>;
 
-type AddressSlice = {
+interface AddressSlice {
   address: Address;
   setAddress: (data: Address) => void;
-};
+}
 
 const initialState: Address = {
   line1: "",
