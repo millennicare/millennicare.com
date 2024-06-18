@@ -1,23 +1,21 @@
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { db, schema } from "@millennicare/db";
-import { Google } from "arctic";
 import { Lucia } from "lucia";
 
-export * from "lucia";
-export * from "arctic";
+import { db } from "@millennicare/db/client";
+import { Session, User } from "@millennicare/db/schema";
 
-const adapter = new DrizzlePostgreSQLAdapter(
-  db,
-  schema.sessionTable,
-  schema.userTable,
-);
+import { env } from "../env";
+
+export type { Session, User } from "lucia";
+
+const adapter = new DrizzlePostgreSQLAdapter(db, Session, User);
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
     name: "millennicare-session",
     expires: false,
     attributes: {
-      secure: process.env.NODE_ENV === "production",
+      secure: env.NODE_ENV === "production",
     },
   },
   getUserAttributes: (userAttributes) => ({
@@ -36,8 +34,18 @@ interface DatabaseUserAttributes {
   email: string;
 }
 
-export const google = new Google(
-  process.env.GOOGLE_CLIENT_ID!,
-  process.env.GOOGLE_CLIENT_SECRET!,
-  process.env.GOOGLE_REDIRECT_URI!,
-);
+export const validateToken = async (token: string) => {
+  const session = await lucia.validateSession(token);
+  return session;
+};
+
+export const invalidateSession = async (token: string) => {
+  await lucia.invalidateSession(token);
+};
+
+/**
+ * Logs user out everywhere on all devices
+ */
+export const invalidateAllSessions = async (email: string) => {
+  await lucia.invalidateUserSessions(email);
+};

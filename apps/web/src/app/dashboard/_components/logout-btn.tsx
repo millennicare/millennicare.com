@@ -1,7 +1,8 @@
 "use client";
 
-import { Button } from "@millennicare/ui/button";
 import { ExitIcon } from "@radix-ui/react-icons";
+
+import { Button } from "@millennicare/ui/button";
 
 import { signOut } from "../actions";
 

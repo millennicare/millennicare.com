@@ -1,11 +1,13 @@
 "use server";
 
-import type { ContactUs } from "@millennicare/validators";
+import type { z } from "zod";
 import { TRPCError } from "@trpc/server";
+
+import type { insertContactSchema } from "@millennicare/db/schema";
 
 import { api } from "~/trpc/server";
 
-export const create = async (values: Omit<ContactUs, "id">) => {
+export const create = async (values: z.infer<typeof insertContactSchema>) => {
   try {
     await api.contactUs.sendMessage(values);
   } catch (error) {

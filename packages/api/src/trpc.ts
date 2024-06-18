@@ -7,11 +7,27 @@
  * The pieces you will need to use are documented accordingly near the end
  */
 
-import { db } from "@millennicare/db";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
+import type { Session, User } from "@millennicare/auth";
+import { validateToken } from "@millennicare/auth";
+import { db } from "@millennicare/db/client";
+
+/**
+ * Isomorphic Session getter for API requests
+ * - Expo requests will have a session token in the Authorization header
+ * - Next.js requests will have a session token in cookies
+ */
+const isomorphicGetSession = async (
+  sessionId?: string,
+): Promise<
+  { user: User; session: Session } | { user: null; session: null }
+> => {
+  if (sessionId) return validateToken(sessionId);
+  return { user: null, session: null };
+};
 /**
  * 1. CONTEXT
  *
@@ -24,13 +40,19 @@ import { ZodError } from "zod";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = (opts: {
+export const createTRPCContext = async (opts: {
   headers: Headers;
-  userId: string | null;
+  sessionId?: string;
 }) => {
+  const authToken = opts.headers.get("Authorization") ?? opts.sessionId;
+  const session = await isomorphicGetSession(authToken);
+  const source = opts.headers.get("x-trpc-source") ?? "unknown";
+  console.log(">>> tRPC Request from", source, "by", session.user);
+
   return {
+    session,
     db,
-    userId: opts.userId,
+    token: authToken,
   };
 };
 
@@ -87,17 +109,14 @@ export const publicProcedure = t.procedure;
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-  if (!ctx.userId) {
-    throw new TRPCError({
-      code: "UNAUTHORIZED",
-      message: "You must be logged in to do that",
-    });
+export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
+  if (!ctx.session.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
   return next({
     ctx: {
-      userId: ctx.userId,
+      session: { ...ctx.session, ...ctx.session.user },
     },
   });
 });

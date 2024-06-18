@@ -1,6 +1,8 @@
 "use client";
 
-import type { ContactUs } from "@millennicare/validators";
+import type { z } from "zod";
+
+import { insertContactSchema } from "@millennicare/db/schema";
 import {
   Form,
   FormControl,
@@ -13,22 +15,25 @@ import {
 import { Input } from "@millennicare/ui/input";
 import { Textarea } from "@millennicare/ui/textarea";
 import { toast } from "@millennicare/ui/toast";
-import { createContactUsSchema } from "@millennicare/validators";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
 import { create } from "./actions";
 
 export default function ContactUsForm() {
   const form = useForm({
-    schema: createContactUsSchema,
+    schema: insertContactSchema,
     mode: "onSubmit",
   });
 
-  async function onSubmit(values: Omit<ContactUs, "id">) {
+  async function onSubmit(values: z.infer<typeof insertContactSchema>) {
     try {
       await create(values);
       toast.success("Message sent!");
     } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+        return;
+      }
       toast.error("Something went wrong, please try again later.");
     }
   }

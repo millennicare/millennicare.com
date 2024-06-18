@@ -3,16 +3,16 @@ import { redirect } from "next/navigation";
 import { validateRequest } from "../lib/auth";
 import { SideNav } from "./_components/side-nav";
 
-type DashboardLayoutProps = {
+interface DashboardLayoutProps {
   children: React.ReactNode;
-};
+}
 
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   const { session } = await validateRequest();
   if (!session) {
-    redirect("/sign-in");
+    redirect("/auth/sign-in");
   }
 
   return (

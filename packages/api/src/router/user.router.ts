@@ -1,32 +1,36 @@
-import { eq, schema } from "@millennicare/db";
-import { updateUserSchema } from "@millennicare/validators";
 import { TRPCError } from "@trpc/server";
+
+import { eq } from "@millennicare/db";
+import { insertUserInfoSchema, User, UserInfo } from "@millennicare/db/schema";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const userRouter = createTRPCRouter({
   update: protectedProcedure
-    .input(updateUserSchema)
+    .input(insertUserInfoSchema)
     .mutation(async ({ ctx, input }) => {
-      const { db, userId } = ctx;
+      const { db, session } = ctx;
+      const userId = session.user.id;
 
       await db
-        .update(schema.userTable)
+        .update(User)
         .set({
           ...input,
         })
-        .where(eq(schema.userTable.id, userId));
+        .where(eq(User.id, userId));
     }),
   delete: protectedProcedure.mutation(async ({ ctx }) => {
-    const { db, userId } = ctx;
+    const { db, session } = ctx;
+    const userId = session.user.id;
 
-    await db.delete(schema.userTable).where(eq(schema.userTable.id, userId));
+    await db.delete(User).where(eq(User.id, userId));
   }),
   getUserInfo: protectedProcedure.query(async ({ ctx }) => {
-    const { db, userId } = ctx;
+    const { db, session } = ctx;
+    const userId = session.user.id;
 
-    const userInfo = await db.query.userInfoTable.findFirst({
-      where: eq(schema.userInfoTable.userId, userId),
+    const userInfo = await db.query.UserInfo.findFirst({
+      where: eq(UserInfo.userId, userId),
     });
 
     if (!userInfo) {
