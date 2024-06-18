@@ -1,19 +1,19 @@
-import { eq, schema } from "@millennicare/db";
-import { sendWaitlistConfirmationEmail } from "@millennicare/lib";
 import { z } from "zod";
+
+import { eq } from "@millennicare/db";
+import { insertWaitlistSchema, Waitlist } from "@millennicare/db/schema";
+import { sendWaitlistConfirmationEmail } from "@millennicare/lib";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const waitlistRouter = createTRPCRouter({
   create: publicProcedure
-    .input(z.object({ email: z.string().email() }))
+    .input(insertWaitlistSchema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
       try {
-        await db
-          .insert(schema.waitlistTable)
-          .values({ email: input.email, contacted: false });
+        await db.insert(Waitlist).values({ email: input.email });
 
         await sendWaitlistConfirmationEmail({ email: input.email });
       } catch (error) {
@@ -31,9 +31,6 @@ export const waitlistRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
-      await db
-        .update(schema.waitlistTable)
-        .set(input)
-        .where(eq(schema.waitlistTable.id, input.id));
+      await db.update(Waitlist).set(input).where(eq(Waitlist.id, input.id));
     }),
 });

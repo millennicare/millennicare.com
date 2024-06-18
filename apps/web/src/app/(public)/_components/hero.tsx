@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <span className="flex w-full flex-col items-center justify-evenly space-y-3 md:flex-row md:space-y-0">
       <div className="flex flex-col">
-        <div className="w-full space-y-3 self-center md:max-w-lg md:text-left ">
+        <div className="w-full space-y-3 self-center md:max-w-lg md:text-left">
           <h1 className="font-mono text-2xl md:text-5xl">
             Modernizing Affordable Childcare for the New Millenium
           </h1>

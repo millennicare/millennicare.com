@@ -1,50 +1,38 @@
-import { and, db, eq, schema } from "@millennicare/db";
-import {
-  createCustomer,
-  getLocationDetailsFromPlaceId,
-  sendPasswordResetEmail,
-} from "@millennicare/lib";
-import {
-  createAddressSchema,
-  createChildSchema,
-  createUserInfoSchema,
-  createUserSchema,
-  signInSchema,
-} from "@millennicare/validators";
+import { hash, verify } from "@node-rs/argon2";
 import { TRPCError } from "@trpc/server";
-import * as argon from "argon2";
 import * as jose from "jose";
 import { z } from "zod";
 
+import { invalidateSession } from "@millennicare/auth";
+import { eq } from "@millennicare/db";
+import { insertUserSchema, User } from "@millennicare/db/schema";
+import { sendPasswordResetEmail } from "@millennicare/lib";
+import { signInSchema } from "@millennicare/validators";
+
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-
-const createToken = async (userId: string, expTime?: string) => {
-  const secret = new TextEncoder().encode(process.env.SYMMETRIC_KEY);
-  const token = await new jose.SignJWT({ sub: userId })
-    .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime(expTime ?? "1h")
-    .sign(secret);
-  return token;
-};
-
-const findDuplicateUser = async (
-  email: string,
-  type?: "admin" | "caregiver" | "careseeker",
-) => {
-  return await db.query.userTable.findFirst({
-    where: type
-      ? and(eq(schema.userTable.email, email), eq(schema.userTable.type, type))
-      : eq(schema.userTable.email, email),
-  });
-};
+import {
+  createSession,
+  createToken,
+  findDuplicateUser,
+} from "../utils/helpers";
 
 export const authRouter = createTRPCRouter({
+  getSession: publicProcedure.query(({ ctx }) => {
+    return ctx.session;
+  }),
+  signOut: protectedProcedure.mutation(async (opts) => {
+    if (!opts.ctx.token) {
+      return { success: false };
+    }
+    await invalidateSession(opts.ctx.token);
+    return { success: true };
+  }),
   /**
    * Register a new user. Will update this in v2 to include a verification email
    * and a more robust user registration process.
    */
   register: publicProcedure
-    .input(createUserSchema)
+    .input(insertUserSchema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
@@ -64,26 +52,36 @@ export const authRouter = createTRPCRouter({
         throw new TRPCError({ code: "BAD_REQUEST" });
       }
 
-      const hashed = await argon.hash(input.password);
+      const hashed = await hash(input.password, {
+        memoryCost: 19456,
+        timeCost: 2,
+        outputLen: 32,
+        parallelism: 1,
+      });
 
       const returnUser = await db
-        .insert(schema.userTable)
+        .insert(User)
         .values({ ...input, password: hashed })
-        .returning({ insertedId: schema.userTable.id });
+        .returning({ insertedId: User.id });
 
       if (!returnUser[0]) {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
 
-      return { id: returnUser[0].insertedId };
+      const session = await createSession(
+        returnUser[0].insertedId,
+        input.email,
+      );
+
+      return { session };
     }),
   checkDuplicateEmail: publicProcedure
     .input(z.object({ email: z.string() }))
     .query(async ({ ctx, input }) => {
       const { db } = ctx;
 
-      const existingUser = await db.query.userTable.findFirst({
-        where: eq(schema.userTable.email, input.email),
+      const existingUser = await db.query.User.findFirst({
+        where: eq(User.email, input.email),
       });
       if (existingUser) {
         throw new TRPCError({
@@ -100,20 +98,18 @@ export const authRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { db, userId } = ctx;
+      const { db, session } = ctx;
+      const userId = session.user.id;
 
-      const user = await db.query.userTable.findFirst({
-        where: eq(schema.userTable.id, userId),
+      const user = await db.query.User.findFirst({
+        where: eq(User.id, userId),
       });
 
       if (!user?.password) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
-      const passwordsMatch = await argon.verify(
-        user.password,
-        input.currentPassword,
-      );
+      const passwordsMatch = await verify(user.password, input.currentPassword);
       if (!passwordsMatch) {
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -121,13 +117,13 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const hashed = await argon.hash(input.newPassword);
+      const hashed = await hash(input.newPassword);
       await db
-        .update(schema.userTable)
+        .update(User)
         .set({
           password: hashed,
         })
-        .where(eq(schema.userTable.id, userId));
+        .where(eq(User.id, userId));
     }),
   resetPassword: publicProcedure
     .input(
@@ -157,11 +153,11 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const hashed = await argon.hash(input.password);
+      const hashed = await hash(input.password);
       await db
-        .update(schema.userTable)
+        .update(User)
         .set({ password: hashed })
-        .where(eq(schema.userTable.id, userId));
+        .where(eq(User.id, userId));
 
       return { message: "Password successfully reset." };
     }),
@@ -170,8 +166,8 @@ export const authRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
-      const user = await db.query.userTable.findFirst({
-        where: eq(schema.userTable.email, input.email),
+      const user = await db.query.User.findFirst({
+        where: eq(User.email, input.email),
       });
 
       if (!user) {
@@ -186,36 +182,33 @@ export const authRouter = createTRPCRouter({
     .input(signInSchema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
-      const existingUser = await db.query.userTable.findFirst({
-        where: eq(schema.userTable.email, input.email),
+
+      const user = await db.query.User.findFirst({
+        where: eq(User.email, input.email),
       });
 
-      if (!existingUser?.password || !input.password) {
+      if (!user) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "Incorrect email or password",
         });
       }
 
-      const passwordsMatch = await argon.verify(
-        existingUser.password,
-        input.password,
-      );
-
-      if (!passwordsMatch) {
+      const validPassword = await verify(user.password, input.password);
+      if (!validPassword) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "Incorrect email or password",
         });
       }
-
-      return { id: existingUser.id };
+      const session = await createSession(user.id, user.email);
+      return { session };
     }),
   getMe: protectedProcedure.query(async ({ ctx }) => {
-    const { db, userId } = ctx;
+    const { db, session } = ctx;
 
-    const user = await db.query.userTable.findFirst({
-      where: eq(schema.userTable.id, userId),
+    const user = await db.query.User.findFirst({
+      where: eq(User.id, session.user.id),
     });
     if (!user) {
       throw new TRPCError({ code: "NOT_FOUND" });
@@ -223,106 +216,4 @@ export const authRouter = createTRPCRouter({
 
     return user;
   }),
-  // careseeker register with password
-  // need to find an better way to handle oauth login as well
-  careseekerRegister: publicProcedure
-    .input(
-      createUserSchema
-        .omit({ type: true })
-        .required({ password: true })
-        .and(
-          createUserInfoSchema.pick({
-            phoneNumber: true,
-            name: true,
-            birthdate: true,
-          }),
-        )
-        .and(
-          createAddressSchema.omit({
-            userId: true,
-            longitude: true,
-            latitude: true,
-          }),
-        )
-        .and(
-          z.object({
-            children: z.array(createChildSchema.omit({ userId: true })),
-          }),
-        ),
-    )
-    .mutation(async ({ ctx, input }) => {
-      if (!input.password) {
-        throw new TRPCError({ code: "BAD_REQUEST" });
-      }
-      const { db } = ctx;
-      // check if there is an existing user with a careseeker account already
-      // since careseeker accounts can also create a caregiver account technically
-      const existingUser = await db.query.userTable.findFirst({
-        where: and(
-          eq(schema.userTable.email, input.email),
-          eq(schema.userTable.type, "careseeker"),
-        ),
-      });
-
-      if (existingUser) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "User already exists",
-        });
-      }
-
-      const customer = await createCustomer({
-        name: input.name,
-        email: input.email,
-      });
-      const hashed = await argon.hash(input.password);
-      // get location details based on PlaceID passed from registration
-      const details = await getLocationDetailsFromPlaceId(input.placeId);
-      const res = await db.transaction(async (tx) => {
-        const user = await tx
-          .insert(schema.userTable)
-          .values({
-            email: input.email,
-            password: hashed,
-            type: "careseeker",
-          })
-          .returning({ insertedId: schema.userTable.id });
-        if (!user[0]) {
-          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
-        }
-        const userId = user[0].insertedId;
-
-        await tx.insert(schema.userInfoTable).values({
-          userId,
-          name: input.name,
-          phoneNumber: input.phoneNumber,
-          birthdate: input.birthdate,
-          stripeId: customer.id,
-        });
-        await tx.insert(schema.careseekerTable).values({
-          userId,
-        });
-        await tx.insert(schema.childTable).values(
-          input.children.map((child) => ({
-            userId,
-            age: child.age,
-            name: child.name,
-          })),
-        );
-        await tx.insert(schema.addressTable).values({
-          line1: details.line1,
-          line2: details.line2,
-          city: details.city,
-          state: details.state,
-          zipCode: details.zipCode,
-          longitude: details.longitude,
-          latitude: details.latitude,
-          placeId: input.placeId,
-          userId,
-        });
-        return userId;
-      });
-
-      return { id: res };
-    }),
 });

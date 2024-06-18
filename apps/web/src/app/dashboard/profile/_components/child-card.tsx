@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Pencil2Icon } from "@radix-ui/react-icons";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,18 +21,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@millennicare/ui/dropdown-menu";
-import { Pencil2Icon } from "@radix-ui/react-icons";
 
 import { deleteChild } from "../actions";
 import EditChildForm from "../forms/edit-child";
 
-type Props = {
+interface Props {
   readonly child: {
     id: string;
     name: string;
     age: number;
   };
-};
+}
 
 export default function ChildCard({ child }: Props) {
   const [openEditForm, setOpenEditForm] = useState(false);

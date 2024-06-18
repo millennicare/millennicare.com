@@ -8,7 +8,7 @@ export default async function ProfilePage() {
   const user = await api.auth.getMe();
   const userInfo = await api.user.getUserInfo();
   const children = await api.children.getByCareseekerId();
-  const proflePictureUrl = await getUrl(userInfo?.profilePicture);
+  const proflePictureUrl = await getUrl(userInfo.profilePicture);
 
   async function getUrl(key: string | null) {
     if (!key) return;

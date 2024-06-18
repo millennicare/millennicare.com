@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { headers } from "next/headers";
+
 import { createCaller, createTRPCContext } from "@millennicare/api";
 
 import { validateRequest } from "~/app/lib/auth";
@@ -11,11 +12,13 @@ import { validateRequest } from "~/app/lib/auth";
 const createContext = cache(async () => {
   const heads = new Headers(headers());
   heads.set("x-trpc-source", "rsc");
+
   const { session } = await validateRequest();
+  heads.set("Authorization", session?.id ?? "");
 
   return createTRPCContext({
-    userId: session?.userId ?? null,
-    headers: heads,
+    sessionId: session?.id,
+    headers: heads as Headers,
   });
 });
 

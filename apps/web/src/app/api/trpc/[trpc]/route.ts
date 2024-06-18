@@ -1,5 +1,6 @@
-import { appRouter, createTRPCContext } from "@millennicare/api";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+
+import { appRouter, createTRPCContext } from "@millennicare/api";
 
 import { validateRequest } from "~/app/lib/auth";
 
@@ -24,14 +25,17 @@ export function OPTIONS() {
 
 const handler = async (req: Request) => {
   const { session } = await validateRequest();
+  req.headers.set("Authorization", session?.id ?? "");
+  console.log(`headers in api handler ${JSON.stringify(req.headers, null, 2)}`);
+
   const response = await fetchRequestHandler({
     endpoint: "/api/trpc",
     router: appRouter,
     req,
     createContext: () =>
       createTRPCContext({
-        userId: session?.userId ?? null,
-        headers: req.headers,
+        sessionId: session?.id,
+        headers: req.headers as Headers,
       }),
     onError({ error, path }) {
       console.error(`>>> tRPC Error on '${path}'`, error);

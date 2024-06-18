@@ -1,11 +1,15 @@
-import { and, eq, schema } from "@millennicare/db";
-import { getLocationDetails } from "@millennicare/lib";
-import {
-  createServiceSchema,
-  selectServiceSchema,
-} from "@millennicare/validators";
 import { TRPCError } from "@trpc/server";
 import * as z from "zod";
+
+import { and, eq } from "@millennicare/db";
+import {
+  Address,
+  Caregiver,
+  insertServiceSchema,
+  Service,
+  User,
+} from "@millennicare/db/schema";
+import { getLocationDetails } from "@millennicare/lib";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
@@ -47,11 +51,13 @@ const degreesToRadians = (point: number) => point * (Math.PI / 180);
 
 export const serviceRouter = createTRPCRouter({
   create: protectedProcedure
-    .input(createServiceSchema)
+    .input(insertServiceSchema)
     .mutation(async ({ ctx, input }) => {
-      const { db, userId } = ctx;
-      const caregiver = await db.query.caregiverTable.findFirst({
-        where: eq(schema.caregiverTable.userId, userId),
+      const { db, session } = ctx;
+      const userId = session.user.id;
+
+      const caregiver = await db.query.Caregiver.findFirst({
+        where: eq(Caregiver.userId, userId),
       });
       if (!caregiver) {
         throw new TRPCError({
@@ -59,35 +65,31 @@ export const serviceRouter = createTRPCRouter({
         });
       }
 
-      await db.insert(schema.serviceTable).values({ ...input });
+      await db.insert(Service).values({ ...input });
     }),
   update: protectedProcedure
-    .input(selectServiceSchema.partial().required({ id: true }))
+    .input(insertServiceSchema.partial().required({ id: true }))
     .mutation(async ({ ctx, input }) => {
-      const { db, userId } = ctx;
+      const { db, session } = ctx;
+      const userId = session.user.id;
 
-      const caregiver = await db.query.userTable.findFirst({
-        where: and(
-          eq(schema.userTable.id, userId),
-          eq(schema.userTable.type, "caregiver"),
-        ),
+      const caregiver = await db.query.User.findFirst({
+        where: and(eq(User.id, userId), eq(User.type, "caregiver")),
       });
       if (!caregiver) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
-      await db
-        .update(schema.serviceTable)
-        .set({ ...input, userId: caregiver.id });
+      await db.update(Service).set({ ...input, userId: caregiver.id });
     }),
   getByCaregiver: publicProcedure
     .input(z.object({ caregiverId: z.string().cuid2() }))
     .query(async ({ ctx, input }) => {
-      const services = await ctx.db.query.serviceTable.findMany({
-        where: eq(schema.serviceTable.id, input.caregiverId),
+      const services = await ctx.db.query.Service.findMany({
+        where: eq(Service.id, input.caregiverId),
       });
 
-      if (!services) {
+      if (services.length === 0) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
       return services;
@@ -95,8 +97,8 @@ export const serviceRouter = createTRPCRouter({
   getById: publicProcedure
     .input(z.object({ serviceId: z.string().cuid2() }))
     .query(async ({ ctx, input }) => {
-      const service = await ctx.db.query.serviceTable.findFirst({
-        where: eq(schema.serviceTable.id, input.serviceId),
+      const service = await ctx.db.query.Service.findFirst({
+        where: eq(Service.id, input.serviceId),
       });
       if (!service) {
         throw new TRPCError({
@@ -111,9 +113,7 @@ export const serviceRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
-      await db
-        .delete(schema.serviceTable)
-        .where(eq(schema.serviceTable.id, input.serviceId));
+      await db.delete(Service).where(eq(Service.id, input.serviceId));
     }),
   // finds services by a custom radius search query (default 5 mile)
   getByZipCode: publicProcedure
@@ -134,8 +134,8 @@ export const serviceRouter = createTRPCRouter({
       const { db } = ctx;
       // get all caregivers in given radius from zipcode
       // 1. check if the supplied zip code is already in address table
-      const location = await ctx.db.query.addressTable.findFirst({
-        where: eq(schema.addressTable.zipCode, input.zipCode),
+      const location = await ctx.db.query.Address.findFirst({
+        where: eq(Address.zipCode, input.zipCode),
       });
 
       // if not present, fetch from aws location api
@@ -161,12 +161,12 @@ export const serviceRouter = createTRPCRouter({
       const sq = db.$with("sq").as(
         db
           .select()
-          .from(schema.caregiverTable)
+          .from(Caregiver)
           .innerJoin(
-            schema.serviceTable,
+            Service,
             and(
-              eq(schema.serviceTable.category, input.category),
-              eq(schema.serviceTable.userId, schema.caregiverTable.userId),
+              eq(Service.category, input.category),
+              eq(Service.userId, Caregiver.userId),
             ),
           ),
       );
@@ -175,17 +175,14 @@ export const serviceRouter = createTRPCRouter({
       const result = await db
         .with(sq)
         .select({
-          zipCode: schema.addressTable.zipCode,
-          longitude: schema.addressTable.longitude,
-          latitude: schema.addressTable.latitude,
+          zipCode: Address.zipCode,
+          longitude: Address.longitude,
+          latitude: Address.latitude,
           userId: sq.caregivers.userId,
           serviceId: sq.services.id,
         })
         .from(sq)
-        .innerJoin(
-          schema.addressTable,
-          eq(schema.addressTable.userId, sq.caregivers.userId),
-        );
+        .innerJoin(Address, eq(Address.userId, sq.caregivers.userId));
 
       // 3. filter caregivers list based on zip code
       return filterByLocation(result, coords, input.radius);

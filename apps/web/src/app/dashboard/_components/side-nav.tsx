@@ -3,9 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@millennicare/ui";
-import { Button } from "@millennicare/ui/button";
-import { Separator } from "@millennicare/ui/separator";
 import {
   CalendarIcon,
   GearIcon,
@@ -13,6 +10,10 @@ import {
   MagnifyingGlassIcon,
   PersonIcon,
 } from "@radix-ui/react-icons";
+
+import { cn } from "@millennicare/ui";
+import { Button } from "@millennicare/ui/button";
+import { Separator } from "@millennicare/ui/separator";
 
 import LogoutButton from "./logout-btn";
 

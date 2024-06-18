@@ -1,13 +1,20 @@
 "use client";
 
-import type { User, UserInfo } from "@millennicare/validators";
+import type { z } from "zod";
 import Image from "next/image";
 
-type InfoCardProps = {
+import type {
+  insertUserInfoSchema,
+  insertUserSchema,
+} from "@millennicare/db/schema";
+
+type User = z.infer<typeof insertUserSchema>;
+type UserInfo = z.infer<typeof insertUserInfoSchema>;
+interface InfoCardProps {
   user: User;
   userInfo: UserInfo;
   proflePictureUrl?: string;
-};
+}
 
 export function InfoCard({ user, userInfo, proflePictureUrl }: InfoCardProps) {
   return (

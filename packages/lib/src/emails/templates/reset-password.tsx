@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Button, Heading, Html, Tailwind } from "@react-email/components";
 
-type ResetPasswordProps = {
+interface ResetPasswordProps {
   token: string;
-};
+}
 
 export default function ResetPassword({ token }: ResetPasswordProps) {
   return (

@@ -1,4 +1,5 @@
 import * as SecureStore from "expo-secure-store";
+
 import { lucia } from "@millennicare/auth";
 
 /**
@@ -39,6 +40,7 @@ export const validateRequest = async () => {
       await SecureStore.deleteItemAsync("session-id");
     }
   } catch (error) {
+    console.error(error);
     throw new Error("Error setting session cookie");
   }
 

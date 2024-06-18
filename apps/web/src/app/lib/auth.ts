@@ -1,10 +1,10 @@
-import type { Session, User } from "@millennicare/auth";
 import { cache } from "react";
 import { cookies } from "next/headers";
+
+import type { Session, User } from "@millennicare/auth";
 import { lucia } from "@millennicare/auth";
 
-export const createSession = async (userId: string, email: string) => {
-  const session = await lucia.createSession(userId, { email });
+export const createSessionCookie = (session: Session) => {
   const sessionCookie = lucia.createSessionCookie(session.id);
   cookies().set(
     sessionCookie.name,
@@ -24,7 +24,6 @@ export const validateRequest = cache(
         session: null,
       };
     }
-
     const result = await lucia.validateSession(sessionId);
     // next.js throws when you attempt to set cookie when rendering page
     try {
@@ -45,6 +44,7 @@ export const validateRequest = cache(
         );
       }
     } catch (error) {
+      console.error(error);
       throw new Error("Error setting session cookie");
     }
     return result;

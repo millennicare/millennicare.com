@@ -9,7 +9,10 @@ jiti("./src/env");
 /** @type {import("next").NextConfig} */
 const config = {
   experimental: {
-    serverComponentsExternalPackages: ["argon2"],
+    serverComponentsExternalPackages: [
+      "@node-rs/argon2",
+      "@aws/amazon-location-utilities-auth-helper",
+    ],
   },
   reactStrictMode: true,
   // output: "standalone",
@@ -36,9 +39,6 @@ const config = {
             : "millennicare-app-files.s3.us-east-1.amazonaws.com",
       },
     ],
-  },
-  experimental: {
-    serverComponentsExternalPackages: ["argon2"],
   },
 };
 

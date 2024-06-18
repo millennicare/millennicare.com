@@ -1,8 +1,7 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalDependencies": ["**/.env"],
-  "globalDotEnv": [".env"],
-  "pipeline": {
+  "ui": "tui",
+  "tasks": {
     "topo": {
       "dependsOn": ["^topo"]
     },
@@ -13,7 +12,8 @@
         "!.next/cache/**",
         "next-env.d.ts",
         ".expo/**",
-        ".output/**"
+        ".output/**",
+        ".vercel/output/**"
       ]
     },
     "dev": {
@@ -22,14 +22,14 @@
     },
     "format": {
       "outputs": ["node_modules/.cache/.prettiercache"],
-      "outputMode": "new-only"
+      "outputLogs": "new-only"
     },
     "lint": {
-      "dependsOn": ["^topo"],
+      "dependsOn": ["^topo", "^build"],
       "outputs": ["node_modules/.cache/.eslintcache"]
     },
     "typecheck": {
-      "dependsOn": ["^topo"],
+      "dependsOn": ["^topo", "^build"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
     },
     "clean": {
@@ -37,8 +37,43 @@
     },
     "//#clean": {
       "cache": false
+    },
+    "push": {
+      "cache": false,
+      "interactive": true
+    },
+    "studio": {
+      "cache": false,
+      "persistent": true
+    },
+    "migrate": {
+      "cache": false,
+      "persistent": true
+    },
+    "create": {
+      "cache": false,
+      "persistent": true
+    },
+    "ui-add": {
+      "cache": false,
+      "interactive": true
     }
   },
-  "globalEnv": ["DATABASE_URL"],
-  "experimentalUI": true
+  "globalEnv": [
+    "DATABASE_URL",
+    "SYMMETRIC_KEY",
+    "PORT",
+    "AWS_ACCESS_KEY_ID",
+    "AWS_SECRET_ACCESS_KEY",
+    "AWS_BUCKET",
+    "AWS_REGION",
+    "AWS_LOCATION_API_KEY",
+    "AWS_LOCATION_SUGGESTION_KEY",
+    "AWS_MAIL_ACCESS_KEY",
+    "AWS_MAIL_SECRET_KEY",
+    "STRIPE_PUBLISHABLE_KEY",
+    "STRIPE_SECRET_KEY"
+  ],
+  "globalPassThroughEnv": ["NODE_ENV", "CI", "npm_lifecycle_event"],
+  "globalDependencies": [".env"]
 }
