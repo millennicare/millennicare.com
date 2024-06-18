@@ -31,6 +31,7 @@ export async function signIn(
     if (error instanceof Error) {
       return { error: error.message };
     }
+
     return { error: "An error occurred" };
   }
 }

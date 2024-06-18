@@ -24,7 +24,6 @@ export const validateRequest = cache(
         session: null,
       };
     }
-
     const result = await lucia.validateSession(sessionId);
     console.log(result);
     // next.js throws when you attempt to set cookie when rendering page
