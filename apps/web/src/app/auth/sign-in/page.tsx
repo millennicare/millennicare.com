@@ -1,10 +1,9 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { lucia } from "@millennicare/auth";
 import { signInSchema } from "@millennicare/validators";
 
 import type { ActionResult } from "~/app/@types/action-result";
+import { createSessionCookie } from "~/app/lib/auth";
 import { api } from "~/trpc/server";
 import SignInForm from "./sign-in-form";
 
@@ -25,15 +24,9 @@ export async function signIn(
   const data = signInSchema.parse(Object.fromEntries(formData));
 
   try {
-    const { id, email } = await api.auth.login(data);
-    const session = await lucia.createSession(id, { email });
-    const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(
-      sessionCookie.name,
-      sessionCookie.value,
-      sessionCookie.attributes,
-    );
-    redirect("/dashboard");
+    const { session } = await api.auth.login(data);
+    createSessionCookie(session);
+    redirect("/dashboard/home");
   } catch (error) {
     if (error instanceof Error) {
       return { error: error.message };

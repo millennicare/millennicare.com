@@ -1,6 +1,4 @@
-import baseConfig, {
-  restrictEnvAccess,
-} from "@millennicare/eslint-config/base";
+import baseConfig from "@millennicare/eslint-config/base";
 import nextjsConfig from "@millennicare/eslint-config/nextjs";
 import reactConfig from "@millennicare/eslint-config/react";
 
@@ -12,5 +10,4 @@ export default [
   ...baseConfig,
   ...reactConfig,
   ...nextjsConfig,
-  ...restrictEnvAccess,
 ];

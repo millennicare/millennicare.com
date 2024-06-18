@@ -1,35 +1,28 @@
 "use server";
 
+import type { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { TRPCError } from "@trpc/server";
 
-import type { AdditionalInfo } from "./slices/additional-info-slice";
-import type { Address } from "./slices/address-slice";
-import type { Children } from "./slices/children-slice";
-import type { Email } from "./slices/email-slice";
-import type { Password } from "./slices/password-slice";
+import type { insertUserSchema } from "@millennicare/db/schema";
+
 import { createSessionCookie } from "~/app/lib/auth";
 import { api } from "~/trpc/server";
 
-type CareseekerRegister = AdditionalInfo 
-   &
-  Children 
-   &
-  Password;
-
-export const careseekerRegister = async (values: CareseekerRegister) => {
+export const careseekerRegister = async (
+  values: z.infer<typeof insertUserSchema>,
+) => {
   try {
-    const { session } = await api.auth.careseekerRegister({
-      ...values,
-    });
-    await createSessionCookie(session);
+    const { session } = await api.auth.register(values);
+    createSessionCookie(session);
 
-    revalidatePath("/sign-up/careseeker");
+    revalidatePath("/sign-up/caregiver");
   } catch (error) {
     console.error(error);
     if (error instanceof TRPCError) {
       throw new Error(error.message);
     }
+
     throw new Error("An error occurred, please try again later.");
   }
 };

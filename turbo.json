@@ -68,10 +68,12 @@
     "AWS_BUCKET",
     "AWS_REGION",
     "AWS_LOCATION_API_KEY",
+    "AWS_LOCATION_SUGGESTION_KEY",
     "AWS_MAIL_ACCESS_KEY",
     "AWS_MAIL_SECRET_KEY",
     "STRIPE_PUBLISHABLE_KEY",
     "STRIPE_SECRET_KEY"
   ],
-  "globalPassThroughEnv": ["NODE_ENV", "CI", "npm_lifecycle_event"]
+  "globalPassThroughEnv": ["NODE_ENV", "CI", "npm_lifecycle_event"],
+  "globalDependencies": [".env"]
 }

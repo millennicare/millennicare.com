@@ -1,13 +1,16 @@
 "use server";
 
+import type { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { TRPCError } from "@trpc/server";
 
-import type { UpdateChild } from "@millennicare/validators";
+import { insertChildSchema } from "@millennicare/db/schema";
 
 import { api } from "~/trpc/server";
 
-export async function editChild(values: UpdateChild) {
+const schema = insertChildSchema.partial().required({ id: true });
+
+export async function editChild(values: z.infer<typeof schema>) {
   try {
     await api.children.update(values);
     revalidatePath("/dashboard/profile");

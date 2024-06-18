@@ -1,5 +1,6 @@
 import type { z } from "zod";
 
+import { insertChildSchema } from "@millennicare/db/schema";
 import {
   Form,
   FormControl,
@@ -11,7 +12,6 @@ import {
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
-import { createChildSchema } from "@millennicare/validators";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
 import { editChild } from "../actions";
@@ -25,10 +25,7 @@ interface Props {
   setOpenEditForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const schema = createChildSchema.pick({
-  name: true,
-  age: true,
-});
+const schema = insertChildSchema.partial().required({ id: true });
 
 export default function EditChildForm({ child, setOpenEditForm }: Props) {
   const form = useForm({

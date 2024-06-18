@@ -14,7 +14,7 @@ export const caregiverRegister = async (
 ) => {
   try {
     const { session } = await api.auth.register(values);
-    await createSessionCookie(session);
+    createSessionCookie(session);
 
     revalidatePath("/sign-up/caregiver");
   } catch (error) {

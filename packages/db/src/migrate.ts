@@ -14,11 +14,12 @@ const db = drizzle(pool);
 async function main() {
   try {
     await migrate(db, { migrationsFolder: "./src/migrations/" });
-    console.log("migrations ran successfully");
     await pool.end();
   } catch (error) {
     console.error(error);
   }
 }
 
-main();
+main()
+  .then(() => console.log("migrations applied"))
+  .catch((error) => console.error("An error occurred:", error));

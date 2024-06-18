@@ -29,7 +29,7 @@ export const userRouter = createTRPCRouter({
     const { db, session } = ctx;
     const userId = session.user.id;
 
-    const userInfo = await db.query.User.findFirst({
+    const userInfo = await db.query.UserInfo.findFirst({
       where: eq(UserInfo.userId, userId),
     });
 

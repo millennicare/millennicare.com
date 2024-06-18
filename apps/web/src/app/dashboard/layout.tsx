@@ -12,7 +12,7 @@ export default async function DashboardLayout({
 }: DashboardLayoutProps) {
   const { session } = await validateRequest();
   if (!session) {
-    redirect("/sign-in");
+    redirect("/auth/sign-in");
   }
 
   return (

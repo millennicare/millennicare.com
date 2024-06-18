@@ -1,9 +1,15 @@
 "use client";
 
+import type { z } from "zod";
 import Image from "next/image";
 
-import type { User, UserInfo } from "@millennicare/validators";
+import type {
+  insertUserInfoSchema,
+  insertUserSchema,
+} from "@millennicare/db/schema";
 
+type User = z.infer<typeof insertUserSchema>;
+type UserInfo = z.infer<typeof insertUserInfoSchema>;
 interface InfoCardProps {
   user: User;
   userInfo: UserInfo;

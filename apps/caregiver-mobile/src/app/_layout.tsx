@@ -34,26 +34,33 @@ await SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
-
   React.useEffect(() => {
     (async () => {
-      const theme = await AsyncStorage.getItem("theme");
+      try {
+        const theme = await AsyncStorage.getItem("theme");
 
-      if (!theme) {
-        await AsyncStorage.setItem("theme", colorScheme);
-        setIsColorSchemeLoaded(true);
-        return;
-      }
-      const colorTheme = theme === "dark" ? "dark" : "light";
-      if (colorTheme !== colorScheme) {
-        setColorScheme(colorTheme);
+        if (!theme) {
+          await AsyncStorage.setItem("theme", colorScheme);
+          setIsColorSchemeLoaded(true);
+          return;
+        }
+        const colorTheme = theme === "dark" ? "dark" : "light";
+        if (colorTheme !== colorScheme) {
+          setColorScheme(colorTheme);
 
+          setIsColorSchemeLoaded(true);
+          return;
+        }
         setIsColorSchemeLoaded(true);
-        return;
+      } catch (error) {
+        console.error("An error occurred:", error);
       }
-      setIsColorSchemeLoaded(true);
     })().finally(async () => {
-      await SplashScreen.hideAsync();
+      try {
+        await SplashScreen.hideAsync();
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
     });
   }, [colorScheme, setColorScheme]);
 

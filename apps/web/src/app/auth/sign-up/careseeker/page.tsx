@@ -1,9 +1,10 @@
-import FormHandler from "./forms/form-handler";
+import RegisterForm from "./form";
 
 export default function CareseekerSignUpPage() {
   return (
-    <div className="flex w-full flex-col items-center justify-center space-y-4 px-4 py-6">
-      <FormHandler />
+    <div className="flex w-full flex-col items-center justify-center gap-y-4">
+      <h1 className="font-sans text-2xl">Create an account</h1>
+      <RegisterForm />
     </div>
   );
 }

@@ -34,4 +34,4 @@ export const childRelations = relations(Child, ({ one }) => ({
 }));
 
 export const insertChildSchema = createInsertSchema(Child);
-export const selectChildschema = createSelectSchema(Child);
+export const selectChildSchema = createSelectSchema(Child);

@@ -16,7 +16,7 @@ import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
-import { caregiverRegister } from "./actions";
+import { careseekerRegister } from "./actions";
 
 export default function RegisterForm() {
   const form = useForm({
@@ -28,8 +28,8 @@ export default function RegisterForm() {
 
   async function onSubmit(values: z.infer<typeof insertUserSchema>) {
     try {
-      await caregiverRegister(values);
-      toast.success("Caregiver account created successfully");
+      await careseekerRegister(values);
+      toast.success("Careseeker account created successfully");
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
