@@ -8,7 +8,7 @@ export const env = createEnv({
   extends: [authEnv],
   shared: {
     NODE_ENV: z
-      .enum(["development", "production", "test"])
+      .enum(["development", "production", "test", "staging"])
       .default("development"),
   },
   server: {

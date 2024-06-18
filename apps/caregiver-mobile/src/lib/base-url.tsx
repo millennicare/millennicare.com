@@ -17,7 +17,11 @@ export const getBaseUrl = () => {
   const localhost = debuggerHost?.split(":")[0];
 
   if (!localhost) {
-    return "https://millennicare.com";
+    if (process.env.NODE_ENV === "production") {
+      return "https://millennicare.com";
+    } else if (process.env.NODE_ENV === "staging") {
+      return "https://millennicarecom-development.up.railway.app";
+    }
   }
   return `http://${localhost}:3000`;
 };
