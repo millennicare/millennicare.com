@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { headers } from "next/headers";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
@@ -51,7 +50,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
           transformer: SuperJSON,
           url: getBaseUrl() + "/api/trpc",
           headers() {
-            const heads = new Headers(headers());
+            const heads = new Headers();
             heads.set("x-trpc-source", "nextjs-react");
             return heads as Headers;
           },
