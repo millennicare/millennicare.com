@@ -23,7 +23,7 @@ const createQueryClient = () =>
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined;
 const getQueryClient = () => {
-  //@ts-expect-error
+  //@ts-expect-error for some reason this throws a lint error
   if (typeof window === "undefined") {
     // Server: always make a new query client
     return createQueryClient();
@@ -69,7 +69,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
 }
 
 const getBaseUrl = () => {
-  // @ts-expect-error
+  // @ts-expect-error throws a linting error despite the use client directive
   if (typeof window !== "undefined") return window.location.origin;
   if (env.NODE_ENV === "production") return `https://millennicare.com`;
   return `http://localhost:${process.env.PORT ?? 3000}`;
