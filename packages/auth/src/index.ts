@@ -35,8 +35,7 @@ interface DatabaseUserAttributes {
 }
 
 export const validateToken = async (token: string) => {
-  const sessionToken = token.slice("Bearer ".length);
-  const session = await lucia.validateSession(sessionToken);
+  const session = await lucia.validateSession(token);
   return session;
 };
 

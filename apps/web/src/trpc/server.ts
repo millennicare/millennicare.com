@@ -12,7 +12,9 @@ import { validateRequest } from "~/app/lib/auth";
 const createContext = cache(async () => {
   const heads = new Headers(headers());
   heads.set("x-trpc-source", "rsc");
+
   const { session } = await validateRequest();
+  heads.set("Authorization", session?.id ?? "");
 
   return createTRPCContext({
     sessionId: session?.id,

@@ -21,12 +21,11 @@ import { db } from "@millennicare/db/client";
  * - Next.js requests will have a session token in cookies
  */
 const isomorphicGetSession = async (
-  headers: Headers,
+  sessionId?: string,
 ): Promise<
   { user: User; session: Session } | { user: null; session: null }
 > => {
-  const authToken = headers.get("Authorization") ?? null;
-  if (authToken) return validateToken(authToken);
+  if (sessionId) return validateToken(sessionId);
   return { user: null, session: null };
 };
 /**
@@ -45,9 +44,8 @@ export const createTRPCContext = async (opts: {
   headers: Headers;
   sessionId?: string;
 }) => {
-  const authToken = opts.headers.get("Authorization") ?? null;
-  const session = await isomorphicGetSession(opts.headers);
-
+  const authToken = opts.headers.get("Authorization") ?? opts.sessionId;
+  const session = await isomorphicGetSession(authToken);
   const source = opts.headers.get("x-trpc-source") ?? "unknown";
   console.log(">>> tRPC Request from", source, "by", session.user);
 
@@ -112,7 +110,7 @@ export const publicProcedure = t.procedure;
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
-  if (!ctx.session.user) {
+  if (!ctx.session?.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
