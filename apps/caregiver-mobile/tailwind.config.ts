@@ -1,13 +1,12 @@
 import type { Config } from "tailwindcss";
 // @ts-expect-error - no types
 import nativewind from "nativewind/preset";
+import { hairlineWidth } from "nativewind/theme";
 
 import baseConfig from "@millennicare/tailwind-config/native";
 
-const { hairlineWidth } = require("nativewind/theme");
-
 export default {
-  content: ["./src/**/*.{ts,tsx}"],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   presets: [baseConfig, nativewind],
   theme: {
     extend: {

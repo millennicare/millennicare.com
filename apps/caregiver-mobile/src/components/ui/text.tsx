@@ -6,7 +6,7 @@ import type {
   TextRef,
 } from "~/components/primitives/types";
 import * as Slot from "~/components/primitives/slot";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/styles/utils";
 
 const TextClassContext = React.createContext<string | undefined>(undefined);
 

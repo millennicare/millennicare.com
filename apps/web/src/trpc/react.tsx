@@ -71,7 +71,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
 const getBaseUrl = () => {
   // @ts-expect-error throws a linting error despite the use client directive
   if (typeof window !== "undefined") return window.location.origin;
-  if (env.NODE_ENV === "staging")
+  if (env.NODE_ENV === "test")
     return `https://millennicarecom-development.up.railway.app`;
   if (env.NODE_ENV === "production") return `https://millennicare.com`;
 

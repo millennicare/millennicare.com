@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 
 import { PortalHost } from "~/components/primitives/portal";
-import { TRPCProvider } from "~/lib/api";
+import { TRPCProvider } from "~/lib/api/trpc";
 
 import "../styles.css";
 
@@ -11,8 +11,8 @@ import { SplashScreen, Stack } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemeProvider } from "@react-navigation/native";
 
-import { NAV_THEME } from "~/lib/constants";
-import { useColorScheme } from "~/lib/useColorScheme";
+import { NAV_THEME } from "~/lib/styles/constants";
+import { useColorScheme } from "~/lib/styles/useColorScheme";
 
 const LIGHT_THEME: Theme = {
   dark: false,
@@ -29,40 +29,32 @@ export {
 } from "expo-router";
 
 // Prevent the splash screen from auto-hiding before getting the color scheme.
-await SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
   React.useEffect(() => {
     (async () => {
-      try {
-        const theme = await AsyncStorage.getItem("theme");
+      const theme = await AsyncStorage.getItem("theme");
 
-        if (!theme) {
-          await AsyncStorage.setItem("theme", colorScheme);
-          setIsColorSchemeLoaded(true);
-          return;
-        }
-        const colorTheme = theme === "dark" ? "dark" : "light";
-        if (colorTheme !== colorScheme) {
-          setColorScheme(colorTheme);
-
-          setIsColorSchemeLoaded(true);
-          return;
-        }
+      if (!theme) {
+        AsyncStorage.setItem("theme", colorScheme);
         setIsColorSchemeLoaded(true);
-      } catch (error) {
-        console.error("An error occurred:", error);
+        return;
       }
-    })().finally(async () => {
-      try {
-        await SplashScreen.hideAsync();
-      } catch (error) {
-        console.error("An error occurred:", error);
+      const colorTheme = theme === "dark" ? "dark" : "light";
+      if (colorTheme !== colorScheme) {
+        setColorScheme(colorTheme);
+
+        setIsColorSchemeLoaded(true);
+        return;
       }
+      setIsColorSchemeLoaded(true);
+    })().finally(() => {
+      SplashScreen.hideAsync();
     });
-  }, [colorScheme, setColorScheme]);
+  }, []);
 
   if (!isColorSchemeLoaded) {
     return null;

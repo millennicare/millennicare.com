@@ -71,7 +71,7 @@ export default function SignInForm({ signIn }: SignInFormProps) {
                 <FormLabel className="flex items-center justify-between">
                   Password
                   <Link
-                    href="/forgot-password"
+                    href="/auth/forgot-password"
                     className={cn(buttonVariants({ variant: "link" }))}
                   >
                     Forgot?
