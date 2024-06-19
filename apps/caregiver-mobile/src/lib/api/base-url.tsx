@@ -19,7 +19,7 @@ export const getBaseUrl = () => {
   if (!localhost) {
     if (process.env.NODE_ENV === "production") {
       return "https://millennicare.com";
-    } else if (process.env.NODE_ENV === "staging") {
+    } else if (process.env.NODE_ENV === "test") {
       return "https://millennicarecom-development.up.railway.app";
     }
   }

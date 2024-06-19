@@ -2,9 +2,9 @@ import type { ConfigContext, ExpoConfig } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: "expo",
-  slug: "expo",
-  scheme: "expo",
+  name: "MillenniCare Caregiver",
+  slug: "millennicare-caregiver",
+  scheme: "millennicare",
   version: "0.1.0",
   orientation: "portrait",
   icon: "./assets/millennicare_logo.png",
@@ -32,11 +32,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: "#1F104A",
     },
   },
-  // extra: {
-  //   eas: {
-  //     projectId: "your-eas-project-id",
-  //   },
-  // },
+  extra: {
+    eas: {
+      projectId: "5a666684-3639-423a-acae-648da79bf224",
+    },
+  },
   experiments: {
     tsconfigPaths: true,
     typedRoutes: true,

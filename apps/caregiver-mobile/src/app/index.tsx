@@ -28,9 +28,11 @@ export default function Index() {
             Modern Childcare for the New Millennium
           </Text>
 
-          <Button size="lg">
-            <Text className="text-white">Get Started</Text>
-          </Button>
+          <Link asChild href="/auth/sign-up">
+            <Button size="lg">
+              <Text className="text-white">Get Started</Text>
+            </Button>
+          </Link>
 
           <Link asChild href="/auth/sign-in/">
             <Button size="lg" className="bg-white">

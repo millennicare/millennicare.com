@@ -2,9 +2,9 @@ import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
 import * as Browser from "expo-web-browser";
 
-import { api } from "./api";
 import { getBaseUrl } from "./base-url";
 import { deleteToken, setToken } from "./session-store";
+import { api } from "./trpc";
 
 export const signIn = async () => {
   const signInUrl = `${getBaseUrl()}/api/auth/signin`;

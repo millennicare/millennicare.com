@@ -40,7 +40,7 @@
     },
     "push": {
       "cache": false,
-      "interactive": false
+      "interactive": true
     },
     "studio": {
       "cache": false,
