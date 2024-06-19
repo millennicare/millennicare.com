@@ -1,5 +1,6 @@
 import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
+import { useState } from "react";
 import { SafeAreaView } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -9,12 +10,13 @@ import { signInSchema } from "@millennicare/validators";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Text } from "~/components/ui/text";
-import { api } from "~/lib/api";
-import { setToken } from "~/lib/session-store";
+import { setToken } from "~/lib/api/session-store";
+import { api } from "~/lib/api/trpc";
 
 type IFormInputs = z.infer<typeof signInSchema>;
 
 export default function SignIn() {
+  const [errorMsg, setErrorMsg] = useState("");
   const {
     handleSubmit,
     control,
@@ -27,10 +29,13 @@ export default function SignIn() {
   const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
     try {
       const response = await mutateAsync(data);
-      console.log(response);
       setToken(response.session.id);
     } catch (error) {
-      console.error(error);
+      if (error instanceof Error) {
+        setErrorMsg(error.message);
+        return;
+      }
+      setErrorMsg("Something went wrong, please try again later.");
     }
   };
 
@@ -79,6 +84,10 @@ export default function SignIn() {
       <Button className="w-full" onPress={handleSubmit(onSubmit)}>
         <Text className="text-white">Sign In</Text>
       </Button>
+
+      {errorMsg && (
+        <Text className="w-full text-center text-red-500">{errorMsg}</Text>
+      )}
     </SafeAreaView>
   );
 }
