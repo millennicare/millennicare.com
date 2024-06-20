@@ -26,7 +26,6 @@ export function OPTIONS() {
 const handler = async (req: Request) => {
   const { session } = await validateRequest();
   req.headers.set("Authorization", session?.id ?? "");
-  console.log(`headers in api handler ${JSON.stringify(req.headers, null, 2)}`);
 
   const response = await fetchRequestHandler({
     endpoint: "/api/trpc",

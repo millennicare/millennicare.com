@@ -73,7 +73,7 @@ export default function ResetPasswordForm() {
             password.
           </p>
           <Button asChild>
-            <Link href="/sign-in">Back to login</Link>
+            <Link href="/auth/sign-in">Back to login</Link>
           </Button>
         </div>
       ) : (
