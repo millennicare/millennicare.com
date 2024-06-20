@@ -15,6 +15,9 @@ import { api } from "~/lib/api/trpc";
 
 type IFormInputs = z.infer<typeof signUpSchema>;
 
+/**
+ * takes first name, last name, phone number, email, dob, and gender
+ */
 export default function SignUp() {
   const [errorMsg, setErrorMsg] = useState("");
   const { mutateAsync } = api.auth.register.useMutation();
@@ -49,15 +52,74 @@ export default function SignUp() {
     >
       <Controller
         control={control}
-        name="email"
+        name="firstName"
         rules={{ required: true }}
         render={({ field: { onChange, onBlur, value } }) => (
           <Input
-            placeholder="Email Address"
+            placeholder="First name"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             className="w-full"
+          />
+        )}
+      />
+      {errors.firstName && (
+        <Text className="text-error w-full text-red-500">
+          {errors.firstName.message}
+        </Text>
+      )}
+      <Controller
+        control={control}
+        name="lastName"
+        rules={{ required: true }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Last name"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            className="w-full"
+          />
+        )}
+      />
+      {errors.lastName && (
+        <Text className="text-error w-full text-red-500">
+          {errors.lastName.message}
+        </Text>
+      )}
+      <Controller
+        control={control}
+        name="phoneNumber"
+        rules={{ required: true }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Phone number"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            className="w-full"
+            keyboardType="phone-pad"
+          />
+        )}
+      />
+      {errors.phoneNumber && (
+        <Text className="text-error w-full text-red-500">
+          {errors.phoneNumber.message}
+        </Text>
+      )}
+      <Controller
+        control={control}
+        name="email"
+        rules={{ required: true }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            placeholder="Email"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            className="w-full"
+            keyboardType="email-address"
           />
         )}
       />
@@ -110,7 +172,7 @@ export default function SignUp() {
       )}
 
       <Button className="w-full" onPress={handleSubmit(onSubmit)}>
-        <Text className="text-white">Sign Up</Text>
+        <Text className="text-white">Join now</Text>
       </Button>
       {errorMsg && (
         <Text className="w-full text-center text-red-500">{errorMsg}</Text>

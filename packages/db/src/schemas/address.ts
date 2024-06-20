@@ -1,10 +1,10 @@
-import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
 import {
   doublePrecision,
   index,
   pgTable,
   text,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
@@ -14,10 +14,7 @@ import { User } from "./user";
 export const Address = pgTable(
   "addresses",
   {
-    id: text("id")
-      .notNull()
-      .primaryKey()
-      .$defaultFn(() => createId()),
+    id: uuid("id").notNull().primaryKey().defaultRandom(),
     line1: varchar("line1", { length: 128 }).notNull(),
     line2: varchar("line2", { length: 128 }),
     city: varchar("city", { length: 128 }).notNull(),
@@ -26,7 +23,7 @@ export const Address = pgTable(
     longitude: doublePrecision("longitude").notNull(),
     latitude: doublePrecision("latitude").notNull(),
     placeId: text("place_id").notNull(),
-    userId: text("user_id")
+    userId: uuid("user_id")
       .notNull()
       .references(() => User.id, {
         onDelete: "cascade",

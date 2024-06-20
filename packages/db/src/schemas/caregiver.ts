@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { boolean, index, pgTable, text } from "drizzle-orm/pg-core";
+import { boolean, index, pgTable, uuid } from "drizzle-orm/pg-core";
 
 import { Service } from "./service";
 import { User } from "./user";
@@ -7,7 +7,7 @@ import { User } from "./user";
 export const Caregiver = pgTable(
   "caregivers",
   {
-    userId: text("user_id")
+    userId: uuid("user_id")
       .unique()
       .references(() => User.id, {
         onDelete: "cascade",
