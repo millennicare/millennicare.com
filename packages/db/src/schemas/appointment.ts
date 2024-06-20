@@ -1,11 +1,5 @@
 import { relations } from "drizzle-orm";
-import {
-  index,
-  pgEnum,
-  pgTable,
-  timestamp,
-  uuid,
-} from "drizzle-orm/pg-core";
+import { index, pgEnum, pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import { Caregiver } from "./caregiver";

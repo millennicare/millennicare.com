@@ -5,15 +5,16 @@ import { z } from "zod";
 
 import { invalidateSession } from "@millennicare/auth";
 import { eq } from "@millennicare/db";
-import { insertUserSchema, User } from "@millennicare/db/schema";
+import { User, UserInfo } from "@millennicare/db/schema";
 import { sendPasswordResetEmail } from "@millennicare/lib";
-import { signInSchema } from "@millennicare/validators";
+import { signInSchema, signUpSchema } from "@millennicare/validators";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import {
   createSession,
   createToken,
   findDuplicateUser,
+  getStripeId,
 } from "../utils/helpers";
 
 export const authRouter = createTRPCRouter({
@@ -27,12 +28,8 @@ export const authRouter = createTRPCRouter({
     await invalidateSession(opts.ctx.token);
     return { success: true };
   }),
-  /**
-   * Register a new user. Will update this in v2 to include a verification email
-   * and a more robust user registration process.
-   */
   register: publicProcedure
-    .input(insertUserSchema)
+    .input(signUpSchema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
 
@@ -44,14 +41,6 @@ export const authRouter = createTRPCRouter({
           message: "User already exists.",
         });
       }
-
-      /**
-       * so typescript isn't angy
-       */
-      if (!input.password) {
-        throw new TRPCError({ code: "BAD_REQUEST" });
-      }
-
       const hashed = await hash(input.password, {
         memoryCost: 19456,
         timeCost: 2,
@@ -59,19 +48,40 @@ export const authRouter = createTRPCRouter({
         parallelism: 1,
       });
 
-      const returnUser = await db
-        .insert(User)
-        .values({ ...input, password: hashed })
-        .returning({ insertedId: User.id });
+      const res = await db.transaction(async (tx) => {
+        const returnUser = await tx
+          .insert(User)
+          .values({ ...input, password: hashed })
+          .returning({ insertedId: User.id });
 
-      if (!returnUser[0]) {
+        const userId = returnUser[0]?.insertedId;
+        if (!userId) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+        }
+        const stripeId = await getStripeId(
+          input.type,
+          input.email,
+          `${input.firstName} ${input.lastName}`,
+        );
+        // if user type is careseeker, create a Stripe customer obj
+        await tx.insert(UserInfo).values({
+          userId: userId,
+          firstName: input.firstName,
+          lastName: input.lastName,
+          phoneNumber: input.phoneNumber,
+          birthdate: input.birthdate,
+          gender: input.gender,
+          stripeId: stripeId,
+        });
+
+        return userId;
+      });
+
+      if (!res) {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
 
-      const session = await createSession(
-        returnUser[0].insertedId,
-        input.email,
-      );
+      const session = await createSession(res, input.email);
 
       return { session };
     }),

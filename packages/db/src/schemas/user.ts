@@ -13,7 +13,7 @@ import { Account } from "./account";
 import { Address } from "./address";
 import { UserInfo } from "./user-info";
 
-export const typeEnum = pgEnum("type", ["caregiver", "careseeker", "admin"]);
+export const typeEnum = pgEnum("type", ["caregiver", "careseeker"]);
 
 export const User = pgTable("users", {
   id: uuid("id").notNull().primaryKey().defaultRandom(),

@@ -1,4 +1,4 @@
-import { object, string, z } from "zod";
+import { date, object, string, z } from "zod";
 
 export const signInSchema = object({
   email: string({ required_error: "Email is required" })
@@ -20,6 +20,8 @@ export const signUpSchema = object({
   lastName: string({ required_error: "Last name is required" }).min(1, {
     message: "Last name is required",
   }),
+  birthdate: date(),
+  gender: z.enum(["male", "female", "non-binary"]),
   phoneNumber: string().regex(phoneNumberRegex, {
     message: "Invalid phone number format",
   }),

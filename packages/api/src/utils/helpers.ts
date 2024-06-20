@@ -5,6 +5,7 @@ import { env } from "@millennicare/auth/env";
 import { and, eq } from "@millennicare/db";
 import { db } from "@millennicare/db/client";
 import { User } from "@millennicare/db/schema";
+import { createAccount, createCustomer } from "@millennicare/lib";
 
 export async function createToken(userId: string, expTime?: string) {
   const secret = new TextEncoder().encode(env.SYMMETRIC_KEY);
@@ -18,7 +19,7 @@ export async function createToken(userId: string, expTime?: string) {
 
 export async function findDuplicateUser(
   email: string,
-  type?: "admin" | "caregiver" | "careseeker",
+  type?: "caregiver" | "careseeker",
 ) {
   return await db.query.User.findFirst({
     where: type
@@ -31,3 +32,22 @@ export async function createSession(userId: string, email: string) {
   const session = await lucia.createSession(userId, { email });
   return session;
 }
+
+export const getStripeId = async (
+  type: "caregiver" | "careseeker",
+
+  email: string,
+  name?: string,
+) => {
+  if (!name) {
+    throw new Error();
+  }
+
+  if (type === "caregiver") {
+    const account = await createAccount(email);
+    return account.id;
+  } else {
+    const customer = await createCustomer({ email, name });
+    return customer.id;
+  }
+};

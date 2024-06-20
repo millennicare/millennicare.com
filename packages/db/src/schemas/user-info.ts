@@ -25,7 +25,8 @@ export const UserInfo = pgTable(
       })
       .unique()
       .notNull(),
-    name: varchar("name", { length: 255 }).notNull(),
+    firstName: varchar("firstName", { length: 255 }).notNull(),
+    lastName: varchar("lastName", { length: 255 }).notNull(),
     phoneNumber: varchar("phone_number", { length: 255 }).notNull(),
     biography: varchar("biography", { length: 255 }),
     profilePicture: text("profile_picture"),
