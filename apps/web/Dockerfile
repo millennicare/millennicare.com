@@ -22,7 +22,7 @@ ARG RAILWAY_SERVICE_ID
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-RUN --mount=type=cache,id=${RAILWAY_SERVICE_ID},target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=s/${RAILWAY_SERVICE_ID},target=/pnpm/store pnpm install --frozen-lockfile
 # RUN pnpm install --frozen-lockfile
 
 # Build the project and its dependencies
