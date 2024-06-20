@@ -23,7 +23,8 @@ ENV TURBO_TOKEN=$TURBO_TOKEN
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-RUN pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=7724a2e1-e414-4d1c-a2c8-e9227b9096e5,target=/pnpm/store pnpm install --frozen-lockfile
+# RUN pnpm install --frozen-lockfile
 
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
