@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Button, Heading, Html, Tailwind } from "@react-email/components";
 
 interface ResetPasswordProps {
@@ -6,6 +5,17 @@ interface ResetPasswordProps {
 }
 
 export default function ResetPassword({ token }: ResetPasswordProps) {
+  function getLink() {
+    let link;
+
+    if (process.env.NODE_ENV === "production") {
+      link = "https://millennicare.com";
+    } else if (process.env.NODE_ENV === "test") {
+      link = "https://millennicarecom-development.up.railway.app";
+    } else link = "http://localhost:3000";
+    return `${link}/auth/reset-password/${token}`;
+  }
+
   return (
     <Tailwind
       config={{
@@ -22,7 +32,7 @@ export default function ResetPassword({ token }: ResetPasswordProps) {
         <Heading>Can't login?</Heading>
         <p>Click the link below and reset your password</p>
         <Button
-          href={`${process.env.NODE_ENV === "production" ? "https://millennicare.com" : "http://localhost:3000"}/reset-password/${token}`}
+          href={getLink()}
           target="_blank"
           className="bg-brand rounded-md px-4 py-2 text-white"
         >
