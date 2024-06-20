@@ -1,7 +1,7 @@
 import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
 import { useState } from "react";
-import { KeyboardAvoidingView, Platform } from "react-native";
+import { View } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
@@ -32,9 +32,7 @@ export default function SignUp() {
   const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
     try {
       const response = await mutateAsync({
-        email: data.email,
-        password: data.password,
-        type: "caregiver",
+        ...data,
       });
       setToken(response.session.id);
     } catch (error) {
@@ -46,10 +44,7 @@ export default function SignUp() {
     }
   };
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      className="flex h-fit w-full flex-col items-center justify-center gap-y-3"
-    >
+    <View className="flex h-fit w-full flex-col items-center justify-center gap-y-3">
       <Controller
         control={control}
         name="firstName"
@@ -177,6 +172,6 @@ export default function SignUp() {
       {errorMsg && (
         <Text className="w-full text-center text-red-500">{errorMsg}</Text>
       )}
-    </KeyboardAvoidingView>
+    </View>
   );
 }
