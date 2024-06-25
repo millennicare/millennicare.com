@@ -5,7 +5,7 @@ import { z } from "zod";
 
 import { invalidateSession } from "@millennicare/auth";
 import { eq } from "@millennicare/db";
-import { User, UserInfo } from "@millennicare/db/schema";
+import { User } from "@millennicare/db/schema";
 import { sendPasswordResetEmail } from "@millennicare/lib";
 import { signInSchema, signUpSchema } from "@millennicare/validators";
 
@@ -14,7 +14,6 @@ import {
   createSession,
   createToken,
   findDuplicateUser,
-  getStripeId,
 } from "../utils/helpers";
 
 export const authRouter = createTRPCRouter({
@@ -58,21 +57,21 @@ export const authRouter = createTRPCRouter({
         if (!userId) {
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
         }
-        const stripeId = await getStripeId(
-          input.type,
-          input.email,
-          `${input.firstName} ${input.lastName}`,
-        );
-        // if user type is careseeker, create a Stripe customer obj
-        await tx.insert(UserInfo).values({
-          userId: userId,
-          firstName: input.firstName,
-          lastName: input.lastName,
-          phoneNumber: input.phoneNumber,
-          birthdate: input.birthdate,
-          gender: input.gender,
-          stripeId: stripeId,
-        });
+        // const stripeId = await getStripeId(
+        //   input.type,
+        //   input.email,
+        //   `${input.firstName} ${input.lastName}`,
+        // );
+        // // if user type is careseeker, create a Stripe customer obj
+        // await tx.insert(UserInfo).values({
+        //   userId: userId,
+        //   firstName: input.firstName,
+        //   lastName: input.lastName,
+        //   phoneNumber: input.phoneNumber,
+        //   birthdate: input.birthdate,
+        //   gender: input.gender,
+        //   stripeId: stripeId,
+        // });
 
         return userId;
       });

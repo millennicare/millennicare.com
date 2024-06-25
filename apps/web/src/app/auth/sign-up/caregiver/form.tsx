@@ -2,7 +2,6 @@
 
 import type { z } from "zod";
 
-import { insertUserSchema } from "@millennicare/db/schema";
 import {
   Form,
   FormControl,
@@ -14,19 +13,22 @@ import {
 } from "@millennicare/ui/form";
 import { Input } from "@millennicare/ui/input";
 import { toast } from "@millennicare/ui/toast";
+import { signUpSchema } from "@millennicare/validators";
 
 import { SubmitButton } from "~/app/_components/submit-btn";
 import { caregiverRegister } from "./actions";
 
+type IFormInputs = z.infer<typeof signUpSchema>;
+
 export default function RegisterForm() {
   const form = useForm({
-    schema: insertUserSchema,
+    schema: signUpSchema,
     defaultValues: {
       type: "caregiver",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof insertUserSchema>) {
+  async function onSubmit(values: IFormInputs) {
     try {
       await caregiverRegister(values);
       toast.success("Caregiver account created successfully");
@@ -66,6 +68,21 @@ export default function RegisterForm() {
               <FormItem>
                 <FormLabel className="flex items-center justify-between">
                   Password
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} type="password" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="confirm"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="flex items-center justify-between">
+                  Confirm password
                 </FormLabel>
                 <FormControl>
                   <Input {...field} type="password" />

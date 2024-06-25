@@ -85,7 +85,7 @@ export default function SignIn() {
         <Text className="text-white">Sign In</Text>
       </Button>
 
-      {errorMsg && (
+      {!!errorMsg && (
         <Text className="w-full text-center text-red-500">{errorMsg}</Text>
       )}
     </SafeAreaView>
