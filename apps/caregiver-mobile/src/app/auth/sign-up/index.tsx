@@ -3,12 +3,15 @@ import type { z } from "zod";
 import { useState } from "react";
 import { View } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { Controller, useForm } from "react-hook-form";
 
 import { signUpSchema } from "@millennicare/validators";
 
+import { Label } from "~/components/primitives/select";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Text } from "~/components/ui/text";
 import { setToken } from "~/lib/api/session-store";
 import { api } from "~/lib/api/trpc";
@@ -20,6 +23,7 @@ type IFormInputs = z.infer<typeof signUpSchema>;
  */
 export default function SignUp() {
   const [errorMsg, setErrorMsg] = useState("");
+  const [gender, setGender] = useState("");
   const { mutateAsync } = api.auth.register.useMutation();
   const {
     handleSubmit,
@@ -27,9 +31,19 @@ export default function SignUp() {
     formState: { errors },
   } = useForm<IFormInputs>({
     resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      birthdate: new Date(),
+    },
   });
 
+  function onLabelPress(label: string) {
+    return () => {
+      setGender(label);
+    };
+  }
+
   const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
+    console.log(data);
     try {
       const response = await mutateAsync({
         ...data,
@@ -126,45 +140,31 @@ export default function SignUp() {
 
       <Controller
         control={control}
-        name="password"
-        rules={{ required: true }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="Password"
-            onBlur={onBlur}
-            onChangeText={onChange}
+        name="birthdate"
+        render={({ field: { onChange, value } }) => (
+          <DateTimePicker
+            mode="date"
             value={value}
             className="w-full"
-            secureTextEntry={true}
+            onChange={onChange}
           />
         )}
       />
-      {errors.password && (
-        <Text className="w-full text-left text-red-500">
-          {errors.password.message}
-        </Text>
-      )}
 
-      <Controller
-        control={control}
-        name="confirm"
-        rules={{ required: true }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="Confirm password"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            className="w-full"
-            secureTextEntry={true}
-          />
-        )}
-      />
-      {errors.confirm && (
-        <Text className="w-full text-left text-red-500">
-          {errors.confirm.message}
-        </Text>
-      )}
+      <RadioGroup value={gender} onValueChange={setGender} className="gap-3">
+        <RadioGroupItemWithLabel
+          value="Male"
+          onLabelPress={onLabelPress("male")}
+        />
+        <RadioGroupItemWithLabel
+          value="Female"
+          onLabelPress={onLabelPress("female")}
+        />
+        <RadioGroupItemWithLabel
+          value="Non-binary"
+          onLabelPress={onLabelPress("non-binary")}
+        />
+      </RadioGroup>
 
       <Button className="w-full" onPress={handleSubmit(onSubmit)}>
         <Text className="text-white">Join now</Text>
@@ -172,6 +172,23 @@ export default function SignUp() {
       {errorMsg && (
         <Text className="w-full text-center text-red-500">{errorMsg}</Text>
       )}
+    </View>
+  );
+}
+
+function RadioGroupItemWithLabel({
+  value,
+  onLabelPress,
+}: {
+  value: string;
+  onLabelPress: () => void;
+}) {
+  return (
+    <View className={"flex-row items-center gap-2"}>
+      <RadioGroupItem aria-labelledby={`label-for-${value}`} value={value} />
+      <Label nativeID={`label-for-${value}`} onPress={onLabelPress}>
+        {value}
+      </Label>
     </View>
   );
 }

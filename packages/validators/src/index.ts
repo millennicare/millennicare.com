@@ -22,9 +22,11 @@ export const signUpSchema = object({
   }),
   birthdate: date(),
   gender: z.enum(["male", "female", "non-binary"]),
-  phoneNumber: string().regex(phoneNumberRegex, {
-    message: "Invalid phone number format",
-  }),
+  phoneNumber: string({ required_error: "Phone number is required" })
+    .min(1, { message: "Phone number is required" })
+    .regex(phoneNumberRegex, {
+      message: "Invalid phone number format",
+    }),
   email: string({ required_error: "Email is required" })
     .email()
     .min(1, { message: "Email is required" }),
