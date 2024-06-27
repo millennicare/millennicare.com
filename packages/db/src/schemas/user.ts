@@ -30,7 +30,7 @@ export const UserRelations = relations(User, ({ many, one }) => ({
   accounts: many(Account),
   address: many(Address),
   userInfo: one(UserInfo),
-  emailVerificationCode: many(EmailVerificationCode),
+  emailVerificationCode: one(EmailVerificationCode),
 }));
 
 export const insertUserSchema = createInsertSchema(User);

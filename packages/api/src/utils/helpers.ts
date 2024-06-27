@@ -53,24 +53,3 @@ export const getStripeId = async (
     return customer.id;
   }
 };
-
-export async function generateEmailVerificationCode(
-  userId: string,
-  email: string,
-): Promise<string> {
-  // delete all existing email verification codes for this userId
-  await db
-    .delete(EmailVerificationCode)
-    .where(eq(EmailVerificationCode.userId, userId));
-
-  const code = generateRandomString(8, alphabet("0-9"));
-
-  await db.insert(EmailVerificationCode).values({
-    userId,
-    email,
-    code,
-    expiresAt: createDate(new TimeSpan(15, "m")),
-  });
-
-  return code;
-}

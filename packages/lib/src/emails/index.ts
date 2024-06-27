@@ -39,7 +39,8 @@ export const sendEmailVerificationEmail = async ({
     },
   };
 
-  return ses.sendEmail(params);
+  const res = await ses.sendEmail(params);
+  console.log(res);
 };
 
 export const sendPasswordResetEmail = async ({

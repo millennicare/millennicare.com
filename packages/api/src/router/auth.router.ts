@@ -1,12 +1,18 @@
 import { hash, verify } from "@node-rs/argon2";
 import { TRPCError } from "@trpc/server";
 import * as jose from "jose";
-import { isWithinExpirationDate } from "oslo";
+import { createDate, isWithinExpirationDate, TimeSpan } from "oslo";
+import { alphabet, generateRandomString } from "oslo/crypto";
 import { z } from "zod";
 
 import { invalidateSession, lucia } from "@millennicare/auth";
 import { eq } from "@millennicare/db";
-import { EmailVerificationCode, User } from "@millennicare/db/schema";
+import {
+  Caregiver,
+  Careseeker,
+  EmailVerificationCode,
+  User,
+} from "@millennicare/db/schema";
 import {
   sendEmailVerificationEmail,
   sendPasswordResetEmail,
@@ -18,7 +24,6 @@ import {
   createSession,
   createToken,
   findDuplicateUser,
-  generateEmailVerificationCode,
 } from "../utils/helpers";
 
 export const authRouter = createTRPCRouter({
@@ -76,7 +81,6 @@ export const authRouter = createTRPCRouter({
     .input(signUpSchema)
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
-
       const existingUser = await findDuplicateUser(input.email, input.type);
       // if a user exists with the same type, throw duplicate error
       if (existingUser && existingUser.type === input.type) {
@@ -97,13 +101,29 @@ export const authRouter = createTRPCRouter({
           .insert(User)
           .values({ ...input, password: hashed, emailVerified: false })
           .returning({ insertedId: User.id });
-
         const userId = returnUser[0]?.insertedId;
         if (!userId) {
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
         }
-        const code = await generateEmailVerificationCode(userId, input.email);
 
+        // create caregiver or careseeker based on type
+        if (input.type === "caregiver") {
+          await tx.insert(Caregiver).values({ userId });
+        } else {
+          await tx.insert(Careseeker).values({ userId });
+        }
+        // delete any existing email verification codes
+        await tx
+          .delete(EmailVerificationCode)
+          .where(eq(EmailVerificationCode.userId, userId));
+
+        const code = generateRandomString(4, alphabet("0-9"));
+        await tx.insert(EmailVerificationCode).values({
+          userId,
+          email: input.email,
+          code,
+          expiresAt: createDate(new TimeSpan(15, "m")),
+        });
         // const stripeId = await getStripeId(
         //   input.type,
         //   input.email,
