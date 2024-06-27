@@ -25,6 +25,7 @@
     "@millennicare/validators": "workspace:*",
     "@trpc/server": "11.0.0-next-beta.283",
     "jose": "^5.4.0",
+    "oslo": "^1.2.0",
     "superjson": "2.2.1",
     "zod": "^3.23.8"
   },

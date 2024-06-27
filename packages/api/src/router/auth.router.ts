@@ -1,12 +1,16 @@
 import { hash, verify } from "@node-rs/argon2";
 import { TRPCError } from "@trpc/server";
 import * as jose from "jose";
+import { isWithinExpirationDate } from "oslo";
 import { z } from "zod";
 
-import { invalidateSession } from "@millennicare/auth";
+import { invalidateSession, lucia } from "@millennicare/auth";
 import { eq } from "@millennicare/db";
-import { User } from "@millennicare/db/schema";
-import { sendPasswordResetEmail } from "@millennicare/lib";
+import { EmailVerificationCode, User } from "@millennicare/db/schema";
+import {
+  sendEmailVerificationEmail,
+  sendPasswordResetEmail,
+} from "@millennicare/lib";
 import { signInSchema, signUpSchema } from "@millennicare/validators";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
@@ -14,6 +18,7 @@ import {
   createSession,
   createToken,
   findDuplicateUser,
+  generateEmailVerificationCode,
 } from "../utils/helpers";
 
 export const authRouter = createTRPCRouter({
@@ -27,6 +32,46 @@ export const authRouter = createTRPCRouter({
     await invalidateSession(opts.ctx.token);
     return { success: true };
   }),
+  verifEmail: protectedProcedure
+    .input(z.object({ code: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { db } = ctx;
+
+      const { user } = await lucia.validateSession(ctx.session.id);
+      if (!user) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
+
+      const databaseCode = await db.query.EmailVerificationCode.findFirst({
+        where: eq(User.id, user.id),
+      });
+
+      if (!databaseCode || input.code !== databaseCode.code) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
+
+      await db
+        .delete(EmailVerificationCode)
+        .where(eq(EmailVerificationCode.id, databaseCode.id));
+
+      if (!isWithinExpirationDate(databaseCode.expiresAt)) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Verification code expired, please request a new one.",
+        });
+      }
+      if (databaseCode.email !== user.email) {
+        throw new TRPCError({ code: "BAD_REQUEST" });
+      }
+
+      await db
+        .update(User)
+        .set({ emailVerified: true })
+        .where(eq(User.id, user.id));
+
+      const session = await createSession(user.id, user.email);
+      return { session };
+    }),
   register: publicProcedure
     .input(signUpSchema)
     .mutation(async ({ ctx, input }) => {
@@ -50,13 +95,15 @@ export const authRouter = createTRPCRouter({
       const res = await db.transaction(async (tx) => {
         const returnUser = await tx
           .insert(User)
-          .values({ ...input, password: hashed })
+          .values({ ...input, password: hashed, emailVerified: false })
           .returning({ insertedId: User.id });
 
         const userId = returnUser[0]?.insertedId;
         if (!userId) {
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
         }
+        const code = await generateEmailVerificationCode(userId, input.email);
+
         // const stripeId = await getStripeId(
         //   input.type,
         //   input.email,
@@ -73,14 +120,17 @@ export const authRouter = createTRPCRouter({
         //   stripeId: stripeId,
         // });
 
-        return userId;
+        return { userId, code };
       });
 
-      if (!res) {
+      if (!res.userId || !res.code) {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
 
-      const session = await createSession(res, input.email);
+      // send email verification code
+      await sendEmailVerificationEmail({ email: input.email, code: res.code });
+
+      const session = await createSession(res.userId, input.email);
 
       return { session };
     }),

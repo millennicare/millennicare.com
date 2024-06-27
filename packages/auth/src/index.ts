@@ -20,6 +20,7 @@ export const lucia = new Lucia(adapter, {
   },
   getUserAttributes: (userAttributes) => ({
     email: userAttributes.email,
+    emailVerified: userAttributes.email_verified,
   }),
 });
 
@@ -32,6 +33,7 @@ declare module "lucia" {
 
 interface DatabaseUserAttributes {
   email: string;
+  email_verified: boolean;
 }
 
 export const validateToken = async (token: string) => {

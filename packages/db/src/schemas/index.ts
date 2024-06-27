@@ -10,3 +10,4 @@ export * from "./session";
 export * from "./user-info";
 export * from "./user";
 export * from "./waitlist";
+export * from "./email-verification-code";

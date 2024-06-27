@@ -2,6 +2,7 @@ import type { SendEmailCommandInput } from "@aws-sdk/client-ses";
 import { SES } from "@aws-sdk/client-ses";
 import { render } from "@react-email/render";
 
+import EmailVerificationCode from "./templates/email-verification-code";
 import ResetPassword from "./templates/reset-password";
 import WaitlistConfirmation from "./templates/waitlist-confirmation";
 
@@ -12,6 +13,34 @@ const ses = new SES({
     accessKeyId: process.env.AWS_MAIL_ACCESS_KEY!,
   },
 });
+
+export const sendEmailVerificationEmail = async ({
+  email,
+  code,
+}: {
+  email: string;
+  code: string;
+}) => {
+  const emailHtml = render(EmailVerificationCode({ code }));
+
+  const params: SendEmailCommandInput = {
+    Source: "no-reply@millennicare.com",
+    Destination: {
+      ToAddresses: [email],
+    },
+    Message: {
+      Body: {
+        Html: { Charset: "UTF-8", Data: emailHtml },
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data: "Email Verification Code",
+      },
+    },
+  };
+
+  return ses.sendEmail(params);
+};
 
 export const sendPasswordResetEmail = async ({
   token,

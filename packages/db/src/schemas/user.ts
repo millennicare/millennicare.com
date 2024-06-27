@@ -11,6 +11,7 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import { Account } from "./account";
 import { Address } from "./address";
+import { EmailVerificationCode } from "./email-verification-code";
 import { UserInfo } from "./user-info";
 
 export const typeEnum = pgEnum("type", ["caregiver", "careseeker"]);
@@ -22,12 +23,14 @@ export const User = pgTable("users", {
   password: text("password").notNull(),
   type: typeEnum("type").notNull(),
   onboardingComplete: boolean("onboarding_complete").default(false),
+  emailVerified: boolean("email_verified").default(false),
 });
 
 export const UserRelations = relations(User, ({ many, one }) => ({
   accounts: many(Account),
   address: many(Address),
   userInfo: one(UserInfo),
+  emailVerificationCode: many(EmailVerificationCode),
 }));
 
 export const insertUserSchema = createInsertSchema(User);

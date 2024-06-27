@@ -470,6 +470,9 @@ importers:
       jose:
         specifier: ^5.4.0
         version: 5.4.1
+      oslo:
+        specifier: ^1.2.0
+        version: 1.2.0
       superjson:
         specifier: 2.2.1
         version: 2.2.1

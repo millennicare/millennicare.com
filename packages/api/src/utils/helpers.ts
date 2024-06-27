@@ -1,10 +1,12 @@
 import * as jose from "jose";
+import { createDate, TimeSpan } from "oslo";
+import { alphabet, generateRandomString } from "oslo/crypto";
 
 import { lucia } from "@millennicare/auth";
 import { env } from "@millennicare/auth/env";
 import { and, eq } from "@millennicare/db";
 import { db } from "@millennicare/db/client";
-import { User } from "@millennicare/db/schema";
+import { EmailVerificationCode, User } from "@millennicare/db/schema";
 import { createAccount, createCustomer } from "@millennicare/lib";
 
 export async function createToken(userId: string, expTime?: string) {
@@ -51,3 +53,24 @@ export const getStripeId = async (
     return customer.id;
   }
 };
+
+export async function generateEmailVerificationCode(
+  userId: string,
+  email: string,
+): Promise<string> {
+  // delete all existing email verification codes for this userId
+  await db
+    .delete(EmailVerificationCode)
+    .where(eq(EmailVerificationCode.userId, userId));
+
+  const code = generateRandomString(8, alphabet("0-9"));
+
+  await db.insert(EmailVerificationCode).values({
+    userId,
+    email,
+    code,
+    expiresAt: createDate(new TimeSpan(15, "m")),
+  });
+
+  return code;
+}
