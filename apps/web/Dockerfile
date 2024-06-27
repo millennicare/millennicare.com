@@ -16,14 +16,14 @@ RUN npm install -g pnpm
 RUN npm install -g turbo
 
 ARG TURBO_TOKEN
-
 ENV TURBO_TOKEN=$TURBO_TOKEN
-
+ARG RAILWAY_SERVICE_ID
 # First install dependencies (as they change less often)
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-RUN pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=s/${RAILWAY_SERVICE_ID},target=/pnpm/store pnpm install --frozen-lockfile
+# RUN pnpm install --frozen-lockfile
 
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .

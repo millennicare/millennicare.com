@@ -1,18 +1,24 @@
-import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
-import { date, index, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import {
+  date,
+  index,
+  pgEnum,
+  pgTable,
+  text,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import { User } from "./user";
 
+export const genderEnum = pgEnum("gender", ["male", "female", "non-binary"]);
+
 export const UserInfo = pgTable(
   "user_info",
   {
-    id: text("id")
-      .notNull()
-      .primaryKey()
-      .$defaultFn(() => createId()),
-    userId: text("user_id")
+    id: uuid("id").notNull().primaryKey().defaultRandom(),
+    userId: uuid("user_id")
       .references(() => User.id, {
         onDelete: "cascade",
         onUpdate: "cascade",
@@ -24,6 +30,7 @@ export const UserInfo = pgTable(
     biography: varchar("biography", { length: 255 }),
     profilePicture: text("profile_picture"),
     birthdate: date("birthdate", { mode: "date" }).notNull(),
+    gender: genderEnum("gender"),
     stripeId: text("stripe_id").notNull(),
   },
   (user) => ({

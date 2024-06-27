@@ -66,7 +66,7 @@ export default function ForgotPasswordForm() {
           </p>
 
           <Button asChild>
-            <Link href="/sign-in">Back to sign in</Link>
+            <Link href="/auth/sign-in">Back to sign in</Link>
           </Button>
         </span>
       ) : (

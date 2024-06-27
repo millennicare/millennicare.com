@@ -9,6 +9,7 @@ export const sendPasswordResetEmail = async (email: string) => {
     const res = await api.auth.forgotPassword({ email });
     return res;
   } catch (error) {
+    console.error(error);
     if (error instanceof TRPCError) {
       return error.message;
     }

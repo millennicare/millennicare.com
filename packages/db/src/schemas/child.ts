@@ -1,6 +1,5 @@
-import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
-import { index, integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { index, integer, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 import { Careseeker } from "./careseeker";
@@ -8,13 +7,10 @@ import { Careseeker } from "./careseeker";
 export const Child = pgTable(
   "children",
   {
-    id: text("id")
-      .notNull()
-      .primaryKey()
-      .$defaultFn(() => createId()),
+    id: uuid("id").notNull().primaryKey().defaultRandom(),
     age: integer("age").notNull(),
     name: varchar("name", { length: 255 }).notNull(),
-    userId: text("user_id")
+    userId: uuid("user_id")
       .notNull()
       .references(() => Careseeker.userId, {
         onDelete: "cascade",

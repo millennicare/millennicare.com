@@ -8,6 +8,20 @@
       "when": 1718508740512,
       "tag": "0000_living_sentinel",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1718909683075,
+      "tag": "0001_cloudy_obadiah_stane",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1718909734559,
+      "tag": "0002_workable_tenebrous",
+      "breakpoints": true
     }
   ]
 }
