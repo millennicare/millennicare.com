@@ -6,7 +6,7 @@ import * as SelectPrimitive from "~/components/primitives/select";
 import { Check } from "~/lib/icons/Check";
 import { ChevronDown } from "~/lib/icons/ChevronDown";
 import { ChevronUp } from "~/lib/icons/ChevronUp";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/styles/utils";
 
 type Option = SelectPrimitive.Option;
 
@@ -150,7 +150,7 @@ SelectLabel.displayName = SelectPrimitive.Label.displayName;
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
+>(({ className, ...props }, ref) => (
   <SelectPrimitive.Item
     ref={ref}
     className={cn(

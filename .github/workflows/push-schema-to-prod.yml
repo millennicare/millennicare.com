@@ -3,7 +3,7 @@ name: push-schema-to-prod
 on:
   push:
     branches: [main]
-    paths: ["packages/db/src/schema/*"]
+    paths: ["packages/db/src/migrations/*"]
 
 jobs:
   deploy-migrations-to-dev:

@@ -291,7 +291,7 @@ const Content = React.forwardRef<
         setContentLayout(null);
         backHandler.remove();
       };
-    }, []);
+    }, [onOpenChange, setContentLayout, setTriggerPosition]);
 
     const positionStyle = useRelativePosition({
       align,
