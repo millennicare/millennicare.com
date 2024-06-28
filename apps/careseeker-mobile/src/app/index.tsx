@@ -1,8 +1,8 @@
 import type { ImageSourcePropType } from "react-native";
 import { ImageBackground, Text, View } from "react-native";
-import { Stack } from "expo-router";
+import { Link, Stack } from "expo-router";
 
-import { Button } from "~/components/ui/Button";
+import { Button } from "~/components/ui/button";
 
 export default function Index() {
   return (
@@ -36,18 +36,17 @@ https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint
             Modern Childcare for the New Millennium{" "}
           </Text>
 
-          <Button
-            label="Get Started"
-            size="lg"
-            className="rounded"
-            labelClasses="text-white"
-          />
-          <Button
-            label="Login"
-            size="lg"
-            className="rounded"
-            labelClasses="text-white"
-          />
+          <Link asChild href="/auth/sign-up">
+            <Button size="lg">
+              <Text className="text-white">Get Started</Text>
+            </Button>
+          </Link>
+
+          <Link asChild href="auth/sign-in">
+            <Button size="lg">
+              <Text className="text-white">Login</Text>
+            </Button>
+          </Link>
         </View>
       </ImageBackground>
     </View>
