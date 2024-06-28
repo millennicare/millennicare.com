@@ -1,12 +1,10 @@
 import * as jose from "jose";
-import { createDate, TimeSpan } from "oslo";
-import { alphabet, generateRandomString } from "oslo/crypto";
 
 import { lucia } from "@millennicare/auth";
 import { env } from "@millennicare/auth/env";
 import { and, eq } from "@millennicare/db";
 import { db } from "@millennicare/db/client";
-import { EmailVerificationCode, User } from "@millennicare/db/schema";
+import { User } from "@millennicare/db/schema";
 import { createAccount, createCustomer } from "@millennicare/lib";
 
 export async function createToken(userId: string, expTime?: string) {
@@ -30,8 +28,12 @@ export async function findDuplicateUser(
   });
 }
 
-export async function createSession(userId: string, email: string) {
-  const session = await lucia.createSession(userId, { email });
+export async function createSession(
+  userId: string,
+  email: string,
+  emailVerified: boolean,
+) {
+  const session = await lucia.createSession(userId, { email, emailVerified });
   return session;
 }
 

@@ -23,7 +23,7 @@ export const User = pgTable("users", {
   password: text("password").notNull(),
   type: typeEnum("type").notNull(),
   onboardingComplete: boolean("onboarding_complete").default(false),
-  emailVerified: boolean("email_verified").default(false),
+  emailVerified: boolean("email_verified").default(false).notNull(),
 });
 
 export const UserRelations = relations(User, ({ many, one }) => ({

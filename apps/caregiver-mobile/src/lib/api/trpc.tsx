@@ -38,7 +38,7 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
             headers.set("x-trpc-source", "expo-react");
 
             const token = getToken();
-            if (token) headers.set("Authorization", `Bearer ${token}`);
+            if (token) headers.set("Authorization", `${token}`);
 
             return Object.fromEntries(headers);
           },

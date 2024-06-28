@@ -7,10 +7,11 @@ import "../styles.css";
 
 import type { Theme } from "@react-navigation/native";
 import * as React from "react";
-import { SplashScreen, Stack } from "expo-router";
+import { Redirect, SplashScreen, Stack } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemeProvider } from "@react-navigation/native";
 
+import { getToken } from "~/lib/api/session-store";
 import { NAV_THEME } from "~/lib/styles/constants";
 import { useColorScheme } from "~/lib/styles/useColorScheme";
 
@@ -58,6 +59,11 @@ export default function RootLayout() {
 
   if (!isColorSchemeLoaded) {
     return null;
+  }
+
+  const token = getToken();
+  if (token) {
+    return <Redirect href="/home" />;
   }
 
   return (

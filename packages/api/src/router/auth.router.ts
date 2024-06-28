@@ -37,7 +37,7 @@ export const authRouter = createTRPCRouter({
     await invalidateSession(opts.ctx.token);
     return { success: true };
   }),
-  verifEmail: protectedProcedure
+  verifyCode: protectedProcedure
     .input(z.object({ code: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx;
@@ -74,7 +74,7 @@ export const authRouter = createTRPCRouter({
         .set({ emailVerified: true })
         .where(eq(User.id, user.id));
 
-      const session = await createSession(user.id, user.email);
+      const session = await createSession(user.id, user.email, true);
       return { session };
     }),
   register: publicProcedure
@@ -150,7 +150,7 @@ export const authRouter = createTRPCRouter({
       // send email verification code
       await sendEmailVerificationEmail({ email: input.email, code: res.code });
 
-      const session = await createSession(res.userId, input.email);
+      const session = await createSession(res.userId, input.email, false);
 
       return { session };
     }),
@@ -265,7 +265,6 @@ export const authRouter = createTRPCRouter({
       const user = await db.query.User.findFirst({
         where: eq(User.email, input.email),
       });
-
       if (!user) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
@@ -280,7 +279,11 @@ export const authRouter = createTRPCRouter({
           message: "Incorrect email or password",
         });
       }
-      const session = await createSession(user.id, user.email);
+      const session = await createSession(
+        user.id,
+        user.email,
+        user.emailVerified,
+      );
       return { session };
     }),
   getMe: protectedProcedure.query(async ({ ctx }) => {

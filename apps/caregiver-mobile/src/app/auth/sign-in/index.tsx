@@ -2,6 +2,7 @@ import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
 import { useState } from "react";
 import { SafeAreaView } from "react-native";
+import { useRouter } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
@@ -25,11 +26,13 @@ export default function SignIn() {
     resolver: zodResolver(signInSchema),
   });
   const { mutateAsync } = api.auth.login.useMutation();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
     try {
       const response = await mutateAsync(data);
       setToken(response.session.id);
+      router.push("/home");
     } catch (error) {
       if (error instanceof Error) {
         setErrorMsg(error.message);

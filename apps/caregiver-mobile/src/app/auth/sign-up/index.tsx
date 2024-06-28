@@ -2,6 +2,7 @@ import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
 import { useState } from "react";
 import { View } from "react-native";
+import { useRouter } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
@@ -19,8 +20,9 @@ type IFormInputs = z.infer<typeof signUpSchema>;
  * takes first name, last name, phone number, email, dob, and gender
  */
 export default function SignUp() {
+  const router = useRouter();
   const [errorMsg, setErrorMsg] = useState("");
-  const { mutateAsync } = api.auth.register.useMutation();
+  const { mutateAsync, isPending } = api.auth.register.useMutation();
   const {
     handleSubmit,
     control,
@@ -33,12 +35,13 @@ export default function SignUp() {
   });
 
   const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
-    console.log(data);
     try {
       const response = await mutateAsync({
         ...data,
       });
+      console.log(response);
       setToken(response.session.id);
+      router.replace("/auth/verify-code");
     } catch (error) {
       if (error instanceof Error) {
         setErrorMsg(error.message);
@@ -111,7 +114,11 @@ export default function SignUp() {
         </Text>
       )}
 
-      <Button className="w-full" onPress={handleSubmit(onSubmit)}>
+      <Button
+        className="w-full"
+        onPress={handleSubmit(onSubmit)}
+        disabled={isPending}
+      >
         <Text className="text-white">Join now</Text>
       </Button>
       {errorMsg && (
