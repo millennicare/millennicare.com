@@ -1,7 +1,7 @@
 import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
 import { useState } from "react";
-import { Image, SafeAreaView } from "react-native";
+import { Image, KeyboardAvoidingView, Platform } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
@@ -40,8 +40,18 @@ export default function SignIn() {
   };
 
   return (
-    <SafeAreaView className="flex h-5/6 w-full flex-col items-center justify-center gap-y-3">
-      <Image source={require("&/millennicare_logo_with_text.png")} />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      className="flex h-full w-full flex-col items-center justify-center gap-y-3 bg-background"
+    >
+      <Image
+        // only doing this to import the logo in to use
+        // tried importing without using the require function however I could not
+        // only disabling for importing images
+        // eslint-disable-next-line
+        source={require("&/millennicare_logo_with_text.png")}
+        className="mb-4"
+      />
 
       <Controller
         control={control}
@@ -90,6 +100,6 @@ export default function SignIn() {
       {errorMsg && (
         <Text className="w-full text-center text-red-500">{errorMsg}</Text>
       )}
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }

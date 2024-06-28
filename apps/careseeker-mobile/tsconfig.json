@@ -3,8 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "&/*": ["./assets/*"],
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "&/*": ["./assets/*"]
     },
     "jsx": "react-native",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",

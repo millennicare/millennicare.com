@@ -1,7 +1,7 @@
 import type { SubmitHandler } from "react-hook-form";
 import type { z } from "zod";
 import { useState } from "react";
-import { KeyboardAvoidingView, Platform } from "react-native";
+import { Image, KeyboardAvoidingView, Platform } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
@@ -12,6 +12,8 @@ import { Input } from "~/components/ui/input";
 import { Text } from "~/components/ui/text";
 import { setToken } from "~/lib/api/session-store";
 import { api } from "~/lib/api/trpc";
+
+// const milleniCareImage = require("&/millennicare_logo_with_text.png");
 
 type IFormInputs = z.infer<typeof signUpSchema>;
 
@@ -45,8 +47,16 @@ export default function SignUp() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      className="flex h-fit w-full flex-col items-center justify-center gap-y-3"
+      className="flex h-full w-full flex-col items-center justify-center gap-y-3 bg-background"
     >
+      <Image
+        // only doing this to import the logo in to use
+        // tried importing without using the require function however I could not
+        // only disabling for importing images
+        // eslint-disable-next-line
+        source={require("&/millennicare_logo_with_text.png")}
+        className="mb-4"
+      />
       <Controller
         control={control}
         name="email"
@@ -57,7 +67,7 @@ export default function SignUp() {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            className="w-full"
+            className="w-11/12"
           />
         )}
       />
@@ -77,7 +87,7 @@ export default function SignUp() {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            className="w-full"
+            className="w-11/12"
             secureTextEntry={true}
           />
         )}
@@ -98,7 +108,7 @@ export default function SignUp() {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            className="w-full"
+            className="w-11/12"
             secureTextEntry={true}
           />
         )}
@@ -109,7 +119,7 @@ export default function SignUp() {
         </Text>
       )}
 
-      <Button className="w-full" onPress={handleSubmit(onSubmit)}>
+      <Button className="w-11/12" onPress={handleSubmit(onSubmit)}>
         <Text className="text-white">Sign Up</Text>
       </Button>
       {errorMsg && (
